@@ -1,0 +1,56 @@
+group 'com.builpr'
+version '0.0-NOTHING'
+
+buildscript {
+    repositories {
+        mavenCentral()
+
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    dev
+}
+
+dependencies {
+    compile 'com.google.guava:guava:21.0'
+    compileOnly 'org.projectlombok:lombok:1.16.16'
+
+    compile 'org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.2.RELEASE'
+
+    dev 'org.springframework.boot:spring-boot-devtools:1.5.2.RELEASE'
+}
+
+bootRun {
+    classpath = sourceSets.main.runtimeClasspath + configurations.dev
+}
+
+bootRepackage {
+    mainClass = 'com.builpr.restapi.SpringStarter'
+    executable = true
+
+}
+
+springBoot {
+    executable = true
+}
