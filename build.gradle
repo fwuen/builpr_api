@@ -1,5 +1,5 @@
 group 'com.builpr'
-version '0.0-NOTHING'
+version '0.0.1-EXAMPLE'
 
 buildscript {
     repositories {
