@@ -45,7 +45,7 @@ public class TokenGeneratorTest {
         TokenGenerator tokenGenerator = new TokenGenerator();
 
         Assert.assertNotNull(tokenGenerator);
-
+        
         String token = tokenGenerator.generate();
 
         Assert.assertNotNull(token);
@@ -62,7 +62,7 @@ public class TokenGeneratorTest {
         tokenGenerator.setTokenSize(newSize);
 
         Assert.assertEquals(newSize, tokenGenerator.getTokenSize());
-
+        
         String token = tokenGenerator.generate();
 
         Assert.assertNotNull(token);

@@ -31,8 +31,10 @@ public class TokenGenerator {
         
         String token = stringBuilder.toString();
         
+        stringBuilder.setLength(0);
+        
         Verify.verifyNotNull(token);
-        Verify.verify((token.length()) == this.tokenSize);
+        Verify.verify(token.length() == tokenSize);
 
         return token;
     }
