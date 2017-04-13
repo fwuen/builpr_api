@@ -63,7 +63,7 @@ public class TokenGeneratorTest {
         Assert.assertNotNull(tokenGenerator);
 
         int newSize = 55;
-        tokenGenerator.setTokenSize(55);
+        tokenGenerator.setTokenSize(newSize);
 
         Assert.assertEquals(newSize, tokenGenerator.getTokenSize());
 
