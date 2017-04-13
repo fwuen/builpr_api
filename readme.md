@@ -22,4 +22,11 @@ und erkennt Änderungen sofort und startet den Server neu.
 
 
 Run Application on Debian8
-Install Java8 Install supervisor Place extras/builpr.conf under /etc/supervisor/conf.d Run "iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080" to redirect port 80 requests to port 8080 Create user with "useradd builpr -r --shell \bin\false" Upload builpr-embedded.jar to /opt/builpr/ Run "chown -hR builpr: /opt/builpr" Start service with supervisorctl and "start builpr"
+Install Java8 
+Install supervisor 
+Place extras/builpr.conf under /etc/supervisor/conf.d 
+Run "iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080" to redirect port 80 requests to port 8080 
+Create user with "useradd builpr -r --shell \bin\false" 
+Upload builpr-embedded.jar to /opt/builpr/ 
+Run "chown -hR builpr: /opt/builpr" 
+Start service with supervisorctl and "start builpr"
