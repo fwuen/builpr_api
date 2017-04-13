@@ -8,10 +8,6 @@ import java.util.Set;
 
 public class TokenGeneratorTest {
 
-    private static final int SIZE = 128;
-
-
-
     @Test
     public void create() {
         new TokenGenerator();
