@@ -1,0 +1,10 @@
+SSH
+    IP:     88.99.172.91
+    Port:   22
+    User:   root
+    PW:     9X2D4NQqp4MvbF
+
+MySQL
+    IP:     88.99.172.91
+    User:   builpr
+    PW:     builpr123
