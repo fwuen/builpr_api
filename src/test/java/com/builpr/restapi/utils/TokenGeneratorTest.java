@@ -28,6 +28,11 @@ public class TokenGeneratorTest {
         new TokenGenerator().setTokenSize(-1);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void setTokenSizeToGreaterThen512() {
+        new TokenGenerator().setTokenSize(513);
+    }
+
     @Test
     public void setPositiveTokenSize() {
         TokenGenerator tokenGenerator = new TokenGenerator();
