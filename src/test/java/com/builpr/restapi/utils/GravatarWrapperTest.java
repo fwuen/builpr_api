@@ -3,7 +3,6 @@ package com.builpr.restapi.utils;
 import com.google.common.base.Preconditions;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class GravatarWrapperTest {

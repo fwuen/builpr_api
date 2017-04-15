@@ -1,7 +1,6 @@
 package com.builpr.restapi.configuration;
 
 import com.builpr.restapi.utils.GravatarWrapper;
-import com.timgroup.jgravatar.Gravatar;
 import com.timgroup.jgravatar.GravatarDefaultImage;
 import com.timgroup.jgravatar.GravatarRating;
 import org.springframework.context.annotation.Bean;

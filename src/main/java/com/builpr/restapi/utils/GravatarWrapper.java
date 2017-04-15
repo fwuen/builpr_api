@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.validator.routines.EmailValidator;
 
-import java.util.regex.Pattern;
-
 public class GravatarWrapper {
 
     @Getter
