@@ -7,7 +7,7 @@ import org.junit.Test;
 public class GravatarTest {
 
     private static final String EMAIL = "syntarex@gmail.com";
-    private static final String NOT_REGISTRED_EMAIL = "ululul@ulululu.de";
+    private static final String NOT_REGISTERED_EMAIL = "ululul@ulululu.de";
 
 
 
@@ -37,7 +37,7 @@ public class GravatarTest {
 
     @Test
     public void getDefaultImageURLWithUnregisteredEmail() {
-        String imageURL = Gravatar.getImageURLByEmail(NOT_REGISTRED_EMAIL);
+        String imageURL = Gravatar.getImageURLByEmail(NOT_REGISTERED_EMAIL);
 
         Assert.assertNotNull(imageURL);
         Assert.assertTrue(imageURL.length() > 0);
