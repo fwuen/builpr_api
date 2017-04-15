@@ -31,6 +31,7 @@ configurations {
 
 dependencies {
     compile 'com.google.guava:guava:21.0'
+    compile 'commons-validator:commons-validator:1.6'
     compileOnly 'org.projectlombok:lombok:1.16.16'
 
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE'
