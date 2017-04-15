@@ -1,5 +1,6 @@
 package com.builpr.restapi.configuration;
 
+import com.builpr.restapi.utils.GravatarWrapper;
 import com.timgroup.jgravatar.Gravatar;
 import com.timgroup.jgravatar.GravatarDefaultImage;
 import com.timgroup.jgravatar.GravatarRating;
@@ -10,12 +11,12 @@ import org.springframework.context.annotation.Configuration;
 public class GravatarConfiguration {
 
     @Bean
-    public Gravatar gravatar() {
-        Gravatar gravatar = new Gravatar();
+    public GravatarWrapper gravatar() {
+        GravatarWrapper gravatar = new GravatarWrapper();
 
-        gravatar.setSize(50);
-        gravatar.setRating(GravatarRating.GENERAL_AUDIENCES);
-        gravatar.setDefaultImage(GravatarDefaultImage.RETRO);
+        gravatar.getGravatarProvider().setSize(50);
+        gravatar.getGravatarProvider().setRating(GravatarRating.GENERAL_AUDIENCES);
+        gravatar.getGravatarProvider().setDefaultImage(GravatarDefaultImage.RETRO);
 
         return gravatar;
     }
