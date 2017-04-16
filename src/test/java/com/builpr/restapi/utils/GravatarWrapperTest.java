@@ -12,10 +12,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
-/* TODO: Fehlende Tests:
-    Ändert sich Default-Image nach Konfiguration?
-    Was passiert wenn Rating von Bild höher als konfiguriert?
-*/
 public class GravatarWrapperTest {
 
     private static final String EMAIL = "syntarex@gmail.com";
