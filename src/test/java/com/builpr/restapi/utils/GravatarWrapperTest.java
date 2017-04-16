@@ -5,6 +5,10 @@ import org.apache.commons.validator.routines.UrlValidator;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+
 public class GravatarWrapperTest {
 
     private static final String EMAIL = "syntarex@gmail.com";
@@ -41,8 +45,6 @@ public class GravatarWrapperTest {
         Assert.assertTrue(url.length() > 0);
         Assert.assertTrue(UrlValidator.getInstance().isValid(url));
         Assert.assertTrue(urlLeadsToImage(url));
-
-        System.out.println(url);
     }
 
     @Test
@@ -55,11 +57,20 @@ public class GravatarWrapperTest {
         Assert.assertTrue(urlLeadsToImage(url));
     }
 
-    /* TODO: Code this. */
     private boolean urlLeadsToImage(String url) {
         Preconditions.checkNotNull(url);
         Preconditions.checkArgument(url.length() > 0);
         Preconditions.checkArgument(UrlValidator.getInstance().isValid(url));
+
+        try {
+            BufferedImage image = ImageIO.read(new URL(url));
+
+            Assert.assertNotNull(image);
+            Assert.assertTrue(image.getWidth() > 0);
+            Assert.assertTrue(image.getHeight() > 0);
+        } catch(Exception ex) {
+            return false;
+        }
 
         return true;
     }
