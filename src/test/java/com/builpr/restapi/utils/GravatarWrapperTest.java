@@ -1,6 +1,9 @@
 package com.builpr.restapi.utils;
 
 import com.google.common.base.Preconditions;
+import com.timgroup.jgravatar.Gravatar;
+import com.timgroup.jgravatar.GravatarDefaultImage;
+import com.timgroup.jgravatar.GravatarRating;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,6 +12,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
+/* TODO: Fehlende Tests:
+    Ändert sich Default-Image nach Konfiguration?
+    Was passiert wenn Rating von Bild höher als konfiguriert?
+*/
 public class GravatarWrapperTest {
 
     private static final String EMAIL = "syntarex@gmail.com";
@@ -41,9 +48,7 @@ public class GravatarWrapperTest {
     public void getUrlWithUnknownEmail() {
         String url = new GravatarWrapper().getUrl(UNKNOWN_EMAIL);
 
-        Assert.assertNotNull(url);
-        Assert.assertTrue(url.length() > 0);
-        Assert.assertTrue(UrlValidator.getInstance().isValid(url));
+        Assert.assertTrue(urlIsValid(url));
         Assert.assertTrue(urlLeadsToImage(url));
     }
 
@@ -51,16 +56,14 @@ public class GravatarWrapperTest {
     public void getUrlWithEmail() {
         String url = new GravatarWrapper().getUrl(EMAIL);
 
-        Assert.assertNotNull(url);
-        Assert.assertTrue(url.length() > 0);
-        Assert.assertTrue(UrlValidator.getInstance().isValid(url));
+        Assert.assertTrue(urlIsValid(url));
         Assert.assertTrue(urlLeadsToImage(url));
     }
 
+
+
     private boolean urlLeadsToImage(String url) {
-        Preconditions.checkNotNull(url);
-        Preconditions.checkArgument(url.length() > 0);
-        Preconditions.checkArgument(UrlValidator.getInstance().isValid(url));
+        Preconditions.checkArgument(urlIsValid(url));
 
         try {
             BufferedImage image = ImageIO.read(new URL(url));
@@ -71,6 +74,14 @@ public class GravatarWrapperTest {
         } catch(Exception ex) {
             return false;
         }
+
+        return true;
+    }
+
+    private boolean urlIsValid(String url) {
+        Assert.assertNotNull(url);
+        Assert.assertTrue(url.length() > 0);
+        Assert.assertTrue(UrlValidator.getInstance().isValid(url));
 
         return true;
     }

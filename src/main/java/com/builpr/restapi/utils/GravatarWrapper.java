@@ -2,13 +2,11 @@ package com.builpr.restapi.utils;
 
 import com.google.common.base.Preconditions;
 import com.timgroup.jgravatar.Gravatar;
-import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class GravatarWrapper {
 
-    @Getter
     private Gravatar gravatarProvider = new Gravatar();
 
 
