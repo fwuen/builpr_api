@@ -1,14 +1,12 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.restapi.model.SimplePayload;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SimplePayloadController {
 
+    @CrossOrigin(origins = "http://localhost:8081")
     @RequestMapping(value = "/simplepayload", method = RequestMethod.GET)
     public SimplePayload byParameter(
             @RequestParam(
