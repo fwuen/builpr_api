@@ -38,7 +38,7 @@ dependencies {
     compile 'com.speedment:speedment:2.3.5'
 
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.3.RELEASE'
-    compile 'org.springframework.data:spring-data-solr:2.1.3.RELEASE'
+    compile 'org.apache.solr:solr-solrj:6.5.1'
 
     compile 'com.timgroup:jgravatar:1.1'
 
