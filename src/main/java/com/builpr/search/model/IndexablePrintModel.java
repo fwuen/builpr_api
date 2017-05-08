@@ -36,7 +36,21 @@ public class IndexablePrintModel {
 
             return this;
         }
-
+    
+        public Builder withTitle(String title) {
+            Preconditions.checkNotNull(title);
+        
+            toBuild.title = title;
+            return this;
+        }
+    
+        public Builder withDescription(String description) {
+            Preconditions.checkNotNull(description);
+        
+            toBuild.description = description;
+            return this;
+        }
+        
         /* TODO: with-Methoden */
 
         public IndexablePrintModel build() {
