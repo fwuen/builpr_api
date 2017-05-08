@@ -14,7 +14,7 @@ public interface SearchManager {
     public List<PrintModelReference> search(String term, Order order) throws SearchException;
     public List<PrintModelReference> search(String term, List<Filter> filter, Order order) throws SearchException;
 
-    public void index(List<IndexablePrintModel> indexable);
+    public void index(List<IndexablePrintModel> indexables);
     public void index(IndexablePrintModel indexable);
 
     public boolean isReachable();

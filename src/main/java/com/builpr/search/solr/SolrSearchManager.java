@@ -35,17 +35,17 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public List<PrintModelReference> search(String term, List<Filter> filter) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchException {
         return search(term, filter, Order.RELEVANCE);
     }
 
     @Override
-    public List<PrintModelReference> search(String term, Order order) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchException {
         return search(term, Lists.newArrayList(), order);
     }
 
     @Override
-    public List<PrintModelReference> search(String term, List<Filter> filter, Order order) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchException {
         try {
             SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, order);
 
@@ -60,13 +60,13 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public void index(List<IndexablePrintModel> indexables) {
+    public void index(@NonNull List<IndexablePrintModel> indexables) {
         for(IndexablePrintModel indexable : indexables)
             index(indexable);
     }
 
     @Override
-    public void index(IndexablePrintModel indexable) {
+    public void index(@NonNull IndexablePrintModel indexable) {
         /* TODO: Mappe ein SolrInputDocument und schiebe dieses in den Solr. */
     }
 

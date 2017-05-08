@@ -9,11 +9,6 @@ public class PriceRangeFilterTest {
     private static final int SMALL = 1;
     private static final int BIG = 100;
 
-    // Richtig erstellen
-    // Eins davon auf 0
-    // Beides auf 0
-    // To kleiner als From
-
     @Test
     public void create() {
         PriceRangeFilter filter = new PriceRangeFilter(SMALL, BIG);

@@ -1,5 +1,6 @@
 package com.builpr.search.model;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 
 public class IndexablePrintModel {
@@ -27,6 +28,16 @@ public class IndexablePrintModel {
         public Builder() {
             this.toBuild = new IndexablePrintModel();
         }
+
+        public Builder withId(int id) {
+            Preconditions.checkArgument(id > 0);
+
+            toBuild.id = id;
+
+            return this;
+        }
+
+        /* TODO: with-Methoden */
 
         public IndexablePrintModel build() {
             /* TODO: Hier mit Verify überprüfen ob alle Felder gesetzt sind */
