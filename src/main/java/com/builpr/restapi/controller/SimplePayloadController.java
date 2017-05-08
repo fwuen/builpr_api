@@ -1,7 +1,6 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.restapi.model.SimplePayload;
-import com.speedment.Speedment;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
