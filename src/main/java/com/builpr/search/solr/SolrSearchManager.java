@@ -103,5 +103,12 @@ public class SolrSearchManager implements SearchManager {
     public static SolrSearchManager createWithSolrClient(@NonNull SolrClient solrClient) {
         return new SolrSearchManager(solrClient);
     }
+    
+    public void removeFromIndex(List<PrintModelReference> removables) {
+    
+    }
+    public void removeFromIndex(PrintModelReference removable) {
+    
+    }
 
 }
