@@ -38,8 +38,8 @@ public class SolrSearchManagerTest {
     
     @Test
     public void reachabilityCheck() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
-        System.out.println(""+solrSearchManager.isReachable());
+        SolrClient solr = new HttpSolrClient.Builder(REMOTE_BASE_URL).build();
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(solr);
         
     }
 

@@ -10,7 +10,6 @@ import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.SolrPing;
@@ -79,7 +78,7 @@ public class SolrSearchManager implements SearchManager {
     public int isReachable() {
         /* TODO: check if reacheable */
         SolrPing sp = new SolrPing();
-        sp.getParams().add("distrib", "true");
+        //sp.getParams().add("distrib", "true");
         SolrPingResponse rsp = null;
         try {
             rsp = sp.process(solrClient, "testcore");
@@ -88,10 +87,7 @@ public class SolrSearchManager implements SearchManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        int status = rsp.getStatus();
-        
-        return status;
+        return rsp.getStatus();
     }
     
     public static SolrSearchManager createWithBaseURL(@NonNull String baseURL) {
@@ -110,5 +106,4 @@ public class SolrSearchManager implements SearchManager {
     public void removeFromIndex(PrintModelReference removable) {
     
     }
-
 }
