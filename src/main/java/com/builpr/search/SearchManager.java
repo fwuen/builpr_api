@@ -18,6 +18,6 @@ public interface SearchManager {
     public void index(List<IndexablePrintModel> indexables);
     public void index(IndexablePrintModel indexable);
 
-    public boolean isReachable();
+    public int isReachable();
 
 }

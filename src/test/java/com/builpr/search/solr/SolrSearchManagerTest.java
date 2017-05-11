@@ -8,6 +8,7 @@ import org.junit.Test;
 public class SolrSearchManagerTest {
 
     private static final String BASE_URL = "localhost";
+    private static final String REMOTE_BASE_URL = "http://builpr.com:6970/solr";
 
     @Test
     public void createWithBaseUrl() {
@@ -33,6 +34,13 @@ public class SolrSearchManagerTest {
     @Test(expected = NullPointerException.class)
     public void createWithSolrClientIsNull() {
         SolrSearchManager.createWithSolrClient(null);
+    }
+    
+    @Test
+    public void reachabilityCheck() {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        System.out.println(""+solrSearchManager.isReachable());
+        
     }
 
     /* TODO: Teste die Methoden auf ihre Funktionalität */

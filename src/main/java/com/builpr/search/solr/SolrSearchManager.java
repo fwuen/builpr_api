@@ -10,9 +10,14 @@ import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.SolrPingResponse;
 
+import java.io.IOException;
 import java.util.List;
 
 public class SolrSearchManager implements SearchManager {
@@ -71,16 +76,24 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public boolean isReachable() {
+    public int isReachable() {
         /* TODO: check if reacheable */
-        return true;
+        SolrPing sp = new SolrPing();
+        sp.getParams().add("distrib", "true");
+        SolrPingResponse rsp = null;
+        try {
+            rsp = sp.process(solrClient, "testcore");
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        int status = rsp.getStatus();
+        
+        return status;
     }
-
-
-
-
-
-
+    
     public static SolrSearchManager createWithBaseURL(@NonNull String baseURL) {
         SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(baseURL).build();
 
