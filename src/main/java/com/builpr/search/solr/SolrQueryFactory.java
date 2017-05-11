@@ -17,4 +17,8 @@ public class SolrQueryFactory {
         return null; /* TODO: Build tha Query here. */
     }
 
+    public SolrQuery getQueryFindAll() {
+        return new SolrQuery("*:*");
+    }
+
 }

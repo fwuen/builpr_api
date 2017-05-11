@@ -18,6 +18,9 @@ public interface SearchManager {
     public void index(List<IndexablePrintModel> indexables);
     public void index(IndexablePrintModel indexable);
 
+    public void removeFromIndex(List<PrintModelReference> removables);
+    public void removeFromIndex(PrintModelReference removable);
+
     public int isReachable();
 
 }
