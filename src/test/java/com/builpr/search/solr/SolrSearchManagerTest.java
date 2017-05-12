@@ -37,12 +37,27 @@ public class SolrSearchManagerTest {
     }
     
     @Test
-    public void reachabilityCheck() {
-        SolrClient solr = new HttpSolrClient.Builder(REMOTE_BASE_URL).build();
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(solr);
+    public void reachabilityCheckWithSolrClient() {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL).build());
+        Assert.assertNotNull(solrSearchManager);
         
+        int status = solrSearchManager.isReachable();
+        
+        Assert.assertTrue(status >= Integer.MIN_VALUE);
+        Assert.assertTrue(status <= Integer.MAX_VALUE);
     }
 
+    @Test
+    public void reachabilityCheckWithBaseURL() {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        Assert.assertNotNull(solrSearchManager);
+    
+        int status = solrSearchManager.isReachable();
+    
+        Assert.assertTrue(status >= Integer.MIN_VALUE);
+        Assert.assertTrue(status <= Integer.MAX_VALUE);
+    }
+    
     /* TODO: Teste die Methoden auf ihre Funktionalität */
 
 }

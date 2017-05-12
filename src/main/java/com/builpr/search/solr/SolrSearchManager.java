@@ -78,7 +78,6 @@ public class SolrSearchManager implements SearchManager {
     public int isReachable() {
         /* TODO: check if reacheable */
         SolrPing sp = new SolrPing();
-        //sp.getParams().add("distrib", "true");
         SolrPingResponse rsp = null;
         try {
             rsp = sp.process(solrClient, "testcore");
