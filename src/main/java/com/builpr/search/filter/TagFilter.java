@@ -6,7 +6,7 @@ import lombok.NonNull;
 
 import java.util.List;
 
-public class TagFilter {
+public class TagFilter extends Filter{
 
     @Getter
     private List<String> tags;

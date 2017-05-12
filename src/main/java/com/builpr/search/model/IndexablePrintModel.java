@@ -3,6 +3,7 @@ package com.builpr.search.model;
 import com.builpr.search.filter.MinimumRatingFilter;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
+import lombok.Getter;
 
 import java.util.Date;
 import java.util.List;
@@ -11,20 +12,28 @@ public class IndexablePrintModel {
 
     /* TODO: Diese Klasse stellt ein komplettes Daten-Model des 3D-Print-Solr-Models dar. Ergänze also alle Felder die indexiert werden müssen. */
 
+    @Getter
     private int id;
 
+    @Getter
     private String title;
 
+    @Getter
     private String description;
 
+    @Getter
     private int ageRestriction;
 
+    @Getter
     private int uploaderId;
 
+    @Getter
     private Date uploadDate;
 
+    @Getter
     private double rating;
 
+    @Getter
     private List<String> tags;
 
 

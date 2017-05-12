@@ -8,6 +8,7 @@ import com.builpr.search.model.IndexablePrintModel;
 import com.builpr.search.model.PrintModelReference;
 import com.google.common.collect.Lists;
 import lombok.NonNull;
+import org.apache.http.params.CoreProtocolPNames;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -15,6 +16,8 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SolrPingResponse;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.common.SolrInputDocument;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,9 +33,7 @@ public class SolrSearchManager implements SearchManager {
         this.solrQueryFactory = new SolrQueryFactory();
         this.printModelReferenceFactory = new PrintModelReferenceFactory();
     }
-
-
-
+    
     @Override
     public List<PrintModelReference> search(@NonNull String term) throws SearchException {
         return search(term, Lists.newArrayList(), Order.RELEVANCE);
@@ -72,8 +73,43 @@ public class SolrSearchManager implements SearchManager {
     @Override
     public void index(@NonNull IndexablePrintModel indexable) {
         /* TODO: Mappe ein SolrInputDocument und schiebe dieses in den Solr. */
+        String tags = buildStringForTagField(indexable);
+        
+        SolrInputDocument document = new SolrInputDocument();
+        document.addField("id", ""+indexable.getId());
+        document.addField("title", indexable.getTitle());
+        document.addField("description", indexable.getDescription());
+        document.addField("ageRestriction", "" + indexable.getAgeRestriction());
+        document.addField("uploaderId", "" + indexable.getUploaderId());
+        document.addField("uploadDate", indexable.getUploadDate().toString());
+        document.addField("rating", "" + indexable.getRating());
+        document.addField("tags", tags);
+        
+        try {
+            UpdateResponse response = solrClient.add(document);
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        try {
+            solrClient.commit();
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
+    
+    private String buildStringForTagField(IndexablePrintModel indexablePrintModel) {
+        StringBuffer buffer = new StringBuffer();
+        for (String tag : indexablePrintModel.getTags()) {
+            buffer.append(tag);
+        }
+        return buffer.toString();
+    }
+    
     @Override
     public int isReachable() {
         /* TODO: check if reacheable */
