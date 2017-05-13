@@ -1,25 +1,19 @@
 package com.builpr.search.solr;
 
-import com.builpr.search.Order;
-import com.builpr.search.SearchException;
-import com.builpr.search.SearchManager;
+import com.builpr.search.*;
 import com.builpr.search.filter.Filter;
 import com.builpr.search.model.IndexablePrintModel;
 import com.builpr.search.model.PrintModelReference;
 import com.google.common.collect.Lists;
 import lombok.NonNull;
-import org.apache.http.params.CoreProtocolPNames;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.SolrPingResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
-import java.io.IOException;
 import java.util.List;
 
 public class SolrSearchManager implements SearchManager {
@@ -59,70 +53,44 @@ public class SolrSearchManager implements SearchManager {
             List<PrintModelReference> results = printModelReferenceFactory.get(queryResponse.getResults());
 
             return results;
+
         } catch(Exception exception) {
             throw new SearchException(exception);
         }
     }
 
     @Override
-    public void index(@NonNull List<IndexablePrintModel> indexables) {
+    public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws IndexException {
         for(IndexablePrintModel indexable : indexables)
-            index(indexable);
+            addToIndex(indexable);
     }
 
     @Override
-    public void index(@NonNull IndexablePrintModel indexable) {
-        /* TODO: Mappe ein SolrInputDocument und schiebe dieses in den Solr. */
-        String tags = buildStringForTagField(indexable);
-        
-        SolrInputDocument document = new SolrInputDocument();
-        document.addField("id", ""+indexable.getId());
-        document.addField("title", indexable.getTitle());
-        document.addField("description", indexable.getDescription());
-        document.addField("ageRestriction", "" + indexable.getAgeRestriction());
-        document.addField("uploaderId", "" + indexable.getUploaderId());
-        document.addField("uploadDate", indexable.getUploadDate().toString());
-        document.addField("rating", "" + indexable.getRating());
-        document.addField("tags", tags);
-        
+    public void addToIndex(@NonNull IndexablePrintModel indexable) throws IndexException {
+        SolrInputDocument inputDocument = new SolrInputDocumentFactory().get(indexable);
+
         try {
-            UpdateResponse response = solrClient.add(document);
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            UpdateResponse response = solrClient.add(inputDocument);
+        } catch (Exception exception) {
+            throw new IndexException(exception);
         }
-    
+
         try {
-            solrClient.commit();
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            UpdateResponse response = solrClient.commit();
+        } catch (Exception exception) {
+            throw new IndexException(exception);
         }
-    }
-    
-    private String buildStringForTagField(IndexablePrintModel indexablePrintModel) {
-        StringBuffer buffer = new StringBuffer();
-        for (String tag : indexablePrintModel.getTags()) {
-            buffer.append(tag);
-        }
-        return buffer.toString();
     }
     
     @Override
-    public int isReachable() {
-        /* TODO: check if reacheable */
-        SolrPing sp = new SolrPing();
-        SolrPingResponse rsp = null;
+    public int isReachable() throws ConnectionException{
+
+        /* TODO: Passt das so? */
         try {
-            rsp = sp.process(solrClient, "testcore");
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            return new SolrPing().process(solrClient).getStatus(); /* TODO: Collection(s) hinzufufügen? */
+        } catch (Exception exception) {
+            throw new ConnectionException(exception);
         }
-        return rsp.getStatus();
     }
     
     public static SolrSearchManager createWithBaseURL(@NonNull String baseURL) {
@@ -135,10 +103,20 @@ public class SolrSearchManager implements SearchManager {
         return new SolrSearchManager(solrClient);
     }
     
-    public void removeFromIndex(List<PrintModelReference> removables) {
-    
+    public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws IndexException {
+        for(PrintModelReference removable : removables)
+        {
+                deleteFromIndex(removable);
+        }
     }
-    public void removeFromIndex(PrintModelReference removable) {
-    
+    public void deleteFromIndex(@NonNull PrintModelReference removable) throws IndexException {
+         /*TODO: Passt das so?*/
+
+         try {
+             UpdateResponse response = solrClient.deleteById(""+removable.getId());
+         }
+         catch (Exception exception) {
+             throw new IndexException(exception);
+         }
     }
 }
