@@ -40,9 +40,16 @@ public class SolrSearchManagerTest {
     public void reachabilityCheckWithSolrClient() {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL).build());
         Assert.assertNotNull(solrSearchManager);
-        
-        int status = solrSearchManager.isReachable();
-        
+
+        int status = 0;
+
+        try {
+            status = solrSearchManager.isReachable();
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
         Assert.assertTrue(status >= Integer.MIN_VALUE);
         Assert.assertTrue(status <= Integer.MAX_VALUE);
     }
@@ -51,9 +58,16 @@ public class SolrSearchManagerTest {
     public void reachabilityCheckWithBaseURL() {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
         Assert.assertNotNull(solrSearchManager);
-        
-        int status = solrSearchManager.isReachable();
-        
+
+        int status = 0;
+
+        try {
+            status = solrSearchManager.isReachable();
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
         Assert.assertTrue(status >= Integer.MIN_VALUE);
         Assert.assertTrue(status <= Integer.MAX_VALUE);
     }
@@ -61,15 +75,29 @@ public class SolrSearchManagerTest {
     @Test(expected = NullPointerException.class)
     public void reachabilityCheckWithSolrClientIsNull() {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(null);
-        
-        int status = solrSearchManager.isReachable();
+
+        int status = 0;
+
+        try {
+            status = solrSearchManager.isReachable();
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
     
     @Test(expected = NullPointerException.class)
     public void reachabilityCheckWithBaseURLIsNull() {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(null);
-    
-        int status = solrSearchManager.isReachable();
+
+        int status = 0;
+
+        try {
+            status = solrSearchManager.isReachable();
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
     
     /* TODO: Teste die Methoden auf ihre Funktionalität */

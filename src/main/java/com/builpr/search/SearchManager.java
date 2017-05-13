@@ -14,13 +14,13 @@ public interface SearchManager {
     public List<PrintModelReference> search(String term, Order order) throws SearchException;
     public List<PrintModelReference> search(String term, List<Filter> filter, Order order) throws SearchException;
 
-    //TODO: kann man hier eventuell boolean zurückgeben --> war Indexierung erfolgreich?
-    public void index(List<IndexablePrintModel> indexables);
-    public void index(IndexablePrintModel indexable);
+    //TODO: Statt "void" die "UpdateResponse" in irgendeiner Form zurückgeben?
+    public void addToIndex(List<IndexablePrintModel> indexables) throws IndexException;
+    public void addToIndex(IndexablePrintModel indexable) throws IndexException;
 
-    public void removeFromIndex(List<PrintModelReference> removables);
-    public void removeFromIndex(PrintModelReference removable);
+    public void deleteFromIndex(List<PrintModelReference> removables) throws  IndexException;
+    public void deleteFromIndex(PrintModelReference removable) throws IndexException;
 
-    public int isReachable();
+    public int isReachable() throws ConnectionException;
 
 }
