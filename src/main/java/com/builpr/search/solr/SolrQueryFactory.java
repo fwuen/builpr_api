@@ -1,10 +1,7 @@
 package com.builpr.search.solr;
 
 import com.builpr.search.Order;
-import com.builpr.search.filter.Filter;
-import com.builpr.search.filter.MinimumRatingFilter;
-import com.builpr.search.filter.PriceRangeFilter;
-import com.builpr.search.filter.TagFilter;
+import com.builpr.search.filter.*;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrQuery;
 
@@ -26,6 +23,8 @@ public class SolrQueryFactory {
             } else if (f instanceof PriceRangeFilter) {
                 query.addNumericRangeFacet("price", ((PriceRangeFilter) f).getFromPrice(), ((PriceRangeFilter) f).getToPrice(), 5);
             } else if (f instanceof TagFilter) {
+            
+            } else if (f instanceof FileFilter) {
             
             }
         }

@@ -112,7 +112,7 @@ public class SolrSearchManager implements SearchManager {
     
     @Override
     public int isReachable() {
-        /* TODO: check if reacheable */
+        // TODO: eventuell überarbeiten
         SolrPing sp = new SolrPing();
         SolrPingResponse rsp = null;
         try {
