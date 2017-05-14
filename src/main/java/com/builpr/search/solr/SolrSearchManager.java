@@ -118,5 +118,11 @@ public class SolrSearchManager implements SearchManager {
          catch (Exception exception) {
              throw new IndexException(exception);
          }
+
+        try {
+            UpdateResponse response = solrClient.commit();
+        } catch (Exception exception) {
+            throw new IndexException(exception);
+        }
     }
 }
