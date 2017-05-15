@@ -21,6 +21,6 @@ public interface SearchManager {
     public void deleteFromIndex(List<PrintModelReference> removables) throws  IndexException;
     public void deleteFromIndex(PrintModelReference removable) throws IndexException;
 
-    public int isReachable() throws ConnectionException;
+    public boolean isReachable() throws ConnectionException;
 
 }
