@@ -30,22 +30,22 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term) throws SearchManagerException {
         return search(term, Lists.newArrayList(), Order.RELEVANCE);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
         return search(term, filter, Order.RELEVANCE);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchManagerException {
         return search(term, Lists.newArrayList(), order);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
         try {
             SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, order);
 
@@ -55,8 +55,8 @@ public class SolrSearchManager implements SearchManager {
 
             return results;
 
-        } catch (Exception exception) {
-            throw new SearchException(exception);
+        } catch(Exception exception) {
+            throw new SearchManagerException(exception);
         }
     }
 
@@ -79,7 +79,7 @@ public class SolrSearchManager implements SearchManager {
         try {
             UpdateResponse response = solrClient.add(COLLECTION, inputDocument);
         } catch (Exception exception) {
-            throw new IndexException(exception);
+            throw new SearchManagerException(exception);
         }
 
         if (commit)
@@ -90,7 +90,7 @@ public class SolrSearchManager implements SearchManager {
         try {
             UpdateResponse response = solrClient.commit();
         } catch (Exception exception) {
-            throw new IndexException(exception);
+            throw new SearchManagerException(exception);
         }
     }
 
@@ -102,7 +102,7 @@ public class SolrSearchManager implements SearchManager {
             }
             return false;
         } catch (Exception exception) {
-            throw new ConnectionException(exception);
+            throw new SearchManagerException(exception);
         }
     }
 
@@ -115,14 +115,14 @@ public class SolrSearchManager implements SearchManager {
     public static SolrSearchManager createWithSolrClient(@NonNull SolrClient solrClient) {
         return new SolrSearchManager(solrClient);
     }
-
-    public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws IndexException {
-        for (PrintModelReference removable : removables) {
-            deleteFromIndex(removable);
+    
+    public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws SearchManagerException {
+        for(PrintModelReference removable : removables)
+        {
+                deleteFromIndex(removable);
         }
     }
-
-    public void deleteFromIndex(@NonNull PrintModelReference removable) throws IndexException {
+    public void deleteFromIndex(@NonNull PrintModelReference removable) throws SearchManagerException {
          /*TODO: Passt das so?*/
 
         try {
@@ -134,7 +134,7 @@ public class SolrSearchManager implements SearchManager {
         try {
             UpdateResponse response = solrClient.commit();
         } catch (Exception exception) {
-            throw new IndexException(exception);
+            throw new SearchManagerException(exception);
         }
     }
 }
