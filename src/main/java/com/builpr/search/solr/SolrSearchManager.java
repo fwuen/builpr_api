@@ -79,7 +79,7 @@ public class SolrSearchManager implements SearchManager {
         SolrInputDocument inputDocument = new SolrInputDocumentFactory().get(indexable);
 
         try {
-            UpdateResponse response = solrClient.add(COLLECTION, inputDocument);
+            solrClient.add(COLLECTION, inputDocument);
         } catch (Exception exception) {
             throw new SearchManagerException(exception);
         }
@@ -90,7 +90,7 @@ public class SolrSearchManager implements SearchManager {
 
     private void commit() throws SearchManagerException {
         try {
-            UpdateResponse response = solrClient.commit();
+            solrClient.commit();
         } catch (Exception exception) {
             throw new SearchManagerException(exception);
         }
@@ -134,7 +134,7 @@ public class SolrSearchManager implements SearchManager {
     private void deleteFromIndex(@NonNull PrintModelReference removable, boolean commit) throws SearchManagerException {
 
         try {
-            UpdateResponse response = solrClient.deleteById(COLLECTION, "" + removable.getId());
+            solrClient.deleteById(COLLECTION, "" + removable.getId());
         } catch (Exception e) {
             throw new SearchManagerException(e);
         }
