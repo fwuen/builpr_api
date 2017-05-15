@@ -61,7 +61,7 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws IndexException {
+    public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws SearchManagerException {
         for (IndexablePrintModel indexable : indexables)
             addToIndex(indexable, false);
 
@@ -69,11 +69,11 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public void addToIndex(@NonNull IndexablePrintModel indexable) throws IndexException {
+    public void addToIndex(@NonNull IndexablePrintModel indexable) throws SearchManagerException {
         this.addToIndex(indexable, true);
     }
 
-    private void addToIndex(@NonNull IndexablePrintModel indexable, boolean commit) {
+    private void addToIndex(@NonNull IndexablePrintModel indexable, boolean commit) throws SearchManagerException {
         SolrInputDocument inputDocument = new SolrInputDocumentFactory().get(indexable);
 
         try {
@@ -86,7 +86,7 @@ public class SolrSearchManager implements SearchManager {
             commit();
     }
 
-    private void commit() {
+    private void commit() throws SearchManagerException {
         try {
             UpdateResponse response = solrClient.commit();
         } catch (Exception exception) {
@@ -95,7 +95,7 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public boolean isReachable() throws ConnectionException {
+    public boolean isReachable() throws SearchManagerException {
         try {
             if (new SolrPing().process(solrClient, COLLECTION).getStatus() == 0) {
                 return true;
@@ -128,7 +128,7 @@ public class SolrSearchManager implements SearchManager {
         try {
             UpdateResponse response = solrClient.deleteById(COLLECTION, "" + removable.getId());
         } catch (Exception exception) {
-            throw new IndexException(exception);
+            throw new SearchManagerException(exception);
         }
 
         try {
