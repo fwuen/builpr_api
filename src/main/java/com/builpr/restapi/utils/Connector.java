@@ -1,5 +1,8 @@
-package com.builpr.database;
+package com.builpr.restapi.utils;
 
+
+import com.builpr.database.BuilprApplication;
+import com.builpr.database.BuilprApplicationBuilder;
 
 public class Connector {
 
