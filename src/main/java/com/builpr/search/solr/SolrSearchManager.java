@@ -8,12 +8,14 @@ import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
+import java.io.IOException;
 import java.util.List;
 
 public class SolrSearchManager implements SearchManager {
@@ -55,7 +57,7 @@ public class SolrSearchManager implements SearchManager {
 
             return results;
 
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             throw new SearchManagerException(exception);
         }
     }
@@ -115,26 +117,29 @@ public class SolrSearchManager implements SearchManager {
     public static SolrSearchManager createWithSolrClient(@NonNull SolrClient solrClient) {
         return new SolrSearchManager(solrClient);
     }
-    
+
+    @Override
     public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws SearchManagerException {
-        for(PrintModelReference removable : removables)
-        {
-                deleteFromIndex(removable);
-        }
+        for (PrintModelReference removable : removables)
+            deleteFromIndex(removable, false);
+
+        commit();
     }
+
+    @Override
     public void deleteFromIndex(@NonNull PrintModelReference removable) throws SearchManagerException {
-         /*TODO: Passt das so?*/
+        deleteFromIndex(removable, true);
+    }
+
+    public void deleteFromIndex(@NonNull PrintModelReference removable, boolean commit) throws SearchManagerException {
 
         try {
             UpdateResponse response = solrClient.deleteById(COLLECTION, "" + removable.getId());
-        } catch (Exception exception) {
-            throw new SearchManagerException(exception);
+        } catch (Exception e) {
+            throw new SearchManagerException(e);
         }
 
-        try {
-            UpdateResponse response = solrClient.commit();
-        } catch (Exception exception) {
-            throw new SearchManagerException(exception);
-        }
+        if (commit)
+            commit();
     }
 }
