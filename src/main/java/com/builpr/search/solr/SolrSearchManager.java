@@ -131,7 +131,7 @@ public class SolrSearchManager implements SearchManager {
         deleteFromIndex(removable, true);
     }
 
-    public void deleteFromIndex(@NonNull PrintModelReference removable, boolean commit) throws SearchManagerException {
+    private void deleteFromIndex(@NonNull PrintModelReference removable, boolean commit) throws SearchManagerException {
 
         try {
             UpdateResponse response = solrClient.deleteById(COLLECTION, "" + removable.getId());
