@@ -29,22 +29,22 @@ public class SolrSearchManager implements SearchManager {
     }
     
     @Override
-    public List<PrintModelReference> search(@NonNull String term) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term) throws SearchManagerException {
         return search(term, Lists.newArrayList(), Order.RELEVANCE);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
         return search(term, filter, Order.RELEVANCE);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchManagerException {
         return search(term, Lists.newArrayList(), order);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
         try {
             SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, order);
 
@@ -55,41 +55,41 @@ public class SolrSearchManager implements SearchManager {
             return results;
 
         } catch(Exception exception) {
-            throw new SearchException(exception);
+            throw new SearchManagerException(exception);
         }
     }
 
     @Override
-    public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws IndexException {
+    public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws SearchManagerException {
         for(IndexablePrintModel indexable : indexables)
             addToIndex(indexable);
     }
 
     @Override
-    public void addToIndex(@NonNull IndexablePrintModel indexable) throws IndexException {
+    public void addToIndex(@NonNull IndexablePrintModel indexable) throws SearchManagerException {
         SolrInputDocument inputDocument = new SolrInputDocumentFactory().get(indexable);
 
         try {
             UpdateResponse response = solrClient.add(inputDocument);
         } catch (Exception exception) {
-            throw new IndexException(exception);
+            throw new SearchManagerException(exception);
         }
 
         try {
             UpdateResponse response = solrClient.commit();
         } catch (Exception exception) {
-            throw new IndexException(exception);
+            throw new SearchManagerException(exception);
         }
     }
     
     @Override
-    public int isReachable() throws ConnectionException{
+    public int isReachable() throws SearchManagerException {
 
         /* TODO: Passt das so? */
         try {
             return new SolrPing().process(solrClient).getStatus(); /* TODO: Collection(s) hinzufufügen? */
         } catch (Exception exception) {
-            throw new ConnectionException(exception);
+            throw new SearchManagerException(exception);
         }
     }
     
@@ -103,26 +103,26 @@ public class SolrSearchManager implements SearchManager {
         return new SolrSearchManager(solrClient);
     }
     
-    public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws IndexException {
+    public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws SearchManagerException {
         for(PrintModelReference removable : removables)
         {
                 deleteFromIndex(removable);
         }
     }
-    public void deleteFromIndex(@NonNull PrintModelReference removable) throws IndexException {
+    public void deleteFromIndex(@NonNull PrintModelReference removable) throws SearchManagerException {
          /*TODO: Passt das so?*/
 
          try {
              UpdateResponse response = solrClient.deleteById(""+removable.getId());
          }
          catch (Exception exception) {
-             throw new IndexException(exception);
+             throw new SearchManagerException(exception);
          }
 
         try {
             UpdateResponse response = solrClient.commit();
         } catch (Exception exception) {
-            throw new IndexException(exception);
+            throw new SearchManagerException(exception);
         }
     }
 }
