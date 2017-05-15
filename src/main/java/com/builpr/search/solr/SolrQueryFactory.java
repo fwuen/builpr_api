@@ -21,9 +21,9 @@ public class SolrQueryFactory {
             if (f instanceof MinimumRatingFilter) {
                 query.addNumericRangeFacet("rating", ((MinimumRatingFilter) f).getMinimumRating(), 5, 0.5);
             } else if (f instanceof TagFilter) {
-            
+                // TODO: Tagfilterung
             } else if (f instanceof FileFilter) {
-            
+                // TODO: Dateiformatfilterung
             }
         }
         return query; /* TODO: Build tha Query here. */
