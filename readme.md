@@ -15,3 +15,17 @@ Um Hot-Swap zu nutzen, sprich Änderungen am Code live zu sehen, wird ein kleine
 Über "gradle build --continuous" wird Gradle befehligt das Projekt bei jeder Code-Änderung neu zu bauen.
 Wird gleichzeitig der Server über den Gradle-Task bootRun gestartet, startet der Server im Hot-Swap Modus 
 und erkennt Änderungen sofort und startet den Server neu.
+
+Für Speedment: 
+1. Tool über Maven starten (speedment-generator/speedment/speedment:tool)
+2. Mit der Datebank verbinden
+3. Auf den obersten node in der Hierearchie gehen (builpr) und dort eingeben: 
+    project name: builpr
+    company name: com.builpr
+    package name: com.builpr.databse
+    Rest lassen
+4. auf den node builpr.com gehen:
+    Java alias: db
+    Username: builpr
+    Rest lassen
+5. auf generate drücken 
