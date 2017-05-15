@@ -3,12 +3,12 @@ package com.builpr.search;
 import lombok.Getter;
 import lombok.NonNull;
 
-public class SearchException extends Exception {
+public class SearchManagerException extends Exception {
 
     @Getter
     private Exception exception;
 
-    public SearchException(@NonNull Exception exception) {
+    public SearchManagerException(@NonNull Exception exception) {
         this.exception = exception;
     }
 
