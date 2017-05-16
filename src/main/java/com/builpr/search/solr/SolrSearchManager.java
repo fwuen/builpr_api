@@ -25,27 +25,59 @@ public class SolrSearchManager implements SearchManager {
     private PrintModelReferenceFactory printModelReferenceFactory;
     private static final String COLLECTION = "testcore";
 
+    /**
+     *
+     * @param solrClient
+     */
     private SolrSearchManager(@NonNull SolrClient solrClient) {
         this.solrClient = solrClient;
         this.solrQueryFactory = new SolrQueryFactory();
         this.printModelReferenceFactory = new PrintModelReferenceFactory();
     }
 
+    /**
+     *
+     * @param term
+     * @return
+     * @throws SearchManagerException
+     */
     @Override
     public List<PrintModelReference> search(@NonNull String term) throws SearchManagerException {
         return search(term, Lists.newArrayList(), Order.RELEVANCE);
     }
 
+    /**
+     *
+     * @param term
+     * @param filter
+     * @return
+     * @throws SearchManagerException
+     */
     @Override
     public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
         return search(term, filter, Order.RELEVANCE);
     }
 
+    /**
+     *
+     * @param term
+     * @param order
+     * @return
+     * @throws SearchManagerException
+     */
     @Override
     public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchManagerException {
         return search(term, Lists.newArrayList(), order);
     }
 
+    /**
+     *
+     * @param term
+     * @param filter
+     * @param order
+     * @return
+     * @throws SearchManagerException
+     */
     @Override
     public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
         try {
@@ -62,6 +94,11 @@ public class SolrSearchManager implements SearchManager {
         }
     }
 
+    /**
+     *
+     * @param indexables
+     * @throws SearchManagerException
+     */
     @Override
     public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws SearchManagerException {
         for (IndexablePrintModel indexable : indexables)
@@ -70,11 +107,22 @@ public class SolrSearchManager implements SearchManager {
         commit();
     }
 
+    /**
+     *
+     * @param indexable
+     * @throws SearchManagerException
+     */
     @Override
     public void addToIndex(@NonNull IndexablePrintModel indexable) throws SearchManagerException {
         this.addToIndex(indexable, true);
     }
 
+    /**
+     *
+     * @param indexable
+     * @param commit
+     * @throws SearchManagerException
+     */
     private void addToIndex(@NonNull IndexablePrintModel indexable, boolean commit) throws SearchManagerException {
         SolrInputDocument inputDocument = new SolrInputDocumentFactory().get(indexable);
 
@@ -96,6 +144,11 @@ public class SolrSearchManager implements SearchManager {
         }
     }
 
+    /**
+     *
+     * @return
+     * @throws SearchManagerException
+     */
     @Override
     public boolean isReachable() throws SearchManagerException {
         try {
@@ -108,16 +161,31 @@ public class SolrSearchManager implements SearchManager {
         }
     }
 
+    /**
+     *
+     * @param baseURL
+     * @return
+     */
     public static SolrSearchManager createWithBaseURL(@NonNull String baseURL) {
         SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(baseURL).build();
 
         return new SolrSearchManager(solrClient);
     }
 
+    /**
+     *
+     * @param solrClient
+     * @return
+     */
     public static SolrSearchManager createWithSolrClient(@NonNull SolrClient solrClient) {
         return new SolrSearchManager(solrClient);
     }
 
+    /**
+     *
+     * @param removables
+     * @throws SearchManagerException
+     */
     @Override
     public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws SearchManagerException {
         for (PrintModelReference removable : removables)
@@ -126,11 +194,22 @@ public class SolrSearchManager implements SearchManager {
         commit();
     }
 
+    /**
+     *
+     * @param removable
+     * @throws SearchManagerException
+     */
     @Override
     public void deleteFromIndex(@NonNull PrintModelReference removable) throws SearchManagerException {
         deleteFromIndex(removable, true);
     }
 
+    /**
+     *
+     * @param removable
+     * @param commit
+     * @throws SearchManagerException
+     */
     private void deleteFromIndex(@NonNull PrintModelReference removable, boolean commit) throws SearchManagerException {
 
         try {

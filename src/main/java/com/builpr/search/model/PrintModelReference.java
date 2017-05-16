@@ -8,6 +8,10 @@ public class PrintModelReference {
     @Getter
     private int id;
 
+    /**
+     *
+     * @param id
+     */
     public PrintModelReference(int id) {
         Preconditions.checkArgument(id > 0);
 

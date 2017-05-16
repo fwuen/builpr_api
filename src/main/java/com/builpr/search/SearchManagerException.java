@@ -8,6 +8,10 @@ public class SearchManagerException extends Exception {
     @Getter
     private Exception exception;
 
+    /**
+     *
+     * @param exception
+     */
     public SearchManagerException(@NonNull Exception exception) {
         this.exception = exception;
     }

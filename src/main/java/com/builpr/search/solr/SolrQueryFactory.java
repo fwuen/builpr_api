@@ -9,6 +9,13 @@ import java.util.List;
 
 public class SolrQueryFactory {
 
+    /**
+     *
+     * @param term
+     * @param filter
+     * @param order
+     * @return
+     */
     public SolrQuery getQueryWith(
             @NonNull String term,
             @NonNull List<Filter> filter,
@@ -29,6 +36,10 @@ public class SolrQueryFactory {
         return query; /* TODO: Build tha Query here. */
     }
 
+    /**
+     *
+     * @return
+     */
     public SolrQuery getQueryFindAll() {
         return new SolrQuery("*:*");
     }
