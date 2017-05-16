@@ -22,7 +22,7 @@ public class IndexablePrintModel {
     private String description;
 
     @Getter
-    private int ageRestriction;
+    private String type;
 
     @Getter
     private int uploaderId;
@@ -76,10 +76,10 @@ public class IndexablePrintModel {
             return this;
         }
 
-        public Builder withAgeRestriction(int ageRestriction) {
-            Preconditions.checkArgument(ageRestriction >= 0);
+        public Builder withType(String type) {
+            Preconditions.checkNotNull(type);
 
-            toBuild.ageRestriction = ageRestriction;
+            toBuild.type = type;
             return this;
         }
 
@@ -121,7 +121,7 @@ public class IndexablePrintModel {
             Verify.verifyNotNull(toBuild.title);
             Verify.verifyNotNull(toBuild.description);
             Verify.verify(toBuild.id >= 0);
-            Verify.verify(toBuild.ageRestriction >= 0);
+            Verify.verifyNotNull(toBuild.type);
             //TODO: was ist, wenn kein Rating vorhanden?
             Verify.verify(toBuild.rating >= MinimumRatingFilter.LOWEST_POSSIBLE_RATING);
             Verify.verify(toBuild.rating <= MinimumRatingFilter.HIGHEST_POSSIBLE_RATING);
