@@ -16,7 +16,7 @@ public class TagFilter extends Filter{
 
     /**
      * Creates a TagFilter-object
-     * @param tags
+     * @param tags List of Strings representing the tags
      */
     public TagFilter(@NonNull List<String> tags) {
         Preconditions.checkArgument(tags.size() > 0);

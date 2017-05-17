@@ -17,6 +17,7 @@ import org.apache.solr.common.SolrInputDocument;
 
 import java.io.IOException;
 import java.util.List;
+// TODO: Doku für @Override-Methode erben
 
 public class SolrSearchManager implements SearchManager {
 
@@ -24,60 +25,28 @@ public class SolrSearchManager implements SearchManager {
     private SolrQueryFactory solrQueryFactory;
     private PrintModelReferenceFactory printModelReferenceFactory;
     private static final String COLLECTION = "testcore";
-
-    /**
-     *
-     * @param solrClient
-     */
+    
     private SolrSearchManager(@NonNull SolrClient solrClient) {
         this.solrClient = solrClient;
         this.solrQueryFactory = new SolrQueryFactory();
         this.printModelReferenceFactory = new PrintModelReferenceFactory();
     }
 
-    /**
-     *
-     * @param term
-     * @return
-     * @throws SearchManagerException
-     */
     @Override
     public List<PrintModelReference> search(@NonNull String term) throws SearchManagerException {
         return search(term, Lists.newArrayList(), Order.RELEVANCE);
     }
-
-    /**
-     *
-     * @param term
-     * @param filter
-     * @return
-     * @throws SearchManagerException
-     */
+    
     @Override
     public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
         return search(term, filter, Order.RELEVANCE);
     }
 
-    /**
-     *
-     * @param term
-     * @param order
-     * @return
-     * @throws SearchManagerException
-     */
     @Override
     public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchManagerException {
         return search(term, Lists.newArrayList(), order);
     }
 
-    /**
-     *
-     * @param term
-     * @param filter
-     * @param order
-     * @return
-     * @throws SearchManagerException
-     */
     @Override
     public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
         try {
@@ -93,12 +62,7 @@ public class SolrSearchManager implements SearchManager {
             throw new SearchManagerException(exception);
         }
     }
-
-    /**
-     *
-     * @param indexables
-     * @throws SearchManagerException
-     */
+    
     @Override
     public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws SearchManagerException {
         for (IndexablePrintModel indexable : indexables)
@@ -107,16 +71,11 @@ public class SolrSearchManager implements SearchManager {
         commit();
     }
 
-    /**
-     *
-     * @param indexable
-     * @throws SearchManagerException
-     */
     @Override
     public void addToIndex(@NonNull IndexablePrintModel indexable) throws SearchManagerException {
         this.addToIndex(indexable, true);
     }
-
+    
     /**
      *
      * @param indexable
@@ -135,7 +94,11 @@ public class SolrSearchManager implements SearchManager {
         if (commit)
             commit();
     }
-
+    
+    /**
+     *
+     * @throws SearchManagerException
+     */
     private void commit() throws SearchManagerException {
         try {
             solrClient.commit();
@@ -144,11 +107,6 @@ public class SolrSearchManager implements SearchManager {
         }
     }
 
-    /**
-     *
-     * @return
-     * @throws SearchManagerException
-     */
     @Override
     public boolean isReachable() throws SearchManagerException {
         try {
@@ -180,12 +138,7 @@ public class SolrSearchManager implements SearchManager {
     public static SolrSearchManager createWithSolrClient(@NonNull SolrClient solrClient) {
         return new SolrSearchManager(solrClient);
     }
-
-    /**
-     *
-     * @param removables
-     * @throws SearchManagerException
-     */
+    
     @Override
     public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws SearchManagerException {
         for (PrintModelReference removable : removables)
@@ -194,11 +147,6 @@ public class SolrSearchManager implements SearchManager {
         commit();
     }
 
-    /**
-     *
-     * @param removable
-     * @throws SearchManagerException
-     */
     @Override
     public void deleteFromIndex(@NonNull PrintModelReference removable) throws SearchManagerException {
         deleteFromIndex(removable, true);
