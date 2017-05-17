@@ -8,6 +8,9 @@ import lombok.Getter;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Class to store data of print-models to add them to the index of the search-engine
+ */
 public class IndexablePrintModel {
 
     /* TODO: Diese Klasse stellt ein komplettes Daten-Model des 3D-Print-Solr-Models dar. Ergänze also alle Felder die indexiert werden müssen. */
@@ -38,33 +41,37 @@ public class IndexablePrintModel {
 
 
     /**
-     *
+     * Creates an IndexablePrintModel-object
      */
     private IndexablePrintModel() { }
 
     /**
-     *
-     * @return
+     * Triggers the creation of a new Builder-object and returns it
+     * @return Builder-object
      */
     public static Builder getBuilder() {
         return new Builder();
     }
 
+    /**
+     * Internal Builder-class of IndexablePrintModel for public creations of IndexablePrintModel-objects
+     */
     public static class Builder {
 
         private IndexablePrintModel toBuild;
 
         /**
-         *
+         * Creates a new Builder-object
+         * Triggers the creation of a new IndexablePrintModel-object and assigns it to the Builder-object
          */
         public Builder() {
             this.toBuild = new IndexablePrintModel();
         }
 
         /**
-         *
-         * @param id
-         * @return
+         * Adds the new parameter to the Builder-object and returns it
+         * @param id The id of the PrintModel
+         * @return Builder-object with the new parameter added to it
          */
         public Builder withId(int id) {
             Preconditions.checkArgument(id >= 0);
@@ -75,9 +82,9 @@ public class IndexablePrintModel {
         }
 
         /**
-         *
-         * @param title
-         * @return
+         * Adds the new parameter to the Builder-object and returns it
+         * @param title The title of the PrintModel
+         * @return Builder-object with the new parameter added to it
          */
         public Builder withTitle(String title) {
             Preconditions.checkNotNull(title);
@@ -87,9 +94,9 @@ public class IndexablePrintModel {
         }
 
         /**
-         *
-         * @param description
-         * @return
+         * Adds the new parameter to the Builder-object and returns it
+         * @param description The description of the PrintModel
+         * @return Builder-object with the new parameter added to it
          */
         public Builder withDescription(String description) {
             Preconditions.checkNotNull(description);
@@ -99,9 +106,9 @@ public class IndexablePrintModel {
         }
 
         /**
-         *
-         * @param type
-         * @return
+         * Adds the new parameter to the Builder-object and returns it
+         * @param type The (file-)type of the PrintModel
+         * @return Builder-object with the new parameter added to it
          */
         public Builder withType(String type) {
             Preconditions.checkNotNull(type);
@@ -111,9 +118,9 @@ public class IndexablePrintModel {
         }
 
         /**
-         *
-         * @param uploaderId
-         * @return
+         * Adds the new parameter to the Builder-object and returns it
+         * @param uploaderId The uploader-id of the PrintModel (references to the user who provided the PrintModel)
+         * @return Builder-object with the new parameter added to it
          */
         public Builder withUploaderId(int uploaderId) {
             Preconditions.checkArgument(uploaderId >= 0);
@@ -123,9 +130,9 @@ public class IndexablePrintModel {
         }
 
         /**
-         *
-         * @param uploadDate
-         * @return
+         * Adds the new parameter to the Builder-object and returns it
+         * @param uploadDate The upload-date of the PrintModel
+         * @return Builder-object with the new parameter added to it
          */
         public Builder withUploadDate(Date uploadDate) {
             Preconditions.checkNotNull(uploadDate);
@@ -135,9 +142,9 @@ public class IndexablePrintModel {
         }
 
         /**
-         *
-         * @param rating
-         * @return
+         * Adds the new parameter to the Builder-object and returns it
+         * @param rating The rating of the PrintModel
+         * @return Builder-object with the new parameter added to it
          */
         public Builder withRating(double rating) {
             //TODO: so ok?
@@ -149,9 +156,9 @@ public class IndexablePrintModel {
         }
 
         /**
-         *
-         * @param tags
-         * @return
+         * Adds the new parameter to the Builder-object and returns it
+         * @param tags List of Strings representing the tags of the PrintModel
+         * @return Builder-object with the new parameter added to it
          */
         public Builder withTags(List<String> tags) {
             Preconditions.checkNotNull(tags);
@@ -163,8 +170,8 @@ public class IndexablePrintModel {
         /* TODO: with-Methoden */
 
         /**
-         *
-         * @return
+         * Verifies the proprierity of the builded IndexablePrintModel-object and returns it
+         * @return The builded IndexablePrintModel-object
          */
         public IndexablePrintModel build() {
             /* TODO: Hier mit Verify überprüfen ob alle Felder gesetzt sind */
