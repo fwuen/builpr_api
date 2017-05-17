@@ -6,11 +6,21 @@ import org.apache.solr.common.SolrInputDocument;
 
 public class SolrInputDocumentFactory {
 
+    /**
+     *
+     * @param indexable
+     * @return
+     */
     public SolrInputDocument get(@NonNull IndexablePrintModel indexable) {
 
         return createInputDocumentWith(indexable);
     }
 
+    /**
+     *
+     * @param indexable
+     * @return
+     */
     /*TODO: Umsetzung finden, die unabhängig von Doppelpflege ist!*/
     /*TODO: Wo wird das Boosting festgelegt? Bei SolrInputDocument und SolrInputField ist es laut Dokumentation Deprecated.*/
     private SolrInputDocument createInputDocumentWith(IndexablePrintModel indexable) {
@@ -20,7 +30,7 @@ public class SolrInputDocumentFactory {
         inputDocument.addField(SolrFields.PRINT_MODEL_TITLE, indexable.getTitle());
         inputDocument.addField(SolrFields.PRINT_MODEL_DESCRIPTION, indexable.getDescription());
         inputDocument.addField(SolrFields.PRINT_MODEL_TAGS, indexable.getTags());
-        inputDocument.addField(SolrFields.PRINT_MODEL_AGE_RESTRICTION, indexable.getAgeRestriction());
+        inputDocument.addField(SolrFields.PRINT_MODEL_TYPE, indexable.getType());
         inputDocument.addField(SolrFields.PRINT_MODEL_UPLOADER, indexable.getUploaderId());
         inputDocument.addField(SolrFields.PRINT_MODEL_UPLOAD_DATE, indexable.getUploadDate());
         inputDocument.addField(SolrFields.PRINT_MODEL_RATING, indexable.getRating());

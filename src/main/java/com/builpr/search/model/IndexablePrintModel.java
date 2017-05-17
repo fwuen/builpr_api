@@ -22,7 +22,7 @@ public class IndexablePrintModel {
     private String description;
 
     @Getter
-    private int ageRestriction;
+    private String type;
 
     @Getter
     private int uploaderId;
@@ -37,11 +37,15 @@ public class IndexablePrintModel {
     private List<String> tags;
 
 
-
-
-
+    /**
+     *
+     */
     private IndexablePrintModel() { }
 
+    /**
+     *
+     * @return
+     */
     public static Builder getBuilder() {
         return new Builder();
     }
@@ -50,10 +54,18 @@ public class IndexablePrintModel {
 
         private IndexablePrintModel toBuild;
 
+        /**
+         *
+         */
         public Builder() {
             this.toBuild = new IndexablePrintModel();
         }
 
+        /**
+         *
+         * @param id
+         * @return
+         */
         public Builder withId(int id) {
             Preconditions.checkArgument(id >= 0);
 
@@ -61,14 +73,24 @@ public class IndexablePrintModel {
 
             return this;
         }
-    
+
+        /**
+         *
+         * @param title
+         * @return
+         */
         public Builder withTitle(String title) {
             Preconditions.checkNotNull(title);
         
             toBuild.title = title;
             return this;
         }
-    
+
+        /**
+         *
+         * @param description
+         * @return
+         */
         public Builder withDescription(String description) {
             Preconditions.checkNotNull(description);
         
@@ -76,13 +98,23 @@ public class IndexablePrintModel {
             return this;
         }
 
-        public Builder withAgeRestriction(int ageRestriction) {
-            Preconditions.checkArgument(ageRestriction >= 0);
+        /**
+         *
+         * @param type
+         * @return
+         */
+        public Builder withType(String type) {
+            Preconditions.checkNotNull(type);
 
-            toBuild.ageRestriction = ageRestriction;
+            toBuild.type = type;
             return this;
         }
 
+        /**
+         *
+         * @param uploaderId
+         * @return
+         */
         public Builder withUploaderId(int uploaderId) {
             Preconditions.checkArgument(uploaderId >= 0);
 
@@ -90,6 +122,11 @@ public class IndexablePrintModel {
             return this;
         }
 
+        /**
+         *
+         * @param uploadDate
+         * @return
+         */
         public Builder withUploadDate(Date uploadDate) {
             Preconditions.checkNotNull(uploadDate);
 
@@ -97,6 +134,11 @@ public class IndexablePrintModel {
             return this;
         }
 
+        /**
+         *
+         * @param rating
+         * @return
+         */
         public Builder withRating(double rating) {
             //TODO: so ok?
             Preconditions.checkArgument(rating >= MinimumRatingFilter.LOWEST_POSSIBLE_RATING);
@@ -106,6 +148,11 @@ public class IndexablePrintModel {
             return this;
         }
 
+        /**
+         *
+         * @param tags
+         * @return
+         */
         public Builder withTags(List<String> tags) {
             Preconditions.checkNotNull(tags);
 
@@ -115,13 +162,17 @@ public class IndexablePrintModel {
         
         /* TODO: with-Methoden */
 
+        /**
+         *
+         * @return
+         */
         public IndexablePrintModel build() {
             /* TODO: Hier mit Verify überprüfen ob alle Felder gesetzt sind */
 
             Verify.verifyNotNull(toBuild.title);
             Verify.verifyNotNull(toBuild.description);
             Verify.verify(toBuild.id >= 0);
-            Verify.verify(toBuild.ageRestriction >= 0);
+            Verify.verifyNotNull(toBuild.type);
             //TODO: was ist, wenn kein Rating vorhanden?
             Verify.verify(toBuild.rating >= MinimumRatingFilter.LOWEST_POSSIBLE_RATING);
             Verify.verify(toBuild.rating <= MinimumRatingFilter.HIGHEST_POSSIBLE_RATING);

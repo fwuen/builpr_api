@@ -14,7 +14,6 @@ public interface SearchManager {
     public List<PrintModelReference> search(String term, Order order) throws SearchManagerException;
     public List<PrintModelReference> search(String term, List<Filter> filter, Order order) throws SearchManagerException;
 
-    //TODO: Statt "void" die "UpdateResponse" in irgendeiner Form zurückgeben?
     public void addToIndex(List<IndexablePrintModel> indexables) throws SearchManagerException;
     public void addToIndex(IndexablePrintModel indexable) throws SearchManagerException;
 

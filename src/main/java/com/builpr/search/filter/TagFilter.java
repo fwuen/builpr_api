@@ -11,6 +11,10 @@ public class TagFilter extends Filter{
     @Getter
     private List<String> tags;
 
+    /**
+     *
+     * @param tags
+     */
     public TagFilter(@NonNull List<String> tags) {
         Preconditions.checkArgument(tags.size() > 0);
 

@@ -22,11 +22,11 @@ public class UserService {
     public User getByUsername(String username) throws Exception {
         List<User> foundUsers = userManager.stream().filter(User.USERNAME.equal(username)).collect(Collectors.toList());
 
-        if(foundUsers.isEmpty()) {
+        if (foundUsers.isEmpty()) {
             throw new UserNotFoundException("Der Nutzer existiert nicht!");
         }
 
-        if(foundUsers.size() > 1) {
+        if (foundUsers.size() > 1) {
             throw new Exception("WTF");
         }
 

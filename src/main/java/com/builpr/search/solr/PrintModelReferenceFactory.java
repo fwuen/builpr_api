@@ -10,6 +10,11 @@ import java.util.List;
 
 public class PrintModelReferenceFactory {
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public List<PrintModelReference> get(@NonNull List<SolrDocument> data) {
         Preconditions.checkArgument(data.size() > 0);
 
@@ -21,6 +26,11 @@ public class PrintModelReferenceFactory {
         return results;
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public PrintModelReference get(@NonNull SolrDocument data) {
         Preconditions.checkArgument(data.containsKey(SolrFields.PRINT_MODEL_ID));
 

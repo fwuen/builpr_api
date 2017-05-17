@@ -13,12 +13,11 @@ public class SolrFields {
     public static final String PRINT_MODEL_DESCRIPTION = "description";
     public static final float BOOST_MODEL_DESCRIPTION = 1.0f;
 
-    //TODO: alle Tags in einem Solr-Field gespeichert?
+    public static final String PRINT_MODEL_TYPE = "type";
+    public static final float BOOST_MODEL_TYPE = 0.0f;
+
     public static final String PRINT_MODEL_TAGS = "tags";
     public static final float BOOST_MODEL_TAGS = 2.0f;
-
-    public static final String PRINT_MODEL_AGE_RESTRICTION = "age_restriction";
-    public static final float BOOST_MODEL_AGE_RESTRICTION = 0.0f;
 
     public static final String PRINT_MODEL_UPLOADER = "uploader";
     public static final float BOOST_MODEL_UPLOADER = 0.0f;

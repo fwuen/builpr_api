@@ -9,7 +9,11 @@ public class FileFilter extends Filter {
     
     @Getter
     private List<String> fileTypes;
-    
+
+    /**
+     *
+     * @param fileTypes
+     */
     public FileFilter(List<String> fileTypes) {
         Preconditions.checkArgument(fileTypes.size() > 0);
         
