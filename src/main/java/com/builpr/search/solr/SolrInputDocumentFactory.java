@@ -21,7 +21,6 @@ public class SolrInputDocumentFactory {
      * @param indexable
      * @return
      */
-    /*TODO: Umsetzung finden, die unabhängig von Doppelpflege ist!*/
     /*TODO: Wo wird das Boosting festgelegt? Bei SolrInputDocument und SolrInputField ist es laut Dokumentation Deprecated.*/
     private SolrInputDocument createInputDocumentWith(IndexablePrintModel indexable) {
         SolrInputDocument inputDocument = new SolrInputDocument();

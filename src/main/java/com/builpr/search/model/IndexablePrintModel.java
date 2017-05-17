@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class IndexablePrintModel {
 
-    /* TODO: Diese Klasse stellt ein komplettes Daten-Model des 3D-Print-Solr-Models dar. Ergänze also alle Felder die indexiert werden müssen. */
+    /* TODO: Attribute auf Vollständigkeit prüfen */
 
     @Getter
     private int id;
@@ -147,7 +147,6 @@ public class IndexablePrintModel {
          * @return Builder-object with the new parameter added to it
          */
         public Builder withRating(double rating) {
-            //TODO: so ok?
             Preconditions.checkArgument(rating >= MinimumRatingFilter.LOWEST_POSSIBLE_RATING);
             Preconditions.checkArgument(rating <= MinimumRatingFilter.HIGHEST_POSSIBLE_RATING);
 
@@ -166,15 +165,12 @@ public class IndexablePrintModel {
             toBuild.tags = tags;
             return this;
         }
-        
-        /* TODO: with-Methoden */
 
         /**
          * Verifies the proprierity of the builded IndexablePrintModel-object and returns it
          * @return The builded IndexablePrintModel-object
          */
         public IndexablePrintModel build() {
-            /* TODO: Hier mit Verify überprüfen ob alle Felder gesetzt sind */
 
             Verify.verifyNotNull(toBuild.title);
             Verify.verifyNotNull(toBuild.description);

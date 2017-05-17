@@ -105,6 +105,6 @@ public class SolrSearchManagerTest {
 //        }
 //    }
 //
-//    /* TODO: Teste die Methoden auf ihre Funktionalität */
+//
 //
 }

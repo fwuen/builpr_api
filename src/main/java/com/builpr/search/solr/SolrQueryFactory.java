@@ -33,7 +33,7 @@ public class SolrQueryFactory {
                 // TODO: Dateiformatfilterung
             }
         }
-        return query; /* TODO: Build tha Query here. */
+        return query;
     }
 
     /**
