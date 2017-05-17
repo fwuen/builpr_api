@@ -42,7 +42,7 @@ public class ModelController {
     @CrossOrigin(origins = "http://localhost:8081")
     @RequestMapping(value = "/model/{modelId}/change", method = RequestMethod.PUT)
     public Model changeModel(@RequestParam(
-    ) Model changedModel) throws InvalidModelIdException {
+    ) Model changedModel) throws InvalidModelIdException, ModelNotFoundException {
         return modelService.changeModel(changedModel);
     }
 
