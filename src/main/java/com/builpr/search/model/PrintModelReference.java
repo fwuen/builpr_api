@@ -14,7 +14,7 @@ public class PrintModelReference {
 
     /**
      * Creates a PrintModelReference-object
-     * @param id
+     * @param id ID of the PrintModel to be stored in the PrintModelReference-object
      */
     public PrintModelReference(int id) {
         Preconditions.checkArgument(id > 0);

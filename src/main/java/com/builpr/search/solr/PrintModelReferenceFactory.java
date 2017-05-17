@@ -8,12 +8,15 @@ import org.apache.solr.common.SolrDocument;
 
 import java.util.List;
 
+/**
+ * Provides the ability to create Solr-specific PrintModelReference-objects
+ */
 public class PrintModelReferenceFactory {
 
     /**
-     *
-     * @param data
-     * @return
+     * Create and return a List of PrintModelReference-objects
+     * @param data List of SolrDocuments to be transformed and stored in PrintModelReference-objects
+     * @return List of PrintModelReference-objects
      */
     public List<PrintModelReference> get(@NonNull List<SolrDocument> data) {
         Preconditions.checkArgument(data.size() > 0);
@@ -27,9 +30,9 @@ public class PrintModelReferenceFactory {
     }
 
     /**
-     *
-     * @param data
-     * @return
+     * Create and return a single PrintModelReference-objects
+     * @param data SolrDocument to be transformed and stored in PrintModelReference-object
+     * @return PrintModelReference-object
      */
     public PrintModelReference get(@NonNull SolrDocument data) {
         Preconditions.checkArgument(data.containsKey(SolrFields.PRINT_MODEL_ID));

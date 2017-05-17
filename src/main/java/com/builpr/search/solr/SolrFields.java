@@ -2,6 +2,9 @@ package com.builpr.search.solr;
 
 import java.util.List;
 
+/**
+ * Stores Solr-fields and belonging value for boosting
+ */
 public class SolrFields {
 
     public static final String PRINT_MODEL_ID = "id";

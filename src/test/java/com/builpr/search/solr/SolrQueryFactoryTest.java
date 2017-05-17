@@ -4,6 +4,4 @@ import org.junit.Test;
 
 public class SolrQueryFactoryTest {
 
-    /* TODO: Schreibe Tests */
-
 }
