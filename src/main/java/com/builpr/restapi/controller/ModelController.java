@@ -2,7 +2,10 @@ package com.builpr.restapi.controller;
 
 
 import com.builpr.database.db.builpr.model.Model;
-import com.builpr.restapi.utils.ModelService;
+import com.builpr.restapi.exception.InvalidModelIdException;
+import com.builpr.restapi.exception.ModelNotFoundException;
+import com.builpr.restapi.model.PublicModel;
+import com.builpr.restapi.service.ModelService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,41 +18,46 @@ public class ModelController {
     }
 
     /**
+     * Getting the data from a model due to the id
+     *
      * @param modelId int
      * @return Model
-     * @throws Exception Exception
+     * @throws ModelNotFoundException Exception
      */
     @CrossOrigin(origins = "http://localhost:8081")
     @RequestMapping(value = "/model/{modelId}", method = RequestMethod.GET)
     public Model getModel(@RequestParam(
             value = "modelId"
-    ) @PathVariable int modelId) throws Exception {
-        return modelService.getModelById(modelId);
+    ) @PathVariable int modelId) throws ModelNotFoundException {
+        return modelService.getById(modelId);
     }
 
     /**
+     * Changing an existing model
+     *
      * @param changedModel Model
      * @return Model
-     * @throws Exception ModelNotFoundException
+     * @throws InvalidModelIdException Exception
      */
     @CrossOrigin(origins = "http://localhost:8081")
     @RequestMapping(value = "/model/{modelId}/change", method = RequestMethod.PUT)
     public Model changeModel(@RequestParam(
-
-    ) Model changedModel) throws Exception {
+    ) Model changedModel) throws InvalidModelIdException {
         return modelService.changeModel(changedModel);
     }
 
     /**
-     * @param newModel Model
+     * Creating a new model
+     *
+     * @param newModel PublicModel
      * @return Model
-     * @throws Exception ModelNotFoundException
+     * @throws InvalidModelIdException Exception
      */
     @CrossOrigin(origins = "http://localhost:8081")
     @RequestMapping(value = "/model/new", method = RequestMethod.POST)
     public Model createModel(@RequestParam(
             value = "model"
-    ) Model newModel) throws Exception {
+    ) PublicModel newModel) throws InvalidModelIdException {
         return modelService.createModel(newModel);
     }
 }

@@ -1,4 +1,4 @@
-package com.builpr.restapi.Exception;
+package com.builpr.restapi.exception;
 
 import com.builpr.database.db.builpr.model.Model;
 
