@@ -41,16 +41,16 @@ public class PublicUser {
         uid = user.getUid();
         username = user.getUsername();
 
-        if(user.getShowEmail() == 1) {
+        if(user.getShowEmail()) {
             email = user.getEmail();
         }
 
         regtime = user.getRegtime();
-        if(user.getShowBirthday() == 1) {
+        if(user.getShowBirthday()) {
             birthday = user.getBirthday();
         }
 
-        if(user.getShowName() == 1) {
+        if(user.getShowName()) {
             firstname = user.getFirstname();
             lastname = user.getLastname();
         }
@@ -78,5 +78,45 @@ public class PublicUser {
         if(user.getDescription().isPresent()) {
             description = user.getDescription().get();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PublicUser that = (PublicUser) o;
+
+        if (uid != that.uid) return false;
+        if (!username.equals(that.username)) return false;
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
+        if (!regtime.equals(that.regtime)) return false;
+        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
+        if (skype != null ? !skype.equals(that.skype) : that.skype != null) return false;
+        if (twitter != null ? !twitter.equals(that.twitter) : that.twitter != null) return false;
+        if (facebook != null ? !facebook.equals(that.facebook) : that.facebook != null) return false;
+        if (instagram != null ? !instagram.equals(that.instagram) : that.instagram != null) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = uid;
+        result = 31 * result + username.hashCode();
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + regtime.hashCode();
+        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
+        result = 31 * result + (skype != null ? skype.hashCode() : 0);
+        result = 31 * result + (twitter != null ? twitter.hashCode() : 0);
+        result = 31 * result + (facebook != null ? facebook.hashCode() : 0);
+        result = 31 * result + (instagram != null ? instagram.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 }
