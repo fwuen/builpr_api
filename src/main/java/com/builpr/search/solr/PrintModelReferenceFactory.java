@@ -14,7 +14,7 @@ import java.util.List;
 public class PrintModelReferenceFactory {
 
     /**
-     * Create and return a List of PrintModelReference-objects
+     * Creates and returns a List of PrintModelReference-objects
      *
      * @param data List of SolrDocuments to be transformed and stored in PrintModelReference-objects
      * @return List of PrintModelReference-objects
@@ -31,7 +31,7 @@ public class PrintModelReferenceFactory {
     }
 
     /**
-     * Create and return a single PrintModelReference-object
+     * Creates and returns a single PrintModelReference-object
      *
      * @param data SolrDocument to be transformed and stored in PrintModelReference-object
      * @return PrintModelReference-object
