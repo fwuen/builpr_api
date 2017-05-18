@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class IndexablePrintModel {
 
-    /* TODO: Attribute auf Vollständigkeit prüfen */
-    
     @Getter
     private int id;
     
@@ -187,7 +185,6 @@ public class IndexablePrintModel {
             Verify.verifyNotNull(toBuild.description);
             Verify.verify(toBuild.id >= 0);
             Verify.verifyNotNull(toBuild.type);
-            //TODO: was ist, wenn kein Rating vorhanden?
             Verify.verify(toBuild.rating >= MinimumRatingFilter.LOWEST_POSSIBLE_RATING);
             Verify.verify(toBuild.rating <= MinimumRatingFilter.HIGHEST_POSSIBLE_RATING);
             Verify.verify(toBuild.uploaderId >= 0);

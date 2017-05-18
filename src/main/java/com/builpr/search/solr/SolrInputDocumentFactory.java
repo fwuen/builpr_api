@@ -14,14 +14,7 @@ public class SolrInputDocumentFactory {
      * @param indexable IndexablePrintModel-object to be transformed into a SolrInputDocument-object
      * @return SolrInputDocument-object
      */
-    public SolrInputDocument get(@NonNull IndexablePrintModel indexable) {
-
-        return createInputDocumentWith(indexable);
-    }
-
-    //TODO: kann man das irgendwie cooler lösen? Die obere Methode ruft diese ja nur auf
-    /*TODO: Wo wird das Boosting festgelegt? Bei SolrInputDocument und SolrInputField ist es laut Dokumentation Deprecated.*/
-    private SolrInputDocument createInputDocumentWith(IndexablePrintModel indexable) {
+    public SolrInputDocument getInputDocumentWith(@NonNull IndexablePrintModel indexable) {
         SolrInputDocument inputDocument = new SolrInputDocument();
 
         inputDocument.addField(SolrFields.PRINT_MODEL_ID, indexable.getId());
@@ -35,4 +28,6 @@ public class SolrInputDocumentFactory {
 
         return inputDocument;
     }
+
+    /*TODO: Wo wird das Boosting festgelegt? Bei SolrInputDocument und SolrInputField ist es laut Dokumentation Deprecated.*/
 }

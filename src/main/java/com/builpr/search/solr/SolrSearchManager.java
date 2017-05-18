@@ -93,7 +93,7 @@ public class SolrSearchManager implements SearchManager {
      * @throws SearchManagerException SearchManagerException
      */
     private void addToIndex(@NonNull IndexablePrintModel indexable, boolean commit) throws SearchManagerException {
-        SolrInputDocument inputDocument = new SolrInputDocumentFactory().get(indexable);
+        SolrInputDocument inputDocument = new SolrInputDocumentFactory().getInputDocumentWith(indexable);
 
         try {
             solrClient.add(COLLECTION, inputDocument);

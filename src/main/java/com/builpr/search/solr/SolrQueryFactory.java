@@ -19,7 +19,8 @@ public class SolrQueryFactory {
         // TODO: Sortierung
         for (Filter f : filter) {
             if (f instanceof MinimumRatingFilter) {
-                query.addNumericRangeFacet("rating", ((MinimumRatingFilter) f).getMinimumRating(), 5, 0.5);
+                // TODO: überdenken/überarbeiten
+                query.addNumericRangeFacet("rating", ((MinimumRatingFilter) f).getMinimumRating(), 5, 1.0);
             } else if (f instanceof TagFilter) {
                 // TODO: Tagfilterung
             } else if (f instanceof FileFilter) {
