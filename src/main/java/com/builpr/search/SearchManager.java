@@ -1,10 +1,9 @@
 package com.builpr.search;
 
 import com.builpr.search.filter.Filter;
-import com.builpr.search.model.IndexablePrintModel;
-import com.builpr.search.model.PrintModelReference;
+import com.builpr.search.model.Printable;
+import com.builpr.search.model.PrintableReference;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,30 +15,30 @@ public interface SearchManager {
      * Searches for data fitting the passed term
      *
      * @param term Term to execute the search with
-     * @return List of PrintModelReference-objects
+     * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintModelReference> search(String term) throws SearchManagerException;
+    public List<PrintableReference> search(String term) throws SearchManagerException;
     
     /**
      * Searches for data fitting the passed term and filters
      *
      * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
-     * @return List of PrintModelReference-objects
+     * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintModelReference> search(String term, List<Filter> filter) throws SearchManagerException;
+    public List<PrintableReference> search(String term, List<Filter> filter) throws SearchManagerException;
     
     /**
      * Searches for data fitting the passed term and order regulation
      *
      * @param term  Term to execute the search with
      * @param order Order regulation to execute the search with
-     * @return List of PrintModelReference-objects
+     * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintModelReference> search(String term, Order order) throws SearchManagerException;
+    public List<PrintableReference> search(String term, Order order) throws SearchManagerException;
     
     /**
      * Searches for data fitting the passed term, filters and order regulation
@@ -47,42 +46,42 @@ public interface SearchManager {
      * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
      * @param order  Order regulation to execute the search with
-     * @return List of PrintModelReference-objects
+     * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintModelReference> search(String term, List<Filter> filter, Order order) throws SearchManagerException;
+    public List<PrintableReference> search(String term, List<Filter> filter, Order order) throws SearchManagerException;
     
     /**
      * Adds print models to the index of the used search engine
      *
-     * @param indexables List of IndexablePrintModel-objects to be added to the index
+     * @param indexables List of Printable-objects to be added to the index
      * @throws SearchManagerException SearchManagerException
      */
-    public void addToIndex(List<IndexablePrintModel> indexables) throws SearchManagerException;
+    public void addToIndex(List<Printable> indexables) throws SearchManagerException;
     
     /**
      * Adds a single print model to the index of the used search engine
      *
-     * @param indexable IndexablePrintModel-object representing the print model to be added to the index
+     * @param indexable Printable-object representing the print model to be added to the index
      * @throws SearchManagerException SearchManagerException
      */
-    public void addToIndex(IndexablePrintModel indexable) throws SearchManagerException;
+    public void addToIndex(Printable indexable) throws SearchManagerException;
     
     /**
      * Deletes print models from the index of the used search engine
      *
-     * @param removables List of PrintModelReference-objects representing the print models to be deleted from the index
+     * @param removables List of PrintableReference-objects representing the print models to be deleted from the index
      * @throws SearchManagerException SearchManagerException
      */
-    public void deleteFromIndex(List<PrintModelReference> removables) throws SearchManagerException;
+    public void deleteFromIndex(List<PrintableReference> removables) throws SearchManagerException;
     
     /**
      * Deletes a single print model from the index of the used search engine
      *
-     * @param removable PrintModelReference-object representing the print model to be deleted from the index
+     * @param removable PrintableReference-object representing the print model to be deleted from the index
      * @throws SearchManagerException SearchManagerException
      */
-    public void deleteFromIndex(PrintModelReference removable) throws SearchManagerException;
+    public void deleteFromIndex(PrintableReference removable) throws SearchManagerException;
     
     /**
      * Checks if the search engine server is reachable
