@@ -2,6 +2,7 @@ package com.builpr.search.solr;
 
 import com.builpr.search.SearchManagerException;
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.junit.Assert;
 import org.junit.Ignore;

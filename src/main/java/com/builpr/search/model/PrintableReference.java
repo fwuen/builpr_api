@@ -7,20 +7,22 @@ import lombok.Getter;
  * Provides the ability to use references to PrintModels
  * Primarily used to map Solr-requests to a Java-MVC-model
  */
-public class PrintModelReference {
+public class PrintableReference {
     
     @Getter
     private int id;
     
     /**
-     * Creates a PrintModelReference-object
+     * Creates a PrintableReference-object
      *
-     * @param id ID of the PrintModel to be stored in the PrintModelReference-object
+     * @param id ID of the PrintModel to be stored in the PrintableReference-object
      */
-    public PrintModelReference(int id) {
+    public PrintableReference(int id) {
         Preconditions.checkArgument(id > 0);
         
         this.id = id;
     }
+
+    public PrintableReference() {};
     
 }
