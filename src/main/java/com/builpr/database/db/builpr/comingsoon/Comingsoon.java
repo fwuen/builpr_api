@@ -1,7 +1,6 @@
 package com.builpr.database.db.builpr.comingsoon;
 
 import com.builpr.database.db.builpr.comingsoon.generated.GeneratedComingsoon;
-import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code comingsoon}-table in the
@@ -11,7 +10,7 @@ import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
  * 
  * @author com.builpr
  */
-public interface Comingsoon extends GeneratedComingsoon, DatabaseObject {
+public interface Comingsoon extends GeneratedComingsoon {
     
     
 }

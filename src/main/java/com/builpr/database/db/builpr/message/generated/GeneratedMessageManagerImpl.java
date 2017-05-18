@@ -22,7 +22,7 @@ public abstract class GeneratedMessageManagerImpl extends AbstractManager<Messag
     private final TableIdentifier<Message> tableIdentifier;
     
     protected GeneratedMessageManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "Message");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Message");
     }
     
     @Override
@@ -33,7 +33,7 @@ public abstract class GeneratedMessageManagerImpl extends AbstractManager<Messag
     @Override
     public Stream<Field<Message>> fields() {
         return Stream.of(
-            Message.MSGID,
+            Message.MESSAGE_ID,
             Message.SENDER,
             Message.RECEIVER,
             Message.CONTENT,
@@ -44,7 +44,7 @@ public abstract class GeneratedMessageManagerImpl extends AbstractManager<Messag
     @Override
     public Stream<Field<Message>> primaryKeyFields() {
         return Stream.of(
-            Message.MSGID
+            Message.MESSAGE_ID
         );
     }
 }

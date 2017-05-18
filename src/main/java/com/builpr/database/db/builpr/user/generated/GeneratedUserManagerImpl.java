@@ -22,7 +22,7 @@ public abstract class GeneratedUserManagerImpl extends AbstractManager<User> imp
     private final TableIdentifier<User> tableIdentifier;
     
     protected GeneratedUserManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "User");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "User");
     }
     
     @Override
@@ -33,7 +33,7 @@ public abstract class GeneratedUserManagerImpl extends AbstractManager<User> imp
     @Override
     public Stream<Field<User>> fields() {
         return Stream.of(
-            User.UID,
+            User.USER_ID,
             User.USERNAME,
             User.PASSWORD,
             User.EMAIL,
@@ -56,7 +56,7 @@ public abstract class GeneratedUserManagerImpl extends AbstractManager<User> imp
     @Override
     public Stream<Field<User>> primaryKeyFields() {
         return Stream.of(
-            User.UID
+            User.USER_ID
         );
     }
 }

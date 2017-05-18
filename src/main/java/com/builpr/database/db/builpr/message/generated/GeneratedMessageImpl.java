@@ -19,7 +19,7 @@ import java.util.StringJoiner;
 @GeneratedCode("Speedment")
 public abstract class GeneratedMessageImpl implements Message {
     
-    private int msgid;
+    private int messageId;
     private int sender;
     private int receiver;
     private String content;
@@ -30,8 +30,8 @@ public abstract class GeneratedMessageImpl implements Message {
     }
     
     @Override
-    public int getMsgid() {
-        return msgid;
+    public int getMessageId() {
+        return messageId;
     }
     
     @Override
@@ -55,8 +55,8 @@ public abstract class GeneratedMessageImpl implements Message {
     }
     
     @Override
-    public Message setMsgid(int msgid) {
-        this.msgid = msgid;
+    public Message setMessageId(int messageId) {
+        this.messageId = messageId;
         return this;
     }
     
@@ -86,22 +86,22 @@ public abstract class GeneratedMessageImpl implements Message {
     
     @Override
     public User findSender(Manager<User> foreignManager) {
-        return foreignManager.stream().filter(User.UID.equal(getSender())).findAny().orElse(null);
+        return foreignManager.stream().filter(User.USER_ID.equal(getSender())).findAny().orElse(null);
     }
     
     @Override
     public User findReceiver(Manager<User> foreignManager) {
-        return foreignManager.stream().filter(User.UID.equal(getReceiver())).findAny().orElse(null);
+        return foreignManager.stream().filter(User.USER_ID.equal(getReceiver())).findAny().orElse(null);
     }
     
     @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
-        sj.add("msgid = "    + Objects.toString(getMsgid()));
-        sj.add("sender = "   + Objects.toString(getSender()));
-        sj.add("receiver = " + Objects.toString(getReceiver()));
-        sj.add("content = "  + Objects.toString(getContent()));
-        sj.add("subject = "  + Objects.toString(getSubject()));
+        sj.add("messageId = " + Objects.toString(getMessageId()));
+        sj.add("sender = "    + Objects.toString(getSender()));
+        sj.add("receiver = "  + Objects.toString(getReceiver()));
+        sj.add("content = "   + Objects.toString(getContent()));
+        sj.add("subject = "   + Objects.toString(getSubject()));
         return "MessageImpl " + sj.toString();
     }
     
@@ -110,7 +110,7 @@ public abstract class GeneratedMessageImpl implements Message {
         if (this == that) { return true; }
         if (!(that instanceof Message)) { return false; }
         final Message thatMessage = (Message)that;
-        if (this.getMsgid() != thatMessage.getMsgid()) {return false; }
+        if (this.getMessageId() != thatMessage.getMessageId()) {return false; }
         if (this.getSender() != thatMessage.getSender()) {return false; }
         if (this.getReceiver() != thatMessage.getReceiver()) {return false; }
         if (!Objects.equals(this.getContent(), thatMessage.getContent())) {return false; }
@@ -121,7 +121,7 @@ public abstract class GeneratedMessageImpl implements Message {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Integer.hashCode(getMsgid());
+        hash = 31 * hash + Integer.hashCode(getMessageId());
         hash = 31 * hash + Integer.hashCode(getSender());
         hash = 31 * hash + Integer.hashCode(getReceiver());
         hash = 31 * hash + Objects.hashCode(getContent());

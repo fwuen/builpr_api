@@ -1,11 +1,14 @@
 package com.builpr.database.db.builpr.conversation.generated;
 
 import com.builpr.database.db.builpr.conversation.Conversation;
+import com.builpr.database.db.builpr.user.User;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
+import com.speedment.runtime.core.manager.Manager;
 import com.speedment.runtime.field.ComparableField;
 import com.speedment.runtime.field.IntField;
+import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.typemapper.TypeMapper;
 import java.sql.Timestamp;
 
@@ -24,34 +27,36 @@ public interface GeneratedConversation {
     
     /**
      * This Field corresponds to the {@link Conversation} field that can be
-     * obtained using the {@link Conversation#getCid()} method.
+     * obtained using the {@link Conversation#getConversationId()} method.
      */
-    final IntField<Conversation, Integer> CID = IntField.create(
-        Identifier.CID,
-        Conversation::getCid,
-        Conversation::setCid,
+    final IntField<Conversation, Integer> CONVERSATION_ID = IntField.create(
+        Identifier.CONVERSATION_ID,
+        Conversation::getConversationId,
+        Conversation::setConversationId,
         TypeMapper.primitive(), 
         true
     );
     /**
      * This Field corresponds to the {@link Conversation} field that can be
-     * obtained using the {@link Conversation#getUid1()} method.
+     * obtained using the {@link Conversation#getUserId1()} method.
      */
-    final IntField<Conversation, Integer> UID1 = IntField.create(
-        Identifier.UID1,
-        Conversation::getUid1,
-        Conversation::setUid1,
+    final IntForeignKeyField<Conversation, Integer, User> USER_ID1 = IntForeignKeyField.create(
+        Identifier.USER_ID1,
+        Conversation::getUserId1,
+        Conversation::setUserId1,
+        User.USER_ID,
         TypeMapper.primitive(), 
         false
     );
     /**
      * This Field corresponds to the {@link Conversation} field that can be
-     * obtained using the {@link Conversation#getUid2()} method.
+     * obtained using the {@link Conversation#getUserId2()} method.
      */
-    final IntField<Conversation, Integer> UID2 = IntField.create(
-        Identifier.UID2,
-        Conversation::getUid2,
-        Conversation::setUid2,
+    final IntForeignKeyField<Conversation, Integer, User> USER_ID2 = IntForeignKeyField.create(
+        Identifier.USER_ID2,
+        Conversation::getUserId2,
+        Conversation::setUserId2,
+        User.USER_ID,
         TypeMapper.primitive(), 
         false
     );
@@ -79,33 +84,34 @@ public interface GeneratedConversation {
     );
     
     /**
-     * Returns the cid of this Conversation. The cid field corresponds to the
-     * database column builpr.com.builpr.Conversation.cid.
+     * Returns the conversationId of this Conversation. The conversationId field
+     * corresponds to the database column
+     * builpr.builpr.Conversation.conversation_id.
      * 
-     * @return the cid of this Conversation
+     * @return the conversationId of this Conversation
      */
-    int getCid();
+    int getConversationId();
     
     /**
-     * Returns the uid1 of this Conversation. The uid1 field corresponds to the
-     * database column builpr.com.builpr.Conversation.uid1.
+     * Returns the userId1 of this Conversation. The userId1 field corresponds
+     * to the database column builpr.builpr.Conversation.user_id_1.
      * 
-     * @return the uid1 of this Conversation
+     * @return the userId1 of this Conversation
      */
-    int getUid1();
+    int getUserId1();
     
     /**
-     * Returns the uid2 of this Conversation. The uid2 field corresponds to the
-     * database column builpr.com.builpr.Conversation.uid2.
+     * Returns the userId2 of this Conversation. The userId2 field corresponds
+     * to the database column builpr.builpr.Conversation.user_id_2.
      * 
-     * @return the uid2 of this Conversation
+     * @return the userId2 of this Conversation
      */
-    int getUid2();
+    int getUserId2();
     
     /**
      * Returns the createDate of this Conversation. The createDate field
      * corresponds to the database column
-     * builpr.com.builpr.Conversation.create_date.
+     * builpr.builpr.Conversation.create_date.
      * 
      * @return the createDate of this Conversation
      */
@@ -114,43 +120,44 @@ public interface GeneratedConversation {
     /**
      * Returns the lastMsgTime of this Conversation. The lastMsgTime field
      * corresponds to the database column
-     * builpr.com.builpr.Conversation.last_msg_time.
+     * builpr.builpr.Conversation.last_msg_time.
      * 
      * @return the lastMsgTime of this Conversation
      */
     Timestamp getLastMsgTime();
     
     /**
-     * Sets the cid of this Conversation. The cid field corresponds to the
-     * database column builpr.com.builpr.Conversation.cid.
+     * Sets the conversationId of this Conversation. The conversationId field
+     * corresponds to the database column
+     * builpr.builpr.Conversation.conversation_id.
      * 
-     * @param cid to set of this Conversation
-     * @return    this Conversation instance
+     * @param conversationId to set of this Conversation
+     * @return               this Conversation instance
      */
-    Conversation setCid(int cid);
+    Conversation setConversationId(int conversationId);
     
     /**
-     * Sets the uid1 of this Conversation. The uid1 field corresponds to the
-     * database column builpr.com.builpr.Conversation.uid1.
+     * Sets the userId1 of this Conversation. The userId1 field corresponds to
+     * the database column builpr.builpr.Conversation.user_id_1.
      * 
-     * @param uid1 to set of this Conversation
-     * @return     this Conversation instance
+     * @param userId1 to set of this Conversation
+     * @return        this Conversation instance
      */
-    Conversation setUid1(int uid1);
+    Conversation setUserId1(int userId1);
     
     /**
-     * Sets the uid2 of this Conversation. The uid2 field corresponds to the
-     * database column builpr.com.builpr.Conversation.uid2.
+     * Sets the userId2 of this Conversation. The userId2 field corresponds to
+     * the database column builpr.builpr.Conversation.user_id_2.
      * 
-     * @param uid2 to set of this Conversation
-     * @return     this Conversation instance
+     * @param userId2 to set of this Conversation
+     * @return        this Conversation instance
      */
-    Conversation setUid2(int uid2);
+    Conversation setUserId2(int userId2);
     
     /**
      * Sets the createDate of this Conversation. The createDate field
      * corresponds to the database column
-     * builpr.com.builpr.Conversation.create_date.
+     * builpr.builpr.Conversation.create_date.
      * 
      * @param createDate to set of this Conversation
      * @return           this Conversation instance
@@ -160,20 +167,38 @@ public interface GeneratedConversation {
     /**
      * Sets the lastMsgTime of this Conversation. The lastMsgTime field
      * corresponds to the database column
-     * builpr.com.builpr.Conversation.last_msg_time.
+     * builpr.builpr.Conversation.last_msg_time.
      * 
      * @param lastMsgTime to set of this Conversation
      * @return            this Conversation instance
      */
     Conversation setLastMsgTime(Timestamp lastMsgTime);
     
+    /**
+     * Queries the specified manager for the referenced User. If no such User
+     * exists, an {@code NullPointerException} will be thrown.
+     * 
+     * @param foreignManager the manager to query for the entity
+     * @return               the foreign entity referenced
+     */
+    User findUserId1(Manager<User> foreignManager);
+    
+    /**
+     * Queries the specified manager for the referenced User. If no such User
+     * exists, an {@code NullPointerException} will be thrown.
+     * 
+     * @param foreignManager the manager to query for the entity
+     * @return               the foreign entity referenced
+     */
+    User findUserId2(Manager<User> foreignManager);
+    
     enum Identifier implements ColumnIdentifier<Conversation> {
         
-        CID           ("cid"),
-        UID1          ("uid1"),
-        UID2          ("uid2"),
-        CREATE_DATE   ("create_date"),
-        LAST_MSG_TIME ("last_msg_time");
+        CONVERSATION_ID ("conversation_id"),
+        USER_ID1        ("user_id_1"),
+        USER_ID2        ("user_id_2"),
+        CREATE_DATE     ("create_date"),
+        LAST_MSG_TIME   ("last_msg_time");
         
         private final String columnName;
         private final TableIdentifier<Conversation> tableIdentifier;
@@ -187,7 +212,7 @@ public interface GeneratedConversation {
         
         @Override
         public String getDbmsName() {
-            return "builpr.com";
+            return "builpr";
         }
         
         @Override

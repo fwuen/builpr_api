@@ -1,7 +1,9 @@
 package com.builpr.database.db.builpr.usercategories.generated;
 
+import com.builpr.database.db.builpr.user.User;
 import com.builpr.database.db.builpr.usercategories.UserCategories;
 import com.speedment.common.annotation.GeneratedCode;
+import com.speedment.runtime.core.manager.Manager;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -17,7 +19,7 @@ import java.util.StringJoiner;
 @GeneratedCode("Speedment")
 public abstract class GeneratedUserCategoriesImpl implements UserCategories {
     
-    private int uid;
+    private int userId;
     private String category;
     
     protected GeneratedUserCategoriesImpl() {
@@ -25,8 +27,8 @@ public abstract class GeneratedUserCategoriesImpl implements UserCategories {
     }
     
     @Override
-    public int getUid() {
-        return uid;
+    public int getUserId() {
+        return userId;
     }
     
     @Override
@@ -35,8 +37,8 @@ public abstract class GeneratedUserCategoriesImpl implements UserCategories {
     }
     
     @Override
-    public UserCategories setUid(int uid) {
-        this.uid = uid;
+    public UserCategories setUserId(int userId) {
+        this.userId = userId;
         return this;
     }
     
@@ -47,9 +49,14 @@ public abstract class GeneratedUserCategoriesImpl implements UserCategories {
     }
     
     @Override
+    public User findUserId(Manager<User> foreignManager) {
+        return foreignManager.stream().filter(User.USER_ID.equal(getUserId())).findAny().orElse(null);
+    }
+    
+    @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
-        sj.add("uid = "      + Objects.toString(getUid()));
+        sj.add("userId = "   + Objects.toString(getUserId()));
         sj.add("category = " + Objects.toString(getCategory()));
         return "UserCategoriesImpl " + sj.toString();
     }
@@ -59,7 +66,7 @@ public abstract class GeneratedUserCategoriesImpl implements UserCategories {
         if (this == that) { return true; }
         if (!(that instanceof UserCategories)) { return false; }
         final UserCategories thatUserCategories = (UserCategories)that;
-        if (this.getUid() != thatUserCategories.getUid()) {return false; }
+        if (this.getUserId() != thatUserCategories.getUserId()) {return false; }
         if (!Objects.equals(this.getCategory(), thatUserCategories.getCategory())) {return false; }
         return true;
     }
@@ -67,7 +74,7 @@ public abstract class GeneratedUserCategoriesImpl implements UserCategories {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Integer.hashCode(getUid());
+        hash = 31 * hash + Integer.hashCode(getUserId());
         hash = 31 * hash + Objects.hashCode(getCategory());
         return hash;
     }

@@ -34,7 +34,7 @@ public abstract class GeneratedUserSqlAdapter {
     private SqlTypeMapperHelper<Integer, Boolean> showEmailHelper;
     
     protected GeneratedUserSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "User");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "User");
     }
     
     @ExecuteBefore(RESOLVED)
@@ -46,7 +46,7 @@ public abstract class GeneratedUserSqlAdapter {
     protected User apply(ResultSet resultSet) throws SpeedmentException {
         final User entity = createEntity();
         try {
-            entity.setUid(          resultSet.getInt(1)                            );
+            entity.setUserId(       resultSet.getInt(1)                            );
             entity.setUsername(     resultSet.getString(2)                         );
             entity.setPassword(     resultSet.getString(3)                         );
             entity.setEmail(        resultSet.getString(4)                         );

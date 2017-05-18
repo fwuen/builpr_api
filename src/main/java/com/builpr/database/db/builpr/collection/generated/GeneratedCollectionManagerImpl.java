@@ -22,7 +22,7 @@ public abstract class GeneratedCollectionManagerImpl extends AbstractManager<Col
     private final TableIdentifier<Collection> tableIdentifier;
     
     protected GeneratedCollectionManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "Collection");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Collection");
     }
     
     @Override
@@ -33,16 +33,16 @@ public abstract class GeneratedCollectionManagerImpl extends AbstractManager<Col
     @Override
     public Stream<Field<Collection>> fields() {
         return Stream.of(
-            Collection.UID,
-            Collection.MID
+            Collection.USER_ID,
+            Collection.PRINTABLE_ID
         );
     }
     
     @Override
     public Stream<Field<Collection>> primaryKeyFields() {
         return Stream.of(
-            Collection.MID,
-            Collection.UID
+            Collection.PRINTABLE_ID,
+            Collection.USER_ID
         );
     }
 }

@@ -22,7 +22,7 @@ public abstract class GeneratedComingsoonManagerImpl extends AbstractManager<Com
     private final TableIdentifier<Comingsoon> tableIdentifier;
     
     protected GeneratedComingsoonManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "comingsoon");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "comingsoon");
     }
     
     @Override

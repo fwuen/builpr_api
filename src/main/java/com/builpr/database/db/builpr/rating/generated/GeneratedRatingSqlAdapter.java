@@ -28,7 +28,7 @@ public abstract class GeneratedRatingSqlAdapter {
     private final TableIdentifier<Rating> tableIdentifier;
     
     protected GeneratedRatingSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "Rating");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Rating");
     }
     
     @ExecuteBefore(RESOLVED)
@@ -40,12 +40,12 @@ public abstract class GeneratedRatingSqlAdapter {
     protected Rating apply(ResultSet resultSet) throws SpeedmentException {
         final Rating entity = createEntity();
         try {
-            entity.setUid(        resultSet.getInt(1)    );
-            entity.setMid(        resultSet.getInt(2)    );
-            entity.setRating(     resultSet.getInt(3)    );
-            entity.setMsg(        resultSet.getString(4) );
-            entity.setRatingTime( resultSet.getDate(5)   );
-            entity.setRid(        resultSet.getInt(6)    );
+            entity.setUserId(      resultSet.getInt(1)    );
+            entity.setPrintableId( resultSet.getInt(2)    );
+            entity.setRating(      resultSet.getInt(3)    );
+            entity.setMsg(         resultSet.getString(4) );
+            entity.setRatingTime(  resultSet.getDate(5)   );
+            entity.setRatingId(    resultSet.getInt(6)    );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }

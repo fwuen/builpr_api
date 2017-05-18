@@ -28,7 +28,7 @@ public abstract class GeneratedCollectionSqlAdapter {
     private final TableIdentifier<Collection> tableIdentifier;
     
     protected GeneratedCollectionSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "Collection");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Collection");
     }
     
     @ExecuteBefore(RESOLVED)
@@ -40,8 +40,8 @@ public abstract class GeneratedCollectionSqlAdapter {
     protected Collection apply(ResultSet resultSet) throws SpeedmentException {
         final Collection entity = createEntity();
         try {
-            entity.setUid( resultSet.getInt(1) );
-            entity.setMid( resultSet.getInt(2) );
+            entity.setUserId(      resultSet.getInt(1) );
+            entity.setPrintableId( resultSet.getInt(2) );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }

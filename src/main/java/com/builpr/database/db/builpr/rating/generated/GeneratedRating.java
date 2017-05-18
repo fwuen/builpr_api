@@ -1,12 +1,16 @@
 package com.builpr.database.db.builpr.rating.generated;
 
+import com.builpr.database.db.builpr.printable.Printable;
 import com.builpr.database.db.builpr.rating.Rating;
+import com.builpr.database.db.builpr.user.User;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
+import com.speedment.runtime.core.manager.Manager;
 import com.speedment.runtime.core.util.OptionalUtil;
 import com.speedment.runtime.field.ComparableField;
 import com.speedment.runtime.field.IntField;
+import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
 import java.sql.Date;
@@ -27,23 +31,25 @@ public interface GeneratedRating {
     
     /**
      * This Field corresponds to the {@link Rating} field that can be obtained
-     * using the {@link Rating#getUid()} method.
+     * using the {@link Rating#getUserId()} method.
      */
-    final IntField<Rating, Integer> UID = IntField.create(
-        Identifier.UID,
-        Rating::getUid,
-        Rating::setUid,
+    final IntForeignKeyField<Rating, Integer, User> USER_ID = IntForeignKeyField.create(
+        Identifier.USER_ID,
+        Rating::getUserId,
+        Rating::setUserId,
+        User.USER_ID,
         TypeMapper.primitive(), 
         false
     );
     /**
      * This Field corresponds to the {@link Rating} field that can be obtained
-     * using the {@link Rating#getMid()} method.
+     * using the {@link Rating#getPrintableId()} method.
      */
-    final IntField<Rating, Integer> MID = IntField.create(
-        Identifier.MID,
-        Rating::getMid,
-        Rating::setMid,
+    final IntForeignKeyField<Rating, Integer, Printable> PRINTABLE_ID = IntForeignKeyField.create(
+        Identifier.PRINTABLE_ID,
+        Rating::getPrintableId,
+        Rating::setPrintableId,
+        Printable.PRINTABLE_ID,
         TypeMapper.primitive(), 
         false
     );
@@ -82,35 +88,35 @@ public interface GeneratedRating {
     );
     /**
      * This Field corresponds to the {@link Rating} field that can be obtained
-     * using the {@link Rating#getRid()} method.
+     * using the {@link Rating#getRatingId()} method.
      */
-    final IntField<Rating, Integer> RID = IntField.create(
-        Identifier.RID,
-        Rating::getRid,
-        Rating::setRid,
+    final IntField<Rating, Integer> RATING_ID = IntField.create(
+        Identifier.RATING_ID,
+        Rating::getRatingId,
+        Rating::setRatingId,
         TypeMapper.primitive(), 
         true
     );
     
     /**
-     * Returns the uid of this Rating. The uid field corresponds to the database
-     * column builpr.com.builpr.Rating.uid.
+     * Returns the userId of this Rating. The userId field corresponds to the
+     * database column builpr.builpr.Rating.user_id.
      * 
-     * @return the uid of this Rating
+     * @return the userId of this Rating
      */
-    int getUid();
+    int getUserId();
     
     /**
-     * Returns the mid of this Rating. The mid field corresponds to the database
-     * column builpr.com.builpr.Rating.mid.
+     * Returns the printableId of this Rating. The printableId field corresponds
+     * to the database column builpr.builpr.Rating.printable_id.
      * 
-     * @return the mid of this Rating
+     * @return the printableId of this Rating
      */
-    int getMid();
+    int getPrintableId();
     
     /**
      * Returns the rating of this Rating. The rating field corresponds to the
-     * database column builpr.com.builpr.Rating.rating.
+     * database column builpr.builpr.Rating.rating.
      * 
      * @return the rating of this Rating
      */
@@ -118,7 +124,7 @@ public interface GeneratedRating {
     
     /**
      * Returns the msg of this Rating. The msg field corresponds to the database
-     * column builpr.com.builpr.Rating.msg.
+     * column builpr.builpr.Rating.msg.
      * 
      * @return the msg of this Rating
      */
@@ -126,41 +132,41 @@ public interface GeneratedRating {
     
     /**
      * Returns the ratingTime of this Rating. The ratingTime field corresponds
-     * to the database column builpr.com.builpr.Rating.rating_time.
+     * to the database column builpr.builpr.Rating.rating_time.
      * 
      * @return the ratingTime of this Rating
      */
     Date getRatingTime();
     
     /**
-     * Returns the rid of this Rating. The rid field corresponds to the database
-     * column builpr.com.builpr.Rating.rid.
+     * Returns the ratingId of this Rating. The ratingId field corresponds to
+     * the database column builpr.builpr.Rating.rating_id.
      * 
-     * @return the rid of this Rating
+     * @return the ratingId of this Rating
      */
-    int getRid();
+    int getRatingId();
     
     /**
-     * Sets the uid of this Rating. The uid field corresponds to the database
-     * column builpr.com.builpr.Rating.uid.
+     * Sets the userId of this Rating. The userId field corresponds to the
+     * database column builpr.builpr.Rating.user_id.
      * 
-     * @param uid to set of this Rating
-     * @return    this Rating instance
+     * @param userId to set of this Rating
+     * @return       this Rating instance
      */
-    Rating setUid(int uid);
+    Rating setUserId(int userId);
     
     /**
-     * Sets the mid of this Rating. The mid field corresponds to the database
-     * column builpr.com.builpr.Rating.mid.
+     * Sets the printableId of this Rating. The printableId field corresponds to
+     * the database column builpr.builpr.Rating.printable_id.
      * 
-     * @param mid to set of this Rating
-     * @return    this Rating instance
+     * @param printableId to set of this Rating
+     * @return            this Rating instance
      */
-    Rating setMid(int mid);
+    Rating setPrintableId(int printableId);
     
     /**
      * Sets the rating of this Rating. The rating field corresponds to the
-     * database column builpr.com.builpr.Rating.rating.
+     * database column builpr.builpr.Rating.rating.
      * 
      * @param rating to set of this Rating
      * @return       this Rating instance
@@ -169,7 +175,7 @@ public interface GeneratedRating {
     
     /**
      * Sets the msg of this Rating. The msg field corresponds to the database
-     * column builpr.com.builpr.Rating.msg.
+     * column builpr.builpr.Rating.msg.
      * 
      * @param msg to set of this Rating
      * @return    this Rating instance
@@ -178,7 +184,7 @@ public interface GeneratedRating {
     
     /**
      * Sets the ratingTime of this Rating. The ratingTime field corresponds to
-     * the database column builpr.com.builpr.Rating.rating_time.
+     * the database column builpr.builpr.Rating.rating_time.
      * 
      * @param ratingTime to set of this Rating
      * @return           this Rating instance
@@ -186,22 +192,40 @@ public interface GeneratedRating {
     Rating setRatingTime(Date ratingTime);
     
     /**
-     * Sets the rid of this Rating. The rid field corresponds to the database
-     * column builpr.com.builpr.Rating.rid.
+     * Sets the ratingId of this Rating. The ratingId field corresponds to the
+     * database column builpr.builpr.Rating.rating_id.
      * 
-     * @param rid to set of this Rating
-     * @return    this Rating instance
+     * @param ratingId to set of this Rating
+     * @return         this Rating instance
      */
-    Rating setRid(int rid);
+    Rating setRatingId(int ratingId);
+    
+    /**
+     * Queries the specified manager for the referenced User. If no such User
+     * exists, an {@code NullPointerException} will be thrown.
+     * 
+     * @param foreignManager the manager to query for the entity
+     * @return               the foreign entity referenced
+     */
+    User findUserId(Manager<User> foreignManager);
+    
+    /**
+     * Queries the specified manager for the referenced Printable. If no such
+     * Printable exists, an {@code NullPointerException} will be thrown.
+     * 
+     * @param foreignManager the manager to query for the entity
+     * @return               the foreign entity referenced
+     */
+    Printable findPrintableId(Manager<Printable> foreignManager);
     
     enum Identifier implements ColumnIdentifier<Rating> {
         
-        UID         ("uid"),
-        MID         ("mid"),
-        RATING      ("rating"),
-        MSG         ("msg"),
-        RATING_TIME ("rating_time"),
-        RID         ("rid");
+        USER_ID      ("user_id"),
+        PRINTABLE_ID ("printable_id"),
+        RATING       ("rating"),
+        MSG          ("msg"),
+        RATING_TIME  ("rating_time"),
+        RATING_ID    ("rating_id");
         
         private final String columnName;
         private final TableIdentifier<Rating> tableIdentifier;
@@ -215,7 +239,7 @@ public interface GeneratedRating {
         
         @Override
         public String getDbmsName() {
-            return "builpr.com";
+            return "builpr";
         }
         
         @Override

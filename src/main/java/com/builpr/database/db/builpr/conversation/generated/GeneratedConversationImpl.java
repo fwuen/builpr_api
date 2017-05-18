@@ -1,7 +1,9 @@
 package com.builpr.database.db.builpr.conversation.generated;
 
 import com.builpr.database.db.builpr.conversation.Conversation;
+import com.builpr.database.db.builpr.user.User;
 import com.speedment.common.annotation.GeneratedCode;
+import com.speedment.runtime.core.manager.Manager;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -18,9 +20,9 @@ import java.util.StringJoiner;
 @GeneratedCode("Speedment")
 public abstract class GeneratedConversationImpl implements Conversation {
     
-    private int cid;
-    private int uid1;
-    private int uid2;
+    private int conversationId;
+    private int userId1;
+    private int userId2;
     private Timestamp createDate;
     private Timestamp lastMsgTime;
     
@@ -29,18 +31,18 @@ public abstract class GeneratedConversationImpl implements Conversation {
     }
     
     @Override
-    public int getCid() {
-        return cid;
+    public int getConversationId() {
+        return conversationId;
     }
     
     @Override
-    public int getUid1() {
-        return uid1;
+    public int getUserId1() {
+        return userId1;
     }
     
     @Override
-    public int getUid2() {
-        return uid2;
+    public int getUserId2() {
+        return userId2;
     }
     
     @Override
@@ -54,20 +56,20 @@ public abstract class GeneratedConversationImpl implements Conversation {
     }
     
     @Override
-    public Conversation setCid(int cid) {
-        this.cid = cid;
+    public Conversation setConversationId(int conversationId) {
+        this.conversationId = conversationId;
         return this;
     }
     
     @Override
-    public Conversation setUid1(int uid1) {
-        this.uid1 = uid1;
+    public Conversation setUserId1(int userId1) {
+        this.userId1 = userId1;
         return this;
     }
     
     @Override
-    public Conversation setUid2(int uid2) {
-        this.uid2 = uid2;
+    public Conversation setUserId2(int userId2) {
+        this.userId2 = userId2;
         return this;
     }
     
@@ -84,13 +86,23 @@ public abstract class GeneratedConversationImpl implements Conversation {
     }
     
     @Override
+    public User findUserId1(Manager<User> foreignManager) {
+        return foreignManager.stream().filter(User.USER_ID.equal(getUserId1())).findAny().orElse(null);
+    }
+    
+    @Override
+    public User findUserId2(Manager<User> foreignManager) {
+        return foreignManager.stream().filter(User.USER_ID.equal(getUserId2())).findAny().orElse(null);
+    }
+    
+    @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
-        sj.add("cid = "         + Objects.toString(getCid()));
-        sj.add("uid1 = "        + Objects.toString(getUid1()));
-        sj.add("uid2 = "        + Objects.toString(getUid2()));
-        sj.add("createDate = "  + Objects.toString(getCreateDate()));
-        sj.add("lastMsgTime = " + Objects.toString(getLastMsgTime()));
+        sj.add("conversationId = " + Objects.toString(getConversationId()));
+        sj.add("userId1 = "        + Objects.toString(getUserId1()));
+        sj.add("userId2 = "        + Objects.toString(getUserId2()));
+        sj.add("createDate = "     + Objects.toString(getCreateDate()));
+        sj.add("lastMsgTime = "    + Objects.toString(getLastMsgTime()));
         return "ConversationImpl " + sj.toString();
     }
     
@@ -99,9 +111,9 @@ public abstract class GeneratedConversationImpl implements Conversation {
         if (this == that) { return true; }
         if (!(that instanceof Conversation)) { return false; }
         final Conversation thatConversation = (Conversation)that;
-        if (this.getCid() != thatConversation.getCid()) {return false; }
-        if (this.getUid1() != thatConversation.getUid1()) {return false; }
-        if (this.getUid2() != thatConversation.getUid2()) {return false; }
+        if (this.getConversationId() != thatConversation.getConversationId()) {return false; }
+        if (this.getUserId1() != thatConversation.getUserId1()) {return false; }
+        if (this.getUserId2() != thatConversation.getUserId2()) {return false; }
         if (!Objects.equals(this.getCreateDate(), thatConversation.getCreateDate())) {return false; }
         if (!Objects.equals(this.getLastMsgTime(), thatConversation.getLastMsgTime())) {return false; }
         return true;
@@ -110,9 +122,9 @@ public abstract class GeneratedConversationImpl implements Conversation {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Integer.hashCode(getCid());
-        hash = 31 * hash + Integer.hashCode(getUid1());
-        hash = 31 * hash + Integer.hashCode(getUid2());
+        hash = 31 * hash + Integer.hashCode(getConversationId());
+        hash = 31 * hash + Integer.hashCode(getUserId1());
+        hash = 31 * hash + Integer.hashCode(getUserId2());
         hash = 31 * hash + Objects.hashCode(getCreateDate());
         hash = 31 * hash + Objects.hashCode(getLastMsgTime());
         return hash;

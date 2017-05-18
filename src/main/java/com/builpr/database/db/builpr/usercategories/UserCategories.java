@@ -1,7 +1,6 @@
 package com.builpr.database.db.builpr.usercategories;
 
 import com.builpr.database.db.builpr.usercategories.generated.GeneratedUserCategories;
-import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code UserCategories}-table in the
@@ -11,7 +10,7 @@ import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
  * 
  * @author com.builpr
  */
-public interface UserCategories extends GeneratedUserCategories, DatabaseObject {
+public interface UserCategories extends GeneratedUserCategories {
     
     
 }

@@ -28,7 +28,7 @@ public abstract class GeneratedUserCategoriesSqlAdapter {
     private final TableIdentifier<UserCategories> tableIdentifier;
     
     protected GeneratedUserCategoriesSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "UserCategories");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "UserCategories");
     }
     
     @ExecuteBefore(RESOLVED)
@@ -40,7 +40,7 @@ public abstract class GeneratedUserCategoriesSqlAdapter {
     protected UserCategories apply(ResultSet resultSet) throws SpeedmentException {
         final UserCategories entity = createEntity();
         try {
-            entity.setUid(      resultSet.getInt(1)    );
+            entity.setUserId(   resultSet.getInt(1)    );
             entity.setCategory( resultSet.getString(2) );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);

@@ -1,7 +1,10 @@
 package com.builpr.database.db.builpr.collection.generated;
 
 import com.builpr.database.db.builpr.collection.Collection;
+import com.builpr.database.db.builpr.printable.Printable;
+import com.builpr.database.db.builpr.user.User;
 import com.speedment.common.annotation.GeneratedCode;
+import com.speedment.runtime.core.manager.Manager;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -17,40 +20,50 @@ import java.util.StringJoiner;
 @GeneratedCode("Speedment")
 public abstract class GeneratedCollectionImpl implements Collection {
     
-    private int uid;
-    private int mid;
+    private int userId;
+    private int printableId;
     
     protected GeneratedCollectionImpl() {
         
     }
     
     @Override
-    public int getUid() {
-        return uid;
+    public int getUserId() {
+        return userId;
     }
     
     @Override
-    public int getMid() {
-        return mid;
+    public int getPrintableId() {
+        return printableId;
     }
     
     @Override
-    public Collection setUid(int uid) {
-        this.uid = uid;
+    public Collection setUserId(int userId) {
+        this.userId = userId;
         return this;
     }
     
     @Override
-    public Collection setMid(int mid) {
-        this.mid = mid;
+    public Collection setPrintableId(int printableId) {
+        this.printableId = printableId;
         return this;
+    }
+    
+    @Override
+    public User findUserId(Manager<User> foreignManager) {
+        return foreignManager.stream().filter(User.USER_ID.equal(getUserId())).findAny().orElse(null);
+    }
+    
+    @Override
+    public Printable findPrintableId(Manager<Printable> foreignManager) {
+        return foreignManager.stream().filter(Printable.PRINTABLE_ID.equal(getPrintableId())).findAny().orElse(null);
     }
     
     @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
-        sj.add("uid = " + Objects.toString(getUid()));
-        sj.add("mid = " + Objects.toString(getMid()));
+        sj.add("userId = "      + Objects.toString(getUserId()));
+        sj.add("printableId = " + Objects.toString(getPrintableId()));
         return "CollectionImpl " + sj.toString();
     }
     
@@ -59,16 +72,16 @@ public abstract class GeneratedCollectionImpl implements Collection {
         if (this == that) { return true; }
         if (!(that instanceof Collection)) { return false; }
         final Collection thatCollection = (Collection)that;
-        if (this.getUid() != thatCollection.getUid()) {return false; }
-        if (this.getMid() != thatCollection.getMid()) {return false; }
+        if (this.getUserId() != thatCollection.getUserId()) {return false; }
+        if (this.getPrintableId() != thatCollection.getPrintableId()) {return false; }
         return true;
     }
     
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Integer.hashCode(getUid());
-        hash = 31 * hash + Integer.hashCode(getMid());
+        hash = 31 * hash + Integer.hashCode(getUserId());
+        hash = 31 * hash + Integer.hashCode(getPrintableId());
         return hash;
     }
 }

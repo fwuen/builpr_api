@@ -22,7 +22,7 @@ public abstract class GeneratedConversationManagerImpl extends AbstractManager<C
     private final TableIdentifier<Conversation> tableIdentifier;
     
     protected GeneratedConversationManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "Conversation");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Conversation");
     }
     
     @Override
@@ -33,9 +33,9 @@ public abstract class GeneratedConversationManagerImpl extends AbstractManager<C
     @Override
     public Stream<Field<Conversation>> fields() {
         return Stream.of(
-            Conversation.CID,
-            Conversation.UID1,
-            Conversation.UID2,
+            Conversation.CONVERSATION_ID,
+            Conversation.USER_ID1,
+            Conversation.USER_ID2,
             Conversation.CREATE_DATE,
             Conversation.LAST_MSG_TIME
         );
@@ -44,7 +44,7 @@ public abstract class GeneratedConversationManagerImpl extends AbstractManager<C
     @Override
     public Stream<Field<Conversation>> primaryKeyFields() {
         return Stream.of(
-            Conversation.CID
+            Conversation.CONVERSATION_ID
         );
     }
 }

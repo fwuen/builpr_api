@@ -1,7 +1,6 @@
 package com.builpr.database.db.builpr.conversation;
 
 import com.builpr.database.db.builpr.conversation.generated.GeneratedConversation;
-import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code Conversation}-table in the
@@ -11,7 +10,7 @@ import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
  * 
  * @author com.builpr
  */
-public interface Conversation extends GeneratedConversation, DatabaseObject {
+public interface Conversation extends GeneratedConversation {
     
     
 }

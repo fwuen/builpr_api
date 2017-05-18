@@ -1,7 +1,6 @@
 package com.builpr.database.db.builpr.rating;
 
 import com.builpr.database.db.builpr.rating.generated.GeneratedRating;
-import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code Rating}-table in the database.
@@ -10,7 +9,7 @@ import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
  * 
  * @author com.builpr
  */
-public interface Rating extends GeneratedRating, DatabaseObject {
+public interface Rating extends GeneratedRating {
     
     
 }

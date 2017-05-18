@@ -22,7 +22,7 @@ public abstract class GeneratedRatingManagerImpl extends AbstractManager<Rating>
     private final TableIdentifier<Rating> tableIdentifier;
     
     protected GeneratedRatingManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "Rating");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Rating");
     }
     
     @Override
@@ -33,19 +33,19 @@ public abstract class GeneratedRatingManagerImpl extends AbstractManager<Rating>
     @Override
     public Stream<Field<Rating>> fields() {
         return Stream.of(
-            Rating.UID,
-            Rating.MID,
+            Rating.USER_ID,
+            Rating.PRINTABLE_ID,
             Rating.RATING,
             Rating.MSG,
             Rating.RATING_TIME,
-            Rating.RID
+            Rating.RATING_ID
         );
     }
     
     @Override
     public Stream<Field<Rating>> primaryKeyFields() {
         return Stream.of(
-            Rating.RID
+            Rating.RATING_ID
         );
     }
 }

@@ -30,12 +30,12 @@ public interface GeneratedUser {
     
     /**
      * This Field corresponds to the {@link User} field that can be obtained
-     * using the {@link User#getUid()} method.
+     * using the {@link User#getUserId()} method.
      */
-    final IntField<User, Integer> UID = IntField.create(
-        Identifier.UID,
-        User::getUid,
-        User::setUid,
+    final IntField<User, Integer> USER_ID = IntField.create(
+        Identifier.USER_ID,
+        User::getUserId,
+        User::setUserId,
         TypeMapper.primitive(), 
         true
     );
@@ -217,16 +217,16 @@ public interface GeneratedUser {
     );
     
     /**
-     * Returns the uid of this User. The uid field corresponds to the database
-     * column builpr.com.builpr.User.uid.
+     * Returns the userId of this User. The userId field corresponds to the
+     * database column builpr.builpr.User.user_id.
      * 
-     * @return the uid of this User
+     * @return the userId of this User
      */
-    int getUid();
+    int getUserId();
     
     /**
      * Returns the username of this User. The username field corresponds to the
-     * database column builpr.com.builpr.User.username.
+     * database column builpr.builpr.User.username.
      * 
      * @return the username of this User
      */
@@ -234,7 +234,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the password of this User. The password field corresponds to the
-     * database column builpr.com.builpr.User.password.
+     * database column builpr.builpr.User.password.
      * 
      * @return the password of this User
      */
@@ -242,7 +242,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the email of this User. The email field corresponds to the
-     * database column builpr.com.builpr.User.email.
+     * database column builpr.builpr.User.email.
      * 
      * @return the email of this User
      */
@@ -250,7 +250,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the regtime of this User. The regtime field corresponds to the
-     * database column builpr.com.builpr.User.regtime.
+     * database column builpr.builpr.User.regtime.
      * 
      * @return the regtime of this User
      */
@@ -258,7 +258,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the birthday of this User. The birthday field corresponds to the
-     * database column builpr.com.builpr.User.birthday.
+     * database column builpr.builpr.User.birthday.
      * 
      * @return the birthday of this User
      */
@@ -266,7 +266,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the firstname of this User. The firstname field corresponds to
-     * the database column builpr.com.builpr.User.firstname.
+     * the database column builpr.builpr.User.firstname.
      * 
      * @return the firstname of this User
      */
@@ -274,7 +274,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the lastname of this User. The lastname field corresponds to the
-     * database column builpr.com.builpr.User.lastname.
+     * database column builpr.builpr.User.lastname.
      * 
      * @return the lastname of this User
      */
@@ -282,7 +282,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the avatar of this User. The avatar field corresponds to the
-     * database column builpr.com.builpr.User.avatar.
+     * database column builpr.builpr.User.avatar.
      * 
      * @return the avatar of this User
      */
@@ -290,7 +290,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the skype of this User. The skype field corresponds to the
-     * database column builpr.com.builpr.User.skype.
+     * database column builpr.builpr.User.skype.
      * 
      * @return the skype of this User
      */
@@ -298,7 +298,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the twitter of this User. The twitter field corresponds to the
-     * database column builpr.com.builpr.User.twitter.
+     * database column builpr.builpr.User.twitter.
      * 
      * @return the twitter of this User
      */
@@ -306,7 +306,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the facebook of this User. The facebook field corresponds to the
-     * database column builpr.com.builpr.User.facebook.
+     * database column builpr.builpr.User.facebook.
      * 
      * @return the facebook of this User
      */
@@ -314,7 +314,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the instagram of this User. The instagram field corresponds to
-     * the database column builpr.com.builpr.User.instagram.
+     * the database column builpr.builpr.User.instagram.
      * 
      * @return the instagram of this User
      */
@@ -322,7 +322,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the description of this User. The description field corresponds
-     * to the database column builpr.com.builpr.User.description.
+     * to the database column builpr.builpr.User.description.
      * 
      * @return the description of this User
      */
@@ -330,7 +330,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the showName of this User. The showName field corresponds to the
-     * database column builpr.com.builpr.User.show_name.
+     * database column builpr.builpr.User.show_name.
      * 
      * @return the showName of this User
      */
@@ -338,7 +338,7 @@ public interface GeneratedUser {
     
     /**
      * Returns the showBirthday of this User. The showBirthday field corresponds
-     * to the database column builpr.com.builpr.User.show_birthday.
+     * to the database column builpr.builpr.User.show_birthday.
      * 
      * @return the showBirthday of this User
      */
@@ -346,24 +346,24 @@ public interface GeneratedUser {
     
     /**
      * Returns the showEmail of this User. The showEmail field corresponds to
-     * the database column builpr.com.builpr.User.show_email.
+     * the database column builpr.builpr.User.show_email.
      * 
      * @return the showEmail of this User
      */
     boolean getShowEmail();
     
     /**
-     * Sets the uid of this User. The uid field corresponds to the database
-     * column builpr.com.builpr.User.uid.
+     * Sets the userId of this User. The userId field corresponds to the
+     * database column builpr.builpr.User.user_id.
      * 
-     * @param uid to set of this User
-     * @return    this User instance
+     * @param userId to set of this User
+     * @return       this User instance
      */
-    User setUid(int uid);
+    User setUserId(int userId);
     
     /**
      * Sets the username of this User. The username field corresponds to the
-     * database column builpr.com.builpr.User.username.
+     * database column builpr.builpr.User.username.
      * 
      * @param username to set of this User
      * @return         this User instance
@@ -372,7 +372,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the password of this User. The password field corresponds to the
-     * database column builpr.com.builpr.User.password.
+     * database column builpr.builpr.User.password.
      * 
      * @param password to set of this User
      * @return         this User instance
@@ -381,7 +381,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the email of this User. The email field corresponds to the database
-     * column builpr.com.builpr.User.email.
+     * column builpr.builpr.User.email.
      * 
      * @param email to set of this User
      * @return      this User instance
@@ -390,7 +390,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the regtime of this User. The regtime field corresponds to the
-     * database column builpr.com.builpr.User.regtime.
+     * database column builpr.builpr.User.regtime.
      * 
      * @param regtime to set of this User
      * @return        this User instance
@@ -399,7 +399,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the birthday of this User. The birthday field corresponds to the
-     * database column builpr.com.builpr.User.birthday.
+     * database column builpr.builpr.User.birthday.
      * 
      * @param birthday to set of this User
      * @return         this User instance
@@ -408,7 +408,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the firstname of this User. The firstname field corresponds to the
-     * database column builpr.com.builpr.User.firstname.
+     * database column builpr.builpr.User.firstname.
      * 
      * @param firstname to set of this User
      * @return          this User instance
@@ -417,7 +417,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the lastname of this User. The lastname field corresponds to the
-     * database column builpr.com.builpr.User.lastname.
+     * database column builpr.builpr.User.lastname.
      * 
      * @param lastname to set of this User
      * @return         this User instance
@@ -426,7 +426,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the avatar of this User. The avatar field corresponds to the
-     * database column builpr.com.builpr.User.avatar.
+     * database column builpr.builpr.User.avatar.
      * 
      * @param avatar to set of this User
      * @return       this User instance
@@ -435,7 +435,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the skype of this User. The skype field corresponds to the database
-     * column builpr.com.builpr.User.skype.
+     * column builpr.builpr.User.skype.
      * 
      * @param skype to set of this User
      * @return      this User instance
@@ -444,7 +444,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the twitter of this User. The twitter field corresponds to the
-     * database column builpr.com.builpr.User.twitter.
+     * database column builpr.builpr.User.twitter.
      * 
      * @param twitter to set of this User
      * @return        this User instance
@@ -453,7 +453,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the facebook of this User. The facebook field corresponds to the
-     * database column builpr.com.builpr.User.facebook.
+     * database column builpr.builpr.User.facebook.
      * 
      * @param facebook to set of this User
      * @return         this User instance
@@ -462,7 +462,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the instagram of this User. The instagram field corresponds to the
-     * database column builpr.com.builpr.User.instagram.
+     * database column builpr.builpr.User.instagram.
      * 
      * @param instagram to set of this User
      * @return          this User instance
@@ -471,7 +471,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the description of this User. The description field corresponds to
-     * the database column builpr.com.builpr.User.description.
+     * the database column builpr.builpr.User.description.
      * 
      * @param description to set of this User
      * @return            this User instance
@@ -480,7 +480,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the showName of this User. The showName field corresponds to the
-     * database column builpr.com.builpr.User.show_name.
+     * database column builpr.builpr.User.show_name.
      * 
      * @param showName to set of this User
      * @return         this User instance
@@ -489,7 +489,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the showBirthday of this User. The showBirthday field corresponds to
-     * the database column builpr.com.builpr.User.show_birthday.
+     * the database column builpr.builpr.User.show_birthday.
      * 
      * @param showBirthday to set of this User
      * @return             this User instance
@@ -498,7 +498,7 @@ public interface GeneratedUser {
     
     /**
      * Sets the showEmail of this User. The showEmail field corresponds to the
-     * database column builpr.com.builpr.User.show_email.
+     * database column builpr.builpr.User.show_email.
      * 
      * @param showEmail to set of this User
      * @return          this User instance
@@ -507,7 +507,7 @@ public interface GeneratedUser {
     
     enum Identifier implements ColumnIdentifier<User> {
         
-        UID           ("uid"),
+        USER_ID       ("user_id"),
         USERNAME      ("username"),
         PASSWORD      ("password"),
         EMAIL         ("email"),
@@ -537,7 +537,7 @@ public interface GeneratedUser {
         
         @Override
         public String getDbmsName() {
-            return "builpr.com";
+            return "builpr";
         }
         
         @Override

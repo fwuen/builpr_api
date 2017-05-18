@@ -28,7 +28,7 @@ public abstract class GeneratedMessageSqlAdapter {
     private final TableIdentifier<Message> tableIdentifier;
     
     protected GeneratedMessageSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "Message");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Message");
     }
     
     @ExecuteBefore(RESOLVED)
@@ -40,11 +40,11 @@ public abstract class GeneratedMessageSqlAdapter {
     protected Message apply(ResultSet resultSet) throws SpeedmentException {
         final Message entity = createEntity();
         try {
-            entity.setMsgid(    resultSet.getInt(1)    );
-            entity.setSender(   resultSet.getInt(2)    );
-            entity.setReceiver( resultSet.getInt(3)    );
-            entity.setContent(  resultSet.getString(4) );
-            entity.setSubject(  resultSet.getString(5) );
+            entity.setMessageId( resultSet.getInt(1)    );
+            entity.setSender(    resultSet.getInt(2)    );
+            entity.setReceiver(  resultSet.getInt(3)    );
+            entity.setContent(   resultSet.getString(4) );
+            entity.setSubject(   resultSet.getString(5) );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }

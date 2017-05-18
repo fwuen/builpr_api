@@ -22,7 +22,7 @@ public abstract class GeneratedUserCategoriesManagerImpl extends AbstractManager
     private final TableIdentifier<UserCategories> tableIdentifier;
     
     protected GeneratedUserCategoriesManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "UserCategories");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "UserCategories");
     }
     
     @Override
@@ -33,7 +33,7 @@ public abstract class GeneratedUserCategoriesManagerImpl extends AbstractManager
     @Override
     public Stream<Field<UserCategories>> fields() {
         return Stream.of(
-            UserCategories.UID,
+            UserCategories.USER_ID,
             UserCategories.CATEGORY
         );
     }
@@ -42,7 +42,7 @@ public abstract class GeneratedUserCategoriesManagerImpl extends AbstractManager
     public Stream<Field<UserCategories>> primaryKeyFields() {
         return Stream.of(
             UserCategories.CATEGORY,
-            UserCategories.UID
+            UserCategories.USER_ID
         );
     }
 }

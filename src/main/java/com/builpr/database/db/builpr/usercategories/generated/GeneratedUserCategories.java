@@ -1,10 +1,12 @@
 package com.builpr.database.db.builpr.usercategories.generated;
 
+import com.builpr.database.db.builpr.user.User;
 import com.builpr.database.db.builpr.usercategories.UserCategories;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
-import com.speedment.runtime.field.IntField;
+import com.speedment.runtime.core.manager.Manager;
+import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
 
@@ -23,12 +25,13 @@ public interface GeneratedUserCategories {
     
     /**
      * This Field corresponds to the {@link UserCategories} field that can be
-     * obtained using the {@link UserCategories#getUid()} method.
+     * obtained using the {@link UserCategories#getUserId()} method.
      */
-    final IntField<UserCategories, Integer> UID = IntField.create(
-        Identifier.UID,
-        UserCategories::getUid,
-        UserCategories::setUid,
+    final IntForeignKeyField<UserCategories, Integer, User> USER_ID = IntForeignKeyField.create(
+        Identifier.USER_ID,
+        UserCategories::getUserId,
+        UserCategories::setUserId,
+        User.USER_ID,
         TypeMapper.primitive(), 
         false
     );
@@ -45,43 +48,51 @@ public interface GeneratedUserCategories {
     );
     
     /**
-     * Returns the uid of this UserCategories. The uid field corresponds to the
-     * database column builpr.com.builpr.UserCategories.uid.
+     * Returns the userId of this UserCategories. The userId field corresponds
+     * to the database column builpr.builpr.UserCategories.user_id.
      * 
-     * @return the uid of this UserCategories
+     * @return the userId of this UserCategories
      */
-    int getUid();
+    int getUserId();
     
     /**
      * Returns the category of this UserCategories. The category field
-     * corresponds to the database column
-     * builpr.com.builpr.UserCategories.category.
+     * corresponds to the database column builpr.builpr.UserCategories.category.
      * 
      * @return the category of this UserCategories
      */
     String getCategory();
     
     /**
-     * Sets the uid of this UserCategories. The uid field corresponds to the
-     * database column builpr.com.builpr.UserCategories.uid.
+     * Sets the userId of this UserCategories. The userId field corresponds to
+     * the database column builpr.builpr.UserCategories.user_id.
      * 
-     * @param uid to set of this UserCategories
-     * @return    this UserCategories instance
+     * @param userId to set of this UserCategories
+     * @return       this UserCategories instance
      */
-    UserCategories setUid(int uid);
+    UserCategories setUserId(int userId);
     
     /**
      * Sets the category of this UserCategories. The category field corresponds
-     * to the database column builpr.com.builpr.UserCategories.category.
+     * to the database column builpr.builpr.UserCategories.category.
      * 
      * @param category to set of this UserCategories
      * @return         this UserCategories instance
      */
     UserCategories setCategory(String category);
     
+    /**
+     * Queries the specified manager for the referenced User. If no such User
+     * exists, an {@code NullPointerException} will be thrown.
+     * 
+     * @param foreignManager the manager to query for the entity
+     * @return               the foreign entity referenced
+     */
+    User findUserId(Manager<User> foreignManager);
+    
     enum Identifier implements ColumnIdentifier<UserCategories> {
         
-        UID      ("uid"),
+        USER_ID  ("user_id"),
         CATEGORY ("category");
         
         private final String columnName;
@@ -96,7 +107,7 @@ public interface GeneratedUserCategories {
         
         @Override
         public String getDbmsName() {
-            return "builpr.com";
+            return "builpr";
         }
         
         @Override

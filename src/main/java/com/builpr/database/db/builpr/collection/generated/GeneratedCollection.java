@@ -1,10 +1,13 @@
 package com.builpr.database.db.builpr.collection.generated;
 
 import com.builpr.database.db.builpr.collection.Collection;
+import com.builpr.database.db.builpr.printable.Printable;
+import com.builpr.database.db.builpr.user.User;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
-import com.speedment.runtime.field.IntField;
+import com.speedment.runtime.core.manager.Manager;
+import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.typemapper.TypeMapper;
 
 /**
@@ -22,65 +25,85 @@ public interface GeneratedCollection {
     
     /**
      * This Field corresponds to the {@link Collection} field that can be
-     * obtained using the {@link Collection#getUid()} method.
+     * obtained using the {@link Collection#getUserId()} method.
      */
-    final IntField<Collection, Integer> UID = IntField.create(
-        Identifier.UID,
-        Collection::getUid,
-        Collection::setUid,
+    final IntForeignKeyField<Collection, Integer, User> USER_ID = IntForeignKeyField.create(
+        Identifier.USER_ID,
+        Collection::getUserId,
+        Collection::setUserId,
+        User.USER_ID,
         TypeMapper.primitive(), 
         false
     );
     /**
      * This Field corresponds to the {@link Collection} field that can be
-     * obtained using the {@link Collection#getMid()} method.
+     * obtained using the {@link Collection#getPrintableId()} method.
      */
-    final IntField<Collection, Integer> MID = IntField.create(
-        Identifier.MID,
-        Collection::getMid,
-        Collection::setMid,
+    final IntForeignKeyField<Collection, Integer, Printable> PRINTABLE_ID = IntForeignKeyField.create(
+        Identifier.PRINTABLE_ID,
+        Collection::getPrintableId,
+        Collection::setPrintableId,
+        Printable.PRINTABLE_ID,
         TypeMapper.primitive(), 
         false
     );
     
     /**
-     * Returns the uid of this Collection. The uid field corresponds to the
-     * database column builpr.com.builpr.Collection.uid.
+     * Returns the userId of this Collection. The userId field corresponds to
+     * the database column builpr.builpr.Collection.user_id.
      * 
-     * @return the uid of this Collection
+     * @return the userId of this Collection
      */
-    int getUid();
+    int getUserId();
     
     /**
-     * Returns the mid of this Collection. The mid field corresponds to the
-     * database column builpr.com.builpr.Collection.mid.
+     * Returns the printableId of this Collection. The printableId field
+     * corresponds to the database column builpr.builpr.Collection.printable_id.
      * 
-     * @return the mid of this Collection
+     * @return the printableId of this Collection
      */
-    int getMid();
+    int getPrintableId();
     
     /**
-     * Sets the uid of this Collection. The uid field corresponds to the
-     * database column builpr.com.builpr.Collection.uid.
+     * Sets the userId of this Collection. The userId field corresponds to the
+     * database column builpr.builpr.Collection.user_id.
      * 
-     * @param uid to set of this Collection
-     * @return    this Collection instance
+     * @param userId to set of this Collection
+     * @return       this Collection instance
      */
-    Collection setUid(int uid);
+    Collection setUserId(int userId);
     
     /**
-     * Sets the mid of this Collection. The mid field corresponds to the
-     * database column builpr.com.builpr.Collection.mid.
+     * Sets the printableId of this Collection. The printableId field
+     * corresponds to the database column builpr.builpr.Collection.printable_id.
      * 
-     * @param mid to set of this Collection
-     * @return    this Collection instance
+     * @param printableId to set of this Collection
+     * @return            this Collection instance
      */
-    Collection setMid(int mid);
+    Collection setPrintableId(int printableId);
+    
+    /**
+     * Queries the specified manager for the referenced User. If no such User
+     * exists, an {@code NullPointerException} will be thrown.
+     * 
+     * @param foreignManager the manager to query for the entity
+     * @return               the foreign entity referenced
+     */
+    User findUserId(Manager<User> foreignManager);
+    
+    /**
+     * Queries the specified manager for the referenced Printable. If no such
+     * Printable exists, an {@code NullPointerException} will be thrown.
+     * 
+     * @param foreignManager the manager to query for the entity
+     * @return               the foreign entity referenced
+     */
+    Printable findPrintableId(Manager<Printable> foreignManager);
     
     enum Identifier implements ColumnIdentifier<Collection> {
         
-        UID ("uid"),
-        MID ("mid");
+        USER_ID      ("user_id"),
+        PRINTABLE_ID ("printable_id");
         
         private final String columnName;
         private final TableIdentifier<Collection> tableIdentifier;
@@ -94,7 +117,7 @@ public interface GeneratedCollection {
         
         @Override
         public String getDbmsName() {
-            return "builpr.com";
+            return "builpr";
         }
         
         @Override

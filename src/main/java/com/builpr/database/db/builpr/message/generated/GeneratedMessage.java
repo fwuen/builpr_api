@@ -26,12 +26,12 @@ public interface GeneratedMessage {
     
     /**
      * This Field corresponds to the {@link Message} field that can be obtained
-     * using the {@link Message#getMsgid()} method.
+     * using the {@link Message#getMessageId()} method.
      */
-    final IntField<Message, Integer> MSGID = IntField.create(
-        Identifier.MSGID,
-        Message::getMsgid,
-        Message::setMsgid,
+    final IntField<Message, Integer> MESSAGE_ID = IntField.create(
+        Identifier.MESSAGE_ID,
+        Message::getMessageId,
+        Message::setMessageId,
         TypeMapper.primitive(), 
         true
     );
@@ -43,7 +43,7 @@ public interface GeneratedMessage {
         Identifier.SENDER,
         Message::getSender,
         Message::setSender,
-        User.UID,
+        User.USER_ID,
         TypeMapper.primitive(), 
         false
     );
@@ -55,7 +55,7 @@ public interface GeneratedMessage {
         Identifier.RECEIVER,
         Message::getReceiver,
         Message::setReceiver,
-        User.UID,
+        User.USER_ID,
         TypeMapper.primitive(), 
         false
     );
@@ -83,16 +83,16 @@ public interface GeneratedMessage {
     );
     
     /**
-     * Returns the msgid of this Message. The msgid field corresponds to the
-     * database column builpr.com.builpr.Message.msgid.
+     * Returns the messageId of this Message. The messageId field corresponds to
+     * the database column builpr.builpr.Message.message_id.
      * 
-     * @return the msgid of this Message
+     * @return the messageId of this Message
      */
-    int getMsgid();
+    int getMessageId();
     
     /**
      * Returns the sender of this Message. The sender field corresponds to the
-     * database column builpr.com.builpr.Message.sender.
+     * database column builpr.builpr.Message.sender.
      * 
      * @return the sender of this Message
      */
@@ -100,7 +100,7 @@ public interface GeneratedMessage {
     
     /**
      * Returns the receiver of this Message. The receiver field corresponds to
-     * the database column builpr.com.builpr.Message.receiver.
+     * the database column builpr.builpr.Message.receiver.
      * 
      * @return the receiver of this Message
      */
@@ -108,7 +108,7 @@ public interface GeneratedMessage {
     
     /**
      * Returns the content of this Message. The content field corresponds to the
-     * database column builpr.com.builpr.Message.content.
+     * database column builpr.builpr.Message.content.
      * 
      * @return the content of this Message
      */
@@ -116,24 +116,24 @@ public interface GeneratedMessage {
     
     /**
      * Returns the subject of this Message. The subject field corresponds to the
-     * database column builpr.com.builpr.Message.subject.
+     * database column builpr.builpr.Message.subject.
      * 
      * @return the subject of this Message
      */
     String getSubject();
     
     /**
-     * Sets the msgid of this Message. The msgid field corresponds to the
-     * database column builpr.com.builpr.Message.msgid.
+     * Sets the messageId of this Message. The messageId field corresponds to
+     * the database column builpr.builpr.Message.message_id.
      * 
-     * @param msgid to set of this Message
-     * @return      this Message instance
+     * @param messageId to set of this Message
+     * @return          this Message instance
      */
-    Message setMsgid(int msgid);
+    Message setMessageId(int messageId);
     
     /**
      * Sets the sender of this Message. The sender field corresponds to the
-     * database column builpr.com.builpr.Message.sender.
+     * database column builpr.builpr.Message.sender.
      * 
      * @param sender to set of this Message
      * @return       this Message instance
@@ -142,7 +142,7 @@ public interface GeneratedMessage {
     
     /**
      * Sets the receiver of this Message. The receiver field corresponds to the
-     * database column builpr.com.builpr.Message.receiver.
+     * database column builpr.builpr.Message.receiver.
      * 
      * @param receiver to set of this Message
      * @return         this Message instance
@@ -151,7 +151,7 @@ public interface GeneratedMessage {
     
     /**
      * Sets the content of this Message. The content field corresponds to the
-     * database column builpr.com.builpr.Message.content.
+     * database column builpr.builpr.Message.content.
      * 
      * @param content to set of this Message
      * @return        this Message instance
@@ -160,7 +160,7 @@ public interface GeneratedMessage {
     
     /**
      * Sets the subject of this Message. The subject field corresponds to the
-     * database column builpr.com.builpr.Message.subject.
+     * database column builpr.builpr.Message.subject.
      * 
      * @param subject to set of this Message
      * @return        this Message instance
@@ -187,11 +187,11 @@ public interface GeneratedMessage {
     
     enum Identifier implements ColumnIdentifier<Message> {
         
-        MSGID    ("msgid"),
-        SENDER   ("sender"),
-        RECEIVER ("receiver"),
-        CONTENT  ("content"),
-        SUBJECT  ("subject");
+        MESSAGE_ID ("message_id"),
+        SENDER     ("sender"),
+        RECEIVER   ("receiver"),
+        CONTENT    ("content"),
+        SUBJECT    ("subject");
         
         private final String columnName;
         private final TableIdentifier<Message> tableIdentifier;
@@ -205,7 +205,7 @@ public interface GeneratedMessage {
         
         @Override
         public String getDbmsName() {
-            return "builpr.com";
+            return "builpr";
         }
         
         @Override

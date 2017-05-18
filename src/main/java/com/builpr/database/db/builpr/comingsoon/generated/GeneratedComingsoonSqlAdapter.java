@@ -28,7 +28,7 @@ public abstract class GeneratedComingsoonSqlAdapter {
     private final TableIdentifier<Comingsoon> tableIdentifier;
     
     protected GeneratedComingsoonSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr.com", "builpr", "comingsoon");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "comingsoon");
     }
     
     @ExecuteBefore(RESOLVED)

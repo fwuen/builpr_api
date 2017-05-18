@@ -70,7 +70,7 @@ public interface GeneratedComingsoon {
     
     /**
      * Returns the id of this Comingsoon. The id field corresponds to the
-     * database column builpr.com.builpr.comingsoon.id.
+     * database column builpr.builpr.comingsoon.id.
      * 
      * @return the id of this Comingsoon
      */
@@ -78,7 +78,7 @@ public interface GeneratedComingsoon {
     
     /**
      * Returns the email of this Comingsoon. The email field corresponds to the
-     * database column builpr.com.builpr.comingsoon.email.
+     * database column builpr.builpr.comingsoon.email.
      * 
      * @return the email of this Comingsoon
      */
@@ -86,7 +86,7 @@ public interface GeneratedComingsoon {
     
     /**
      * Returns the activated of this Comingsoon. The activated field corresponds
-     * to the database column builpr.com.builpr.comingsoon.activated.
+     * to the database column builpr.builpr.comingsoon.activated.
      * 
      * @return the activated of this Comingsoon
      */
@@ -94,7 +94,7 @@ public interface GeneratedComingsoon {
     
     /**
      * Returns the key of this Comingsoon. The key field corresponds to the
-     * database column builpr.com.builpr.comingsoon.key.
+     * database column builpr.builpr.comingsoon.key.
      * 
      * @return the key of this Comingsoon
      */
@@ -102,7 +102,7 @@ public interface GeneratedComingsoon {
     
     /**
      * Sets the id of this Comingsoon. The id field corresponds to the database
-     * column builpr.com.builpr.comingsoon.id.
+     * column builpr.builpr.comingsoon.id.
      * 
      * @param id to set of this Comingsoon
      * @return   this Comingsoon instance
@@ -111,7 +111,7 @@ public interface GeneratedComingsoon {
     
     /**
      * Sets the email of this Comingsoon. The email field corresponds to the
-     * database column builpr.com.builpr.comingsoon.email.
+     * database column builpr.builpr.comingsoon.email.
      * 
      * @param email to set of this Comingsoon
      * @return      this Comingsoon instance
@@ -120,7 +120,7 @@ public interface GeneratedComingsoon {
     
     /**
      * Sets the activated of this Comingsoon. The activated field corresponds to
-     * the database column builpr.com.builpr.comingsoon.activated.
+     * the database column builpr.builpr.comingsoon.activated.
      * 
      * @param activated to set of this Comingsoon
      * @return          this Comingsoon instance
@@ -129,7 +129,7 @@ public interface GeneratedComingsoon {
     
     /**
      * Sets the key of this Comingsoon. The key field corresponds to the
-     * database column builpr.com.builpr.comingsoon.key.
+     * database column builpr.builpr.comingsoon.key.
      * 
      * @param key to set of this Comingsoon
      * @return    this Comingsoon instance
@@ -155,7 +155,7 @@ public interface GeneratedComingsoon {
         
         @Override
         public String getDbmsName() {
-            return "builpr.com";
+            return "builpr";
         }
         
         @Override

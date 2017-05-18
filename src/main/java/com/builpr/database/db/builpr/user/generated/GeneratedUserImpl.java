@@ -21,7 +21,7 @@ import java.util.StringJoiner;
 @GeneratedCode("Speedment")
 public abstract class GeneratedUserImpl implements User {
     
-    private int uid;
+    private int userId;
     private String username;
     private String password;
     private String email;
@@ -44,8 +44,8 @@ public abstract class GeneratedUserImpl implements User {
     }
     
     @Override
-    public int getUid() {
-        return uid;
+    public int getUserId() {
+        return userId;
     }
     
     @Override
@@ -129,8 +129,8 @@ public abstract class GeneratedUserImpl implements User {
     }
     
     @Override
-    public User setUid(int uid) {
-        this.uid = uid;
+    public User setUserId(int userId) {
+        this.userId = userId;
         return this;
     }
     
@@ -233,7 +233,7 @@ public abstract class GeneratedUserImpl implements User {
     @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
-        sj.add("uid = "          + Objects.toString(getUid()));
+        sj.add("userId = "       + Objects.toString(getUserId()));
         sj.add("username = "     + Objects.toString(getUsername()));
         sj.add("password = "     + Objects.toString(getPassword()));
         sj.add("email = "        + Objects.toString(getEmail()));
@@ -258,7 +258,7 @@ public abstract class GeneratedUserImpl implements User {
         if (this == that) { return true; }
         if (!(that instanceof User)) { return false; }
         final User thatUser = (User)that;
-        if (this.getUid() != thatUser.getUid()) {return false; }
+        if (this.getUserId() != thatUser.getUserId()) {return false; }
         if (!Objects.equals(this.getUsername(), thatUser.getUsername())) {return false; }
         if (!Objects.equals(this.getPassword(), thatUser.getPassword())) {return false; }
         if (!Objects.equals(this.getEmail(), thatUser.getEmail())) {return false; }
@@ -281,7 +281,7 @@ public abstract class GeneratedUserImpl implements User {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Integer.hashCode(getUid());
+        hash = 31 * hash + Integer.hashCode(getUserId());
         hash = 31 * hash + Objects.hashCode(getUsername());
         hash = 31 * hash + Objects.hashCode(getPassword());
         hash = 31 * hash + Objects.hashCode(getEmail());

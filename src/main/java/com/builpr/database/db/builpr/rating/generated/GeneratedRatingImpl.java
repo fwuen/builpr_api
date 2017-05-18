@@ -1,7 +1,10 @@
 package com.builpr.database.db.builpr.rating.generated;
 
+import com.builpr.database.db.builpr.printable.Printable;
 import com.builpr.database.db.builpr.rating.Rating;
+import com.builpr.database.db.builpr.user.User;
 import com.speedment.common.annotation.GeneratedCode;
+import com.speedment.runtime.core.manager.Manager;
 import com.speedment.runtime.core.util.OptionalUtil;
 import java.sql.Date;
 import java.util.Objects;
@@ -20,25 +23,25 @@ import java.util.StringJoiner;
 @GeneratedCode("Speedment")
 public abstract class GeneratedRatingImpl implements Rating {
     
-    private int uid;
-    private int mid;
+    private int userId;
+    private int printableId;
     private int rating;
     private String msg;
     private Date ratingTime;
-    private int rid;
+    private int ratingId;
     
     protected GeneratedRatingImpl() {
         
     }
     
     @Override
-    public int getUid() {
-        return uid;
+    public int getUserId() {
+        return userId;
     }
     
     @Override
-    public int getMid() {
-        return mid;
+    public int getPrintableId() {
+        return printableId;
     }
     
     @Override
@@ -57,19 +60,19 @@ public abstract class GeneratedRatingImpl implements Rating {
     }
     
     @Override
-    public int getRid() {
-        return rid;
+    public int getRatingId() {
+        return ratingId;
     }
     
     @Override
-    public Rating setUid(int uid) {
-        this.uid = uid;
+    public Rating setUserId(int userId) {
+        this.userId = userId;
         return this;
     }
     
     @Override
-    public Rating setMid(int mid) {
-        this.mid = mid;
+    public Rating setPrintableId(int printableId) {
+        this.printableId = printableId;
         return this;
     }
     
@@ -92,20 +95,30 @@ public abstract class GeneratedRatingImpl implements Rating {
     }
     
     @Override
-    public Rating setRid(int rid) {
-        this.rid = rid;
+    public Rating setRatingId(int ratingId) {
+        this.ratingId = ratingId;
         return this;
+    }
+    
+    @Override
+    public User findUserId(Manager<User> foreignManager) {
+        return foreignManager.stream().filter(User.USER_ID.equal(getUserId())).findAny().orElse(null);
+    }
+    
+    @Override
+    public Printable findPrintableId(Manager<Printable> foreignManager) {
+        return foreignManager.stream().filter(Printable.PRINTABLE_ID.equal(getPrintableId())).findAny().orElse(null);
     }
     
     @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
-        sj.add("uid = "        + Objects.toString(getUid()));
-        sj.add("mid = "        + Objects.toString(getMid()));
-        sj.add("rating = "     + Objects.toString(getRating()));
-        sj.add("msg = "        + Objects.toString(OptionalUtil.unwrap(getMsg())));
-        sj.add("ratingTime = " + Objects.toString(getRatingTime()));
-        sj.add("rid = "        + Objects.toString(getRid()));
+        sj.add("userId = "      + Objects.toString(getUserId()));
+        sj.add("printableId = " + Objects.toString(getPrintableId()));
+        sj.add("rating = "      + Objects.toString(getRating()));
+        sj.add("msg = "         + Objects.toString(OptionalUtil.unwrap(getMsg())));
+        sj.add("ratingTime = "  + Objects.toString(getRatingTime()));
+        sj.add("ratingId = "    + Objects.toString(getRatingId()));
         return "RatingImpl " + sj.toString();
     }
     
@@ -114,24 +127,24 @@ public abstract class GeneratedRatingImpl implements Rating {
         if (this == that) { return true; }
         if (!(that instanceof Rating)) { return false; }
         final Rating thatRating = (Rating)that;
-        if (this.getUid() != thatRating.getUid()) {return false; }
-        if (this.getMid() != thatRating.getMid()) {return false; }
+        if (this.getUserId() != thatRating.getUserId()) {return false; }
+        if (this.getPrintableId() != thatRating.getPrintableId()) {return false; }
         if (this.getRating() != thatRating.getRating()) {return false; }
         if (!Objects.equals(this.getMsg(), thatRating.getMsg())) {return false; }
         if (!Objects.equals(this.getRatingTime(), thatRating.getRatingTime())) {return false; }
-        if (this.getRid() != thatRating.getRid()) {return false; }
+        if (this.getRatingId() != thatRating.getRatingId()) {return false; }
         return true;
     }
     
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Integer.hashCode(getUid());
-        hash = 31 * hash + Integer.hashCode(getMid());
+        hash = 31 * hash + Integer.hashCode(getUserId());
+        hash = 31 * hash + Integer.hashCode(getPrintableId());
         hash = 31 * hash + Integer.hashCode(getRating());
         hash = 31 * hash + Objects.hashCode(getMsg());
         hash = 31 * hash + Objects.hashCode(getRatingTime());
-        hash = 31 * hash + Integer.hashCode(getRid());
+        hash = 31 * hash + Integer.hashCode(getRatingId());
         return hash;
     }
 }
