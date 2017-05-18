@@ -19,13 +19,22 @@ import java.io.IOException;
 import java.util.List;
 // TODO: Doku für @Override-Methode erben
 
+/**
+ * Provides access to Solr search engine
+ * Implements SearchManager-interface
+ */
 public class SolrSearchManager implements SearchManager {
 
     private SolrClient solrClient;
     private SolrQueryFactory solrQueryFactory;
     private PrintModelReferenceFactory printModelReferenceFactory;
     private static final String COLLECTION = "testcore";
-    
+
+    /**
+     * Creates and returns a SolrSearchManager-object
+     *
+     * @param solrClient The solr-client that should be assigned to the SolrSearchManager-object to execute all further instructions on
+     */
     private SolrSearchManager(@NonNull SolrClient solrClient) {
         this.solrClient = solrClient;
         this.solrQueryFactory = new SolrQueryFactory();
@@ -36,7 +45,7 @@ public class SolrSearchManager implements SearchManager {
     public List<PrintModelReference> search(@NonNull String term) throws SearchManagerException {
         return search(term, Lists.newArrayList(), Order.RELEVANCE);
     }
-    
+
     @Override
     public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
         return search(term, filter, Order.RELEVANCE);
@@ -62,7 +71,7 @@ public class SolrSearchManager implements SearchManager {
             throw new SearchManagerException(exception);
         }
     }
-    
+
     @Override
     public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws SearchManagerException {
         for (IndexablePrintModel indexable : indexables)
@@ -75,11 +84,13 @@ public class SolrSearchManager implements SearchManager {
     public void addToIndex(@NonNull IndexablePrintModel indexable) throws SearchManagerException {
         this.addToIndex(indexable, true);
     }
-    
+
     /**
-     * @param indexable
-     * @param commit
-     * @throws SearchManagerException
+     * Adds an print model to the Solr index
+     *
+     * @param indexable The print model that should be added to the Solr index
+     * @param commit Whether the actual commit to the Solr search engine should be executed or not
+     * @throws SearchManagerException SearchManagerException
      */
     private void addToIndex(@NonNull IndexablePrintModel indexable, boolean commit) throws SearchManagerException {
         SolrInputDocument inputDocument = new SolrInputDocumentFactory().get(indexable);
@@ -93,9 +104,11 @@ public class SolrSearchManager implements SearchManager {
         if (commit)
             commit();
     }
-    
+
     /**
-     * @throws SearchManagerException
+     * Commits changes to the Solr search engine
+     *
+     * @throws SearchManagerException SearchManagerException
      */
     private void commit() throws SearchManagerException {
         try {
@@ -117,16 +130,28 @@ public class SolrSearchManager implements SearchManager {
         }
     }
 
+    /**
+     * Creates and returns a SolrSearchManager-object with a SolrClient-object initialized with a base URL
+     *
+     * @param baseURL The base URL the for the SolrSearchManager required Solr client-object should be initialized with
+     * @return SolrSearchManager-object
+     */
     public static SolrSearchManager createWithBaseURL(@NonNull String baseURL) {
         SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(baseURL).build();
 
         return new SolrSearchManager(solrClient);
     }
 
+    /**
+     * Creates and returns a SolrSearchManager-object with a SolrClient-object passed as parameter
+     *
+     * @param solrClient The SolrClient-object the SolrSearchManager should be initialized with
+     * @return SolrSearchManager-object
+     */
     public static SolrSearchManager createWithSolrClient(@NonNull SolrClient solrClient) {
         return new SolrSearchManager(solrClient);
     }
-    
+
     @Override
     public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws SearchManagerException {
         for (PrintModelReference removable : removables)
@@ -140,6 +165,13 @@ public class SolrSearchManager implements SearchManager {
         deleteFromIndex(removable, true);
     }
 
+    /**
+     * Deletes a given print model from the Solr index
+     *
+     * @param removable The print model that should be deleted from the index
+     * @param commit Whether the actual commit to the Solr search engine should be executed or not
+     * @throws SearchManagerException SearchManagerException
+     */
     private void deleteFromIndex(@NonNull PrintModelReference removable, boolean commit) throws SearchManagerException {
 
         try {
