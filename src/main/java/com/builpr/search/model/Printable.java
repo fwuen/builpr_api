@@ -4,6 +4,7 @@ import com.builpr.search.filter.MinimumRatingFilter;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import lombok.Getter;
+import org.apache.solr.client.solrj.beans.Field;
 
 import java.util.Date;
 import java.util.List;
@@ -11,37 +12,45 @@ import java.util.List;
 /**
  * Class to store data of print-models to add them to the index of the search-engine
  */
-public class IndexablePrintModel {
+public class Printable extends Indexable {
 
     @Getter
+    @Field
     private int id;
     
     @Getter
+    @Field
     private String title;
     
     @Getter
+    @Field
     private String description;
     
     @Getter
+    @Field
     private String type;
     
     @Getter
+    @Field
     private int uploaderId;
     
     @Getter
+    @Field
     private Date uploadDate;
     
     @Getter
+    @Field
     private double rating;
     
     @Getter
+    @Field
     private List<String> tags;
     
     
     /**
-     * Creates an IndexablePrintModel-object
+     * Creates an Printable-object
      */
-    private IndexablePrintModel() {
+    private Printable() {
     }
     
     /**
@@ -54,18 +63,18 @@ public class IndexablePrintModel {
     }
     
     /**
-     * Internal Builder-class of IndexablePrintModel for public creations of IndexablePrintModel-objects
+     * Internal Builder-class of Printable for public creations of Printable-objects
      */
     public static class Builder {
         
-        private IndexablePrintModel toBuild;
+        private Printable toBuild;
         
         /**
          * Creates a new Builder-object
-         * Triggers the creation of a new IndexablePrintModel-object and assigns it to the Builder-object
+         * Triggers the creation of a new Printable-object and assigns it to the Builder-object
          */
         public Builder() {
-            this.toBuild = new IndexablePrintModel();
+            this.toBuild = new Printable();
         }
         
         /**
@@ -175,11 +184,11 @@ public class IndexablePrintModel {
         }
         
         /**
-         * Verifies the proprierity of the builded IndexablePrintModel-object and returns it
+         * Verifies the proprierity of the builded Printable-object and returns it
          *
-         * @return The builded IndexablePrintModel-object
+         * @return The builded Printable-object
          */
-        public IndexablePrintModel build() {
+        public Printable build() {
             
             Verify.verifyNotNull(toBuild.title);
             Verify.verifyNotNull(toBuild.description);

@@ -2,20 +2,17 @@ package com.builpr.search.solr;
 
 import com.builpr.search.*;
 import com.builpr.search.filter.Filter;
-import com.builpr.search.model.IndexablePrintModel;
-import com.builpr.search.model.PrintModelReference;
+import com.builpr.search.model.Printable;
+import com.builpr.search.model.PrintableReference;
 import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
-import java.io.IOException;
 import java.util.List;
 // TODO: Doku für @Override-Methode erben
 
@@ -27,7 +24,7 @@ public class SolrSearchManager implements SearchManager {
 
     private SolrClient solrClient;
     private SolrQueryFactory solrQueryFactory;
-    private PrintModelReferenceFactory printModelReferenceFactory;
+    private PrintableReferenceFactory printableReferenceFactory;
     private static final String COLLECTION = "testcore";
 
     /**
@@ -38,32 +35,32 @@ public class SolrSearchManager implements SearchManager {
     private SolrSearchManager(@NonNull SolrClient solrClient) {
         this.solrClient = solrClient;
         this.solrQueryFactory = new SolrQueryFactory();
-        this.printModelReferenceFactory = new PrintModelReferenceFactory();
+        this.printableReferenceFactory = new PrintableReferenceFactory();
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term) throws SearchManagerException {
+    public List<PrintableReference> search(@NonNull String term) throws SearchManagerException {
         return search(term, Lists.newArrayList(), Order.RELEVANCE);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
+    public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
         return search(term, filter, Order.RELEVANCE);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchManagerException {
+    public List<PrintableReference> search(@NonNull String term, @NonNull Order order) throws SearchManagerException {
         return search(term, Lists.newArrayList(), order);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
+    public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
         try {
             SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, order);
 
             QueryResponse queryResponse = solrClient.query(COLLECTION, solrQuery);
 
-            List<PrintModelReference> results = printModelReferenceFactory.get(queryResponse.getResults());
+            List<PrintableReference> results = printableReferenceFactory.get(queryResponse.getResults());
 
             return results;
 
@@ -73,15 +70,15 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public void addToIndex(@NonNull List<IndexablePrintModel> indexables) throws SearchManagerException {
-        for (IndexablePrintModel indexable : indexables)
+    public void addToIndex(@NonNull List<Printable> indexables) throws SearchManagerException {
+        for (Printable indexable : indexables)
             addToIndex(indexable, false);
 
         commit();
     }
 
     @Override
-    public void addToIndex(@NonNull IndexablePrintModel indexable) throws SearchManagerException {
+    public void addToIndex(@NonNull Printable indexable) throws SearchManagerException {
         this.addToIndex(indexable, true);
     }
 
@@ -92,7 +89,7 @@ public class SolrSearchManager implements SearchManager {
      * @param commit Whether the actual commit to the Solr search engine should be executed or not
      * @throws SearchManagerException SearchManagerException
      */
-    private void addToIndex(@NonNull IndexablePrintModel indexable, boolean commit) throws SearchManagerException {
+    private void addToIndex(@NonNull Printable indexable, boolean commit) throws SearchManagerException {
         SolrInputDocument inputDocument = new SolrInputDocumentFactory().getInputDocumentWith(indexable);
 
         try {
@@ -153,15 +150,15 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public void deleteFromIndex(@NonNull List<PrintModelReference> removables) throws SearchManagerException {
-        for (PrintModelReference removable : removables)
+    public void deleteFromIndex(@NonNull List<PrintableReference> removables) throws SearchManagerException {
+        for (PrintableReference removable : removables)
             deleteFromIndex(removable, false);
 
         commit();
     }
 
     @Override
-    public void deleteFromIndex(@NonNull PrintModelReference removable) throws SearchManagerException {
+    public void deleteFromIndex(@NonNull PrintableReference removable) throws SearchManagerException {
         deleteFromIndex(removable, true);
     }
 
@@ -172,7 +169,7 @@ public class SolrSearchManager implements SearchManager {
      * @param commit Whether the actual commit to the Solr search engine should be executed or not
      * @throws SearchManagerException SearchManagerException
      */
-    private void deleteFromIndex(@NonNull PrintModelReference removable, boolean commit) throws SearchManagerException {
+    private void deleteFromIndex(@NonNull PrintableReference removable, boolean commit) throws SearchManagerException {
 
         try {
             solrClient.deleteById(COLLECTION, "" + removable.getId());
