@@ -20,7 +20,7 @@ public class PrintableReferenceFactoryTest {
     @Test(expected = NullPointerException.class)
     public void getReferenceListWithNull() {
         PrintableReferenceFactory factory = new PrintableReferenceFactory();
-        List list = null;
+        List<SolrDocument> list = null;
 
         factory.get(list);
     }
@@ -44,7 +44,7 @@ public class PrintableReferenceFactoryTest {
     @Test(expected = IllegalArgumentException.class)
     public void getReferenceListWithEmptyList() {
         PrintableReferenceFactory factory = new PrintableReferenceFactory();
-        List list = Lists.newArrayList();
+        List<SolrDocument> list = Lists.newArrayList();
 
         factory.get(list);
     }
