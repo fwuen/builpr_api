@@ -6,7 +6,7 @@ import com.builpr.database.BuilprApplicationBuilder;
 import com.builpr.database.db.builpr.collection.CollectionManager;
 import com.builpr.database.db.builpr.conversation.ConversationManager;
 import com.builpr.database.db.builpr.message.MessageManager;
-import com.builpr.database.db.builpr.model.ModelManager;
+import com.builpr.database.db.builpr.printable.PrintableManager;
 import com.builpr.database.db.builpr.rating.RatingManager;
 import com.builpr.database.db.builpr.user.UserManager;
 import com.builpr.database.db.builpr.usercategories.UserCategoriesManager;
@@ -40,8 +40,8 @@ public class Connector {
         return getConnection().getOrThrow(MessageManager.class);
     }
 
-    public static ModelManager getModelManager() {
-        return getConnection().getOrThrow(ModelManager.class);
+    public static PrintableManager getModelManager() {
+        return getConnection().getOrThrow(PrintableManager.class);
     }
 
     public static RatingManager getRatingManager() {
