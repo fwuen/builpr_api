@@ -8,18 +8,19 @@ import lombok.Getter;
  * Primarily used to map Solr-requests to a Java-MVC-model
  */
 public class PrintModelReference {
-
+    
     @Getter
     private int id;
-
+    
     /**
      * Creates a PrintModelReference-object
+     *
      * @param id ID of the PrintModel to be stored in the PrintModelReference-object
      */
     public PrintModelReference(int id) {
         Preconditions.checkArgument(id > 0);
-
+        
         this.id = id;
     }
-
+    
 }
