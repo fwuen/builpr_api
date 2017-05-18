@@ -5,19 +5,18 @@ import lombok.Getter;
 
 /**
  * Provides the ability to do minimum-rating-filtering
- * @author
- * @author
  */
 public class MinimumRatingFilter extends Filter {
-
+    
     public static final int LOWEST_POSSIBLE_RATING = 1;
     public static final int HIGHEST_POSSIBLE_RATING = 5;
-
+    
     @Getter
     private int minimumRating;
-
+    
     /**
      * Creates a MinimumRatingFilter-object
+     *
      * @param minimumRating The minimum Rating that should be applied to the Filter
      */
     //TODO: eventuell double statt int für minimumRating von 0.5?
@@ -26,8 +25,8 @@ public class MinimumRatingFilter extends Filter {
         Preconditions.checkArgument(minimumRating >= LOWEST_POSSIBLE_RATING);
         Preconditions.checkArgument(minimumRating <= HIGHEST_POSSIBLE_RATING);
         Preconditions.checkArgument(LOWEST_POSSIBLE_RATING < HIGHEST_POSSIBLE_RATING);
-
+        
         this.minimumRating = minimumRating;
     }
-
+    
 }

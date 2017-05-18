@@ -77,7 +77,6 @@ public class SolrSearchManager implements SearchManager {
     }
     
     /**
-     *
      * @param indexable
      * @param commit
      * @throws SearchManagerException
@@ -96,7 +95,6 @@ public class SolrSearchManager implements SearchManager {
     }
     
     /**
-     *
      * @throws SearchManagerException
      */
     private void commit() throws SearchManagerException {
@@ -119,22 +117,12 @@ public class SolrSearchManager implements SearchManager {
         }
     }
 
-    /**
-     *
-     * @param baseURL
-     * @return
-     */
     public static SolrSearchManager createWithBaseURL(@NonNull String baseURL) {
         SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(baseURL).build();
 
         return new SolrSearchManager(solrClient);
     }
 
-    /**
-     *
-     * @param solrClient
-     * @return
-     */
     public static SolrSearchManager createWithSolrClient(@NonNull SolrClient solrClient) {
         return new SolrSearchManager(solrClient);
     }
@@ -152,12 +140,6 @@ public class SolrSearchManager implements SearchManager {
         deleteFromIndex(removable, true);
     }
 
-    /**
-     *
-     * @param removable
-     * @param commit
-     * @throws SearchManagerException
-     */
     private void deleteFromIndex(@NonNull PrintModelReference removable, boolean commit) throws SearchManagerException {
 
         try {

@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Provides the ability to do file-type-filtering
+ *
  * @author
  * @author
  */
@@ -19,6 +20,7 @@ public class FileFilter extends Filter {
 
     /**
      * Creates a FileFilter-object
+     *
      * @param fileTypes List of Strings representing file-types
      */
     public FileFilter(@NonNull List<String> fileTypes) {
