@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * Provides the ability to do file-type-filtering
- * @author
- * @author
  */
 public class FileFilter extends Filter {
 

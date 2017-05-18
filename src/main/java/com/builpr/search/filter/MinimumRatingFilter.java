@@ -5,8 +5,6 @@ import lombok.Getter;
 
 /**
  * Provides the ability to do minimum-rating-filtering
- * @author
- * @author
  */
 public class MinimumRatingFilter extends Filter {
 

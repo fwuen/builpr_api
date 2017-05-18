@@ -4,23 +4,22 @@ import com.builpr.search.model.IndexablePrintModel;
 import lombok.NonNull;
 import org.apache.solr.common.SolrInputDocument;
 
+/**
+ * Provides the ability to create Solr-specific input documents
+ */
 public class SolrInputDocumentFactory {
 
     /**
-     *
-     * @param indexable
-     * @return
+     * Creates and returns a SolrInputDocument-object
+     * @param indexable IndexablePrintModel-object to be transformed into a SolrInputDocument-object
+     * @return SolrInputDocument-object
      */
     public SolrInputDocument get(@NonNull IndexablePrintModel indexable) {
 
         return createInputDocumentWith(indexable);
     }
 
-    /**
-     *
-     * @param indexable
-     * @return
-     */
+    //TODO: kann man das irgendwie cooler lösen? Die obere Methode ruft diese ja nur auf
     /*TODO: Wo wird das Boosting festgelegt? Bei SolrInputDocument und SolrInputField ist es laut Dokumentation Deprecated.*/
     private SolrInputDocument createInputDocumentWith(IndexablePrintModel indexable) {
         SolrInputDocument inputDocument = new SolrInputDocument();
