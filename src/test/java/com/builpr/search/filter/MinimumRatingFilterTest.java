@@ -22,15 +22,6 @@ public class MinimumRatingFilterTest {
     }
 
     /**
-     * Try to create a MinimumRatingFilter-object with 0 as a parameter
-     * The test should fail with an IllegalArgumentException
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void createWithZero() {
-        new MinimumRatingFilter(0);
-    }
-
-    /**
      * Try to create a MinimumRatingFilter-object with a negative parameter
      * The test should fail with an IllegalArgumentException
      */
