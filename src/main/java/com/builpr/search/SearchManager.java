@@ -14,6 +14,7 @@ public interface SearchManager {
     
     /**
      * Searches for data fitting the passed term
+     *
      * @param term Term to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
@@ -22,7 +23,8 @@ public interface SearchManager {
     
     /**
      * Searches for data fitting the passed term and filters
-     * @param term Term to execute the search with
+     *
+     * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
@@ -31,7 +33,8 @@ public interface SearchManager {
     
     /**
      * Searches for data fitting the passed term and order regulation
-     * @param term Term to execute the search with
+     *
+     * @param term  Term to execute the search with
      * @param order Order regulation to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
@@ -40,9 +43,10 @@ public interface SearchManager {
     
     /**
      * Searches for data fitting the passed term, filters and order regulation
-     * @param term Term to execute the search with
+     *
+     * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
-     * @param order Order regulation to execute the search with
+     * @param order  Order regulation to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
      */
@@ -50,6 +54,7 @@ public interface SearchManager {
     
     /**
      * Adds print models to the index of the used search engine
+     *
      * @param indexables List of IndexablePrintModel-objects to be added to the index
      * @throws SearchManagerException SearchManagerException
      */
@@ -57,6 +62,7 @@ public interface SearchManager {
     
     /**
      * Adds a single print model to the index of the used search engine
+     *
      * @param indexable IndexablePrintModel-object representing the print model to be added to the index
      * @throws SearchManagerException SearchManagerException
      */
@@ -64,13 +70,15 @@ public interface SearchManager {
     
     /**
      * Deletes print models from the index of the used search engine
+     *
      * @param removables List of PrintModelReference-objects representing the print models to be deleted from the index
      * @throws SearchManagerException SearchManagerException
      */
-    public void deleteFromIndex(List<PrintModelReference> removables) throws  SearchManagerException;
+    public void deleteFromIndex(List<PrintModelReference> removables) throws SearchManagerException;
     
     /**
      * Deletes a single print model from the index of the used search engine
+     *
      * @param removable PrintModelReference-object representing the print model to be deleted from the index
      * @throws SearchManagerException SearchManagerException
      */
@@ -78,9 +86,10 @@ public interface SearchManager {
     
     /**
      * Checks if the search engine server is reachable
+     *
      * @return true - server is reachable, false - server is not reachable
      * @throws SearchManagerException SearchManagerException
      */
     public boolean isReachable() throws SearchManagerException;
-
+    
 }

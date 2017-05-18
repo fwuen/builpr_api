@@ -77,7 +77,6 @@ public class SolrSearchManager implements SearchManager {
     }
     
     /**
-     *
      * @param indexable
      * @param commit
      * @throws SearchManagerException
@@ -96,7 +95,6 @@ public class SolrSearchManager implements SearchManager {
     }
     
     /**
-     *
      * @throws SearchManagerException
      */
     private void commit() throws SearchManagerException {

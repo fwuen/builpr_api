@@ -14,7 +14,8 @@ import java.util.List;
 public class PrintModelReferenceFactory {
 
     /**
-     * Creates and returns a List of PrintModelReference-objects
+     * Create and return a List of PrintModelReference-objects
+     *
      * @param data List of SolrDocuments to be transformed and stored in PrintModelReference-objects
      * @return List of PrintModelReference-objects
      */
@@ -23,14 +24,15 @@ public class PrintModelReferenceFactory {
 
         List<PrintModelReference> results = Lists.newArrayList();
 
-        for(SolrDocument solrDocument : data)
+        for (SolrDocument solrDocument : data)
             results.add(get(solrDocument));
 
         return results;
     }
 
     /**
-     * Creates and returns a single PrintModelReference-object
+     * Create and return a single PrintModelReference-object
+     *
      * @param data SolrDocument to be transformed and stored in PrintModelReference-object
      * @return PrintModelReference-object
      */
@@ -38,7 +40,7 @@ public class PrintModelReferenceFactory {
         Preconditions.checkArgument(data.containsKey(SolrFields.PRINT_MODEL_ID));
 
         return new PrintModelReference(
-            Integer.valueOf(String.valueOf(data.get(SolrFields.PRINT_MODEL_ID)))
+                Integer.valueOf(String.valueOf(data.get(SolrFields.PRINT_MODEL_ID)))
         );
     }
 

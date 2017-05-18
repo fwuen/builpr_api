@@ -9,19 +9,20 @@ import java.util.List;
 /**
  * Provides the ability to do tag-filtering
  */
-public class TagFilter extends Filter{
-
+public class TagFilter extends Filter {
+    
     @Getter
     private List<String> tags;
-
+    
     /**
      * Creates a TagFilter-object
+     *
      * @param tags List of Strings representing the tags
      */
     public TagFilter(@NonNull List<String> tags) {
         Preconditions.checkArgument(tags.size() > 0);
-
+        
         this.tags = tags;
     }
-
+    
 }
