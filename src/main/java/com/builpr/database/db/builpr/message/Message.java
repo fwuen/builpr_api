@@ -1,6 +1,7 @@
 package com.builpr.database.db.builpr.message;
 
 import com.builpr.database.db.builpr.message.generated.GeneratedMessage;
+import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code Message}-table in the database.
@@ -9,7 +10,7 @@ import com.builpr.database.db.builpr.message.generated.GeneratedMessage;
  * 
  * @author com.builpr
  */
-public interface Message extends GeneratedMessage {
+public interface Message extends GeneratedMessage, DatabaseObject {
     
     
 }

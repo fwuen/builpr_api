@@ -1,6 +1,7 @@
 package com.builpr.database.db.builpr.printablecategory;
 
 import com.builpr.database.db.builpr.printablecategory.generated.GeneratedPrintableCategory;
+import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code PrintableCategory}-table in the
@@ -10,7 +11,7 @@ import com.builpr.database.db.builpr.printablecategory.generated.GeneratedPrinta
  * 
  * @author com.builpr
  */
-public interface PrintableCategory extends GeneratedPrintableCategory {
+public interface PrintableCategory extends GeneratedPrintableCategory, DatabaseObject {
     
     
 }

@@ -1,6 +1,7 @@
 package com.builpr.database.db.builpr.printablecustomtag;
 
 import com.builpr.database.db.builpr.printablecustomtag.generated.GeneratedPrintableCustomTag;
+import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code PrintableCustomTag}-table in
@@ -10,7 +11,7 @@ import com.builpr.database.db.builpr.printablecustomtag.generated.GeneratedPrint
  * 
  * @author com.builpr
  */
-public interface PrintableCustomTag extends GeneratedPrintableCustomTag {
+public interface PrintableCustomTag extends GeneratedPrintableCustomTag, DatabaseObject {
     
     
 }
