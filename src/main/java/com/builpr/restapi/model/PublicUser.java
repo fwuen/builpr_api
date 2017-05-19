@@ -38,7 +38,7 @@ public class PublicUser {
 
 
     public PublicUser(User user) {
-        uid = user.getUid();
+        uid = user.getUserId();
         username = user.getUsername();
 
         if(user.getShowEmail()) {
