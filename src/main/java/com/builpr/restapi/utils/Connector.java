@@ -83,7 +83,7 @@ public class Connector {
         return getConnection().getOrThrow(UserCategoriesManager.class);
     }
 
-    public static Manager getManagerByDatabaseobject(DatabaseObject databaseObject) throws Exception{
+    public static Manager getManagerByDatabaseObject(DatabaseObject databaseObject) throws Exception{
         if (databaseObject instanceof Collection) {
             return getCollectionManager();
         } else if(databaseObject instanceof Conversation) {

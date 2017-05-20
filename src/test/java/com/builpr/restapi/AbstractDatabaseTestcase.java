@@ -34,7 +34,7 @@ public abstract class AbstractDatabaseTestcase {
      */
     @AfterClass
     public static void tearDownAfterClass() {
-
+        // @todo if possible, disconnect (if connected to it) from the testscheme of the database
     }
 
     /**
@@ -50,7 +50,7 @@ public abstract class AbstractDatabaseTestcase {
      */
     @After
     public void tearDown() {
-        // @todo if possible, disconnect (if connected to it) from the testscheme of the database
+        destroyDataset();
     }
 
     public void addToDataset(DatabaseObject databaseObject) {
@@ -64,7 +64,7 @@ public abstract class AbstractDatabaseTestcase {
         for (DatabaseObject obj :
                 dataset) {
             try {
-                Connector.getManagerByDatabaseobject(obj).persist(obj);
+                Connector.getManagerByDatabaseObject(obj).persist(obj);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -72,13 +72,13 @@ public abstract class AbstractDatabaseTestcase {
     }
 
     /**
-     * removes dataset from database
+     * removes dataset from the database
      */
     public void destroyDataset() {
         for (DatabaseObject obj :
                 dataset) {
             try {
-                Connector.getManagerByDatabaseobject(obj).remove(obj);
+                Connector.getManagerByDatabaseObject(obj).remove(obj);
             } catch (Exception e) {
                 e.printStackTrace();
             }
