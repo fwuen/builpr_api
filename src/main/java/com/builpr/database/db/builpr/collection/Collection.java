@@ -1,6 +1,7 @@
 package com.builpr.database.db.builpr.collection;
 
 import com.builpr.database.db.builpr.collection.generated.GeneratedCollection;
+import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code Collection}-table in the
@@ -10,7 +11,7 @@ import com.builpr.database.db.builpr.collection.generated.GeneratedCollection;
  * 
  * @author com.builpr
  */
-public interface Collection extends GeneratedCollection {
+public interface Collection extends GeneratedCollection, DatabaseObject {
     
     
 }
