@@ -28,7 +28,7 @@ public abstract class GeneratedMessageSqlAdapter {
     private final TableIdentifier<Message> tableIdentifier;
     
     protected GeneratedMessageSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Message");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "message");
     }
     
     @ExecuteBefore(RESOLVED)

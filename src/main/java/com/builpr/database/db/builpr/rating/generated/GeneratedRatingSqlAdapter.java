@@ -28,7 +28,7 @@ public abstract class GeneratedRatingSqlAdapter {
     private final TableIdentifier<Rating> tableIdentifier;
     
     protected GeneratedRatingSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Rating");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "rating");
     }
     
     @ExecuteBefore(RESOLVED)

@@ -38,6 +38,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE'
     compile 'org.apache.solr:solr-solrj:6.5.1'
     compile 'org.springframework.security:spring-security-web:4.2.2.RELEASE'
+    compile 'org.springframework.security.oauth:spring-security-oauth2:2.1.0.RELEASE'
+    compile 'org.springframework.security:spring-security-jwt:1.0.2.RELEASE'
 
     compile 'com.timgroup:jgravatar:1.1'
 

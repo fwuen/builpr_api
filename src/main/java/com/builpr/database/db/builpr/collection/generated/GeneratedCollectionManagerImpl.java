@@ -22,7 +22,7 @@ public abstract class GeneratedCollectionManagerImpl extends AbstractManager<Col
     private final TableIdentifier<Collection> tableIdentifier;
     
     protected GeneratedCollectionManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Collection");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "collection");
     }
     
     @Override

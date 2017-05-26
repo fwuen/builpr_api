@@ -28,7 +28,7 @@ public abstract class GeneratedConversationSqlAdapter {
     private final TableIdentifier<Conversation> tableIdentifier;
     
     protected GeneratedConversationSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Conversation");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "conversation");
     }
     
     @ExecuteBefore(RESOLVED)

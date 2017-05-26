@@ -34,7 +34,7 @@ public abstract class GeneratedUserSqlAdapter {
     private SqlTypeMapperHelper<Integer, Boolean> showEmailHelper;
     
     protected GeneratedUserSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "User");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "user");
     }
     
     @ExecuteBefore(RESOLVED)

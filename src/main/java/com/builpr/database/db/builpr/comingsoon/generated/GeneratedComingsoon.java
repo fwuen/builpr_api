@@ -27,7 +27,7 @@ public interface GeneratedComingsoon {
      * This Field corresponds to the {@link Comingsoon} field that can be
      * obtained using the {@link Comingsoon#getId()} method.
      */
-    final IntField<Comingsoon, Integer> ID = IntField.create(
+    IntField<Comingsoon, Integer> ID = IntField.create(
         Identifier.ID,
         Comingsoon::getId,
         Comingsoon::setId,
@@ -38,7 +38,7 @@ public interface GeneratedComingsoon {
      * This Field corresponds to the {@link Comingsoon} field that can be
      * obtained using the {@link Comingsoon#getEmail()} method.
      */
-    final StringField<Comingsoon, String> EMAIL = StringField.create(
+    StringField<Comingsoon, String> EMAIL = StringField.create(
         Identifier.EMAIL,
         Comingsoon::getEmail,
         Comingsoon::setEmail,
@@ -49,7 +49,7 @@ public interface GeneratedComingsoon {
      * This Field corresponds to the {@link Comingsoon} field that can be
      * obtained using the {@link Comingsoon#getActivated()} method.
      */
-    final IntField<Comingsoon, Integer> ACTIVATED = IntField.create(
+    IntField<Comingsoon, Integer> ACTIVATED = IntField.create(
         Identifier.ACTIVATED,
         Comingsoon::getActivated,
         Comingsoon::setActivated,
@@ -60,7 +60,7 @@ public interface GeneratedComingsoon {
      * This Field corresponds to the {@link Comingsoon} field that can be
      * obtained using the {@link Comingsoon#getKey()} method.
      */
-    final StringField<Comingsoon, String> KEY = StringField.create(
+    StringField<Comingsoon, String> KEY = StringField.create(
         Identifier.KEY,
         o -> OptionalUtil.unwrap(o.getKey()),
         Comingsoon::setKey,

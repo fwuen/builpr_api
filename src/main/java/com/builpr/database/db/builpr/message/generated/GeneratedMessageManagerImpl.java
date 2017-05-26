@@ -22,7 +22,7 @@ public abstract class GeneratedMessageManagerImpl extends AbstractManager<Messag
     private final TableIdentifier<Message> tableIdentifier;
     
     protected GeneratedMessageManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Message");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "message");
     }
     
     @Override

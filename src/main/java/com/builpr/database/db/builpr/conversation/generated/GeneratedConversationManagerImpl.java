@@ -22,7 +22,7 @@ public abstract class GeneratedConversationManagerImpl extends AbstractManager<C
     private final TableIdentifier<Conversation> tableIdentifier;
     
     protected GeneratedConversationManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Conversation");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "conversation");
     }
     
     @Override

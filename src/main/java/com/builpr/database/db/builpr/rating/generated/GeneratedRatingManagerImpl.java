@@ -22,7 +22,7 @@ public abstract class GeneratedRatingManagerImpl extends AbstractManager<Rating>
     private final TableIdentifier<Rating> tableIdentifier;
     
     protected GeneratedRatingManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Rating");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "rating");
     }
     
     @Override

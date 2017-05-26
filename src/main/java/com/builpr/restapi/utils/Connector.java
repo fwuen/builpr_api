@@ -7,21 +7,21 @@ import com.builpr.database.db.builpr.collection.Collection;
 import com.builpr.database.db.builpr.collection.CollectionManager;
 import com.builpr.database.db.builpr.conversation.Conversation;
 import com.builpr.database.db.builpr.conversation.ConversationManager;
-import com.builpr.database.db.builpr.customtags.CustomTags;
-import com.builpr.database.db.builpr.customtags.CustomTagsManager;
+import com.builpr.database.db.builpr.customtags.Customtags;
+import com.builpr.database.db.builpr.customtags.CustomtagsManager;
 import com.builpr.database.db.builpr.message.MessageManager;
 import com.builpr.database.db.builpr.printable.Printable;
 import com.builpr.database.db.builpr.printable.PrintableManager;
-import com.builpr.database.db.builpr.printablecategory.PrintableCategory;
-import com.builpr.database.db.builpr.printablecategory.PrintableCategoryManager;
-import com.builpr.database.db.builpr.printablecustomtag.PrintableCustomTag;
-import com.builpr.database.db.builpr.printablecustomtag.PrintableCustomTagManager;
+import com.builpr.database.db.builpr.printablecategory.Printablecategory;
+import com.builpr.database.db.builpr.printablecategory.PrintablecategoryManager;
+import com.builpr.database.db.builpr.printablecustomtag.Printablecustomtag;
+import com.builpr.database.db.builpr.printablecustomtag.PrintablecustomtagManager;
 import com.builpr.database.db.builpr.rating.Rating;
 import com.builpr.database.db.builpr.rating.RatingManager;
 import com.builpr.database.db.builpr.user.User;
 import com.builpr.database.db.builpr.user.UserManager;
-import com.builpr.database.db.builpr.usercategories.UserCategories;
-import com.builpr.database.db.builpr.usercategories.UserCategoriesManager;
+import com.builpr.database.db.builpr.usercategory.Usercategory;
+import com.builpr.database.db.builpr.usercategory.UsercategoryManager;
 import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 import com.speedment.runtime.core.manager.Manager;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -33,9 +33,9 @@ public class Connector {
 
     public static BuilprApplication getConnection() {
         if(schemaName == null) {
-            return new BuilprApplicationBuilder().withPassword("builpr123").build();
+            return new BuilprApplicationBuilder().build();
         }else{
-            return new BuilprApplicationBuilder().withSchema(schemaName).withPassword("builpr123").build();
+            return new BuilprApplicationBuilder().withSchema(schemaName).build();
         }
 
     }
@@ -52,8 +52,8 @@ public class Connector {
         return getConnection().getOrThrow(ConversationManager.class);
     }
 
-    public static CustomTagsManager getCustomTagsManager() {
-        return getConnection().getOrThrow(CustomTagsManager.class);
+    public static CustomtagsManager getCustomTagsManager() {
+        return getConnection().getOrThrow(CustomtagsManager.class);
     }
 
     public static MessageManager getMessageManager() {
@@ -64,12 +64,12 @@ public class Connector {
         return getConnection().getOrThrow(PrintableManager.class);
     }
 
-    public static PrintableCategoryManager getPrintableCategoryManager() {
-        return getConnection().getOrThrow(PrintableCategoryManager.class);
+    public static PrintablecategoryManager getPrintableCategoryManager() {
+        return getConnection().getOrThrow(PrintablecategoryManager.class);
     }
 
-    public static PrintableCustomTagManager getPrintableCustomTagManager() {
-        return getConnection().getOrThrow(PrintableCustomTagManager.class);
+    public static PrintablecustomtagManager getPrintableCustomTagManager() {
+        return getConnection().getOrThrow(PrintablecustomtagManager.class);
     }
 
     public static RatingManager getRatingManager() {
@@ -80,8 +80,8 @@ public class Connector {
         return getConnection().getOrThrow(UserManager.class);
     }
 
-    public static UserCategoriesManager getUserCateogriesManager() {
-        return getConnection().getOrThrow(UserCategoriesManager.class);
+    public static UsercategoryManager getUserCateogriesManager() {
+        return getConnection().getOrThrow(UsercategoryManager.class);
     }
 
     public static Manager getManagerByDatabaseObject(DatabaseObject databaseObject) throws Exception{
@@ -89,21 +89,21 @@ public class Connector {
             return getCollectionManager();
         } else if(databaseObject instanceof Conversation) {
             return getConversationManager();
-        } else if (databaseObject instanceof CustomTags) {
+        } else if (databaseObject instanceof Customtags) {
             return getCustomTagsManager();
         } else if (databaseObject instanceof MessageManager) {
             return getMessageManager();
         } else if (databaseObject instanceof Printable) {
             return getPrintableManager();
-        } else if (databaseObject instanceof PrintableCategory) {
+        } else if (databaseObject instanceof Printablecategory) {
             return getPrintableCategoryManager();
-        } else if (databaseObject instanceof PrintableCustomTag) {
+        } else if (databaseObject instanceof Printablecustomtag) {
             return getPrintableCustomTagManager();
         } else if (databaseObject instanceof Rating) {
             return getRatingManager();
         } else if (databaseObject instanceof User) {
             return getUserManager();
-        } else if (databaseObject instanceof UserCategories) {
+        } else if (databaseObject instanceof Usercategory) {
             return getUserCateogriesManager();
         } else {
             throw new Exception("Wrong datatype!"); // @todo exception erstellen

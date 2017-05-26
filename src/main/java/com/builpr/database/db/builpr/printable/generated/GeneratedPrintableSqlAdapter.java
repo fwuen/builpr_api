@@ -5,9 +5,12 @@ import com.builpr.database.db.builpr.printable.PrintableImpl;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.common.injector.annotation.ExecuteBefore;
 import com.speedment.common.injector.annotation.WithState;
+import com.speedment.runtime.config.Project;
 import com.speedment.runtime.config.identifier.TableIdentifier;
+import com.speedment.runtime.core.component.ProjectComponent;
 import com.speedment.runtime.core.component.sql.SqlPersistenceComponent;
 import com.speedment.runtime.core.component.sql.SqlStreamSupplierComponent;
+import com.speedment.runtime.core.component.sql.SqlTypeMapperHelper;
 import com.speedment.runtime.core.exception.SpeedmentException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,9 +29,10 @@ import static com.speedment.common.injector.State.RESOLVED;
 public abstract class GeneratedPrintableSqlAdapter {
     
     private final TableIdentifier<Printable> tableIdentifier;
+    private SqlTypeMapperHelper<Integer, Boolean> ageRestrictionHelper;
     
     protected GeneratedPrintableSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Printable");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "printable");
     }
     
     @ExecuteBefore(RESOLVED)
@@ -40,13 +44,13 @@ public abstract class GeneratedPrintableSqlAdapter {
     protected Printable apply(ResultSet resultSet) throws SpeedmentException {
         final Printable entity = createEntity();
         try {
-            entity.setPrintableId(    resultSet.getInt(1)    );
-            entity.setTitle(          resultSet.getString(2) );
-            entity.setDescription(    resultSet.getString(3) );
-            entity.setFile(           resultSet.getString(4) );
-            entity.setAgeRestriction( resultSet.getInt(5)    );
-            entity.setUploaderId(     resultSet.getInt(6)    );
-            entity.setUploadDate(     resultSet.getDate(7)   );
+            entity.setPrintableId(    resultSet.getInt(1)                             );
+            entity.setTitle(          resultSet.getString(2)                          );
+            entity.setDescription(    resultSet.getString(3)                          );
+            entity.setFile(           resultSet.getString(4)                          );
+            entity.setAgeRestriction( ageRestrictionHelper.apply(resultSet.getInt(5)) );
+            entity.setUploaderId(     resultSet.getInt(6)                             );
+            entity.setUploadDate(     resultSet.getDate(7)                            );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }
@@ -55,5 +59,11 @@ public abstract class GeneratedPrintableSqlAdapter {
     
     protected PrintableImpl createEntity() {
         return new PrintableImpl();
+    }
+    
+    @ExecuteBefore(RESOLVED)
+    void createHelpers(ProjectComponent projectComponent) {
+        final Project project = projectComponent.getProject();
+        ageRestrictionHelper = SqlTypeMapperHelper.create(project, Printable.AGE_RESTRICTION, Printable.class);
     }
 }

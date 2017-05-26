@@ -4,7 +4,7 @@ import com.builpr.database.db.builpr.message.generated.GeneratedMessage;
 import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
- * The main interface for entities of the {@code Message}-table in the database.
+ * The main interface for entities of the {@code message}-table in the database.
  * <p>
  * This file is safe to edit. It will not be overwritten by the code generator.
  * 

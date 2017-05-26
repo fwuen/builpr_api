@@ -22,7 +22,7 @@ public abstract class GeneratedUserManagerImpl extends AbstractManager<User> imp
     private final TableIdentifier<User> tableIdentifier;
     
     protected GeneratedUserManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "User");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "user");
     }
     
     @Override

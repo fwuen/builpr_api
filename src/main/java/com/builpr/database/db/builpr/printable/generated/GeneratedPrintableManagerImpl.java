@@ -22,7 +22,7 @@ public abstract class GeneratedPrintableManagerImpl extends AbstractManager<Prin
     private final TableIdentifier<Printable> tableIdentifier;
     
     protected GeneratedPrintableManagerImpl() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Printable");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "printable");
     }
     
     @Override

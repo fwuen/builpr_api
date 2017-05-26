@@ -26,7 +26,7 @@ public abstract class GeneratedPrintableImpl implements Printable {
     private String title;
     private String description;
     private String file;
-    private int ageRestriction;
+    private boolean ageRestriction;
     private int uploaderId;
     private Date uploadDate;
     
@@ -55,7 +55,7 @@ public abstract class GeneratedPrintableImpl implements Printable {
     }
     
     @Override
-    public int getAgeRestriction() {
+    public boolean getAgeRestriction() {
         return ageRestriction;
     }
     
@@ -94,7 +94,7 @@ public abstract class GeneratedPrintableImpl implements Printable {
     }
     
     @Override
-    public Printable setAgeRestriction(int ageRestriction) {
+    public Printable setAgeRestriction(boolean ageRestriction) {
         this.ageRestriction = ageRestriction;
         return this;
     }
@@ -151,7 +151,7 @@ public abstract class GeneratedPrintableImpl implements Printable {
         hash = 31 * hash + Objects.hashCode(getTitle());
         hash = 31 * hash + Objects.hashCode(getDescription());
         hash = 31 * hash + Objects.hashCode(getFile());
-        hash = 31 * hash + Integer.hashCode(getAgeRestriction());
+        hash = 31 * hash + Boolean.hashCode(getAgeRestriction());
         hash = 31 * hash + Integer.hashCode(getUploaderId());
         hash = 31 * hash + Objects.hashCode(getUploadDate());
         return hash;

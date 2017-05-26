@@ -4,7 +4,7 @@ import com.builpr.database.db.builpr.printable.generated.GeneratedPrintable;
 import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
- * The main interface for entities of the {@code Printable}-table in the
+ * The main interface for entities of the {@code printable}-table in the
  * database.
  * <p>
  * This file is safe to edit. It will not be overwritten by the code generator.

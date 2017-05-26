@@ -28,7 +28,7 @@ public abstract class GeneratedCollectionSqlAdapter {
     private final TableIdentifier<Collection> tableIdentifier;
     
     protected GeneratedCollectionSqlAdapter() {
-        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "Collection");
+        this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "collection");
     }
     
     @ExecuteBefore(RESOLVED)
