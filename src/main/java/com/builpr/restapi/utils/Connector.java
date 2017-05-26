@@ -24,6 +24,7 @@ import com.builpr.database.db.builpr.usercategories.UserCategories;
 import com.builpr.database.db.builpr.usercategories.UserCategoriesManager;
 import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 import com.speedment.runtime.core.manager.Manager;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 
 public class Connector {
