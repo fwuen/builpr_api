@@ -40,21 +40,21 @@ public class SolrSearchManager implements SearchManager {
 
     @Override
     public List<PrintableReference> search(@NonNull String term) throws SearchManagerException {
-        return search(term, Lists.newArrayList(), Order.RELEVANCE);
+        return search(term, Lists.newArrayList(), Sort.RELEVANCE);
     }
 
     @Override
     public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
-        return search(term, filter, Order.RELEVANCE);
+        return search(term, filter, Sort.RELEVANCE);
     }
 
     @Override
-    public List<PrintableReference> search(@NonNull String term, @NonNull Order order) throws SearchManagerException {
+    public List<PrintableReference> search(@NonNull String term, @NonNull Sort order) throws SearchManagerException {
         return search(term, Lists.newArrayList(), order);
     }
 
     @Override
-    public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
+    public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Sort sort) throws SearchManagerException {
         try {
             SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, sort);
 
