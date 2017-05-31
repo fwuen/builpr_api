@@ -1,5 +1,6 @@
 package com.builpr.search.solr;
 
+import com.builpr.search.Order;
 import com.builpr.search.Sort;
 import com.builpr.search.filter.*;
 import lombok.NonNull;
@@ -12,7 +13,8 @@ public class SolrQueryFactory {
     public SolrQuery getQueryWith(
             @NonNull String term,
             @NonNull List<Filter> filter,
-            @NonNull Sort sort
+            @NonNull Sort sort,
+            @NonNull Order order
     ) {
         SolrQuery query = new SolrQuery();
         query.setQuery(term);
