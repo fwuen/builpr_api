@@ -4,7 +4,6 @@ import com.builpr.search.filter.Filter;
 import com.builpr.search.model.IndexablePrintModel;
 import com.builpr.search.model.PrintModelReference;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,25 +31,25 @@ public interface SearchManager {
     public List<PrintModelReference> search(String term, List<Filter> filter) throws SearchManagerException;
     
     /**
-     * Searches for data fitting the passed term and order regulation
+     * Searches for data fitting the passed term and sort regulation
      *
      * @param term  Term to execute the search with
-     * @param order Order regulation to execute the search with
+     * @param sort Sort regulation to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintModelReference> search(String term, Order order) throws SearchManagerException;
+    public List<PrintModelReference> search(String term, Sort sort) throws SearchManagerException;
     
     /**
-     * Searches for data fitting the passed term, filters and order regulation
+     * Searches for data fitting the passed term, filters and sort regulation
      *
      * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
-     * @param order  Order regulation to execute the search with
+     * @param sort  Sort regulation to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintModelReference> search(String term, List<Filter> filter, Order order) throws SearchManagerException;
+    public List<PrintModelReference> search(String term, List<Filter> filter, Sort sort) throws SearchManagerException;
     
     /**
      * Adds print models to the index of the used search engine

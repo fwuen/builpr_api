@@ -16,11 +16,8 @@ public class SolrFields {
     public static final String PRINT_MODEL_DESCRIPTION = "description";
     public static final float BOOST_MODEL_DESCRIPTION = 1.0f;
     
-    public static final String PRINT_MODEL_TYPE = "type";
-    public static final float BOOST_MODEL_TYPE = 0.0f;
-    
-    public static final String PRINT_MODEL_TAGS = "tags";
-    public static final float BOOST_MODEL_TAGS = 2.0f;
+    public static final String PRINT_MODEL_CATEGORIES = "categories";
+    public static final float BOOST_MODEL_CATEGORIES = 2.0f;
     
     public static final String PRINT_MODEL_UPLOADER = "uploader";
     public static final float BOOST_MODEL_UPLOADER = 0.0f;

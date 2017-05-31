@@ -21,10 +21,7 @@ public class IndexablePrintModel {
     
     @Getter
     private String description;
-    
-    @Getter
-    private String type;
-    
+
     @Getter
     private int uploaderId;
     
@@ -35,7 +32,7 @@ public class IndexablePrintModel {
     private double rating;
     
     @Getter
-    private List<String> tags;
+    private List<String> categories;
     
     
     /**
@@ -111,19 +108,6 @@ public class IndexablePrintModel {
         /**
          * Adds the new parameter to the Builder-object and returns it
          *
-         * @param type The (file-)type of the PrintModel
-         * @return Builder-object with the new parameter added to it
-         */
-        public Builder withType(String type) {
-            Preconditions.checkNotNull(type);
-            
-            toBuild.type = type;
-            return this;
-        }
-        
-        /**
-         * Adds the new parameter to the Builder-object and returns it
-         *
          * @param uploaderId The uploader-id of the PrintModel (references to the user who provided the PrintModel)
          * @return Builder-object with the new parameter added to it
          */
@@ -164,13 +148,13 @@ public class IndexablePrintModel {
         /**
          * Adds the new parameter to the Builder-object and returns it
          *
-         * @param tags List of Strings representing the tags of the PrintModel
+         * @param categories List of Strings representing the categories of the PrintModel
          * @return Builder-object with the new parameter added to it
          */
-        public Builder withTags(List<String> tags) {
-            Preconditions.checkNotNull(tags);
+        public Builder withCategories(List<String> categories) {
+            Preconditions.checkNotNull(categories);
             
-            toBuild.tags = tags;
+            toBuild.categories = categories;
             return this;
         }
         
@@ -184,12 +168,11 @@ public class IndexablePrintModel {
             Verify.verifyNotNull(toBuild.title);
             Verify.verifyNotNull(toBuild.description);
             Verify.verify(toBuild.id >= 0);
-            Verify.verifyNotNull(toBuild.type);
             Verify.verify(toBuild.rating >= MinimumRatingFilter.LOWEST_POSSIBLE_RATING);
             Verify.verify(toBuild.rating <= MinimumRatingFilter.HIGHEST_POSSIBLE_RATING);
             Verify.verify(toBuild.uploaderId >= 0);
             Verify.verifyNotNull(toBuild.uploadDate);
-            Verify.verifyNotNull(toBuild.tags);
+            Verify.verifyNotNull(toBuild.categories);
             
             return this.toBuild;
         }

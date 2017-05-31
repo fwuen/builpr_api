@@ -20,8 +20,7 @@ public class SolrInputDocumentFactory {
         inputDocument.addField(SolrFields.PRINT_MODEL_ID, indexable.getId());
         inputDocument.addField(SolrFields.PRINT_MODEL_TITLE, indexable.getTitle());
         inputDocument.addField(SolrFields.PRINT_MODEL_DESCRIPTION, indexable.getDescription());
-        inputDocument.addField(SolrFields.PRINT_MODEL_TAGS, indexable.getTags());
-        inputDocument.addField(SolrFields.PRINT_MODEL_TYPE, indexable.getType());
+        inputDocument.addField(SolrFields.PRINT_MODEL_CATEGORIES, indexable.getCategories());
         inputDocument.addField(SolrFields.PRINT_MODEL_UPLOADER, indexable.getUploaderId());
         inputDocument.addField(SolrFields.PRINT_MODEL_UPLOAD_DATE, indexable.getUploadDate());
         inputDocument.addField(SolrFields.PRINT_MODEL_RATING, indexable.getRating());

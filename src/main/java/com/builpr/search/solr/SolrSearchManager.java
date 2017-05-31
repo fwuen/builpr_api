@@ -8,14 +8,11 @@ import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
-import java.io.IOException;
 import java.util.List;
 // TODO: Doku für @Override-Methode erben
 
@@ -43,23 +40,23 @@ public class SolrSearchManager implements SearchManager {
 
     @Override
     public List<PrintModelReference> search(@NonNull String term) throws SearchManagerException {
-        return search(term, Lists.newArrayList(), Order.RELEVANCE);
+        return search(term, Lists.newArrayList(), Sort.RELEVANCE);
     }
 
     @Override
     public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
-        return search(term, filter, Order.RELEVANCE);
+        return search(term, filter, Sort.RELEVANCE);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull Order order) throws SearchManagerException {
-        return search(term, Lists.newArrayList(), order);
+    public List<PrintModelReference> search(@NonNull String term, @NonNull Sort sort) throws SearchManagerException {
+        return search(term, Lists.newArrayList(), sort);
     }
 
     @Override
-    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
+    public List<PrintModelReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Sort sort) throws SearchManagerException {
         try {
-            SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, order);
+            SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, sort);
 
             QueryResponse queryResponse = solrClient.query(COLLECTION, solrQuery);
 
