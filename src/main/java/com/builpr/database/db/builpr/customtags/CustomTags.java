@@ -1,6 +1,7 @@
 package com.builpr.database.db.builpr.customtags;
 
 import com.builpr.database.db.builpr.customtags.generated.GeneratedCustomTags;
+import com.builpr.restapi.utils.help_interfaces.DatabaseObject;
 
 /**
  * The main interface for entities of the {@code CustomTags}-table in the
@@ -10,7 +11,7 @@ import com.builpr.database.db.builpr.customtags.generated.GeneratedCustomTags;
  * 
  * @author com.builpr
  */
-public interface CustomTags extends GeneratedCustomTags {
+public interface CustomTags extends GeneratedCustomTags, DatabaseObject {
     
     
 }

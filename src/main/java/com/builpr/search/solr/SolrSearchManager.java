@@ -56,7 +56,7 @@ public class SolrSearchManager implements SearchManager {
     @Override
     public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Order order) throws SearchManagerException {
         try {
-            SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, order);
+            SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, sort);
 
             QueryResponse queryResponse = solrClient.query(COLLECTION, solrQuery);
 
