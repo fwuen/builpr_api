@@ -45,7 +45,7 @@ public interface SearchManager {
      *
      * @param term  Term to execute the search with
      * @param sort  SORT regulation to execute the search with
-     * @param ORDER ORDER regulation to execute the search with
+     * @param order ORDER regulation to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
      */
@@ -68,7 +68,7 @@ public interface SearchManager {
      * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
      * @param sort  SORT regulation to execute the search with
-     * @param ORDER ORDER regulation to execute the search with
+     * @param order ORDER regulation to execute the search with
      * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */

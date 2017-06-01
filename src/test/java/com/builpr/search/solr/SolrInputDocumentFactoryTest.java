@@ -34,9 +34,8 @@ public class SolrInputDocumentFactoryTest {
                 .withDescription("Test")
                 .withId(1)
                 .withRating(1.0)
-                .withTags(new ArrayList<String>(Arrays.asList("Test")))
+                .withCategories(new ArrayList<String>(Arrays.asList("Test")))
                 .withTitle("Test")
-                .withType("Test")
                 .withUploadDate(new Date(0))
                 .withUploaderId(1)
                 .build();
