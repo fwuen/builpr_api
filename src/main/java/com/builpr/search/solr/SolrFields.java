@@ -27,6 +27,9 @@ public class SolrFields {
     
     public static final String PRINT_MODEL_RATING = "rating";
     public static final float BOOST_MODEL_RATING = 1.5f;
-    
+
+    public static final String PRINT_MODEL_DOWNLOADS = "downloads";
+    public static final float BOOST_MODEL_DOWNLOADS = 1.2f;
+
     
 }

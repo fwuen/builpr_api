@@ -4,6 +4,7 @@ import com.builpr.search.filter.MinimumRatingFilter;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import lombok.Getter;
+import org.apache.solr.client.solrj.beans.Field;
 
 import java.util.Date;
 import java.util.List;

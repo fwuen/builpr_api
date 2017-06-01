@@ -34,45 +34,45 @@ public interface SearchManager {
      * Searches for data fitting the passed term and sort regulation
      *
      * @param term  Term to execute the search with
-     * @param sort Sort regulation to execute the search with
+     * @param sort SORT regulation to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintableReference> search(String term, Sort sort) throws SearchManagerException;
+    public List<PrintableReference> search(String term, SORT sort) throws SearchManagerException;
 
     /**
-     * Searches for data fitting the passed term and sort regulation
+     * Searches for data fitting the passed term, sort and regulations
      *
      * @param term  Term to execute the search with
-     * @param sort  Sort regulation to execute the search with
-     * @param order Order regulation to execute the search with
+     * @param sort  SORT regulation to execute the search with
+     * @param ORDER ORDER regulation to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintableReference> search(String term, Sort sort, Order order) throws  SearchManagerException;
+    public List<PrintableReference> search(String term, SORT sort, ORDER order) throws  SearchManagerException;
 
     /**
      * Searches for data fitting the passed term, filters and sort regulation
      *
      * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
-     * @param sort  Sort regulation to execute the search with
+     * @param sort  SORT regulation to execute the search with
      * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintableReference> search(String term, List<Filter> filter, Sort sort) throws SearchManagerException;
+    public List<PrintableReference> search(String term, List<Filter> filter, SORT sort) throws SearchManagerException;
 
     /**
-     * Searches for data fitting the passed term, filters and sort regulation
+     * Searches for data fitting the passed term, filters, sort and ORDER regulations
      *
      * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
-     * @param sort  Sort regulation to execute the search with
-     * @param order Order regulation to execute the search with
+     * @param sort  SORT regulation to execute the search with
+     * @param ORDER ORDER regulation to execute the search with
      * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintableReference> search(String term, List<Filter> filter, Sort sort, Order order) throws SearchManagerException;
+    public List<PrintableReference> search(String term, List<Filter> filter, SORT sort, ORDER order) throws SearchManagerException;
 
     /**
      * Adds print models to the index of the used search engine

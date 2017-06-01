@@ -3,6 +3,6 @@ package com.builpr.search;
 /**
  * Enum to store sorting order
  */
-public enum Order {
+public enum ORDER {
     ASC, DESC
 }

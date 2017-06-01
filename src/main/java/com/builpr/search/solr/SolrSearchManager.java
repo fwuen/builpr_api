@@ -40,32 +40,32 @@ public class SolrSearchManager implements SearchManager {
 
     @Override
     public List<PrintableReference> search(@NonNull String term) throws SearchManagerException {
-        return search(term, Lists.newArrayList(), Sort.RELEVANCE, Order.ASC);
+        return search(term, Lists.newArrayList(), SORT.RELEVANCE, ORDER.ASC);
     }
 
     @Override
     public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter) throws SearchManagerException {
-        return search(term, filter, Sort.RELEVANCE, Order.ASC);
+        return search(term, filter, SORT.RELEVANCE, ORDER.ASC);
     }
 
     @Override
-    public List<PrintableReference> search(@NonNull String term, @NonNull Sort sort) throws SearchManagerException {
-        return search(term, Lists.newArrayList(), sort, Order.ASC);
+    public List<PrintableReference> search(@NonNull String term, @NonNull SORT sort) throws SearchManagerException {
+        return search(term, Lists.newArrayList(), sort, ORDER.ASC);
     }
 
     @Override
-    public List<PrintableReference> search(@NonNull String term, @NonNull Sort sort, Order order) throws SearchManagerException {
+    public List<PrintableReference> search(@NonNull String term, @NonNull SORT sort, ORDER order) throws SearchManagerException {
         return search(term, Lists.newArrayList(), sort, order);
     }
 
     @Override
-    public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Sort sort) throws SearchManagerException
+    public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull SORT sort) throws SearchManagerException
     {
-        return search(term, Lists.newArrayList(), sort, Order.ASC);
+        return search(term, Lists.newArrayList(), sort, ORDER.ASC);
     }
 
     @Override
-    public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull Sort sort, @NonNull Order order) throws SearchManagerException
+    public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull SORT sort, @NonNull ORDER order) throws SearchManagerException
     {
         try {
             SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, sort, order);
