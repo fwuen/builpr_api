@@ -12,7 +12,7 @@ public class SolrQueryFactory {
 
     public SolrQuery getQueryWith(
             @NonNull String term,
-            @NonNull List<Filter> filter,
+            @NonNull List<Filter> filters,
             @NonNull SORT sort,
             @NonNull ORDER order
     ) {
@@ -20,13 +20,13 @@ public class SolrQueryFactory {
 
         query.setQuery(term);
 
-        for (Filter f : filter) {
-            if (f instanceof MinimumRatingFilter)
+        for (Filter filter : filters) {
+            if (filter instanceof MinimumRatingFilter)
             {
                 // TODO: überdenken/überarbeiten
-                query.addNumericRangeFacet("rating", ((MinimumRatingFilter) f).getMinimumRating(), 5, 1.0);
+                query.addNumericRangeFacet("rating", ((MinimumRatingFilter) filter).getMinimumRating(), 5, 1.0);
             }
-            else if (f instanceof CategoryFilter)
+            else if (filter instanceof CategoryFilter)
             {
                 CategoryFilter concreteFilter = (CategoryFilter) filter;
 
