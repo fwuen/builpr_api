@@ -28,7 +28,7 @@ public class SolrQueryFactory {
             }
             else if (filter instanceof CategoryFilter)
             {
-                CategoryFilter concreteFilter = (CategoryFilter) f;
+                CategoryFilter concreteFilter = (CategoryFilter) filter;
 
                 for(String category : concreteFilter.getCategories())
                 query.addFilterQuery(SolrFields.PRINT_MODEL_CATEGORIES + ":" + category);
