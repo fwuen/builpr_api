@@ -7,7 +7,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 // TODO: Tests für diese Klasse schreiben.
 
 /**
- * Utility class for mapping general enums to solr spedific enums.
+ * Utility class for mapping general enums to solr specific enums.
  */
 public abstract class SolrEnumMapper {
 

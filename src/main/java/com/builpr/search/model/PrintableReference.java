@@ -23,6 +23,6 @@ public class PrintableReference {
         this.id = id;
     }
 
-    public PrintableReference() {};
+    public PrintableReference() {}
     
 }
