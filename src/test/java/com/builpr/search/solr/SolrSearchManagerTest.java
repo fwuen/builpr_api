@@ -10,19 +10,19 @@ import org.junit.Test;
 
 public class SolrSearchManagerTest {
     
-    private static final String BASE_URL = "localhost";
-    private static final String REMOTE_BASE_URL = "http://builpr.com:6970/solr";
+    private static final String LOCAL_BASE_URL = "http://localhost/solr";
+    private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
 
     @Test
     public void createWithBaseUrl() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(BASE_URL);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
 
         Assert.assertNotNull(solrSearchManager);
     }
 
     @Test
     public void createWithMockedSolrClient() {
-        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl("localhost").build();
+        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL).build();
 
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(solrClient);
 
@@ -41,49 +41,33 @@ public class SolrSearchManagerTest {
 
     //TODO: alle reachability-Tests überprüfen
     @Test
-    public void reachabilityCheckWithSolrClient() {
+    public void reachabilityCheckWithSolrClient() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL).build());
         Assert.assertNotNull(solrSearchManager);
     
-        try {
-            solrSearchManager.isReachable();
-        } catch (SearchManagerException e) {
-            e.printStackTrace();
-        }
+        solrSearchManager.isReachable();
     }
 
     @Test
-    public void reachabilityCheckWithBaseURL() {
+    public void reachabilityCheckWithBaseURL() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
         Assert.assertNotNull(solrSearchManager);
         
-        try {
-            solrSearchManager.isReachable();
-        } catch (SearchManagerException e) {
-            e.printStackTrace();
-        }
+        solrSearchManager.isReachable();
     }
 
     @Test(expected = NullPointerException.class)
-    public void reachabilityCheckWithSolrClientIsNull() {
+    public void reachabilityCheckWithSolrClientIsNull() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(null);
     
-        try {
-            solrSearchManager.isReachable();
-        } catch (SearchManagerException e) {
-            e.printStackTrace();
-        }
+        solrSearchManager.isReachable();
     }
 
     @Test(expected = NullPointerException.class)
-    public void reachabilityCheckWithBaseURLIsNull() {
+    public void reachabilityCheckWithBaseURLIsNull() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(null);
     
-        try {
-            solrSearchManager.isReachable();
-        } catch (SearchManagerException e) {
-            e.printStackTrace();
-        }
+        solrSearchManager.isReachable();
     }
 
 

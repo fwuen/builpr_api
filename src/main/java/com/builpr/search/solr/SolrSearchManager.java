@@ -25,7 +25,7 @@ public class SolrSearchManager implements SearchManager {
     private SolrClient solrClient;
     private SolrQueryFactory solrQueryFactory;
     private PrintableReferenceFactory printableReferenceFactory;
-    private static final String COLLECTION = "testcore";
+    private static final String COLLECTION = "main";
 
     /**
      * Creates and returns a SolrSearchManager-object
