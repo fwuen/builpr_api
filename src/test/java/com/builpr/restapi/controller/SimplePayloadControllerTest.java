@@ -3,12 +3,16 @@ package com.builpr.restapi.controller;
 
 import com.builpr.restapi.model.SimplePayload;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/* TODO: Tests müssen mit Auth arbeiten. */
 public class SimplePayloadControllerTest extends ControllerTest<SimplePayloadController> {
 
     private static final String URL = "/simplepayload";

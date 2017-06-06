@@ -37,7 +37,8 @@ dependencies {
     compile 'com.speedment:runtime:3.0.8'
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE'
     compile 'org.apache.solr:solr-solrj:6.5.1'
-    compile 'org.springframework.security:spring-security-web:4.2.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-security:1.5.2.RELEASE'
+    compile 'io.jsonwebtoken:jjwt:0.7.0'
 
     compile 'com.timgroup:jgravatar:1.1'
 
