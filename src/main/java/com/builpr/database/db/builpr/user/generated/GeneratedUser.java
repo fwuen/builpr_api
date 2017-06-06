@@ -5,12 +5,10 @@ import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
 import com.speedment.runtime.core.util.OptionalUtil;
-import com.speedment.runtime.field.BooleanField;
 import com.speedment.runtime.field.ComparableField;
 import com.speedment.runtime.field.IntField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
-import com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Optional;
@@ -142,33 +140,33 @@ public interface GeneratedUser {
      * This Field corresponds to the {@link User} field that can be obtained
      * using the {@link User#getShowName()} method.
      */
-    BooleanField<User, Integer> SHOW_NAME = BooleanField.create(
+    IntField<User, Integer> SHOW_NAME = IntField.create(
         Identifier.SHOW_NAME,
         User::getShowName,
         User::setShowName,
-        new PrimitiveIntegerZeroOneToBooleanMapper(), 
+        TypeMapper.primitive(), 
         false
     );
     /**
      * This Field corresponds to the {@link User} field that can be obtained
      * using the {@link User#getShowBirthday()} method.
      */
-    BooleanField<User, Integer> SHOW_BIRTHDAY = BooleanField.create(
+    IntField<User, Integer> SHOW_BIRTHDAY = IntField.create(
         Identifier.SHOW_BIRTHDAY,
         User::getShowBirthday,
         User::setShowBirthday,
-        new PrimitiveIntegerZeroOneToBooleanMapper(), 
+        TypeMapper.primitive(), 
         false
     );
     /**
      * This Field corresponds to the {@link User} field that can be obtained
      * using the {@link User#getShowEmail()} method.
      */
-    BooleanField<User, Integer> SHOW_EMAIL = BooleanField.create(
+    IntField<User, Integer> SHOW_EMAIL = IntField.create(
         Identifier.SHOW_EMAIL,
         User::getShowEmail,
         User::setShowEmail,
-        new PrimitiveIntegerZeroOneToBooleanMapper(), 
+        TypeMapper.primitive(), 
         false
     );
     /**
@@ -269,7 +267,7 @@ public interface GeneratedUser {
      * 
      * @return the showName of this User
      */
-    boolean getShowName();
+    int getShowName();
     
     /**
      * Returns the showBirthday of this User. The showBirthday field corresponds
@@ -277,7 +275,7 @@ public interface GeneratedUser {
      * 
      * @return the showBirthday of this User
      */
-    boolean getShowBirthday();
+    int getShowBirthday();
     
     /**
      * Returns the showEmail of this User. The showEmail field corresponds to
@@ -285,7 +283,7 @@ public interface GeneratedUser {
      * 
      * @return the showEmail of this User
      */
-    boolean getShowEmail();
+    int getShowEmail();
     
     /**
      * Returns the accessToken of this User. The accessToken field corresponds
@@ -392,7 +390,7 @@ public interface GeneratedUser {
      * @param showName to set of this User
      * @return         this User instance
      */
-    User setShowName(boolean showName);
+    User setShowName(int showName);
     
     /**
      * Sets the showBirthday of this User. The showBirthday field corresponds to
@@ -401,7 +399,7 @@ public interface GeneratedUser {
      * @param showBirthday to set of this User
      * @return             this User instance
      */
-    User setShowBirthday(boolean showBirthday);
+    User setShowBirthday(int showBirthday);
     
     /**
      * Sets the showEmail of this User. The showEmail field corresponds to the
@@ -410,7 +408,7 @@ public interface GeneratedUser {
      * @param showEmail to set of this User
      * @return          this User instance
      */
-    User setShowEmail(boolean showEmail);
+    User setShowEmail(int showEmail);
     
     /**
      * Sets the accessToken of this User. The accessToken field corresponds to

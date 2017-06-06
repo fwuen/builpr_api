@@ -45,7 +45,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "{",
             "  \"config\" : {",
             "    \"expanded\" : true,",
-            "    \"appId\" : \"c08b9fb0-debc-45ad-8fed-eca86ee0ddae\",",
+            "    \"appId\" : \"1fbace02-e354-42af-9208-5424fea175a8\",",
             "    \"companyName\" : \"com.builpr\",",
             "    \"name\" : \"builpr\",",
             "    \"packageLocation\" : \"src/main/java/\",",
@@ -53,7 +53,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "    \"packageName\" : \"com.builpr.database\",",
             "    \"dbmses\" : [",
             "      {",
-            "        \"expanded\" : false,",
+            "        \"expanded\" : true,",
             "        \"port\" : 3306,",
             "        \"schemas\" : [",
             "          {",
@@ -341,7 +341,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"ordinalPosition\" : 1",
             "                      }",
             "                    ],",
-            "                    \"id\" : \"PRIMARY\"",
+            "                    \"id\" : \"PRIMARY\",",
+            "                    \"enabled\" : true",
             "                  },",
             "                  {",
             "                    \"expanded\" : false,",
@@ -353,15 +354,16 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"expanded\" : true,",
             "                        \"name\" : \"uploader_id\",",
             "                        \"id\" : \"uploader_id\",",
-            "                        \"ordinalPosition\" : 1",
-            "                      }"
+            "                        \"ordinalPosition\" : 1"
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart3(StringBuilder sb) {
         Stream.of(
+            "                      }",
             "                    ],",
-            "                    \"id\" : \"Model_uid_index\"",
+            "                    \"id\" : \"Model_uid_index\",",
+            "                    \"enabled\" : true",
             "                  }",
             "                ],",
             "                \"columns\" : [",
@@ -458,14 +460,14 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  },",
             "                  {",
-            "                    \"expanded\" : false,",
-            "                    \"foreignKeyColumns\" : [",
-            "                      {"
+            "                    \"expanded\" : false,"
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart4(StringBuilder sb) {
         Stream.of(
+            "                    \"foreignKeyColumns\" : [",
+            "                      {",
             "                        \"foreignDatabaseName\" : \"builpr\",",
             "                        \"foreignSchemaName\" : \"builpr\",",
             "                        \"expanded\" : true,",
@@ -564,14 +566,14 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"enabled\" : true",
             "              },",
             "              {",
-            "                \"foreignKeys\" : [",
-            "                  {",
-            "                    \"expanded\" : false,"
+            "                \"foreignKeys\" : ["
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart5(StringBuilder sb) {
         Stream.of(
+            "                  {",
+            "                    \"expanded\" : false,",
             "                    \"foreignKeyColumns\" : [",
             "                      {",
             "                        \"foreignDatabaseName\" : \"builpr\",",
@@ -603,7 +605,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                      }",
             "                    ],",
             "                    \"name\" : \"Rating_Printable_printable_id_fk\",",
-            "                    \"id\" : \"Rating_Printable_printable_id_fk\"",
+            "                    \"id\" : \"Rating_Printable_printable_id_fk\",",
+            "                    \"enabled\" : true",
             "                  }",
             "                ],",
             "                \"expanded\" : false,",
@@ -629,7 +632,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"ordinalPosition\" : 1",
             "                      }",
             "                    ],",
-            "                    \"id\" : \"PRIMARY\"",
+            "                    \"id\" : \"PRIMARY\",",
+            "                    \"enabled\" : true",
             "                  },",
             "                  {",
             "                    \"expanded\" : false,",
@@ -651,7 +655,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"ordinalPosition\" : 2",
             "                      }",
             "                    ],",
-            "                    \"id\" : \"Rating_uid_mid_uindex\"",
+            "                    \"id\" : \"Rating_uid_mid_uindex\",",
+            "                    \"enabled\" : true",
             "                  },",
             "                  {",
             "                    \"expanded\" : false,",
@@ -667,17 +672,17 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                      }",
             "                    ],",
             "                    \"id\" : \"Rating_Printable_printable_id_fk\"",
-            "                  }",
-            "                ],",
-            "                \"columns\" : [",
-            "                  {",
-            "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\","
+            "                  }"
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart6(StringBuilder sb) {
         Stream.of(
+            "                ],",
+            "                \"columns\" : [",
+            "                  {",
+            "                    \"databaseType\" : \"java.lang.Integer\",",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"user_id\",",
@@ -773,17 +778,17 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"indexColumns\" : [",
             "                      {",
             "                        \"orderType\" : \"ASC\",",
-            "                        \"expanded\" : true,",
-            "                        \"name\" : \"token\",",
-            "                        \"id\" : \"token\",",
-            "                        \"ordinalPosition\" : 1",
-            "                      }",
-            "                    ],"
+            "                        \"expanded\" : true,"
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart7(StringBuilder sb) {
         Stream.of(
+            "                        \"name\" : \"token\",",
+            "                        \"id\" : \"token\",",
+            "                        \"ordinalPosition\" : 1",
+            "                      }",
+            "                    ],",
             "                    \"id\" : \"register_confirmation_token_token_uindex\",",
             "                    \"enabled\" : true",
             "                  }",
@@ -814,7 +819,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"enabled\" : true",
             "              },",
             "              {",
-            "                \"expanded\" : true,",
+            "                \"expanded\" : false,",
             "                \"primaryKeyColumns\" : [",
             "                  {",
             "                    \"expanded\" : true,",
@@ -837,8 +842,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"ordinalPosition\" : 1",
             "                      }",
             "                    ],",
-            "                    \"id\" : \"PRIMARY\",",
-            "                    \"enabled\" : true",
+            "                    \"id\" : \"PRIMARY\"",
             "                  },",
             "                  {",
             "                    \"expanded\" : false,",
@@ -853,8 +857,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"ordinalPosition\" : 1",
             "                      }",
             "                    ],",
-            "                    \"id\" : \"user_access_token_uindex\",",
-            "                    \"enabled\" : true",
+            "                    \"id\" : \"user_access_token_uindex\"",
             "                  },",
             "                  {",
             "                    \"expanded\" : false,",
@@ -869,8 +872,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"ordinalPosition\" : 1",
             "                      }",
             "                    ],",
-            "                    \"id\" : \"User_email_uindex\",",
-            "                    \"enabled\" : true",
+            "                    \"id\" : \"User_email_uindex\"",
             "                  },",
             "                  {",
             "                    \"expanded\" : false,",
@@ -882,16 +884,15 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"expanded\" : true,",
             "                        \"name\" : \"username\",",
             "                        \"id\" : \"username\",",
-            "                        \"ordinalPosition\" : 1",
-            "                      }",
-            "                    ],"
+            "                        \"ordinalPosition\" : 1"
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart8(StringBuilder sb) {
         Stream.of(
-            "                    \"id\" : \"User_username_uindex\",",
-            "                    \"enabled\" : true",
+            "                      }",
+            "                    ],",
+            "                    \"id\" : \"User_username_uindex\"",
             "                  }",
             "                ],",
             "                \"columns\" : [",
@@ -975,60 +976,47 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"nullable\" : true,",
             "                    \"name\" : \"avatar\",",
             "                    \"id\" : \"avatar\",",
-            "                    \"ordinalPosition\" : 9,",
-            "                    \"enabled\" : true",
+            "                    \"ordinalPosition\" : 9",
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.String\",",
             "                    \"expanded\" : true,",
             "                    \"nullable\" : true,",
-            "                    \"autoIncrement\" : false,",
             "                    \"name\" : \"description\",",
-            "                    \"nullableImplementation\" : \"OPTIONAL\",",
             "                    \"id\" : \"description\",",
-            "                    \"ordinalPosition\" : 10,",
-            "                    \"enabled\" : true",
+            "                    \"ordinalPosition\" : 10",
             "                  },",
             "                  {",
-            "                    \"databaseType\" : \"java.lang.Integer\","
+            "                    \"databaseType\" : \"java.lang.Integer\",",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
+            "                    \"expanded\" : true,",
+            "                    \"nullable\" : false,"
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart9(StringBuilder sb) {
         Stream.of(
-            "                    \"expanded\" : true,",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper\",",
-            "                    \"nullable\" : false,",
-            "                    \"autoIncrement\" : false,",
             "                    \"name\" : \"show_name\",",
-            "                    \"nullableImplementation\" : \"OPTIONAL\",",
             "                    \"id\" : \"show_name\",",
-            "                    \"ordinalPosition\" : 11,",
-            "                    \"enabled\" : true",
+            "                    \"ordinalPosition\" : 11",
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper\",",
             "                    \"nullable\" : false,",
-            "                    \"autoIncrement\" : false,",
             "                    \"name\" : \"show_birthday\",",
-            "                    \"nullableImplementation\" : \"OPTIONAL\",",
             "                    \"id\" : \"show_birthday\",",
-            "                    \"ordinalPosition\" : 12,",
-            "                    \"enabled\" : true",
+            "                    \"ordinalPosition\" : 12",
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper\",",
             "                    \"nullable\" : false,",
-            "                    \"autoIncrement\" : false,",
             "                    \"name\" : \"show_email\",",
-            "                    \"nullableImplementation\" : \"OPTIONAL\",",
             "                    \"id\" : \"show_email\",",
-            "                    \"ordinalPosition\" : 13,",
-            "                    \"enabled\" : true",
+            "                    \"ordinalPosition\" : 13",
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.String\",",
@@ -1036,8 +1024,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"nullable\" : true,",
             "                    \"name\" : \"access_token\",",
             "                    \"id\" : \"access_token\",",
-            "                    \"ordinalPosition\" : 14,",
-            "                    \"enabled\" : true",
+            "                    \"ordinalPosition\" : 14",
             "                  }",
             "                ],",
             "                \"name\" : \"user\",",
@@ -1057,7 +1044,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "        \"alias\" : \"db\",",
             "        \"id\" : \"builpr\",",
             "        \"enabled\" : true,",
-            "        \"username\" : \"marco\"",
+            "        \"username\" : \"builpr\"",
             "      }",
             "    ],",
             "    \"enabled\" : true",
