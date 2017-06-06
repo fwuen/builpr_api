@@ -10,8 +10,8 @@ public class SimplePayloadController {
     @RequestMapping(value = "/simplepayload", method = RequestMethod.GET)
     public SimplePayload byParameter(
             @RequestParam(
-                    value = "payload",
-                    defaultValue = "Benutze den Parameter 'payload' um das Payload-Attribut zu befüllen.",
+                    value = "account",
+                    defaultValue = "Benutze den Parameter 'account' um das Payload-Attribut zu befüllen.",
                     required = false
             ) String payload
     ) {

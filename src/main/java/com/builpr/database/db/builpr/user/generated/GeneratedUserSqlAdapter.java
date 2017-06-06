@@ -5,9 +5,12 @@ import com.builpr.database.db.builpr.user.UserImpl;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.common.injector.annotation.ExecuteBefore;
 import com.speedment.common.injector.annotation.WithState;
+import com.speedment.runtime.config.Project;
 import com.speedment.runtime.config.identifier.TableIdentifier;
+import com.speedment.runtime.core.component.ProjectComponent;
 import com.speedment.runtime.core.component.sql.SqlPersistenceComponent;
 import com.speedment.runtime.core.component.sql.SqlStreamSupplierComponent;
+import com.speedment.runtime.core.component.sql.SqlTypeMapperHelper;
 import com.speedment.runtime.core.exception.SpeedmentException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +29,9 @@ import static com.speedment.common.injector.State.RESOLVED;
 public abstract class GeneratedUserSqlAdapter {
     
     private final TableIdentifier<User> tableIdentifier;
+    private SqlTypeMapperHelper<Integer, Boolean> showNameHelper;
+    private SqlTypeMapperHelper<Integer, Boolean> showBirthdayHelper;
+    private SqlTypeMapperHelper<Integer, Boolean> showEmailHelper;
     
     protected GeneratedUserSqlAdapter() {
         this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "user");
@@ -40,20 +46,20 @@ public abstract class GeneratedUserSqlAdapter {
     protected User apply(ResultSet resultSet) throws SpeedmentException {
         final User entity = createEntity();
         try {
-            entity.setUserId(       resultSet.getInt(1)       );
-            entity.setUsername(     resultSet.getString(2)    );
-            entity.setPassword(     resultSet.getString(3)    );
-            entity.setEmail(        resultSet.getString(4)    );
-            entity.setRegtime(      resultSet.getTimestamp(5) );
-            entity.setBirthday(     resultSet.getDate(6)      );
-            entity.setFirstname(    resultSet.getString(7)    );
-            entity.setLastname(     resultSet.getString(8)    );
-            entity.setAvatar(       resultSet.getString(9)    );
-            entity.setDescription(  resultSet.getString(10)   );
-            entity.setShowName(     resultSet.getInt(11)      );
-            entity.setShowBirthday( resultSet.getInt(12)      );
-            entity.setShowEmail(    resultSet.getInt(13)      );
-            entity.setAccessToken(  resultSet.getString(14)   );
+            entity.setUserId(       resultSet.getInt(1)                            );
+            entity.setUsername(     resultSet.getString(2)                         );
+            entity.setPassword(     resultSet.getString(3)                         );
+            entity.setEmail(        resultSet.getString(4)                         );
+            entity.setRegtime(      resultSet.getTimestamp(5)                      );
+            entity.setBirthday(     resultSet.getDate(6)                           );
+            entity.setFirstname(    resultSet.getString(7)                         );
+            entity.setLastname(     resultSet.getString(8)                         );
+            entity.setAvatar(       resultSet.getString(9)                         );
+            entity.setDescription(  resultSet.getString(10)                        );
+            entity.setShowName(     showNameHelper.apply(resultSet.getInt(11))     );
+            entity.setShowBirthday( showBirthdayHelper.apply(resultSet.getInt(12)) );
+            entity.setShowEmail(    showEmailHelper.apply(resultSet.getInt(13))    );
+            entity.setAccessToken(  resultSet.getString(14)                        );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }
@@ -62,5 +68,13 @@ public abstract class GeneratedUserSqlAdapter {
     
     protected UserImpl createEntity() {
         return new UserImpl();
+    }
+    
+    @ExecuteBefore(RESOLVED)
+    void createHelpers(ProjectComponent projectComponent) {
+        final Project project = projectComponent.getProject();
+        showNameHelper = SqlTypeMapperHelper.create(project, User.SHOW_NAME, User.class);
+        showBirthdayHelper = SqlTypeMapperHelper.create(project, User.SHOW_BIRTHDAY, User.class);
+        showEmailHelper = SqlTypeMapperHelper.create(project, User.SHOW_EMAIL, User.class);
     }
 }
