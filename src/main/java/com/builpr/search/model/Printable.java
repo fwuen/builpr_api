@@ -28,11 +28,11 @@ public class Printable extends Indexable {
 
     @Getter
     @Field
-    private int uploader_id;
+    private int uploaderId;
     
     @Getter
     @Field
-    private Date upload_date;
+    private Date uploadDate;
     
     @Getter
     @Field
@@ -44,7 +44,7 @@ public class Printable extends Indexable {
 
     @Getter
     @Field
-    private int number_of_downloads;
+    private int numberOfDownloads;
 
     
     /**
@@ -126,7 +126,7 @@ public class Printable extends Indexable {
         public Builder withUploaderId(int uploaderId) {
             Preconditions.checkArgument(uploaderId >= 0);
             
-            toBuild.uploader_id = uploaderId;
+            toBuild.uploaderId = uploaderId;
             return this;
         }
         
@@ -139,7 +139,7 @@ public class Printable extends Indexable {
         public Builder withUploadDate(Date uploadDate) {
             Preconditions.checkNotNull(uploadDate);
             
-            toBuild.upload_date = uploadDate;
+            toBuild.uploadDate = uploadDate;
             return this;
         }
         
@@ -179,7 +179,7 @@ public class Printable extends Indexable {
         public Builder withNumberOfDownloads(int numberOfDownloads) {
             Preconditions.checkArgument(numberOfDownloads > 0);
 
-            toBuild.number_of_downloads = numberOfDownloads;
+            toBuild.numberOfDownloads = numberOfDownloads;
             return this;
         }
         
@@ -195,10 +195,10 @@ public class Printable extends Indexable {
             Verify.verify(toBuild.id > 0);
             Verify.verify(toBuild.rating >= MinimumRatingFilter.LOWEST_POSSIBLE_RATING);
             Verify.verify(toBuild.rating <= MinimumRatingFilter.HIGHEST_POSSIBLE_RATING);
-            Verify.verify(toBuild.uploader_id > 0);
-            Verify.verifyNotNull(toBuild.upload_date);
+            Verify.verify(toBuild.uploaderId > 0);
+            Verify.verifyNotNull(toBuild.uploadDate);
             Verify.verifyNotNull(toBuild.categories);
-            Verify.verify(toBuild.number_of_downloads >= 0);
+            Verify.verify(toBuild.numberOfDownloads >= 0);
             
             return this.toBuild;
         }

@@ -17,17 +17,18 @@ public class SolrSearchManagerTest {
     
     private static final String LOCAL_BASE_URL = "http://localhost/solr";
     private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
+    private static final String REMOTE_BASE_URL_EXTERN = "http://builpr.com:8983/solr";
 
     @Test
     public void createWithBaseUrl() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
 
         Assert.assertNotNull(solrSearchManager);
     }
 
     @Test
     public void createWithMockedSolrClient() {
-        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL).build();
+        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL_EXTERN).build();
 
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(solrClient);
 
@@ -47,7 +48,7 @@ public class SolrSearchManagerTest {
     //TODO: alle reachability-Tests überprüfen
     @Test
     public void reachabilityCheckWithSolrClient() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL).build());
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL_EXTERN).build());
         Assert.assertNotNull(solrSearchManager);
     
         System.out.println(""+solrSearchManager.isReachable());
@@ -55,7 +56,7 @@ public class SolrSearchManagerTest {
 
     @Test
     public void reachabilityCheckWithBaseURL() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Assert.assertNotNull(solrSearchManager);
         
         solrSearchManager.isReachable();
@@ -63,7 +64,7 @@ public class SolrSearchManagerTest {
 
     @Test
     public void solrServerIsReachable() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Assert.assertNotNull(solrSearchManager);
 
         try {
@@ -90,7 +91,7 @@ public class SolrSearchManagerTest {
 
     @Test
     public void testIndexWithCommit() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         List<String> categories = new ArrayList<String>();
         categories.add("3D");
         categories.add("car");
