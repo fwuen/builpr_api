@@ -45,7 +45,7 @@ public class SolrSearchManagerTest {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL).build());
         Assert.assertNotNull(solrSearchManager);
     
-        solrSearchManager.isReachable();
+        System.out.println(""+solrSearchManager.isReachable());
     }
 
     @Test
@@ -54,6 +54,19 @@ public class SolrSearchManagerTest {
         Assert.assertNotNull(solrSearchManager);
         
         solrSearchManager.isReachable();
+    }
+
+    @Test
+    public void solrServerIsReachable() {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        Assert.assertNotNull(solrSearchManager);
+
+        try {
+            boolean reachable = solrSearchManager.isReachable();
+            Assert.assertTrue(reachable);
+        } catch (SearchManagerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test(expected = NullPointerException.class)
