@@ -15,4 +15,7 @@ public class SimplePayload {
         this.payload = payload;
     }
 
+    /* Just for Jackson */
+    private SimplePayload() { }
+
 }

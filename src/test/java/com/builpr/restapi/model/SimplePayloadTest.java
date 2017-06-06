@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class SimplePayloadTest {
 
-    private static final String PAYLOAD = "test";
+    private static final String PAYLOAD = "testWithPayload";
 
 
 

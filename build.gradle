@@ -43,6 +43,7 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.2.RELEASE'
+    testCompile 'com.fasterxml.jackson.core:jackson-databind:2.8.8.1'
 
     dev 'org.springframework.boot:spring-boot-devtools:1.5.2.RELEASE'
 
