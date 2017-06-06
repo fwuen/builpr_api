@@ -123,7 +123,7 @@ public class SolrSearchManager implements SearchManager {
      */
     private void commit() throws SearchManagerException {
         try {
-            solrClient.commit();
+            solrClient.commit(COLLECTION);
         } catch (Exception exception) {
             throw new SearchManagerException(exception);
         }
