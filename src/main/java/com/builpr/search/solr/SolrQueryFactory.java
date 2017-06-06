@@ -21,22 +21,23 @@ public class SolrQueryFactory {
         query.setQuery(term);
 
         for (Filter filter : filters) {
-            if (filter instanceof MinimumRatingFilter)
-            {
+            if (filter instanceof MinimumRatingFilter) {
                 // TODO: überdenken/überarbeiten
                 query.addNumericRangeFacet("rating", ((MinimumRatingFilter) filter).getMinimumRating(), 5, 1.0);
-            }
-            else if (filter instanceof CategoryFilter)
-            {
+            } else if (filter instanceof CategoryFilter) {
                 CategoryFilter concreteFilter = (CategoryFilter) filter;
-                for(String category : concreteFilter.getCategories())
-                query.addFilterQuery(SolrFields.PRINT_MODEL_CATEGORIES + ":" + category);
+                for (String category : concreteFilter.getCategories())
+                    query.addFilterQuery(SolrFields.PRINT_MODEL_CATEGORIES + ":" + category);
             }
         }
-        query.addSort(
-                SolrEnumMapper.enumToSolrEnum(sort).toString(),
-                SolrEnumMapper.enumToSolrEnum(order)
-        );
+
+        // Solr automatically sorts by relevance if no other field is determined
+        if (sort != SORT.RELEVANCE) {
+            query.addSort(
+                    SolrEnumMapper.enumToSolrEnum(sort).toString(),
+                    SolrEnumMapper.enumToSolrEnum(order)
+            );
+        }
 
         return query;
     }
