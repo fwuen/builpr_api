@@ -2,6 +2,7 @@ package com.builpr.search.solr;
 
 import com.builpr.search.SearchManagerException;
 import com.builpr.search.model.Printable;
+import com.builpr.search.model.PrintableReference;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -131,6 +132,15 @@ public class SolrSearchManagerTest {
                 withNumberOfDownloads(27442).
                 build();
         solrSearchManager.addToIndex(p1);
+    }
+
+    @Test
+    public void testSearchWithSimpleTerm() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(
+                REMOTE_BASE_URL_EXTERN
+        );
+        List<PrintableReference> pr = solrSearchManager.search("car");
+        PrintableReference ref = pr.get(0);
     }
 
 }
