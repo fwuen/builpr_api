@@ -18,7 +18,8 @@ public class SolrQueryFactory {
     ) {
         SolrQuery query = new SolrQuery();
 
-        query.setQuery(term);
+        // TODO: Ggf. dynmaisch gesatalten
+        query.setQuery("(title:\"*" + term + "*\" OR description:\"*" + term + "*\"");
 
         for (Filter filter : filters) {
             if (filter instanceof MinimumRatingFilter) {
