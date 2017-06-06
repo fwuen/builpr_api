@@ -29,13 +29,10 @@ public class SolrQueryFactory {
             else if (filter instanceof CategoryFilter)
             {
                 CategoryFilter concreteFilter = (CategoryFilter) filter;
-
                 for(String category : concreteFilter.getCategories())
                 query.addFilterQuery(SolrFields.PRINT_MODEL_CATEGORIES + ":" + category);
             }
         }
-
-        // TODO: Wie wird Sortieren nach Relevanz umgesetzt? Relevanz als SolrField? Ist für jede Abfrage anders!
         query.addSort(
                 SolrEnumMapper.enumToSolrEnum(sort).toString(),
                 SolrEnumMapper.enumToSolrEnum(order)
