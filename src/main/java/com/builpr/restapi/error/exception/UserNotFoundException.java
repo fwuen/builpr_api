@@ -1,4 +1,4 @@
-package com.builpr.restapi.exception;
+package com.builpr.restapi.error.exception;
 
 public class UserNotFoundException extends Exception {
 

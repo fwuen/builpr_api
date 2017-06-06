@@ -4,7 +4,7 @@ import com.builpr.database.BuilprApplication;
 import com.builpr.restapi.utils.Connector;
 import com.builpr.database.db.builpr.user.User;
 import com.builpr.database.db.builpr.user.UserManager;
-import com.builpr.restapi.exception.UserNotFoundException;
+import com.builpr.restapi.error.exception.UserNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,5 +31,9 @@ public class UserService {
         }
 
         return foundUsers.get(0);
+    }
+
+    public void persist(User user) {
+        userManager.persist(user);
     }
 }
