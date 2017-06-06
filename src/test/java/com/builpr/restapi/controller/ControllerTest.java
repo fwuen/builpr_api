@@ -1,14 +1,22 @@
 package com.builpr.restapi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.util.Lists;
 import org.assertj.core.util.Preconditions;
 import org.junit.Before;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+
+/* TODO: Authentication wird nicht beachtet */
 
 public abstract class ControllerTest<ControllerType> {
 
@@ -30,7 +38,9 @@ public abstract class ControllerTest<ControllerType> {
         }
     }
 
-
+    protected User getTestUser() {
+        return new User("admin", "password", AuthorityUtils.createAuthorityList("USER"));
+    }
 
     @Before
     public void mockController() {
