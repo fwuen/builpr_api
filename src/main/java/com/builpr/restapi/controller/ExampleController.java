@@ -21,11 +21,11 @@ public class ExampleController {
     /* Dieses RequestMapping liefert das Json dass es vom Post an http://localhost:8080 bekommt zurück
     * Ich schicke also folgendes per Post an http://localhost:8080/jsonBack
     * {
-    *   "payload": "<Irgendein Text>"
+    *   "account": "<Irgendein Text>"
     * }
     * und bekomme
     * {
-    *   "payload": "<Irgendein Text>"
+    *   "account": "<Irgendein Text>"
     * }
     * zurück. Das Konvertieren vom Json zum JsonExample-Objekt übernimmt Spring komplett.
     *   */
