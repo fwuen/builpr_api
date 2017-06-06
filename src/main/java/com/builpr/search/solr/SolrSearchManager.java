@@ -2,6 +2,7 @@ package com.builpr.search.solr;
 
 import com.builpr.search.*;
 import com.builpr.search.filter.Filter;
+import com.builpr.search.model.Indexable;
 import com.builpr.search.model.Printable;
 import com.builpr.search.model.PrintableReference;
 import com.google.common.collect.Lists;
@@ -83,15 +84,15 @@ public class SolrSearchManager implements SearchManager {
     }
 
     @Override
-    public void addToIndex(@NonNull List<Printable> indexables) throws SearchManagerException {
-        for (Printable indexable : indexables)
+    public void addToIndex(@NonNull List<Indexable> indexables) throws SearchManagerException {
+        for (Indexable indexable : indexables)
             addToIndex(indexable, false);
 
         commit();
     }
 
     @Override
-    public void addToIndex(@NonNull Printable indexable) throws SearchManagerException {
+    public void addToIndex(@NonNull Indexable indexable) throws SearchManagerException {
         this.addToIndex(indexable, true);
     }
 
@@ -102,7 +103,7 @@ public class SolrSearchManager implements SearchManager {
      * @param commit Whether the actual commit to the Solr search engine should be executed or not
      * @throws SearchManagerException SearchManagerException
      */
-    private void addToIndex(@NonNull Printable indexable, boolean commit) throws SearchManagerException {
+    private void addToIndex(@NonNull Indexable indexable, boolean commit) throws SearchManagerException {
         SolrInputDocument inputDocument = new SolrInputDocumentFactory().getInputDocumentWith(indexable);
 
         try {

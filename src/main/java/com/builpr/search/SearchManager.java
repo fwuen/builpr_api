@@ -1,6 +1,7 @@
 package com.builpr.search;
 
 import com.builpr.search.filter.Filter;
+import com.builpr.search.model.Indexable;
 import com.builpr.search.model.Printable;
 import com.builpr.search.model.PrintableReference;
 
@@ -80,7 +81,7 @@ public interface SearchManager {
      * @param indexables List of Printable-objects to be added to the index
      * @throws SearchManagerException SearchManagerException
      */
-    public void addToIndex(List<Printable> indexables) throws SearchManagerException;
+    public void addToIndex(List<Indexable> indexables) throws SearchManagerException;
     
     /**
      * Adds a single print model to the index of the used search engine
@@ -88,7 +89,7 @@ public interface SearchManager {
      * @param indexable Printable-object representing the print model to be added to the index
      * @throws SearchManagerException SearchManagerException
      */
-    public void addToIndex(Printable indexable) throws SearchManagerException;
+    public void addToIndex(Indexable indexable) throws SearchManagerException;
     
     /**
      * Deletes print models from the index of the used search engine

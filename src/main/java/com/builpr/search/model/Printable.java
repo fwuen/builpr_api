@@ -36,11 +36,15 @@ public class Printable extends Indexable {
     
     @Getter
     @Field
-    private double rating;
+    private double rating = 0;
     
     @Getter
     @Field
     private List<String> categories;
+
+    @Getter
+    @Field
+    private int numberOfDownloads;
 
     
     /**
@@ -165,6 +169,19 @@ public class Printable extends Indexable {
             toBuild.categories = categories;
             return this;
         }
+
+        /**
+         * Adds the new parameter to the Builder-object and returns it
+         *
+         * @param numberOfDownloads The number of Downloads the Indexable has reached
+         * @return Builder-object with the new parameter added to it
+         */
+        public Builder withNumberOfDownloads(int numberOfDownloads) {
+            Preconditions.checkArgument(numberOfDownloads > 0);
+
+            toBuild.numberOfDownloads = numberOfDownloads;
+            return this;
+        }
         
         /**
          * Verifies the proprierity of the builded Printable-object and returns it
@@ -175,12 +192,13 @@ public class Printable extends Indexable {
             
             Verify.verifyNotNull(toBuild.title);
             Verify.verifyNotNull(toBuild.description);
-            Verify.verify(toBuild.id >= 0);
+            Verify.verify(toBuild.id > 0);
             Verify.verify(toBuild.rating >= MinimumRatingFilter.LOWEST_POSSIBLE_RATING);
             Verify.verify(toBuild.rating <= MinimumRatingFilter.HIGHEST_POSSIBLE_RATING);
-            Verify.verify(toBuild.uploaderId >= 0);
+            Verify.verify(toBuild.uploaderId > 0);
             Verify.verifyNotNull(toBuild.uploadDate);
             Verify.verifyNotNull(toBuild.categories);
+            Verify.verify(toBuild.numberOfDownloads >= 0);
             
             return this.toBuild;
         }
