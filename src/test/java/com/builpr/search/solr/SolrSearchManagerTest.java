@@ -4,12 +4,19 @@ import com.builpr.search.SearchManagerException;
 import com.builpr.search.model.Printable;
 import com.builpr.search.model.PrintableReference;
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.util.NamedList;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,14 +29,14 @@ public class SolrSearchManagerTest {
 
     @Test
     public void createWithBaseUrl() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
 
         Assert.assertNotNull(solrSearchManager);
     }
 
     @Test
     public void createWithMockedSolrClient() {
-        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL_EXTERN).build();
+        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL).build();
 
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(solrClient);
 
@@ -49,7 +56,7 @@ public class SolrSearchManagerTest {
     //TODO: alle reachability-Tests überprüfen
     @Test
     public void reachabilityCheckWithSolrClient() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL_EXTERN).build());
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL).build());
         Assert.assertNotNull(solrSearchManager);
     
         System.out.println(""+solrSearchManager.isReachable());
@@ -57,7 +64,7 @@ public class SolrSearchManagerTest {
 
     @Test
     public void reachabilityCheckWithBaseURL() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
         Assert.assertNotNull(solrSearchManager);
         
         solrSearchManager.isReachable();
@@ -65,7 +72,7 @@ public class SolrSearchManagerTest {
 
     @Test
     public void solrServerIsReachable() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
         Assert.assertNotNull(solrSearchManager);
 
         try {
@@ -92,7 +99,7 @@ public class SolrSearchManagerTest {
 
     @Test
     public void testIndexWithCommit() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
         List<String> categories = new ArrayList<String>();
         categories.add("3D");
         categories.add("car");
@@ -135,14 +142,29 @@ public class SolrSearchManagerTest {
     }
 
     //TODO make it work
-    @Ignore
     @Test
-    public void testSearchWithSimpleTerm() throws SearchManagerException {
+    public void testSearchWithSimpleTerm() {
+        /*
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(
-                REMOTE_BASE_URL_EXTERN
+                REMOTE_BASE_URL
         );
         List<PrintableReference> pr = solrSearchManager.search("car");
         PrintableReference ref = pr.get(0);
+        */
+        SolrClient solr = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL).build();
+        SolrQuery query = new SolrQuery();
+        //query.set("q", "title:*car*");
+        query.setQuery("title:*car*");
+        QueryResponse res = null;
+        try {
+            res = solr.query("testing", query);
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SolrDocumentList list = res.getResults();
+        list.get(0);
     }
 
 }

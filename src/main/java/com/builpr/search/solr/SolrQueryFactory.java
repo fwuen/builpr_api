@@ -17,9 +17,9 @@ public class SolrQueryFactory {
             @NonNull ORDER order
     ) {
         SolrQuery query = new SolrQuery();
-
-        // TODO: Ggf. dynmaisch gesatalten
-        query.setQuery("(title:\"*" + term + "*\" OR description:\"*" + term + "*\"");
+        
+        query.setQuery(term);
+        query.setFields("title", "description", "uploaderId", "uploadDate", "categories", "numberOfDownloads");
 
         for (Filter filter : filters) {
             if (filter instanceof MinimumRatingFilter) {
