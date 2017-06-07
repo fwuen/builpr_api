@@ -7,6 +7,7 @@ import com.google.common.base.Preconditions;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrQuery;
 
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,8 @@ public class SolrQueryFactory {
         for (Filter filter : filters) {
             if (filter instanceof MinimumRatingFilter) {
                 // TODO MinimumRatingFilter geht noch nicht
-                query.addNumericRangeFacet("rating", ((MinimumRatingFilter) filter).getMinimumRating(), MinimumRatingFilter.HIGHEST_POSSIBLE_RATING, 1.0);
+                //query.addNumericRangeFacet(SolrFields.PRINT_MODEL_RATING, ((MinimumRatingFilter) filter).getMinimumRating(), MinimumRatingFilter.HIGHEST_POSSIBLE_RATING, 1.0);
+                query.setFilterQueries(SolrFields.PRINT_MODEL_RATING + ":[" + ((MinimumRatingFilter) filter).getMinimumRating() + " TO " + MinimumRatingFilter.HIGHEST_POSSIBLE_RATING + "]");
             } else if (filter instanceof CategoryFilter) {
                 CategoryFilter concreteFilter = (CategoryFilter) filter;
                 for (String category : concreteFilter.getCategories())
