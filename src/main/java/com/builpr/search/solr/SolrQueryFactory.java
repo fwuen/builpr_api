@@ -24,8 +24,8 @@ public class SolrQueryFactory {
 
         for (Filter filter : filters) {
             if (filter instanceof MinimumRatingFilter) {
-                // TODO: überdenken/überarbeiten
-                query.addNumericRangeFacet("rating", ((MinimumRatingFilter) filter).getMinimumRating(), 5, 1.0);
+                // TODO MinimumRatingFilter geht noch nicht
+                query.addNumericRangeFacet("rating", ((MinimumRatingFilter) filter).getMinimumRating(), MinimumRatingFilter.HIGHEST_POSSIBLE_RATING, 1.0);
             } else if (filter instanceof CategoryFilter) {
                 CategoryFilter concreteFilter = (CategoryFilter) filter;
                 for (String category : concreteFilter.getCategories())
@@ -49,8 +49,9 @@ public class SolrQueryFactory {
 
     private String buildQueryString(String term) {
         StringBuilder builder = new StringBuilder();
-        term.toLowerCase();
-        term.trim();
+        term = term.toLowerCase();
+        term = term.trim();
+        term = term.replaceAll("(\\s)(\\s)+", " ");
         ArrayList<String> terms = new ArrayList(Arrays.asList(term.split(" ")));
 
         for(String t : terms)

@@ -1,6 +1,9 @@
 package com.builpr.search.solr;
 
 import com.builpr.search.SearchManagerException;
+import com.builpr.search.filter.Filter;
+import com.builpr.search.filter.MinimumRatingFilter;
+import com.builpr.search.model.Indexable;
 import com.builpr.search.model.Printable;
 import com.builpr.search.model.PrintableReference;
 import org.apache.solr.client.solrj.SolrClient;
@@ -12,6 +15,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.util.NamedList;
+import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -113,7 +117,7 @@ public class SolrSearchManagerTest {
         Printable p1 = Printable.getBuilder().
                 withId(1).
                 withTitle("car (mercedes c9 inspired)").
-                withDescription("This car model is loosely based on a mercedes C9 le man car.\n" +
+                withDescription(("This car model is loosely based on a mercedes C9 le man car.\n" +
                 "\n" +
                 "The model was split in half as it prints better this way. Unfortunately on my set up it warped quite badly and so it could do with some tweaking.\n" +
                 "\n" +
@@ -131,7 +135,7 @@ public class SolrSearchManagerTest {
                 "\n" +
                 "The wheels were super glued in place but I'm sure someone could modify the car to allow for rotating wheels. The aim was to glue the two body halves together, which should be straight forward as long as your model doesn't warp!\n" +
                 "\n" +
-                "I positioned a number of ear rafts around the car from whpthomas http://www.thingiverse.com/thing:38272. The aim was to reduce warping although the blue tape I was printing on started to lift off the build plate, I think printing PLA straight onto the build plate would be fine or just using stronger wider tape.\n").
+                "I positioned a number of ear rafts around the car from whpthomas http://www.thingiverse.com/thing:38272. The aim was to reduce warping although the blue tape I was printing on started to lift off the build plate, I think printing PLA straight onto the build plate would be fine or just using stronger wider tape.\n").toLowerCase()).
                 withRating(1).
                 withCategories(categories).
                 withUploaderId(1).
@@ -139,6 +143,95 @@ public class SolrSearchManagerTest {
                 withNumberOfDownloads(27442).
                 build();
         solrSearchManager.addToIndex(p1);
+    }
+    
+    @Test
+    public void testIndexWithMultipleFilesAndCommit() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        List<String> categories = new ArrayList<String>();
+        Date date = new Date(System.currentTimeMillis());
+        List<Indexable> indexables = new ArrayList<>();
+        
+        Printable p1 = Printable.getBuilder().
+                withCategories(categories).
+                withDescription("Tower").
+                withId(2).
+                withNumberOfDownloads(13).
+                withRating(0).
+                withTitle("Customizable tower").
+                withUploadDate(date).
+                withUploaderId(1).
+                build();
+    
+        categories.add("plane");
+        categories.add("ww1");
+        Printable p2 = Printable.getBuilder().
+                withCategories(categories).
+                withDescription("This is just a simple gotha bomber from world war 1. print up on its nose with supports for best result. enjoy!").
+                withRating(5).
+                withNumberOfDownloads(30).
+                withId(3).
+                withTitle("Gotha G.V").
+                withUploadDate(date).
+                withUploaderId(1).
+                build();
+        
+        categories.clear();
+        Printable p3 = Printable.getBuilder().
+                withCategories(categories).
+                withDescription("Its just a thin hookah / shisha...\nNOT smokable... :D").
+                withRating(3).
+                withNumberOfDownloads(526).
+                withId(4).
+                withTitle("Hookah/Shisha").
+                withUploadDate(date).
+                withUploaderId(1).
+                build();
+        
+        Printable p4 = Printable.getBuilder().
+                withCategories(categories).
+                withDescription("This is a quick model I threw together making a fidget spinner. I thought I'd change things up a bit and make it easier to hold onto and fun to do cool \"tricks\" on almost like a yoyo. Enjoy and do as you wish.\n" +
+                        "Print Settings\n" +
+                        "\n" +
+                        "Printer:\n" +
+                        "Prusa i3 Mk 2\n" +
+                        "\n" +
+                        "Rafts:\n" +
+                        "No\n" +
+                        "\n" +
+                        "Supports:\n" +
+                        "No\n" +
+                        "\n" +
+                        "Resolution:\n" +
+                        ".2\n" +
+                        "\n" +
+                        "Infill:\n" +
+                        "At least 20%\n" +
+                        "\n" +
+                        "\n" +
+                        "Notes:\n" +
+                        "You will need:\n" +
+                        "\n" +
+                        "4x Bearings (preferably ABEC 7 or better)\n" +
+                        "3D printer (Duh)\n" +
+                        "super glue if you wanna be risky\n" +
+                        "sand paper to get correct resistance on cap\n" +
+                        "\n" +
+                        "Print using PETG or PLA for best fit, and sand down caps pole to match inside of bearing for the correct resistance of your bearing (Many Manufacturers are slightly different)").
+                withRating(2).
+                withNumberOfDownloads(18340).
+                withId(5).
+                withUploadDate(date).
+                withUploaderId(1).
+                withTitle("Trick Fidget Spinner (Three and Two weight models)").
+                build();
+        
+        indexables.add(p1);
+        indexables.add(p2);
+        indexables.add(p3);
+        indexables.add(p4);
+        
+        solrSearchManager.addToIndex(indexables);
     }
 
     //TODO make it work
@@ -171,9 +264,24 @@ public class SolrSearchManagerTest {
 
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
 
-            List<PrintableReference> pr = solrSearchManager.search(" car  car   car ");
+        List<PrintableReference> pr = solrSearchManager.search("shisha");
 
-            PrintableReference ref = pr.get(0);
+        for(PrintableReference prf : pr) {
+            System.out.println(prf.toString());
+        }
     }
 
+    @Test
+    public void testSearchWithTermAndFilter() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+    
+        List<Filter> filters = new ArrayList<>();
+        filters.add(new MinimumRatingFilter(2));
+        List<PrintableReference> pr = solrSearchManager.search("just", filters);
+        
+        for(PrintableReference prf : pr) {
+            System.out.println(prf.getId() + " " + prf.toString());
+        }
+    }
+    
 }

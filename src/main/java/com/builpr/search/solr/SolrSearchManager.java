@@ -96,6 +96,7 @@ public class SolrSearchManager implements SearchManager {
         this.addToIndex(indexable, true);
     }
 
+    //TODO toLowerCase vor Indexierung
     /**
      * Adds an print model to the Solr index
      *
