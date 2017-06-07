@@ -6,6 +6,8 @@ import com.builpr.search.filter.*;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrQuery;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SolrQueryFactory {
@@ -17,9 +19,8 @@ public class SolrQueryFactory {
             @NonNull ORDER order
     ) {
         SolrQuery query = new SolrQuery();
-        
-        query.setQuery(term);
-        query.setFields("title", "description", "uploaderId", "uploadDate", "categories", "numberOfDownloads");
+
+        query.setQuery(buildQueryString(term));
 
         for (Filter filter : filters) {
             if (filter instanceof MinimumRatingFilter) {
@@ -40,7 +41,31 @@ public class SolrQueryFactory {
             );
         }
 
+        query.setFields("id");
+
+        System.err.println(query.toQueryString());
         return query;
+    }
+
+    private String buildQueryString(String term) {
+        StringBuilder builder = new StringBuilder();
+        term.toLowerCase();
+        term.trim();
+        ArrayList<String> terms = new ArrayList(Arrays.asList(term.split(" ")));
+
+        for(String t : terms)
+        {
+            builder.append(SolrFields.PRINT_MODEL_TITLE + ":*" + t + "*");
+            builder.append(" OR ");
+            builder.append(SolrFields.PRINT_MODEL_DESCRIPTION + ":*" + t + "*");
+
+            if (terms.indexOf(t) < terms.size() - 1)
+            {
+                builder.append(" OR ");
+            }
+        }
+
+        return builder.toString();
     }
 
     public SolrQuery getQueryFindAll() {

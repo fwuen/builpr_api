@@ -143,7 +143,7 @@ public class SolrSearchManagerTest {
 
     //TODO make it work
     @Test
-    public void testSearchWithSimpleTerm() {
+    public void testSearchWithSimpleTerm() throws SearchManagerException {
         /*
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(
                 REMOTE_BASE_URL
@@ -151,6 +151,8 @@ public class SolrSearchManagerTest {
         List<PrintableReference> pr = solrSearchManager.search("car");
         PrintableReference ref = pr.get(0);
         */
+
+        /*
         SolrClient solr = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL).build();
         SolrQuery query = new SolrQuery();
         //query.set("q", "title:*car*");
@@ -165,6 +167,13 @@ public class SolrSearchManagerTest {
         }
         SolrDocumentList list = res.getResults();
         list.get(0);
+        */
+
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+
+            List<PrintableReference> pr = solrSearchManager.search(" car  car   car ");
+
+            PrintableReference ref = pr.get(0);
     }
 
 }
