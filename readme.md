@@ -16,7 +16,7 @@ Um Hot-Swap zu nutzen, sprich Änderungen am Code live zu sehen, wird ein kleine
 Wird gleichzeitig der Server über den Gradle-Task bootRun gestartet, startet der Server im Hot-Swap Modus 
 und erkennt Änderungen sofort und startet den Server neu.
 
-Um Zugriff auf Datenbank und Solr zu erhalten, muss OpenVPN verwendet werden.
+Um Zugriff auf Datenbank und Solr zu erhalten, muss OpenVPN (https://swupdate.openvpn.org/community/releases/openvpn-install-2.4.2-I601.exe) verwendet werden.
 Konfigurationsdatei aus dem server-Repo herunterladen und in OpenVPN einbinden.
 OpenVPN GUI öffnen und verbinden.
 Zugangsdaten eintragen. Die Verbindung zum Testserver wird hergestellt.
