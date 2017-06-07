@@ -44,6 +44,7 @@ public class PrintableReferenceFactory {
         DocumentObjectBinder documentObjectBinder = new DocumentObjectBinder();
 
         return documentObjectBinder.getBean(PrintableReference.class, data);
+
     }
 
 }

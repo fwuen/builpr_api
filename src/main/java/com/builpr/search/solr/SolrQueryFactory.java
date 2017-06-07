@@ -3,6 +3,7 @@ package com.builpr.search.solr;
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
 import com.builpr.search.filter.*;
+import com.google.common.base.Preconditions;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrQuery;
 

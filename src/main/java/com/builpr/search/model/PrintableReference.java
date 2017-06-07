@@ -2,6 +2,7 @@ package com.builpr.search.model;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
+import org.apache.solr.client.solrj.beans.Field;
 
 /**
  * Provides the ability to use references to PrintModels
@@ -10,16 +11,17 @@ import lombok.Getter;
 public class PrintableReference {
     
     @Getter
-    private int id;
+    @Field
+    public String id;
     
     /**
      * Creates a PrintableReference-object
      *
      * @param id ID of the PrintModel to be stored in the PrintableReference-object
      */
-    public PrintableReference(int id) {
-        Preconditions.checkArgument(id > 0);
-        
+    public PrintableReference(String id) {
+        Preconditions.checkArgument(Integer.parseInt(id) > 0);
+
         this.id = id;
     }
 
