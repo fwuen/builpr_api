@@ -17,8 +17,9 @@ public class SolrQueryFactory {
             @NonNull ORDER order
     ) {
         SolrQuery query = new SolrQuery();
-
+        
         query.setQuery(term);
+        query.setFields("title", "description", "uploaderId", "uploadDate", "categories", "numberOfDownloads");
 
         for (Filter filter : filters) {
             if (filter instanceof MinimumRatingFilter) {
