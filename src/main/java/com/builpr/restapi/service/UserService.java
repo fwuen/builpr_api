@@ -5,9 +5,6 @@ import com.builpr.database.db.builpr.user.UserManager;
 import com.builpr.restapi.utils.Connector;
 import java.util.Optional;
 
-/**
- * user service
- */
 public class UserService {
 
     private UserManager userManager;
