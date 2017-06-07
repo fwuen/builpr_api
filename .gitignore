@@ -2,5 +2,6 @@
 .gradle
 build
 desktop.ini
+*.iml
 src/main/java/com/builpr/restapi/database
 settings.properties
