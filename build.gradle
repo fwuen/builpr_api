@@ -44,6 +44,10 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.2.RELEASE'
+    //testCompile 'org.springframework.boot:spring-boot-security-tests:1.5.2.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
+    // TODO: Replace this security Test Lib with Spring Boot Security Test Lib
+
     testCompile 'com.fasterxml.jackson.core:jackson-databind:2.8.8.1'
 
     dev 'org.springframework.boot:spring-boot-devtools:1.5.2.RELEASE'

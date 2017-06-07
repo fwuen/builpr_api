@@ -1,7 +1,7 @@
 package com.builpr.restapi.security;
 
+import com.builpr.Constants;
 import com.builpr.restapi.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DatabaseUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserService userService;
+    private UserService userService = new UserService();
 
     public UserDetails loadUserByUsername(String username) {
         if(username == null)
@@ -24,7 +23,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
         if(dbUser == null)
             throw new UsernameNotFoundException(username);
 
-        return new User(String.valueOf(dbUser.getUserId()), dbUser.getPassword(), AuthorityUtils.createAuthorityList("USER"));
+        return new User(String.valueOf(dbUser.getUserId()), dbUser.getPassword(), AuthorityUtils.createAuthorityList(Constants.ROLE_USER));
     }
 
 }

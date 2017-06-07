@@ -2,7 +2,9 @@ package com.builpr.search.solr;
 
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
-import com.builpr.search.filter.*;
+import com.builpr.search.filter.CategoryFilter;
+import com.builpr.search.filter.Filter;
+import com.builpr.search.filter.MinimumRatingFilter;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrQuery;
 

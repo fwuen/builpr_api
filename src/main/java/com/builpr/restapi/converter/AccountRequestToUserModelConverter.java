@@ -5,8 +5,6 @@ import com.builpr.database.db.builpr.user.User;
 import com.builpr.database.db.builpr.user.UserImpl;
 import com.builpr.restapi.model.Request.RegisterRequest;
 import com.builpr.restapi.security.PasswordConfiguration;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Date;

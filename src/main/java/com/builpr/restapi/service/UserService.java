@@ -3,6 +3,7 @@ package com.builpr.restapi.service;
 import com.builpr.database.db.builpr.user.User;
 import com.builpr.database.db.builpr.user.UserManager;
 import com.builpr.restapi.utils.Connector;
+
 import java.util.Optional;
 
 public class UserService {

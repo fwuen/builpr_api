@@ -16,7 +16,6 @@ public class SimplePayloadController {
             ) String payload
     ) {
         return new SimplePayload(payload);
-
     }
 
 }

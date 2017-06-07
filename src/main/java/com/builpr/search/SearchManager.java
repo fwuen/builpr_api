@@ -2,7 +2,6 @@ package com.builpr.search;
 
 import com.builpr.search.filter.Filter;
 import com.builpr.search.model.Indexable;
-import com.builpr.search.model.Printable;
 import com.builpr.search.model.PrintableReference;
 
 import java.util.List;

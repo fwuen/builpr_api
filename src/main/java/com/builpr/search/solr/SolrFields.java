@@ -1,7 +1,5 @@
 package com.builpr.search.solr;
 
-import java.util.List;
-
 /**
  * Stores Solr-fields and belonging value for boosting
  */

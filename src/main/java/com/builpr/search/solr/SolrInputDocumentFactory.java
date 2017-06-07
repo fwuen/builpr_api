@@ -1,7 +1,6 @@
 package com.builpr.search.solr;
 
 import com.builpr.search.model.Indexable;
-import com.builpr.search.model.Printable;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
 import org.apache.solr.common.SolrInputDocument;

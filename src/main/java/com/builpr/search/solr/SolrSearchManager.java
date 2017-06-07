@@ -1,9 +1,11 @@
 package com.builpr.search.solr;
 
-import com.builpr.search.*;
+import com.builpr.search.ORDER;
+import com.builpr.search.SORT;
+import com.builpr.search.SearchManager;
+import com.builpr.search.SearchManagerException;
 import com.builpr.search.filter.Filter;
 import com.builpr.search.model.Indexable;
-import com.builpr.search.model.Printable;
 import com.builpr.search.model.PrintableReference;
 import com.google.common.collect.Lists;
 import lombok.NonNull;
