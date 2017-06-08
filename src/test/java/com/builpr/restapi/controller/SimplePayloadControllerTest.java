@@ -1,29 +1,36 @@
 
 package com.builpr.restapi.controller;
 
+import com.builpr.Constants;
 import com.builpr.restapi.model.SimplePayload;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/* TODO: Auth funktioniert aber User Abgleich läuft irgnedwie nicht. */
 public class SimplePayloadControllerTest extends ControllerTest {
 
-    private static final String URL = "/simplepayload";
     private static final String KEY = "payload";
     private static final String VALUE = "testWithPayload";
 
 
 
     @Test
-    @Ignore
+    public void testSecurity() throws Exception {
+        mockMvc.perform(
+                get(Constants.URL_SIMPLEPAYLOAD)
+        )
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(TEST_USER_NAME)
     public void testWithPayload() throws Exception {
         MvcResult result = mockMvc.perform(
-                get(URL).param(KEY, VALUE)
+                get(Constants.URL_SIMPLEPAYLOAD).param(KEY, VALUE)
         )
             .andExpect(status().isOk())
             .andReturn();
@@ -36,10 +43,10 @@ public class SimplePayloadControllerTest extends ControllerTest {
     }
 
     @Test
-    @Ignore
+    @WithMockUser(TEST_USER_NAME)
     public void testWithoutPayload() throws Exception {
         MvcResult result = mockMvc.perform(
-                get(URL)
+                get(Constants.URL_SIMPLEPAYLOAD)
         )
             .andExpect(status().isOk())
             .andReturn();

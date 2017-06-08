@@ -32,6 +32,12 @@ public class UserService {
         return user.orElse(null);
     }
 
+    public void deleteByUsername(String name) {
+        userManager.remove(
+            this.getByUsername(name)
+        );
+    }
+
     public boolean isPresent(String name) {
         return getByUsername(name) != null;
     }
@@ -39,4 +45,5 @@ public class UserService {
     public void persist(User user) {
         userManager.persist(user);
     }
+
 }

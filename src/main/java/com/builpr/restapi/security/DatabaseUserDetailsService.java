@@ -18,6 +18,9 @@ public class DatabaseUserDetailsService implements UserDetailsService {
         if(username == null)
             throw new UsernameNotFoundException(username);
 
+        if(!userService.isPresent(username))
+            throw new UsernameNotFoundException(username);
+
         com.builpr.database.db.builpr.user.User dbUser = userService.getByUsername(username);
 
         if(dbUser == null)
