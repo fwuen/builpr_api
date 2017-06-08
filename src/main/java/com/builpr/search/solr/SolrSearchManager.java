@@ -18,6 +18,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrInputDocument;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 // TODO: Doku für @Override-Methode erben
 
@@ -72,19 +73,24 @@ public class SolrSearchManager implements SearchManager {
     @Override
     public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull SORT sort, @NonNull ORDER order) throws SearchManagerException
     {
-        try {
+        List<PrintableReference> results = Lists.newArrayList();
+
+        try
+        {
             SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, sort, order);
 
             QueryResponse queryResponse = solrClient.query(COLLECTION, solrQuery);
 
-            List<PrintableReference> results = printableReferenceFactory.get(queryResponse.getResults());
-
-            return results;
-
-        } catch (Exception exception) {
+            results = printableReferenceFactory.get(queryResponse.getResults());
+        }
+        catch (Exception exception)
+        {
             throw new SearchManagerException(exception);
         }
-
+        finally
+        {
+            return results;
+        }
     }
 
     @Override
