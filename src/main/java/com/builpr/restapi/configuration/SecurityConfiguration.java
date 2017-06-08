@@ -1,6 +1,5 @@
 package com.builpr.restapi.configuration;
 
-import com.builpr.restapi.security.DatabaseUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

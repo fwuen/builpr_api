@@ -1,11 +1,8 @@
 package com.builpr.restapi.controller;
 
-import com.builpr.database.db.builpr.user.User;
-import com.builpr.database.db.builpr.user.UserImpl;
-import com.builpr.restapi.service.UserService;
+import com.builpr.DataIntegrityTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Preconditions;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
-import java.sql.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
