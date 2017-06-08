@@ -4,6 +4,7 @@ import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
 import com.builpr.search.filter.*;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrQuery;
 
@@ -26,9 +27,7 @@ public class SolrQueryFactory {
 
         for (Filter filter : filters) {
             if (filter instanceof MinimumRatingFilter) {
-                // TODO MinimumRatingFilter geht noch nicht
-                //query.addNumericRangeFacet(SolrFields.PRINT_MODEL_RATING, ((MinimumRatingFilter) filter).getMinimumRating(), MinimumRatingFilter.HIGHEST_POSSIBLE_RATING, 1.0);
-                query.setFilterQueries(SolrFields.PRINT_MODEL_RATING + ":[" + ((MinimumRatingFilter) filter).getMinimumRating() + " TO " + MinimumRatingFilter.HIGHEST_POSSIBLE_RATING + "]");
+                query.addFilterQuery(SolrFields.PRINT_MODEL_RATING + ":[" + ((MinimumRatingFilter) filter).getMinimumRating() + " TO " + MinimumRatingFilter.HIGHEST_POSSIBLE_RATING + "]");
             } else if (filter instanceof CategoryFilter) {
                 CategoryFilter concreteFilter = (CategoryFilter) filter;
                 for (String category : concreteFilter.getCategories())
@@ -55,7 +54,7 @@ public class SolrQueryFactory {
         term = term.toLowerCase();
         term = term.trim();
         term = term.replaceAll("(\\s)(\\s)+", " ");
-        ArrayList<String> terms = new ArrayList(Arrays.asList(term.split(" ")));
+        ArrayList<String> terms = Lists.newArrayList(Arrays.asList(term.split(" ")));
 
         for(String t : terms)
         {
