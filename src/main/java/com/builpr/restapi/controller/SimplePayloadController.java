@@ -11,7 +11,7 @@ import java.security.Principal;
 public class SimplePayloadController {
 
     @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
-    @PreAuthorize(Constants.SECURITY_USER)
+    //@PreAuthorize(Constants.SECURITY_USER)
     @RequestMapping(value = Constants.URL_SIMPLEPAYLOAD, method = RequestMethod.GET)
     public SimplePayload byParameter(
             @RequestParam(

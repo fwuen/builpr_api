@@ -16,7 +16,7 @@ public class TokenAuthenticationService {
 
     private static final long EXPIRATION_TIME = 864_000_000; // 10 Days
     private static final String SECRET = "builprIsAwesome";
-    private static final String TOKEN_PREFIX = "builpr";
+    private static final String TOKEN_PREFIX = "Bearer";
     private static final String HEADER_STRING = "Authorization";
 
     public static void addAuthentication(@NonNull HttpServletResponse response, @NonNull String username) {
