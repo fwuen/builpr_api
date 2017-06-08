@@ -34,6 +34,4 @@ public abstract class DataIntegrityTest {
         new DatabaseUserManager().persist(user);
     }
 
-    /* TODO: Add more test data */
-
 }
