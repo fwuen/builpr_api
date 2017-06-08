@@ -36,14 +36,14 @@ public class SolrSearchManagerTest {
 
     @Test
     public void createWithBaseUrl() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
 
         Assert.assertNotNull(solrSearchManager);
     }
 
     @Test
     public void createWithMockedSolrClient() {
-        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL).build();
+        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(REMOTE_BASE_URL_EXTERN).build();
 
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(solrClient);
 
@@ -540,10 +540,11 @@ public class SolrSearchManagerTest {
 
     }
 
+    /*
     @Test
     public void testClearIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
-    }
+    }*/
 }
