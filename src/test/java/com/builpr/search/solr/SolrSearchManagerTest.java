@@ -104,6 +104,38 @@ public class SolrSearchManagerTest {
         solrSearchManager.isReachable();
     }
 
+    @Test
+    public void indexRandomStringsWithCommit() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        List<String> categories = new ArrayList<String>();
+        categories.add("egories");
+        categories.add("cat");
+        categories.add("awesome");
+        categories.add("random");
+        categories.add("very");
+        categories.add("some");
+
+        Date date = new Date(System.currentTimeMillis());
+
+        Preconditions.checkNotNull(solrSearchManager);
+        Preconditions.checkNotNull(categories);
+        Preconditions.checkNotNull(date);
+
+        Printable p1 = Printable.getBuilder().
+                withId(10).
+                withTitle("azreiöjypoOIPAÖOIRHQHWEUPRIALDIFGhahueiprqi").
+                withDescription("FPWQOIQEROQWIEUöfuqpweiurhqweriaödööfejÖHPIQUHEWJRK:BNLKJDXVOUIHERQLEHR").
+                withRating(5).
+                withCategories(categories).
+                withUploaderId(1).
+                withUploadDate(date).
+                withNumberOfDownloads(274422342).
+                build();
+
+        Preconditions.checkNotNull(p1);
+        solrSearchManager.addToIndex(p1);
+    }
+
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
     @Test
     public void indexWithCommit() throws SearchManagerException {
