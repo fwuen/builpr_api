@@ -18,7 +18,7 @@ public class Constants {
     public static final String URL_GRAVATAR = "/gravatar";
 
 
-    
+
     public static final String SECURITY_ROLE_USER = "USER";
     public static final String SECURITY_CROSS_ORIGIN = "http://localhost:8081";
     public static final List<String> SECURITY_URLS = Lists.newArrayList(URL_SIMPLEPAYLOAD);

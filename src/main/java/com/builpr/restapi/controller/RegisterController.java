@@ -1,8 +1,8 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.Constants;
-import com.builpr.database.bridge.user.User;
 import com.builpr.database.DatabaseUserManager;
+import com.builpr.database.bridge.user.User;
 import com.builpr.restapi.converter.AccountRequestToUserModelConverter;
 import com.builpr.restapi.error.response.account.RegisterError;
 import com.builpr.restapi.model.Request.RegisterRequest;
