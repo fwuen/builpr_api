@@ -39,7 +39,7 @@ public class TokenAuthenticationService {
                     .getBody()
                     .getSubject();
 
-            return user != null ? new UsernamePasswordAuthenticationToken(user, null, AuthorityUtils.createAuthorityList(Constants.ROLE_USER)) : null;
+            return user != null ? new UsernamePasswordAuthenticationToken(user, null, AuthorityUtils.createAuthorityList(Constants.SECURITY_ROLE_USER)) : null;
         }
 
         return null;

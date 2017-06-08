@@ -26,7 +26,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
         if(dbUser == null)
             throw new UsernameNotFoundException(username);
 
-        return new User(dbUser.getUsername(), dbUser.getPassword(), AuthorityUtils.createAuthorityList(Constants.ROLE_USER));
+        return new User(dbUser.getUsername(), dbUser.getPassword(), AuthorityUtils.createAuthorityList(Constants.SECURITY_ROLE_USER));
     }
 
 }
