@@ -571,10 +571,11 @@ public class SolrSearchManagerTest {
         solrSearchManager.addToIndex(indexableList);
     }
 
+    /*
     @Test
     public void testClearIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
-    }
+    }*/
 }
