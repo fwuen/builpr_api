@@ -1,8 +1,8 @@
 package com.builpr;
 
-import com.builpr.database.db.builpr.user.User;
-import com.builpr.database.db.builpr.user.UserImpl;
-import com.builpr.restapi.service.UserService;
+import com.builpr.database.bridge.user.User;
+import com.builpr.database.bridge.user.UserImpl;
+import com.builpr.database.service.DatabaseUserManager;
 import org.junit.Before;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -19,7 +19,7 @@ public abstract class DataIntegrityTest {
     }
 
     private void clearDatabase() {
-        new UserService().deleteByUsername(TEST_USER_NAME);
+        new DatabaseUserManager().deleteByUsername(TEST_USER_NAME);
     }
 
     private void addUserToDatabase() {
@@ -31,7 +31,7 @@ public abstract class DataIntegrityTest {
         user.setLastname(TEST_USER_NAME);
         user.setBirthday(new Date(0));
 
-        new UserService().persist(user);
+        new DatabaseUserManager().persist(user);
     }
 
     /* TODO: Add more test data */

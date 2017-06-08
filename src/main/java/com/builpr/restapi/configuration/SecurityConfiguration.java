@@ -1,7 +1,6 @@
 package com.builpr.restapi.configuration;
 
 import com.builpr.Constants;
-import com.builpr.restapi.security.DatabaseUserDetailsService;
 import com.builpr.restapi.security.JWTAuthenticationFilter;
 import com.builpr.restapi.security.JWTLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;

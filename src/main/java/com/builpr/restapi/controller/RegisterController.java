@@ -1,12 +1,12 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.Constants;
-import com.builpr.database.db.builpr.user.User;
+import com.builpr.database.bridge.user.User;
+import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.converter.AccountRequestToUserModelConverter;
 import com.builpr.restapi.error.response.account.RegisterError;
 import com.builpr.restapi.model.Request.RegisterRequest;
 import com.builpr.restapi.model.Response.Response;
-import com.builpr.restapi.service.UserService;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +19,10 @@ import java.util.Date;
 @RestController
 public class RegisterController {
 
-    private UserService userService;
+    private DatabaseUserManager databaseUserManager;
 
     public RegisterController() {
-        userService = new UserService();
+        databaseUserManager = new DatabaseUserManager();
     }
 
     /**
@@ -60,7 +60,7 @@ public class RegisterController {
             response.setSuccess(false);
             response.addError(RegisterError.PASSWORDS_NOT_MATCHING);
         }
-        if (userService.getByUsername(registerRequest.getUsername()) != null) {
+        if (databaseUserManager.getByUsername(registerRequest.getUsername()) != null) {
             response.setSuccess(false);
             response.addError(RegisterError.USERNAME_TAKEN);
         }
@@ -68,7 +68,7 @@ public class RegisterController {
             response.setSuccess(false);
             response.addError(RegisterError.INVALID_EMAIL);
         }
-        if (userService.getByEmail(registerRequest.getEmail()) != null) {
+        if (databaseUserManager.getByEmail(registerRequest.getEmail()) != null) {
             response.setSuccess(false);
             response.addError(RegisterError.EMAIL_TAKEN);
         }
@@ -88,7 +88,7 @@ public class RegisterController {
         User registeredUser = AccountRequestToUserModelConverter.from(registerRequest);
 
         if (response.isSuccess()) {
-            userService.persist(registeredUser);
+            databaseUserManager.persist(registeredUser);
         }
 
         return response;

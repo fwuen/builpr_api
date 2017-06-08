@@ -2,11 +2,14 @@ package com.builpr;
 
 import com.google.common.collect.Lists;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
     public static final String DATE_FORMAT = "yyyy-mm-dd";
+
+
+
+    public static final String DATABASE_PASSWORD = "builpr123";
 
 
 

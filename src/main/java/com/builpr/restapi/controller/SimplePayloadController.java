@@ -2,7 +2,6 @@ package com.builpr.restapi.controller;
 
 import com.builpr.Constants;
 import com.builpr.restapi.model.SimplePayload;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;

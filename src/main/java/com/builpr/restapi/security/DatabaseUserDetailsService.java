@@ -1,7 +1,7 @@
 package com.builpr.restapi.security;
 
 import com.builpr.Constants;
-import com.builpr.restapi.service.UserService;
+import com.builpr.database.service.DatabaseUserManager;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,16 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class DatabaseUserDetailsService implements UserDetailsService {
 
-    private UserService userService = new UserService();
+    private DatabaseUserManager databaseUserManager = new DatabaseUserManager();
 
     public UserDetails loadUserByUsername(String username) {
         if(username == null)
             throw new UsernameNotFoundException("Username ist null");
 
-        if(!userService.isPresent(username))
+        if(!databaseUserManager.isPresent(username))
             throw new UsernameNotFoundException(username);
 
-        com.builpr.database.db.builpr.user.User dbUser = userService.getByUsername(username);
+        com.builpr.database.bridge.user.User dbUser = databaseUserManager.getByUsername(username);
 
         if(dbUser == null)
             throw new UsernameNotFoundException(username);
