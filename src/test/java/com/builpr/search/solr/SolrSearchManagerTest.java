@@ -1,5 +1,6 @@
 package com.builpr.search.solr;
 
+import com.builpr.search.SearchManager;
 import com.builpr.search.SearchManagerException;
 import com.builpr.search.filter.CategoryFilter;
 import com.builpr.search.filter.Filter;
@@ -78,16 +79,11 @@ public class SolrSearchManagerTest {
     }
 
     @Test
-    public void solrServerIsReachable() {
+    public void solrServerIsReachable() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Assert.assertNotNull(solrSearchManager);
-
-        try {
-            boolean reachable = solrSearchManager.isReachable();
-            Assert.assertTrue(reachable);
-        } catch (SearchManagerException e) {
-            e.printStackTrace();
-        }
+        boolean reachable = solrSearchManager.isReachable();
+        Assert.assertTrue(reachable);
     }
 
     @Test(expected = NullPointerException.class)
@@ -465,37 +461,45 @@ public class SolrSearchManagerTest {
 
     }
 
-    @Ignore
     @Test(expected = NullPointerException.class)
-    public void searchWithNullTerm() {
-
+    public void searchWithNullTerm() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        Preconditions.checkNotNull(solrSearchManager);
+        solrSearchManager.search(null);
     }
 
-    @Ignore
-    @Test(expected = NullPointerException.class)
-    public void searchWithNullCategory() {
+    @Test(expected = SearchManagerException.class)
+    public void searchWithTermAndNullCategory() throws SearchManagerException{
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        Preconditions.checkNotNull(solrSearchManager);
+        List<Filter> filterList = Lists.newArrayList();
+        CategoryFilter f = null;
 
+        Preconditions.checkNotNull(filterList);
+        filterList.add(f);
+        solrSearchManager.search("test", filterList);
     }
 
-    @Ignore
     @Test(expected = NullPointerException.class)
-    public void searchWithNullMinimumRating() {
+    public void searchWithTermAndNullFilterList() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        Preconditions.checkNotNull(solrSearchManager);
+        List<Filter> filterList = null;
 
+        solrSearchManager.search("test", filterList);
     }
 
-    @Ignore
-    @Test(expected = NullPointerException.class)
-    public void searchWithTermAndNullCategory() {
+    @Test(expected = SearchManagerException.class)
+    public void searchWithTermAndNullMinimumRating() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        Preconditions.checkNotNull(solrSearchManager);
+        List<Filter> filterList = Lists.newArrayList();
+        MinimumRatingFilter mrf = null;
+        filterList.add(mrf);
 
+        solrSearchManager.search("test", filterList);
     }
 
-    @Ignore
-    @Test(expected = NullPointerException.class)
-    public void searchWithTermAndNullMinimumRating() {
-
-    }
-
-    @Ignore
     @Test(expected = NullPointerException.class)
     public void searchWithTermAndNullCategoryAndNullMinimumRating() {
 
