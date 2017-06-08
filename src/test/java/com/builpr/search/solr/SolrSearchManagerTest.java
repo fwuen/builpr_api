@@ -498,53 +498,83 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("test", filterList);
     }
 
-    @Ignore
-    @Test(expected = NullPointerException.class)
-    public void searchWithTermAndNullCategoryAndNullMinimumRating() {
-
+    @Test(expected = SearchManagerException.class)
+    public void searchWithTermAndNullCategoryAndNullMinimumRating() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        MinimumRatingFilter mrf = null;
+        CategoryFilter cf = null;
+        List<Filter> filterList = Lists.newArrayList();
+        filterList.add(cf);
+        filterList.add(mrf);
+        solrSearchManager.search("test", filterList);
     }
 
-    @Ignore
-    @Test(expected = NullPointerException.class)
-    public void searchWithTermAndCategoryAndNullMinimumRating() {
-
+    @Test(expected = SearchManagerException.class)
+    public void searchWithTermAndCategoryAndNullMinimumRating() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        MinimumRatingFilter mrf = null;
+        List<String> categories = Lists.newArrayList();
+        categories.add("cat");
+        CategoryFilter cf = new CategoryFilter(categories);
+        List<Filter> filterList = Lists.newArrayList();
+        filterList.add(cf);
+        filterList.add(mrf);
+        solrSearchManager.search("test", filterList);
     }
 
-    @Ignore
-    @Test(expected = NullPointerException.class)
-    public void searchWithTermAndNullCategoryAndMinimumRating() {
-
+    @Test(expected = SearchManagerException.class)
+    public void searchWithTermAndNullCategoryAndMinimumRating() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        MinimumRatingFilter mrf = new MinimumRatingFilter(1);
+        CategoryFilter cf = null;
+        List<Filter> filterList = Lists.newArrayList();
+        filterList.add(mrf);
+        filterList.add(cf);
+        solrSearchManager.search("test", filterList);
     }
 
-    @Ignore
     @Test(expected = NullPointerException.class)
-    public void searchWithNullTermAndCategoryAndMinimumRating() {
-
+    public void searchWithNullTermAndCategoryAndMinimumRating() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        MinimumRatingFilter mrf = new MinimumRatingFilter(1);
+        List<String> categories = Lists.newArrayList();
+        categories.add("cat");
+        CategoryFilter cf = new CategoryFilter(categories);
+        List<Filter> filterList = Lists.newArrayList();
+        filterList.add(cf);
+        filterList.add(mrf);
+        solrSearchManager.search(null, filterList);
     }
 
-    @Ignore
     @Test(expected = NullPointerException.class)
-    public void searchWithNullTermAndNullCategoryAndMinimumRating() {
-
+    public void searchWithNullTermAndNullCategoryAndMinimumRating() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        MinimumRatingFilter mrf = new MinimumRatingFilter(1);
+        CategoryFilter cf = null;
+        List<Filter> filterList = Lists.newArrayList();
+        filterList.add(cf);
+        filterList.add(mrf);
+        solrSearchManager.search(null, filterList);
     }
 
-    @Ignore
     @Test(expected = NullPointerException.class)
-    public void indexNullAndCommit() {
-
+    public void indexNull() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        Indexable idx = null;
+        solrSearchManager.addToIndex(idx);
     }
 
-    @Ignore
     @Test(expected = NullPointerException.class)
-    public void indexMultipleNullAndCommit() {
-
+    public void indexNullList() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        List<Indexable> indexableList = null;
+        solrSearchManager.addToIndex(indexableList);
     }
 
-    /*
     @Test
     public void testClearIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
-    }*/
+    }
 }
