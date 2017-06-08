@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class PrintableReferenceTest {
 
-    private static final int VALID_ID = 4;
+    private static final String VALID_ID = "4";
     
     /**
      * Create a PrintableReference-object with a legitimate ID as parameter
@@ -27,7 +27,7 @@ public class PrintableReferenceTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createWithNegativeId() {
-        new PrintableReference(-1);
+        new PrintableReference("-1");
     }
     
     /**
@@ -36,7 +36,7 @@ public class PrintableReferenceTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void createWithIdIsZero() {
-        new PrintableReference(0);
+        new PrintableReference("0");
     }
 
 }

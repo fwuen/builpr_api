@@ -58,7 +58,7 @@ public class PrintableReferenceFactoryTest {
         List<SolrDocument> documents = Lists.newArrayList();
         SolrDocument solrdoc = new SolrDocument();
 
-        solrdoc.put(SolrFields.PRINT_MODEL_ID, 1);
+        solrdoc.put(SolrFields.PRINT_MODEL_ID, "1");
         documents.add(solrdoc);
 
         List<PrintableReference> references = factory.get(documents);
@@ -75,7 +75,7 @@ public class PrintableReferenceFactoryTest {
         PrintableReferenceFactory factory = new PrintableReferenceFactory();
         SolrDocument solrdoc = new SolrDocument();
 
-        solrdoc.put(SolrFields.PRINT_MODEL_ID, 1);
+        solrdoc.put(SolrFields.PRINT_MODEL_ID, "1");
         PrintableReference reference = factory.get(solrdoc);
 
         Assert.assertNotNull(reference);

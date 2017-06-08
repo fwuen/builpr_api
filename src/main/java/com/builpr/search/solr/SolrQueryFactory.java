@@ -2,12 +2,14 @@ package com.builpr.search.solr;
 
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
-import com.builpr.search.filter.CategoryFilter;
-import com.builpr.search.filter.Filter;
-import com.builpr.search.filter.MinimumRatingFilter;
+import com.builpr.search.filter.*;
+import com.google.common.base.Preconditions;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrQuery;
 
+import javax.validation.constraints.Min;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SolrQueryFactory {
@@ -20,12 +22,13 @@ public class SolrQueryFactory {
     ) {
         SolrQuery query = new SolrQuery();
 
-        query.setQuery(term);
+        query.setQuery(buildQueryString(term));
 
         for (Filter filter : filters) {
             if (filter instanceof MinimumRatingFilter) {
-                // TODO: überdenken/überarbeiten
-                query.addNumericRangeFacet("rating", ((MinimumRatingFilter) filter).getMinimumRating(), 5, 1.0);
+                // TODO MinimumRatingFilter geht noch nicht
+                //query.addNumericRangeFacet(SolrFields.PRINT_MODEL_RATING, ((MinimumRatingFilter) filter).getMinimumRating(), MinimumRatingFilter.HIGHEST_POSSIBLE_RATING, 1.0);
+                query.setFilterQueries(SolrFields.PRINT_MODEL_RATING + ":[" + ((MinimumRatingFilter) filter).getMinimumRating() + " TO " + MinimumRatingFilter.HIGHEST_POSSIBLE_RATING + "]");
             } else if (filter instanceof CategoryFilter) {
                 CategoryFilter concreteFilter = (CategoryFilter) filter;
                 for (String category : concreteFilter.getCategories())
@@ -41,7 +44,32 @@ public class SolrQueryFactory {
             );
         }
 
+        query.setFields("id");
+
+        System.err.println(query.toQueryString());
         return query;
+    }
+
+    private String buildQueryString(String term) {
+        StringBuilder builder = new StringBuilder();
+        term = term.toLowerCase();
+        term = term.trim();
+        term = term.replaceAll("(\\s)(\\s)+", " ");
+        ArrayList<String> terms = new ArrayList(Arrays.asList(term.split(" ")));
+
+        for(String t : terms)
+        {
+            builder.append(SolrFields.PRINT_MODEL_TITLE + ":*" + t + "*");
+            builder.append(" OR ");
+            builder.append(SolrFields.PRINT_MODEL_DESCRIPTION + ":*" + t + "*");
+
+            if (terms.indexOf(t) < terms.size() - 1)
+            {
+                builder.append(" OR ");
+            }
+        }
+
+        return builder.toString();
     }
 
     public SolrQuery getQueryFindAll() {
