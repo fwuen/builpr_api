@@ -1,15 +1,16 @@
 package com.builpr.restapi.model.Response;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * basic response
  */
-public class Response<responseType, errorType> {
+public class Response<payloadType, errorType> {
 
     @Setter
     @Getter
@@ -17,17 +18,19 @@ public class Response<responseType, errorType> {
 
     @Setter
     @Getter
-    private responseType payload;
+    private payloadType payload;
 
     @Setter
     @Getter
-    private List<errorType> errorList;
+    private List<errorType> errorList = Lists.newArrayList();
 
-    public Response() {
-        errorList = new ArrayList<>();
+    public Response() { }
+
+    public Response(@NonNull payloadType payload) {
+        this.setPayload(payload);
     }
 
-    public void addError(errorType error) {
+    public void addError(@NonNull errorType error) {
         errorList.add(error);
     }
 

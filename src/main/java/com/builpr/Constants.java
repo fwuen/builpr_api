@@ -21,7 +21,12 @@ public class Constants {
 
     public static final String URL_LOGIN = "/login";
     public static final String URL_SIMPLEPAYLOAD = "/simplepayload";
+    public static final String URL_GRAVATAR = "/gravatar";
 
     public static final List<String> SECURED_URLS = Lists.newArrayList(URL_SIMPLEPAYLOAD);
+
+
+
+    public static final String USER_IMAGE_GRAVATAR_NOT_SET = "http://placehold.it/100x100";
 }
 
