@@ -16,7 +16,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String username) {
         if(username == null)
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException("Username ist null");
 
         if(!userService.isPresent(username))
             throw new UsernameNotFoundException(username);
@@ -26,7 +26,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
         if(dbUser == null)
             throw new UsernameNotFoundException(username);
 
-        return new User(String.valueOf(dbUser.getUserId()), dbUser.getPassword(), AuthorityUtils.createAuthorityList(Constants.ROLE_USER));
+        return new User(dbUser.getUsername(), dbUser.getPassword(), AuthorityUtils.createAuthorityList(Constants.ROLE_USER));
     }
 
 }

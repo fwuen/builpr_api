@@ -13,5 +13,7 @@ public class Constants {
     public static final String SECURITY_USER = "hasRole('" + ROLE_USER + "')";
 
 
+
+    public static final String URL_LOGIN = "/login";
     public static final String URL_SIMPLEPAYLOAD = "/simplepayload";
 }

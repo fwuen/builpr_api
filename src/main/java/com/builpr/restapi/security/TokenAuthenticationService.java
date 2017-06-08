@@ -1,11 +1,12 @@
 package com.builpr.restapi.security;
 
-import com.google.common.collect.Lists;
+import com.builpr.Constants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ public class TokenAuthenticationService {
 
     private static final long EXPIRATION_TIME = 864_000_000; // 10 Days
     private static final String SECRET = "builprIsAwesome";
-    private static final String TOKEN_PREFIX = "Bearer";
+    private static final String TOKEN_PREFIX = "builpr";
     private static final String HEADER_STRING = "Authorization";
 
     public static void addAuthentication(@NonNull HttpServletResponse response, @NonNull String username) {
@@ -38,7 +39,7 @@ public class TokenAuthenticationService {
                     .getBody()
                     .getSubject();
 
-            return user != null ? new UsernamePasswordAuthenticationToken(user, null, Lists.newArrayList()) : null;
+            return user != null ? new UsernamePasswordAuthenticationToken(user, null, AuthorityUtils.createAuthorityList(Constants.ROLE_USER)) : null;
         }
 
         return null;

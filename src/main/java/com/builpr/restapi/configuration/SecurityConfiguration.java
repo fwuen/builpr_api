@@ -1,5 +1,9 @@
 package com.builpr.restapi.configuration;
 
+import com.builpr.Constants;
+import com.builpr.restapi.security.DatabaseUserDetailsService;
+import com.builpr.restapi.security.JWTAuthenticationFilter;
+import com.builpr.restapi.security.JWTLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -30,15 +35,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
+    /* TODO: IMPORTANT! Login funktioniert zwar aber auth mit Token nicht wirklich. Username und Role werden dem SecurityContext hinzugefügt, passieren tut trotzdem nichts. x.x*/
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().authorizeRequests()
-                .antMatchers("/login").permitAll();
-                /*.and()
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
+        httpSecurity.csrf().disable()
+                .addFilterBefore(new JWTLoginFilter(Constants.URL_LOGIN, authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);*/
+                        UsernamePasswordAuthenticationFilter.class);
     }
 
 }
