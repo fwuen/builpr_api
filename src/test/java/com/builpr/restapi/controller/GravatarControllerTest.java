@@ -30,8 +30,6 @@ public class GravatarControllerTest extends ControllerTest {
         Assert.assertEquals(true, response.isSuccess());
         Assert.assertNotNull(response.getPayload());
         Assert.assertTrue(response.getPayload().length() > 0);
-
-        System.out.println(response.getPayload());
     }
 
     @Test
