@@ -2,7 +2,7 @@ package com.builpr;
 
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserImpl;
-import com.builpr.database.service.DatabaseUserManager;
+import com.builpr.database.DatabaseUserManager;
 import org.junit.Before;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
