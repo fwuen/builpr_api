@@ -20,9 +20,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.util.NamedList;
 import org.assertj.core.util.Lists;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 import javax.validation.constraints.Null;
 import java.io.IOException;
@@ -500,6 +498,7 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("test", filterList);
     }
 
+    @Ignore
     @Test(expected = NullPointerException.class)
     public void searchWithTermAndNullCategoryAndNullMinimumRating() {
 
@@ -539,5 +538,12 @@ public class SolrSearchManagerTest {
     @Test(expected = NullPointerException.class)
     public void indexMultipleNullAndCommit() {
 
+    }
+
+    @Test
+    public void testClearIndex() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        Preconditions.checkNotNull(solrSearchManager);
+        solrSearchManager.clearIndex();
     }
 }

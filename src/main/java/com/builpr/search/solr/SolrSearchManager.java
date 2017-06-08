@@ -11,11 +11,13 @@ import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrInputDocument;
 
+import java.io.IOException;
 import java.util.List;
 // TODO: Doku für @Override-Methode erben
 
@@ -196,5 +198,15 @@ public class SolrSearchManager implements SearchManager {
 
         if (commit)
             commit();
+    }
+
+    @Override
+    public void clearIndex() throws SearchManagerException {
+        try {
+            solrClient.deleteByQuery(COLLECTION, "*:*");
+            commit();
+        } catch (Exception exception) {
+            throw new SearchManagerException(exception);
+        }
     }
 }
