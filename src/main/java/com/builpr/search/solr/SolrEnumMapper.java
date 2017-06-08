@@ -48,10 +48,10 @@ public abstract class SolrEnumMapper {
                 return SOLR_SORT.rating;
 
             case "DOWNLOADS":
-                return SOLR_SORT.downloads;
+                return SOLR_SORT.numberOfDownloads;
 
             case "UPLOAD_DATE":
-                return SOLR_SORT.upload_date;
+                return SOLR_SORT.uploadDate;
 
             default:
                 return SOLR_SORT.RELEVANCE;

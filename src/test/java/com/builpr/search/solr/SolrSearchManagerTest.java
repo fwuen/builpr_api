@@ -1,6 +1,7 @@
 package com.builpr.search.solr;
 
-import com.builpr.search.SearchManager;
+import com.builpr.search.ORDER;
+import com.builpr.search.SORT;
 import com.builpr.search.SearchManagerException;
 import com.builpr.search.filter.CategoryFilter;
 import com.builpr.search.filter.Filter;
@@ -11,19 +12,10 @@ import com.builpr.search.model.PrintableReference;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Verify;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrRequest;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.util.NamedList;
 import org.assertj.core.util.Lists;
 import org.junit.*;
 
-import javax.validation.constraints.Null;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +24,7 @@ public class SolrSearchManagerTest {
 
     private static final String LOCAL_BASE_URL = "http://localhost/solr";
     private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
-    private static final String REMOTE_BASE_URL_EXTERN = "http://builpr.com:8983/solr";
+    private static final String REMOTE_BASE_URL_EXTERN = "http://192.168.1.50:8983/solr";
 
     @Test
     public void createWithBaseUrl() {
@@ -362,7 +354,7 @@ public class SolrSearchManagerTest {
         Verify.verifyNotNull(pr);
         Verify.verify(pr.size() > 0);
 
-        // Does not belong to the actual test; just for the developer to see the found Printables
+        // Does not belong to the actual test; shisha for the developer to see the found Printables
         for (PrintableReference prf : pr) {
             System.out.println(prf.toString());
         }
@@ -379,12 +371,12 @@ public class SolrSearchManagerTest {
         Preconditions.checkNotNull(solrSearchManager);
         Preconditions.checkNotNull(filters);
         Preconditions.checkState(filters.size() == 1);
-        List<PrintableReference> pr = solrSearchManager.search("just", filters);
+        List<PrintableReference> pr = solrSearchManager.search("shisha", filters);
 
         Verify.verifyNotNull(pr);
         Verify.verify(pr.size() > 0);
 
-        // Does not belong to the actual test; just for the developer to see the found Printables
+        // Does not belong to the actual test; shisha for the developer to see the found Printables
         for (PrintableReference prf : pr) {
             System.out.println(prf.getId() + " " + prf.toString());
         }
@@ -410,7 +402,7 @@ public class SolrSearchManagerTest {
         Verify.verifyNotNull(pr);
         Verify.verify(pr.size() > 0);
 
-        // Does not belong to the actual test; just for the developer to see the found Printables
+        // Does not belong to the actual test; shisha for the developer to see the found Printables
         for (PrintableReference prf : pr) {
             System.out.println(prf.getId() + " " + prf.toString());
         }
@@ -438,7 +430,7 @@ public class SolrSearchManagerTest {
         Verify.verifyNotNull(pr);
         Verify.verify(pr.size() > 0);
 
-        // Does not belong to the actual test; just for the developer to see the found Printables
+        // Does not belong to the actual test; shisha for the developer to see the found Printables
         for (PrintableReference prf : pr) {
             System.out.println(prf.getId() + " " + prf.toString());
         }
@@ -538,6 +530,114 @@ public class SolrSearchManagerTest {
     @Test(expected = NullPointerException.class)
     public void indexMultipleNullAndCommit() {
 
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByName() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.ALPHABETICAL);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByRating() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.RATING);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByDownloads() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.DOWNLOADS);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByUploadDate() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.UPLOAD_DATE);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByNameAndOrderAsc() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.ASC);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByRatingAndOrderAsc() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.RATING, ORDER.ASC);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByDownloadsAndOrderAsc() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.ASC);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByUploadDateAndOrderAsc() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.ASC);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByNameAndOrderDesc() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.DESC);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByRatingAndOrderDesc() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.RATING, ORDER.DESC);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByDownloadsAndOrderDesc() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.DESC);
+    }
+
+    //TODO: Test zu Test machen
+    @Test
+    public void searchWithTermAndSortByUploadDateAndOrderDesc() throws SearchManagerException
+    {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+
+        solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
     }
 
     /*
