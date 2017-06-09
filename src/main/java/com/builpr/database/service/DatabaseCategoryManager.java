@@ -15,10 +15,10 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
 
     private DatabasePrintableCategoryManager printableCategoryManager;
 
-    private DatabasePrintableManager printableManager;
-
     public DatabaseCategoryManager() {
         super(CategoryManager.class);
+
+        printableCategoryManager = new DatabasePrintableCategoryManager();
     }
 
     /**
