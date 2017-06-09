@@ -1,4 +1,4 @@
-package com.builpr.database;
+package com.builpr.database.service;
 
 import com.builpr.Constants;
 import com.builpr.database.bridge.BuilprApplicationBuilder;

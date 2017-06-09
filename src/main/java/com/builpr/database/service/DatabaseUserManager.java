@@ -1,4 +1,4 @@
-package com.builpr.database;
+package com.builpr.database.service;
 
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserManager;
