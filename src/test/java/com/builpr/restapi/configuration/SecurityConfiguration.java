@@ -20,7 +20,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(Constants.SECURED_URLS.toArray(new String[Constants.SECURED_URLS.size()])).authenticated().and()
+                .antMatchers(Constants.SECURITY_URLS.toArray(new String[Constants.SECURITY_URLS.size()])).authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

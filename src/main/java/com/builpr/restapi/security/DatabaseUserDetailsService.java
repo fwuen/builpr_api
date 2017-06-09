@@ -1,7 +1,7 @@
 package com.builpr.restapi.security;
 
 import com.builpr.Constants;
-import com.builpr.database.service.DatabaseUserManager;
+import com.builpr.database.DatabaseUserManager;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +26,7 @@ public class DatabaseUserDetailsService implements UserDetailsService {
         if(dbUser == null)
             throw new UsernameNotFoundException(username);
 
-        return new User(dbUser.getUsername(), dbUser.getPassword(), AuthorityUtils.createAuthorityList(Constants.ROLE_USER));
+        return new User(dbUser.getUsername(), dbUser.getPassword(), AuthorityUtils.createAuthorityList(Constants.SECURITY_ROLE_USER));
     }
 
 }
