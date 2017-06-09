@@ -5,7 +5,6 @@ import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.bridge.printable_category.PrintableCategory;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.core.manager.Manager;
-
 import java.util.Objects;
 import java.util.StringJoiner;
 

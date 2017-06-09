@@ -3,7 +3,6 @@ package com.builpr.database.bridge.user.generated;
 import com.builpr.database.bridge.user.User;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.core.util.OptionalUtil;
-
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -32,9 +31,9 @@ public abstract class GeneratedUserImpl implements User {
     private String lastname;
     private String avatar;
     private String description;
-    private int showName;
-    private int showBirthday;
-    private int showEmail;
+    private boolean showName;
+    private boolean showBirthday;
+    private boolean showEmail;
     private String accessToken;
     
     protected GeneratedUserImpl() {
@@ -92,17 +91,17 @@ public abstract class GeneratedUserImpl implements User {
     }
     
     @Override
-    public int getShowName() {
+    public boolean getShowName() {
         return showName;
     }
     
     @Override
-    public int getShowBirthday() {
+    public boolean getShowBirthday() {
         return showBirthday;
     }
     
     @Override
-    public int getShowEmail() {
+    public boolean getShowEmail() {
         return showEmail;
     }
     
@@ -172,19 +171,19 @@ public abstract class GeneratedUserImpl implements User {
     }
     
     @Override
-    public User setShowName(int showName) {
+    public User setShowName(boolean showName) {
         this.showName = showName;
         return this;
     }
     
     @Override
-    public User setShowBirthday(int showBirthday) {
+    public User setShowBirthday(boolean showBirthday) {
         this.showBirthday = showBirthday;
         return this;
     }
     
     @Override
-    public User setShowEmail(int showEmail) {
+    public User setShowEmail(boolean showEmail) {
         this.showEmail = showEmail;
         return this;
     }
@@ -250,9 +249,9 @@ public abstract class GeneratedUserImpl implements User {
         hash = 31 * hash + Objects.hashCode(getLastname());
         hash = 31 * hash + Objects.hashCode(getAvatar());
         hash = 31 * hash + Objects.hashCode(getDescription());
-        hash = 31 * hash + Integer.hashCode(getShowName());
-        hash = 31 * hash + Integer.hashCode(getShowBirthday());
-        hash = 31 * hash + Integer.hashCode(getShowEmail());
+        hash = 31 * hash + Boolean.hashCode(getShowName());
+        hash = 31 * hash + Boolean.hashCode(getShowBirthday());
+        hash = 31 * hash + Boolean.hashCode(getShowEmail());
         hash = 31 * hash + Objects.hashCode(getAccessToken());
         return hash;
     }

@@ -47,8 +47,5 @@ public class RegisterRequest {
     @Getter
     private boolean showEmail;
 
-    @Setter
-    @Getter
-    private String abc;
 
 }

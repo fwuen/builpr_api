@@ -12,7 +12,6 @@ import com.speedment.runtime.field.IntField;
 import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
-
 import java.sql.Date;
 import java.util.Optional;
 

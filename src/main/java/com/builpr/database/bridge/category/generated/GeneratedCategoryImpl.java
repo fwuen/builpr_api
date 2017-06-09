@@ -2,7 +2,6 @@ package com.builpr.database.bridge.category.generated;
 
 import com.builpr.database.bridge.category.Category;
 import com.speedment.common.annotation.GeneratedCode;
-
 import java.util.Objects;
 import java.util.StringJoiner;
 

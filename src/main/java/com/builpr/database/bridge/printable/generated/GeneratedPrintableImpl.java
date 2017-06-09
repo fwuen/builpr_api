@@ -5,7 +5,6 @@ import com.builpr.database.bridge.user.User;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.core.manager.Manager;
 import com.speedment.runtime.core.util.OptionalUtil;
-
 import java.sql.Date;
 import java.util.Objects;
 import java.util.Optional;

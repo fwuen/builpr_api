@@ -2,7 +2,6 @@ package com.builpr.database.bridge.register_confirmation_token.generated;
 
 import com.builpr.database.bridge.register_confirmation_token.RegisterConfirmationToken;
 import com.speedment.common.annotation.GeneratedCode;
-
 import java.util.Objects;
 import java.util.StringJoiner;
 

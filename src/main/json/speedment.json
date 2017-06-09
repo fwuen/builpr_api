@@ -747,7 +747,7 @@
                 "enabled" : true
               },
               {
-                "expanded" : false,
+                "expanded" : true,
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
@@ -770,7 +770,8 @@
                         "ordinalPosition" : 1
                       }
                     ],
-                    "id" : "PRIMARY"
+                    "id" : "PRIMARY",
+                    "enabled" : true
                   },
                   {
                     "expanded" : false,
@@ -785,7 +786,8 @@
                         "ordinalPosition" : 1
                       }
                     ],
-                    "id" : "user_access_token_uindex"
+                    "id" : "user_access_token_uindex",
+                    "enabled" : true
                   },
                   {
                     "expanded" : false,
@@ -800,7 +802,8 @@
                         "ordinalPosition" : 1
                       }
                     ],
-                    "id" : "User_email_uindex"
+                    "id" : "User_email_uindex",
+                    "enabled" : true
                   },
                   {
                     "expanded" : false,
@@ -815,7 +818,8 @@
                         "ordinalPosition" : 1
                       }
                     ],
-                    "id" : "User_username_uindex"
+                    "id" : "User_username_uindex",
+                    "enabled" : true
                   }
                 ],
                 "columns" : [
@@ -899,7 +903,8 @@
                     "nullable" : true,
                     "name" : "avatar",
                     "id" : "avatar",
-                    "ordinalPosition" : 9
+                    "ordinalPosition" : 9,
+                    "enabled" : true
                   },
                   {
                     "databaseType" : "java.lang.String",
@@ -907,42 +912,55 @@
                     "nullable" : true,
                     "name" : "description",
                     "id" : "description",
-                    "ordinalPosition" : 10
+                    "ordinalPosition" : 10,
+                    "enabled" : true
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "show_name",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "show_name",
-                    "ordinalPosition" : 11
+                    "ordinalPosition" : 11,
+                    "enabled" : true
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "show_birthday",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "show_birthday",
-                    "ordinalPosition" : 12
+                    "ordinalPosition" : 12,
+                    "enabled" : true
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "show_email",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "show_email",
-                    "ordinalPosition" : 13
+                    "ordinalPosition" : 13,
+                    "enabled" : true
                   },
                   {
                     "databaseType" : "java.lang.String",
                     "expanded" : true,
                     "nullable" : true,
+                    "autoIncrement" : false,
                     "name" : "access_token",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "access_token",
-                    "ordinalPosition" : 14
+                    "ordinalPosition" : 14,
+                    "enabled" : true
                   }
                 ],
                 "name" : "user",

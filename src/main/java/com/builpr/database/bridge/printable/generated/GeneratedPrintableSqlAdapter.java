@@ -9,10 +9,8 @@ import com.speedment.runtime.config.identifier.TableIdentifier;
 import com.speedment.runtime.core.component.sql.SqlPersistenceComponent;
 import com.speedment.runtime.core.component.sql.SqlStreamSupplierComponent;
 import com.speedment.runtime.core.exception.SpeedmentException;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import static com.speedment.common.injector.State.RESOLVED;
 
 /**
