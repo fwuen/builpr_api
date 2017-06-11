@@ -27,6 +27,12 @@ public class SolrSearchManagerTest {
     private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
     private static final String REMOTE_BASE_URL_EXTERN = "http://192.168.1.50:8983/solr";
 
+    @BeforeClass
+    public void prepareSolrSearchManagerTest() {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        
+    }
+    
     //Creation Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     @Test
@@ -321,10 +327,6 @@ public class SolrSearchManagerTest {
     //Search Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
-    @Before
-    public void prepareSearchWithSimpleTerm() {
-    
-    }
     @Test
     public void searchWithSimpleTerm() throws SearchManagerException {
 
@@ -343,10 +345,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
-    @Before
-    public void prepareSearchWithTermAndMinimumRating() {
-    
-    }
     @Test
     public void searchWithTermAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -369,10 +367,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
-    @Before
-    public void prepareSearchWithTermAndCategory() {
-    
-    }
     @Test
     public void searchWithTermAndCategory() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -399,10 +393,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
-    @Before
-    public void prepareSearchWithTermAndCategoryAndMinimumRating() {
-    
-    }
     @Test
     public void searchWithTermAndCategoryAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -429,29 +419,17 @@ public class SolrSearchManagerTest {
             System.out.println(prf.getId() + " " + prf.toString());
         }
     }
-
-    @Before
-    public void prepareSearchWithCategory() {
     
-    }
     @Test
     public void searchWithCategory() {
 
     }
-
-    @Before
-    public void prepareSearchWithCategoryAndMinimumRating() {
     
-    }
     @Test
     public void searchWithCategoryAndMinimumRating() {
 
     }
-
-    @Before
-    public void prepareSearchWithMinimumRating() {
     
-    }
     @Test
     public void searchWithMinimumRating() {
 
@@ -561,10 +539,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByName() {
-    
-    }
     @Test
     public void searchWithTermAndSortByName() throws SearchManagerException
     {
@@ -574,10 +548,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByRating() {
-    
-    }
     @Test
     public void searchWithTermAndSortByRating() throws SearchManagerException
     {
@@ -587,10 +557,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByDownloads() {
-    
-    }
     @Test
     public void searchWithTermAndSortByDownloads() throws SearchManagerException
     {
@@ -600,10 +566,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByUploadDate() {
-    
-    }
     @Test
     public void searchWithTermAndSortByUploadDate() throws SearchManagerException
     {
@@ -626,10 +588,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByRatingAndOrderAsc() {
-    
-    }
     @Test
     public void searchWithTermAndSortByRatingAndOrderAsc() throws SearchManagerException
     {
@@ -639,10 +597,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByDownloadsAndOrderAsc() {
-    
-    }
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderAsc() throws SearchManagerException
     {
@@ -652,10 +606,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByUploadDateAndOrderAsc() {
-    
-    }
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderAsc() throws SearchManagerException
     {
@@ -665,10 +615,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByNameAndOrderDesc() {
-    
-    }
     @Test
     public void searchWithTermAndSortByNameAndOrderDesc() throws SearchManagerException
     {
@@ -678,10 +624,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByRatingAndOrderDesc() {
-    
-    }
     @Test
     public void searchWithTermAndSortByRatingAndOrderDesc() throws SearchManagerException
     {
@@ -691,10 +633,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByDownloadsAndOrderDesc() {
-    
-    }
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderDesc() throws SearchManagerException
     {
@@ -704,10 +642,6 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
-    @Before
-    public void prepareSearchWithTermAndSortByUploadDateAndOrderDesc() {
-    
-    }
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderDesc() throws SearchManagerException
     {
