@@ -1,7 +1,9 @@
 package com.builpr.database.service;
 
 import com.builpr.database.bridge.printable.Printable;
+import com.builpr.database.bridge.printable.PrintableImpl;
 import com.builpr.database.bridge.printable.PrintableManager;
+import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.utils.TokenGenerator;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,6 +72,22 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
             }
         }
         return categories;
+    }
+
+    /**
+     * @param request PrintableNewRequest
+     * @param userID  int
+     * @param path    String
+     * @return Printable
+     */
+    public Printable createPrintable(PrintableNewRequest request, int userID, String path) {
+        PrintableImpl printable = new PrintableImpl();
+        printable.setTitle(request.getTitle());
+        printable.setDescription(request.getDescription());
+        printable.setUploaderId(userID);
+        printable.setFilePath(path);
+        this.getDao().persist(printable);
+        return printable;
     }
 
     /**

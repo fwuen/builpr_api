@@ -6,11 +6,17 @@ import com.builpr.database.service.DatabaseCategoryManager;
 import com.builpr.database.service.DatabasePrintableCategoryManager;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseUserManager;
+import com.builpr.restapi.converter.PrintableToResponseConverter;
+import com.builpr.restapi.error.exception.PrintableNotFoundException;
 import com.builpr.restapi.error.response.account.printable.PrintableDownloadError;
 import com.builpr.restapi.error.response.account.printable.PrintableNewError;
+import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
+import com.builpr.restapi.model.Request.Printable.PrintableRequest;
 import com.builpr.restapi.model.Response.Response;
+import com.builpr.restapi.model.Response.printable.PrintableEditResponse;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
+import com.builpr.restapi.model.Response.printable.PrintableResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
