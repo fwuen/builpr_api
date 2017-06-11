@@ -16,6 +16,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.assertj.core.util.Lists;
 import org.junit.*;
 
+import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,8 @@ public class SolrSearchManagerTest {
     private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
     private static final String REMOTE_BASE_URL_EXTERN = "http://192.168.1.50:8983/solr";
 
+    //Creation Tests
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     @Test
     public void createWithBaseUrl() {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -52,6 +55,8 @@ public class SolrSearchManagerTest {
         SolrSearchManager.createWithSolrClient(null);
     }
 
+    //Reachability Tests
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     @Test
     public void reachabilityCheckWithSolrClient() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(REMOTE_BASE_URL_EXTERN).build());
@@ -90,6 +95,8 @@ public class SolrSearchManagerTest {
         solrSearchManager.isReachable();
     }
 
+    //Index Tests
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     @Test
     public void indexRandomStringsWithCommit() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -341,8 +348,28 @@ public class SolrSearchManagerTest {
 
         solrSearchManager.addToIndex(indexables);
     }
+    
+    @Test(expected = NullPointerException.class)
+    public void indexNull() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        Indexable idx = null;
+        solrSearchManager.addToIndex(idx);
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void indexNullList() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        List<Indexable> indexableList = null;
+        solrSearchManager.addToIndex(indexableList);
+    }
 
+    //Search Tests
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
+    @Before
+    public void prepareSearchWithSimpleTerm() {
+    
+    }
     @Test
     public void searchWithSimpleTerm() throws SearchManagerException {
 
@@ -361,6 +388,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
+    @Before
+    public void prepareSearchWithTermAndMinimumRating() {
+    
+    }
     @Test
     public void searchWithTermAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -383,6 +414,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
+    @Before
+    public void prepareSearchWithTermAndCategory() {
+    
+    }
     @Test
     public void searchWithTermAndCategory() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -409,6 +444,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO Test korrigieren, der testet aktuell nicht wirklich was
+    @Before
+    public void prepareSearchWithTermAndCategoryAndMinimumRating() {
+    
+    }
     @Test
     public void searchWithTermAndCategoryAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -436,21 +475,33 @@ public class SolrSearchManagerTest {
         }
     }
 
+    @Before
+    public void prepareSearchWithCategory() {
+    
+    }
     @Test
     public void searchWithCategory() {
 
     }
 
+    @Before
+    public void prepareSearchWithCategoryAndMinimumRating() {
+    
+    }
     @Test
     public void searchWithCategoryAndMinimumRating() {
 
     }
 
+    @Before
+    public void prepareSearchWithMinimumRating() {
+    
+    }
     @Test
     public void searchWithMinimumRating() {
 
     }
-
+    
     @Test(expected = NullPointerException.class)
     public void searchWithNullTerm() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -458,6 +509,7 @@ public class SolrSearchManagerTest {
         solrSearchManager.search(null);
     }
 
+    @Ignore
     @Test(expected = SearchManagerException.class)
     public void searchWithTermAndNullCategory() throws SearchManagerException{
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -479,6 +531,7 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("test", filterList);
     }
 
+    @Ignore
     @Test(expected = SearchManagerException.class)
     public void searchWithTermAndNullMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -490,6 +543,7 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("test", filterList);
     }
 
+    @Ignore
     @Test(expected = SearchManagerException.class)
     public void searchWithTermAndNullCategoryAndNullMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -501,6 +555,7 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("test", filterList);
     }
 
+    @Ignore
     @Test(expected = SearchManagerException.class)
     public void searchWithTermAndCategoryAndNullMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -514,6 +569,7 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("test", filterList);
     }
 
+    @Ignore
     @Test(expected = SearchManagerException.class)
     public void searchWithTermAndNullCategoryAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -524,7 +580,7 @@ public class SolrSearchManagerTest {
         filterList.add(cf);
         solrSearchManager.search("test", filterList);
     }
-
+    
     @Test(expected = NullPointerException.class)
     public void searchWithNullTermAndCategoryAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -537,7 +593,7 @@ public class SolrSearchManagerTest {
         filterList.add(mrf);
         solrSearchManager.search(null, filterList);
     }
-
+    
     @Test(expected = NullPointerException.class)
     public void searchWithNullTermAndNullCategoryAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -549,21 +605,11 @@ public class SolrSearchManagerTest {
         solrSearchManager.search(null, filterList);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void indexNull() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
-        Indexable idx = null;
-        solrSearchManager.addToIndex(idx);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void indexNullList() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
-        List<Indexable> indexableList = null;
-        solrSearchManager.addToIndex(indexableList);
-    }
-
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByName() {
+    
+    }
     @Test
     public void searchWithTermAndSortByName() throws SearchManagerException
     {
@@ -573,6 +619,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByRating() {
+    
+    }
     @Test
     public void searchWithTermAndSortByRating() throws SearchManagerException
     {
@@ -582,6 +632,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByDownloads() {
+    
+    }
     @Test
     public void searchWithTermAndSortByDownloads() throws SearchManagerException
     {
@@ -591,6 +645,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByUploadDate() {
+    
+    }
     @Test
     public void searchWithTermAndSortByUploadDate() throws SearchManagerException
     {
@@ -600,6 +658,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByNameAndOrderAsc() {
+    
+    }
     @Test
     public void searchWithTermAndSortByNameAndOrderAsc() throws SearchManagerException
     {
@@ -609,6 +671,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByRatingAndOrderAsc() {
+    
+    }
     @Test
     public void searchWithTermAndSortByRatingAndOrderAsc() throws SearchManagerException
     {
@@ -618,6 +684,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByDownloadsAndOrderAsc() {
+    
+    }
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderAsc() throws SearchManagerException
     {
@@ -627,6 +697,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByUploadDateAndOrderAsc() {
+    
+    }
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderAsc() throws SearchManagerException
     {
@@ -636,6 +710,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByNameAndOrderDesc() {
+    
+    }
     @Test
     public void searchWithTermAndSortByNameAndOrderDesc() throws SearchManagerException
     {
@@ -645,6 +723,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByRatingAndOrderDesc() {
+    
+    }
     @Test
     public void searchWithTermAndSortByRatingAndOrderDesc() throws SearchManagerException
     {
@@ -654,6 +736,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByDownloadsAndOrderDesc() {
+    
+    }
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderDesc() throws SearchManagerException
     {
@@ -663,6 +749,10 @@ public class SolrSearchManagerTest {
     }
 
     //TODO: Test zu Test machen
+    @Before
+    public void prepareSearchWithTermAndSortByUploadDateAndOrderDesc() {
+    
+    }
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderDesc() throws SearchManagerException
     {
@@ -671,11 +761,13 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
     }
 
-    /*
+    //Clear Index Tests
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+    @AfterClass
     @Test
     public void testClearIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
-    }*/
+    }
 }
