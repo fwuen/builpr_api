@@ -3,6 +3,9 @@ package com.builpr.restapi.converter;
 import com.builpr.database.bridge.rating.Rating;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * converts a speedment rating model to a rating payload
  */
@@ -17,5 +20,11 @@ public class RatingModelToRatingPayloadConverter {
                 .setTime(rating.getRatingTime().toString());
     }
 
-
+    public static List<RatingPayload> from(List<Rating> ratings) {
+        List<RatingPayload> ratingPayloads = new ArrayList<>();
+        for (Rating rating : ratings) {
+            ratingPayloads.add(from(rating));
+        }
+        return ratingPayloads;
+    }
 }

@@ -23,7 +23,56 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
 
     public List<Printable> getPrintablesForUser(int userID) {
         return getDao().stream().filter(Printable.UPLOADER_ID.equal(userID)).collect(Collectors.toList());
-    } /**
+    }
+
+    public Printable getPrintableById(int printableID) {
+        List<Printable> list = getDao().stream().filter(Printable.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
+        return list.get(0);
+    }
+
+    /**
+     * @param printableID int
+     * @return boolean
+     */
+    public boolean checkPrintableId(int printableID) {
+        if (printableID < 1) {
+            return false;
+        }
+        Printable printable = getPrintableById(printableID);
+        return printable != null;
+    }
+
+    /**
+     * @param description String
+     * @return boolean
+     */
+    public boolean checkDescription(String description) {
+        return description.length() <= 1000;
+    }
+
+    /**
+     * @param title String
+     * @return boolean
+     */
+    public boolean checkTitle(String title) {
+        return !(title.length() < 5 || title.length() > 100);
+    }
+
+    /**
+     * @param categories List<String>
+     * @return List<String>
+     */
+    public List<String> checkCategories(List<String> categories) {
+        for (String category : categories) {
+            category = category.toLowerCase();
+            if (category.contains(" ")) {
+                categories.remove(category);
+            }
+        }
+        return categories;
+    }
+
+    /**
      * @param multipartFile MultiPartFile
      * @return String
      * @throws IOException Exception
