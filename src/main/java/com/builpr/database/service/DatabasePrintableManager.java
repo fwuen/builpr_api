@@ -3,8 +3,10 @@ package com.builpr.database.service;
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.bridge.printable.PrintableImpl;
 import com.builpr.database.bridge.printable.PrintableManager;
+import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.utils.TokenGenerator;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -91,6 +93,18 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
+     * @param request PrintableEditRequest
+     * @return void
+     */
+    public void update(PrintableEditRequest request) {
+        this.getDao().stream().
+                filter(Printable.PRINTABLE_ID.equal(request.getPrintableID()))
+                .map(Printable.TITLE.setTo(request.getTitle()))
+                .map(Printable.DESCRIPTION.setTo(request.getDescription()))
+                .forEach(this.getDao().updater());
+    }
+
+    /**
      * @param multipartFile MultiPartFile
      * @return String
      * @throws IOException Exception
@@ -107,7 +121,7 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         try {
             Files.createFile(path1);
         } catch (FileAlreadyExistsException e) {
-            System.err.println("already exists: " + e.getMessage());
+            throw new FileAlreadyExistsException("File alreads existent");
         }
         multipartFile.transferTo(file);
 
@@ -120,9 +134,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      * @throws IOException Exception
      */
     public MultipartFile downloadFile(int printableID) throws IOException {
-//        Printable printable = getPrintableById(printableID);
-//        String path = printable.getFilePath();
-        String path = "C:\\Users\\Markus\\Desktop\\Modells\\Z-Shim_1mm.stl";
+        Printable printable = getPrintableById(printableID);
+        String path = printable.getFilePath();
         File file = new File(path);
         Path p = FileSystems.getDefault().getPath(path);
         byte[] fileData = Files.readAllBytes(p);

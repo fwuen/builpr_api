@@ -6,9 +6,13 @@ import com.builpr.database.service.DatabaseCategoryManager;
 import com.builpr.database.service.DatabasePrintableCategoryManager;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseUserManager;
+import com.builpr.restapi.converter.PrintableEditRequestToResponseConverter;
+import com.builpr.restapi.converter.PrintableToPrintableNewResponseConverter;
 import com.builpr.restapi.converter.PrintableToResponseConverter;
 import com.builpr.restapi.error.exception.PrintableNotFoundException;
 import com.builpr.restapi.error.response.account.printable.PrintableDownloadError;
+import com.builpr.restapi.error.response.account.printable.PrintableEditError;
+import com.builpr.restapi.error.response.account.printable.PrintableError;
 import com.builpr.restapi.error.response.account.printable.PrintableNewError;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
@@ -24,12 +28,10 @@ import java.io.IOException;
 import java.security.Principal;
 
 /**
- *
+ * PrintableController
  */
-public class UploadController {
-    /**
-     * Printable Service
-     */
+public class PrintableController {
+
     private DatabasePrintableManager databasePrintableManager;
     private PrintableToResponseConverter printableToResponseConverter;
     private DatabaseCategoryManager databaseCategoryManager;
@@ -37,7 +39,7 @@ public class UploadController {
     private DatabaseUserManager databaseUserManager;
 
 
-    public UploadController() {
+    public PrintableController() {
         databasePrintableManager = new DatabasePrintableManager();
         printableToResponseConverter = new PrintableToResponseConverter();
         databaseCategoryManager = new DatabaseCategoryManager();
@@ -129,6 +131,7 @@ public class UploadController {
         response.setPayload(printableEditResponse);
         return response;
     }
+
     /**
      * @param principal Principal
      * @param request   PrintableNewRequest
@@ -157,18 +160,18 @@ public class UploadController {
             response.setSuccess(false);
             response.addError(PrintableNewError.DESCRIPTION_INVALID);
         }
-//        if (request.getFile().isEmpty() || request.getFile().getBytes().length < 1) {
-//            response.setSuccess(false);
-//            response.addError(PrintableNewError.FILE_INVALID);
-//        }
+        if (request.getFile().isEmpty() || request.getFile().getBytes().length < 1) {
+            response.setSuccess(false);
+            response.addError(PrintableNewError.FILE_INVALID);
+        }
         if (!response.isSuccess()) {
             return response;
         }
         String path = databasePrintableManager.uploadFile(request.getFile());
- //       Printable printable = databasePrintableManager.createPrintable(request, user.getUserId(), path);
+        Printable printable = databasePrintableManager.createPrintable(request, user.getUserId(), path);
 
- //       PrintableNewResponse printableNewResponse = PrintableToPrintableNewResponseConverter.from(printable);
- //       response.setPayload(printableNewResponse);
+        PrintableNewResponse printableNewResponse = PrintableToPrintableNewResponseConverter.from(printable);
+        response.setPayload(printableNewResponse);
         return response;
     }
 
