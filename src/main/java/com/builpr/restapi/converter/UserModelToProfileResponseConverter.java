@@ -21,8 +21,6 @@ public class UserModelToProfileResponseConverter {
 
     private static DatabaseRatingManager databaseRatingManager = new DatabaseRatingManager();
 
-    private static DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();
-
     public static ProfilePayload from(User user) {
 
         GravatarWrapper gravatarWrapper = new GravatarWrapper();
