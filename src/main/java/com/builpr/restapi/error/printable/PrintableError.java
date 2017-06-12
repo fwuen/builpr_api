@@ -1,4 +1,4 @@
-package com.builpr.restapi.error.response.account.printable;
+package com.builpr.restapi.error.printable;
 
 /**
  * Error-enum for the request /printable

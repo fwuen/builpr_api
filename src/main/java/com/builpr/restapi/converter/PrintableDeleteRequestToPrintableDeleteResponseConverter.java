@@ -25,6 +25,9 @@ public class PrintableDeleteRequestToPrintableDeleteResponseConverter {
         if (printable.getDescription().isPresent()) {
             response.setDescription(printable.getDescription().get());
         }
+        DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();
+        DatabaseRatingManager databaseRatingManager = new DatabaseRatingManager();
+        response.setUploadDate(printable.getUploadDate());
         response.setCategories(CategoryToStringConverter.convertCategoriesToString(databaseCategoryManager.getCategoriesForPrintable(printable.getPrintableId())));
         response.setTitle(printable.getTitle());
         response.setDownloads(printable.getNumDownloads());

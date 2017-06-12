@@ -7,6 +7,7 @@ import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Response.printable.PrintableEditResponse;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
+import org.omg.CORBA.DATA_CONVERSION;
 
 import java.util.List;
 
@@ -15,21 +16,18 @@ import java.util.List;
  */
 public class PrintableEditRequestToResponseConverter {
 
-    private static DatabaseRatingManager databaseRatingManager;
-    private static DatabaseCategoryManager databaseCategoryManager;
-    private static DatabasePrintableManager databasePrintableManager;
-
     public PrintableEditRequestToResponseConverter() {
-        databaseRatingManager = new DatabaseRatingManager();
-        databaseCategoryManager = new DatabaseCategoryManager();
-        databasePrintableManager = new DatabasePrintableManager();
+
     }
 
 
     public static PrintableEditResponse from(PrintableEditRequest request) {
+        DatabaseRatingManager databaseRatingManager = new DatabaseRatingManager();
+        DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();
+        DatabasePrintableManager databasePrintableManager = new DatabasePrintableManager();
         PrintableEditResponse response = new PrintableEditResponse();
-        Printable printable = databasePrintableManager.getPrintableById(request.getPrintableID());
 
+        Printable printable = databasePrintableManager.getPrintableById(request.getPrintableID());
         List<String> categories = CategoryToStringConverter.convertCategoriesToString(databaseCategoryManager.getCategoriesForPrintable(request.getPrintableID()));
         List<RatingPayload> ratings = RatingModelToRatingPayloadConverter.from(databaseRatingManager.getRatingsForPrintable(request.getPrintableID()));
         response.setPrintableID(printable.getPrintableId());

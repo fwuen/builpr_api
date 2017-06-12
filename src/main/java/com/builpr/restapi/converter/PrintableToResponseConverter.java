@@ -14,12 +14,8 @@ import java.util.List;
  *
  */
 public class PrintableToResponseConverter {
-    private DatabaseRatingManager databaseRatingManager;
-    private DatabaseCategoryManager databaseCategoryManager;
 
     public PrintableToResponseConverter() {
-        databaseRatingManager = new DatabaseRatingManager();
-        databaseCategoryManager = new DatabaseCategoryManager();
     }
 
     /**
@@ -29,9 +25,11 @@ public class PrintableToResponseConverter {
      * @param isMine    boolean
      * @return PrintableResponse
      */
-    public PrintableResponse from(Printable printable, boolean isMine) {
+    public static PrintableResponse from(Printable printable, boolean isMine) {
+        DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();
+        DatabaseRatingManager databaseRatingManager = new DatabaseRatingManager();
+        List<String> categories = CategoryToStringConverter.convertCategoriesToString(databaseCategoryManager.getCategoriesByID(printable.getPrintableId()));
 
-        List<String> categories = CategoryToStringConverter.convertCategoriesToString(databaseCategoryManager.getCategoriesForPrintable(printable.getPrintableId()));
         List<RatingPayload> ratings = RatingModelToRatingPayloadConverter.from(databaseRatingManager.getRatingsForPrintable(printable.getPrintableId()));
         PrintableResponse response = new PrintableResponse();
         response.setPrintableID(printable.getPrintableId());
@@ -41,7 +39,7 @@ public class PrintableToResponseConverter {
             response.setDescription(printable.getDescription().get());
         }
         response.setDownloads(printable.getNumDownloads());
-
+        response.setUploadDate(printable.getUploadDate());
         response.setRatings(ratings);
         response.setCategories(categories);
         response.setMine(isMine);

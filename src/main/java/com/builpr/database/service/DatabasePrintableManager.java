@@ -3,17 +3,19 @@ package com.builpr.database.service;
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.bridge.printable.PrintableImpl;
 import com.builpr.database.bridge.printable.PrintableManager;
+import com.builpr.restapi.model.CustomMultipartFile;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.utils.TokenGenerator;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -25,13 +27,29 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         super(PrintableManager.class);
     }
 
+    /**
+     * @param userID int
+     * @return List<Printable>
+     */
     public List<Printable> getPrintablesForUser(int userID) {
         return getDao().stream().filter(Printable.UPLOADER_ID.equal(userID)).collect(Collectors.toList());
     }
 
+    /**
+     * @param printableID int
+     * @return Printable
+     */
     public Printable getPrintableById(int printableID) {
-        List<Printable> list = getDao().stream().filter(Printable.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
-        return list.get(0);
+        Optional<Printable> list = getDao().stream().filter(Printable.PRINTABLE_ID.equal(printableID)).findFirst();
+        return list.orElse(null);
+    }
+
+    /**
+     * @param printable int
+     * @return void
+     */
+    public void persist(Printable printable) {
+        getDao().persist(printable);
     }
 
     /**
@@ -87,8 +105,11 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         printable.setTitle(request.getTitle());
         printable.setDescription(request.getDescription());
         printable.setUploaderId(userID);
+        Date currentDate = new Date(System.currentTimeMillis());
+        printable.setUploadDate(currentDate);
         printable.setFilePath(path);
-        this.getDao().persist(printable);
+
+        persist(printable);
         return printable;
     }
 
@@ -111,7 +132,7 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      */
     public String uploadFile(MultipartFile multipartFile) throws IOException {
 //         Filename = token + timestamp
-        TokenGenerator tokenGenerator = new TokenGenerator(false);
+        TokenGenerator tokenGenerator = new TokenGenerator(true);
         String token = tokenGenerator.generate();
         long timestamp = System.currentTimeMillis();
         String filename = token + timestamp + ".stl";
@@ -136,10 +157,9 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     public MultipartFile downloadFile(int printableID) throws IOException {
         Printable printable = getPrintableById(printableID);
         String path = printable.getFilePath();
-        File file = new File(path);
         Path p = FileSystems.getDefault().getPath(path);
         byte[] fileData = Files.readAllBytes(p);
-        return null; //new CustomMultipartFile(fileData, path);
+        return new CustomMultipartFile(fileData, path);
     }
 
     /**
@@ -147,6 +167,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      * @return void
      */
     public void deletePrintable(int printableID) {
-        this.getDao().stream().filter(Printable.PRINTABLE_ID.equal(printableID)).forEach(this.getDao().remover());
+        getDao().remove(
+                this.getPrintableById(printableID)
+        );
     }
 }

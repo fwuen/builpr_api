@@ -3,6 +3,7 @@ package com.builpr.restapi.model.Response.printable;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
 import lombok.Getter;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -30,6 +31,9 @@ public class PrintablePayload {
 
     @Getter
     private List<RatingPayload> ratings;
+
+    @Getter
+    private Date uploadDate;
 
     public PrintablePayload setPrintableID(int printableID) {
         this.printableID = printableID;
@@ -63,6 +67,11 @@ public class PrintablePayload {
 
     public PrintablePayload setRatings(List<RatingPayload> ratings) {
         this.ratings = ratings;
+        return this;
+    }
+
+    public PrintablePayload setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
         return this;
     }
 }

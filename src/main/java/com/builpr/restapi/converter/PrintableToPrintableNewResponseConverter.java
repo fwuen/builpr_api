@@ -18,6 +18,7 @@ public class PrintableToPrintableNewResponseConverter {
     }
 
     public static PrintableNewResponse from(Printable printable) {
+
         PrintableNewResponse printableNewResponse = new PrintableNewResponse();
         printableNewResponse.setPrintableID(printable.getPrintableId());
         printableNewResponse.setOwnerID(printable.getUploaderId());
@@ -25,10 +26,7 @@ public class PrintableToPrintableNewResponseConverter {
             printableNewResponse.setDescription(printable.getDescription().get());
         }
         printableNewResponse.setTitle(printable.getTitle());
-        printableNewResponse.setDownloads(printable.getNumDownloads());
-        // Uploaddate????
-        printableNewResponse.setCategories(CategoryToStringConverter.convertCategoriesToString(databaseCategoryManager.getCategoriesForPrintable(printable.getPrintableId())));
-        printableNewResponse.setRatings(RatingModelToRatingPayloadConverter.from(databaseRatingManager.getRatingsForPrintable(printable.getPrintableId())));
+        printableNewResponse.setUploadDate(printable.getUploadDate());
         return printableNewResponse;
     }
 }

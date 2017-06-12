@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -37,5 +38,5 @@ public class PrintableNewRequest {
      */
     @Getter
     @Setter
-    MultipartFile file;
+    File file;
 }

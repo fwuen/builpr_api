@@ -9,11 +9,18 @@ public class Constants {
     public static final String DATE_PATTERN = "[0-9]{4}-[0-9]{2}-[0-9]{2}";
 
 
-
     public static final String DATABASE_PASSWORD = "builpr123";
 
+    public static final String URL_NEW_RATING = "/rating/new";
+    public static final String URL_DELETE_RATING = "/rating/delete";
 
     public static final String BASE_URL = "http://localhost:8080";
+
+    public static final String URL_DELETE_PRINTABLE = "/printable/delete";
+    public static final String URL_GET_PRINTABLE = "/printable";
+    public static final String URL_EDIT_PRINTABLE = "/printable/edit";
+    public static final String URL_DOWNLOAD = "/printable/download";
+    public static final String URL_NEW_PRINTABLE = "/printable/new";
 
     public static final String URL_LOGIN = "/login";
     public static final String URL_SIMPLEPAYLOAD = "/simplepayload";
@@ -25,7 +32,6 @@ public class Constants {
     public static final String URL_MESSAGE = "/message";
 
 
-
     public static final String SECURITY_ROLE_USER = "USER";
     public static final String SECURITY_CROSS_ORIGIN = "http://localhost:8081";
     public static final List<String> SECURITY_URLS = Lists.newArrayList(
@@ -33,7 +39,6 @@ public class Constants {
             URL_PROFILE_EDIT,
             URL_MESSAGE
     );
-
 
 
     public static final String USER_IMAGE_GRAVATAR_NOT_SET = "http://placehold.it/100x100";
