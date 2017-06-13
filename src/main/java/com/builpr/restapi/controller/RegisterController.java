@@ -47,6 +47,11 @@ public class RegisterController {
         if (registerRequest.getPassword().length() < MIN_PASSWD_LENGTH) {
             response.setSuccess(false);
             response.addError(PASSWORD_TOO_SHORT);
+        } else {
+            if (!registerRequest.getPassword().equals(registerRequest.getPassword2())) {
+                response.setSuccess(false);
+                response.addError(PASSWORDS_NOT_MATCHING);
+            }
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT);
@@ -58,10 +63,6 @@ public class RegisterController {
         if (registerDate == null || registerDate.after(currentDate) || !registerRequest.getBirthday().matches(DATE_PATTERN)) {
             response.setSuccess(false);
             response.addError(INVALID_DATE);
-        }
-        if (!registerRequest.getPassword().equals(registerRequest.getPassword2())) {
-            response.setSuccess(false);
-            response.addError(PASSWORDS_NOT_MATCHING);
         }
         if (databaseUserManager.getByUsername(registerRequest.getUsername()) != null) {
             response.setSuccess(false);

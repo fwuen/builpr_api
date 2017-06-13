@@ -21,25 +21,25 @@ public enum RegisterError implements MappableError {
     EMPTY_LASTNAME(9, "The given last name is empty");
 
 
-    private final int code;
-    private final String description;
+    private final int CODE;
+    private final String DESCRIPTION;
 
     private RegisterError(int code, String description) {
-        this.code = code;
-        this.description = description;
+        this.CODE = code;
+        this.DESCRIPTION = description;
     }
 
     public String getDescription() {
-        return description;
+        return DESCRIPTION;
     }
 
     public int getCode() {
-        return code;
+        return CODE;
     }
 
     public Map<Integer, String> toMap() {
         Map<Integer, String> map = Maps.newHashMap();
-        map.put(code, description);
+        map.put(CODE, DESCRIPTION);
 
         return map;
     }

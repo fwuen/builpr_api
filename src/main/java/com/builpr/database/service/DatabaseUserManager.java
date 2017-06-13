@@ -2,7 +2,9 @@ package com.builpr.database.service;
 
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserManager;
+import com.builpr.database.bridge.user.generated.GeneratedUser;
 
+import java.util.List;
 import java.util.Optional;
 
 public class DatabaseUserManager extends DatabaseManager<UserManager> {
@@ -41,6 +43,10 @@ public class DatabaseUserManager extends DatabaseManager<UserManager> {
 
     public void persist(User user) {
         getDao().persist(user);
+    }
+
+    public void update(User user) {
+        getDao().update(user);
     }
 
 }
