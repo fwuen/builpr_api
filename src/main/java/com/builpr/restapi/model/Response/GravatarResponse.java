@@ -2,7 +2,7 @@ package com.builpr.restapi.model.Response;
 
 import lombok.NonNull;
 
-public class GravatarResponse extends Response<String, String> {
+public class GravatarResponse extends Response<String> {
 
     public GravatarResponse() {
         super();

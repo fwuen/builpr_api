@@ -19,7 +19,9 @@ public abstract class DataIntegrityTest {
     }
 
     private void clearDatabase() {
-        new DatabaseUserManager().deleteByUsername(TEST_USER_NAME);
+        if (new DatabaseUserManager().isPresent(TEST_USER_NAME)) {
+            new DatabaseUserManager().deleteByUsername(TEST_USER_NAME);
+        }
     }
 
     private void addUserToDatabase() {

@@ -1,51 +1,90 @@
 package com.builpr.restapi.model.Request;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * registration request
  */
 public class RegisterRequest {
 
-    @Setter
     @Getter
     private String username;
 
-    @Setter
     @Getter
     private String email;
 
-    @Setter
     @Getter
     private String password;
 
-    @Setter
     @Getter
     private String password2;
 
-    @Setter
     @Getter
     private String birthday;
 
-    @Setter
     @Getter
     private String firstname;
 
-    @Setter
     @Getter
     private String lastname;
 
     @Getter
     private boolean showBirthday;
 
-    @Setter
     @Getter
     private boolean showName;
 
-    @Setter
     @Getter
     private boolean showEmail;
 
+    
+    public RegisterRequest setUsername(String username) {
+        this.username = username;
+        return this;
+    }
 
+    public RegisterRequest setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public RegisterRequest setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public RegisterRequest setPassword2(String password2) {
+        this.password2 = password2;
+        return this;
+    }
+
+    public RegisterRequest setBirthday(String birthday) {
+        this.birthday = birthday;
+        return this;
+    }
+
+    public RegisterRequest setFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public RegisterRequest setLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public RegisterRequest setShowBirthday(boolean showBirthday) {
+        this.showBirthday = showBirthday;
+        return this;
+    }
+
+    public RegisterRequest setShowName(boolean showName) {
+        this.showName = showName;
+        return this;
+    }
+
+    public RegisterRequest setShowEmail(boolean showEmail) {
+        this.showEmail = showEmail;
+        return this;
+    }
 }

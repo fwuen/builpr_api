@@ -1,16 +1,20 @@
 package com.builpr.restapi.model.Response;
 
+import com.builpr.restapi.error.response.MappableError;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * basic response
  */
-public class Response<payloadType, errorType> {
+public class Response<payloadType> {
 
     @Setter
     @Getter
@@ -22,7 +26,7 @@ public class Response<payloadType, errorType> {
 
     @Setter
     @Getter
-    private List<errorType> errorList = Lists.newArrayList();
+    private Map<Integer, String> errorMap = new HashMap<>();
 
     public Response() { }
 
@@ -30,8 +34,8 @@ public class Response<payloadType, errorType> {
         this.setPayload(payload);
     }
 
-    public void addError(@NonNull errorType error) {
-        errorList.add(error);
+    public void addError(MappableError error) {
+        errorMap.putAll(error.toMap());
     }
 
 }

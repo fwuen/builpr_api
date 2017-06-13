@@ -8,6 +8,8 @@ import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.profile.ProfilePayload;
 import org.springframework.web.bind.annotation.*;
 
+import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
+
 /**
  * profile controller
  */
@@ -21,10 +23,10 @@ public class ProfileController {
         userService = new DatabaseUserManager();
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     @ResponseBody
-    public Response<ProfilePayload, String> showProfile(
+    public Response<ProfilePayload> showProfile(
             @RequestParam(
                     value = "id",
                     defaultValue = "0",
@@ -39,7 +41,7 @@ public class ProfileController {
 
         ProfilePayload profilePayload = UserModelToProfileResponseConverter.from(user);
 
-        Response<ProfilePayload, String> response = new Response<>();
+        Response<ProfilePayload> response = new Response<>();
 
         response.setPayload(profilePayload);
 
