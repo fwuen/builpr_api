@@ -1,13 +1,14 @@
 package com.builpr.restapi.controller;
 
+import com.builpr.Constants;
 import com.builpr.database.bridge.rating.Rating;
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.converter.RatingModelToRatingPayloadConverter;
-import com.builpr.restapi.error.rating.RatingDeleteError;
-import com.builpr.restapi.error.rating.RatingNewError;
+import com.builpr.restapi.error.Rating.RatingDeleteError;
+import com.builpr.restapi.error.Rating.RatingNewError;
 import com.builpr.restapi.model.Request.Rating.RatingDeleteRequest;
 import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 import com.builpr.restapi.model.Response.Response;
@@ -34,11 +35,11 @@ public class RatingController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/rating/new", method = RequestMethod.POST)
     @ResponseBody
-    public Response<RatingPayload, RatingNewError> createRating(Principal principal, @RequestBody RatingNewRequest request) {
-        Response<RatingPayload, RatingNewError> response = new Response<>();
+    public Response<RatingPayload> createRating(Principal principal, @RequestBody RatingNewRequest request) {
+        Response<RatingPayload> response = new Response<>();
         if (request.getPrintableID() == 0 || !databasePrintableManager.checkPrintableId(request.getPrintableID())) {
             response.setSuccess(false);
             response.addError(RatingNewError.PRINTABLE_NOT_EXISTING);
@@ -86,12 +87,12 @@ public class RatingController {
         return response;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/rating/delete", method = RequestMethod.DELETE)
     @ResponseBody
-    public Response<RatingPayload, RatingDeleteError> createRating(Principal
+    public Response<RatingPayload> createRating(Principal
                                                                            principal, @RequestBody RatingDeleteRequest request) {
-        Response<RatingPayload, RatingDeleteError> response = new Response<>();
+        Response<RatingPayload> response = new Response<>();
         if (request.getRatingID() == 0 || databaseRatingManager.getRatingByRatingID(request.getRatingID()) == null) {
             response.setSuccess(false);
             response.addError(RatingDeleteError.RATING_NOT_FOUND);

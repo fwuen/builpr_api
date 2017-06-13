@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 public class PrintableControllerTest extends ControllerTest {
-    protected static final String DB_TEST_USER_NAME = "DB_test_user";
+    private static final String DB_TEST_USER_NAME = "DB_test_user";
     private static ObjectMapper mapper = new ObjectMapper();
     private static List<String> VALID_LIST = new ArrayList<>();
     private static String VALID_TITLE = "testTitle";
@@ -77,8 +77,8 @@ public class PrintableControllerTest extends ControllerTest {
         ).andExpect(status().isOk())
                 .andReturn();
 
-        Response<PrintableNewResponse, PrintableNewError> response = getResponseBodyOf(result, Response.class);
-        // TODO immer file = null warum?
+        Response response = getResponseBodyOf(result, Response.class);
+        // TODO immer file = null warum? Test funktioniert weil noch
     }
 
     @Test
@@ -97,11 +97,11 @@ public class PrintableControllerTest extends ControllerTest {
         ).andExpect(status().isOk())
                 .andReturn();
 
-        Response<PrintableNewResponse, PrintableNewError> response = getResponseBodyOf(result, Response.class);
+        Response response = getResponseBodyOf(result, Response.class);
 
         Assert.assertTrue(!response.isSuccess());
         Assert.assertNull(response.getPayload());
-        Assert.assertTrue(!response.getErrorList().isEmpty());
+        Assert.assertTrue(!response.getErrorMap().isEmpty());
         // TODO auf die einzelnen Fehler prüfen
     }
 
@@ -120,11 +120,11 @@ public class PrintableControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Response<PrintableNewResponse, PrintableNewError> response = getResponseBodyOf(result, Response.class);
+        Response response = getResponseBodyOf(result, Response.class);
 
         Assert.assertTrue(!response.isSuccess());
         Assert.assertNull(response.getPayload());
-        Assert.assertTrue(!response.getErrorList().isEmpty());
+        Assert.assertTrue(!response.getErrorMap().isEmpty());
         // TODO Errorlist auf USER_INVALID bzw NO_AUTHORIZATION prüfen
     }
 
@@ -137,10 +137,10 @@ public class PrintableControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Response<MultipartFile, PrintableDownloadError> response = getResponseBodyOf(result, Response.class);
+        Response response = getResponseBodyOf(result, Response.class);
         Assert.assertNull(response.getPayload());
         Assert.assertTrue(!response.isSuccess());
-        Assert.assertTrue(!response.getErrorList().isEmpty());
+        Assert.assertTrue(!response.getErrorMap().isEmpty());
     }
 
     @Test
@@ -153,10 +153,10 @@ public class PrintableControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Response<PrintableResponse, PrintableError> response = getResponseBodyOf(result, Response.class);
+        Response response = getResponseBodyOf(result, Response.class);
 
         Assert.assertNotNull(response.getPayload());
-        Assert.assertTrue(response.getErrorList().isEmpty());
+        Assert.assertTrue(response.getErrorMap().isEmpty());
     }
 
     @Test
@@ -169,10 +169,10 @@ public class PrintableControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Response<PrintableResponse, PrintableError> response = getResponseBodyOf(result, Response.class);
+        Response response = getResponseBodyOf(result, Response.class);
 
         Assert.assertNull(response.getPayload());
-        Assert.assertTrue(!response.getErrorList().isEmpty());
+        Assert.assertTrue(!response.getErrorMap().isEmpty());
     }
 
     @Test
@@ -191,7 +191,7 @@ public class PrintableControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Response<PrintableEditResponse, PrintableEditError> response = getResponseBodyOf(result, Response.class);
+        Response response = getResponseBodyOf(result, Response.class);
 
         Assert.assertNotNull(response);
         Assert.assertNotNull(response.getPayload());
@@ -213,7 +213,7 @@ public class PrintableControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Response<PrintableDeleteResponse, PrintableDeleteError> response = getResponseBodyOf(result, Response.class);
+        Response response = getResponseBodyOf(result, Response.class);
 
         Assert.assertNotNull(response);
         Assert.assertNotNull(response.getPayload());

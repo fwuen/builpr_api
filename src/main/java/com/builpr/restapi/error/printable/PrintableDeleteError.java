@@ -1,9 +1,14 @@
 package com.builpr.restapi.error.printable;
 
+import com.builpr.restapi.error.response.MappableError;
+import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 /**
  *
  */
-public enum PrintableDeleteError {
+public enum PrintableDeleteError implements MappableError {
     USER_INVALID(1, "Invalid user"),
     PRINTABLE_NOT_EXISTING(2, "The printable is not exisiting"),
     NO_AUTHORIZATION(3, "No authorization to delete the printable");
@@ -22,6 +27,13 @@ public enum PrintableDeleteError {
 
     public int getCode() {
         return code;
+    }
+
+    public Map<Integer, String> toMap() {
+        Map<Integer, String> map = Maps.newHashMap();
+        map.put(code, description);
+
+        return map;
     }
 }
 

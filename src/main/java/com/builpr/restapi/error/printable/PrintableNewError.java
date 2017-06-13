@@ -1,9 +1,14 @@
 package com.builpr.restapi.error.printable;
 
+import com.builpr.restapi.error.response.MappableError;
+import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 /**
  *
  */
-public enum PrintableNewError {
+public enum PrintableNewError implements MappableError {
     TITLE_INVALID(1, "Title is invalid"),
     DESCRIPTION_INVALID(2, "The description is invalid"),
     CATEGORIES_INVALID(3, "The categories are invalid"),
@@ -26,6 +31,13 @@ public enum PrintableNewError {
 
     public int getCode() {
         return code;
+    }
+
+    public Map<Integer, String> toMap() {
+        Map<Integer, String> map = Maps.newHashMap();
+        map.put(code, description);
+
+        return map;
     }
 }
 

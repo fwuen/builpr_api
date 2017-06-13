@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
+import static com.builpr.restapi.error.printable.PrintableDownloadError.PRINTABLE_ID_INVALID;
+
 /**
  * PrintableController
  */
@@ -49,17 +52,17 @@ public class PrintableController {
     /**
      * @param principal   Principal
      * @param printableID int
-     * @return response Response<PrintableResponse, PrintableError>
+     * @return response Response<PrintableResponse>
      * @throws PrintableNotFoundException Exception
      */
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/printable", method = RequestMethod.GET)
     @ResponseBody
-    public Response<PrintableResponse, PrintableError> getPrintable(Principal principal, @RequestParam(
+    public Response<PrintableResponse> getPrintable(Principal principal, @RequestParam(
             value = "id",
             defaultValue = "0"
     ) int printableID) throws PrintableNotFoundException {
-        Response<PrintableResponse, PrintableError> response = new Response<>();
+        Response<PrintableResponse> response = new Response<>();
         boolean isMine = false;
 
         if (printableID == 0 || !databasePrintableManager.checkPrintableId(printableID)) {
@@ -89,13 +92,13 @@ public class PrintableController {
     /**
      * @param principal Principal
      * @param request   PrintableEditRequest
-     * @return response Response<PrintableEditResponse, PrintableEditError>
+     * @return response Response<PrintableEditResponse>
      */
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/printable/edit", method = RequestMethod.PUT)
     @ResponseBody
-    public Response<PrintableEditResponse, PrintableEditError> editPrintable(Principal principal, @RequestBody PrintableEditRequest request) {
-        Response<PrintableEditResponse, PrintableEditError> response = new Response<>();
+    public Response<PrintableEditResponse> editPrintable(Principal principal, @RequestBody PrintableEditRequest request) {
+        Response<PrintableEditResponse> response = new Response<>();
 
 
         if (request.getPrintableID() == 0 || !databasePrintableManager.checkPrintableId(request.getPrintableID())) {
@@ -145,13 +148,13 @@ public class PrintableController {
      * @param principal Principal
      * @param request   PrintableNewRequest
      * @param file      MultipartFile
-     * @return response Response<PrintableNewResponse, PrintableNewError>
+     * @return response Response<PrintableNewResponse>
      */
     @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = Constants.URL_NEW_PRINTABLE, method = RequestMethod.POST)
     @ResponseBody
-    public Response<PrintableNewResponse, PrintableNewError> createPrintable(Principal principal, @RequestBody MultipartFile file, @RequestBody PrintableNewRequest request) throws IOException {
-        Response<PrintableNewResponse, PrintableNewError> response = new Response<>();
+    public Response<PrintableNewResponse> createPrintable(Principal principal, @RequestBody MultipartFile file, @RequestBody PrintableNewRequest request) throws IOException {
+        Response<PrintableNewResponse> response = new Response<>();
         User user = null;
 //        Path p = FileSystems.getDefault().getPath("C:\\Users\\Markus\\Desktop\\Modells\\testFile.stl");
 //        byte[] fileData = Files.readAllBytes(p);
@@ -209,17 +212,17 @@ public class PrintableController {
 
     /**
      * @param printableID int
-     * @return response Respones<PrintableDownloadResponse, PrintableDownloadError>
+     * @return response Respones<PrintableDownloadResponse>
      */
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/printable/download", method = RequestMethod.GET)
     @ResponseBody
-    public Response<MultipartFile, PrintableDownloadError> downloadFile(@RequestParam(
+    public Response<MultipartFile> downloadFile(@RequestParam(
             value = "id",
             defaultValue = "0"
     ) int printableID) throws IOException {
 
-        Response<MultipartFile, PrintableDownloadError> response = new Response<>();
+        Response<MultipartFile> response = new Response<>();
 
         if (printableID == 0 || !databasePrintableManager.checkPrintableId(printableID)) {
             response.setSuccess(false);
@@ -238,13 +241,13 @@ public class PrintableController {
     /**
      * @param principal Principal
      * @param request   PrintableDeleteRequest
-     * @return response Response<PrintableDeleteResponse, PrintableDeleteError>
+     * @return response Response<PrintableDeleteResponse>
      */
-    @CrossOrigin(origins = "http://localhost:8081")
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/printable/delete", method = RequestMethod.DELETE)
     @ResponseBody
-    public Response<PrintableDeleteResponse, PrintableDeleteError> delete(Principal principal, @RequestBody PrintableDeleteRequest request) {
-        Response<PrintableDeleteResponse, PrintableDeleteError> response = new Response<>();
+    public Response<PrintableDeleteResponse> delete(Principal principal, @RequestBody PrintableDeleteRequest request) {
+        Response<PrintableDeleteResponse> response = new Response<>();
 
         if (request.getPrintableID() == 0 || !databasePrintableManager.checkPrintableId(request.getPrintableID())) {
             response.setSuccess(false);

@@ -1,8 +1,6 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.Constants;
-import com.builpr.restapi.error.rating.RatingDeleteError;
-import com.builpr.restapi.error.rating.RatingNewError;
 import com.builpr.restapi.model.Request.Rating.RatingDeleteRequest;
 import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 import com.builpr.restapi.model.Response.Response;
@@ -38,11 +36,11 @@ public class RatingControllerTest extends ControllerTest {
                         .content(mapper.writeValueAsString(ratingNewRequest)))
                 .andExpect(status().isOk())
                 .andReturn();
-        Response<RatingPayload, RatingNewError> resonse = getResponseBodyOf(result, Response.class);
+        Response response = getResponseBodyOf(result, Response.class);
 
-        Assert.assertNotNull(resonse);
-        Assert.assertTrue(resonse.isSuccess());
-        Assert.assertTrue(resonse.getErrorList().isEmpty());
+        Assert.assertNotNull(response);
+        Assert.assertTrue(response.isSuccess());
+        Assert.assertTrue(response.getErrorMap().isEmpty());
 
     }
 
@@ -59,7 +57,7 @@ public class RatingControllerTest extends ControllerTest {
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andReturn();
-        Response<RatingPayload, RatingDeleteError> resonse = getResponseBodyOf(result, Response.class);
+        Response resonse = getResponseBodyOf(result, Response.class);
 
 
     }

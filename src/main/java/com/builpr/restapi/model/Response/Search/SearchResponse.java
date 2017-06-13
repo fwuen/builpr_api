@@ -1,7 +1,7 @@
 package com.builpr.restapi.model.Response.Search;
 
+import com.builpr.database.bridge.printable.Printable;
 import com.builpr.restapi.model.Request.Search.SearchPayload;
-import com.builpr.search.model.Printable;
 import lombok.Getter;
 import lombok.Setter;
 

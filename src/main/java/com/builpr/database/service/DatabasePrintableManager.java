@@ -7,6 +7,7 @@ import com.builpr.restapi.model.CustomMultipartFile;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.utils.TokenGenerator;
+import com.builpr.search.model.PrintableReference;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -14,7 +15,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,6 +45,16 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     public Printable getPrintableById(int printableID) {
         Optional<Printable> list = getDao().stream().filter(Printable.PRINTABLE_ID.equal(printableID)).findFirst();
         return list.orElse(null);
+    }
+
+    public List<Printable> getPrintableList(List<PrintableReference> printableReferences) {
+        List<Printable> list = new ArrayList<>();
+        for (PrintableReference reference : printableReferences) {
+            if (getPrintableById(reference.getId()) != null) {
+                list.add(getPrintableById(reference.getId()));
+            }
+        }
+        return list;
     }
 
     /**
@@ -86,9 +99,10 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      */
     public List<String> checkCategories(List<String> categories) {
         for (String category : categories) {
+            category = category.replaceAll("\\P{L}+", "");
             category = category.toLowerCase();
-            if (category.contains(" ")) {
-                categories.remove(category);
+            if (Objects.equals(category, "")) {
+                categories.remove(categories);
             }
         }
         return categories;

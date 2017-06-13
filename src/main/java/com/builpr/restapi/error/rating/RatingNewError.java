@@ -1,9 +1,14 @@
-package com.builpr.restapi.error.rating;
+package com.builpr.restapi.error.Rating;
+
+import com.builpr.restapi.error.response.MappableError;
+import com.google.common.collect.Maps;
+
+import java.util.Map;
 
 /**
  *
  */
-public enum RatingNewError {
+public enum RatingNewError implements MappableError {
     RATING_INVALID(1, "The given rating is invalid"),
     PRINTABLE_NOT_EXISTING(2, "The printable is not exisiting"),
     TEXT_INVALID(3, "Text invalid"),
@@ -25,5 +30,12 @@ public enum RatingNewError {
 
     public int getCode() {
         return code;
+    }
+
+    public Map<Integer, String> toMap() {
+        Map<Integer, String> map = Maps.newHashMap();
+        map.put(code, description);
+
+        return map;
     }
 }

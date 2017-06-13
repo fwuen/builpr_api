@@ -1,9 +1,14 @@
-package com.builpr.restapi.error.rating;
+package com.builpr.restapi.error.Rating;
+
+import com.builpr.restapi.error.response.MappableError;
+import com.google.common.collect.Maps;
+
+import java.util.Map;
 
 /**
  *
  */
-public enum RatingDeleteError {
+public enum RatingDeleteError implements MappableError {
     RATING_NOT_FOUND(1, "rating cannot be found"),
     NO_AUTHORIZATION(2, "No authorization"),
     USER_INVALID(3, "User invalid");
@@ -21,5 +26,12 @@ public enum RatingDeleteError {
 
     public int getCode() {
         return code;
+    }
+
+    public Map<Integer, String> toMap() {
+        Map<Integer, String> map = Maps.newHashMap();
+        map.put(code, description);
+
+        return map;
     }
 }

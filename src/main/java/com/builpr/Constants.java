@@ -14,6 +14,8 @@ public class Constants {
     public static final String URL_NEW_RATING = "/rating/new";
     public static final String URL_DELETE_RATING = "/rating/delete";
 
+    public static final String URL_SEARCH = "/search";
+
     public static final String BASE_URL = "http://localhost:8080";
 
     public static final String URL_DELETE_PRINTABLE = "/printable/delete";
@@ -42,8 +44,6 @@ public class Constants {
 
 
     public static final String USER_IMAGE_GRAVATAR_NOT_SET = "http://placehold.it/100x100";
-
-
 
 
     public static final String USERNAME_PATTERN = "[A-Za-z][A-Za-z0-9_]{3,}[A-Z-a-z0-9]";

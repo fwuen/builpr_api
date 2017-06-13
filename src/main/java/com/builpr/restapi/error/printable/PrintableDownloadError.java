@@ -1,9 +1,14 @@
 package com.builpr.restapi.error.printable;
 
+import com.builpr.restapi.error.response.MappableError;
+import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 /**
  *
  */
-public enum PrintableDownloadError {
+public enum PrintableDownloadError implements MappableError {
     PRINTABLE_ID_INVALID(1, "The ID is invalid");
 
     private final int code;
@@ -20,5 +25,12 @@ public enum PrintableDownloadError {
 
     public int getCode() {
         return code;
+    }
+
+    public Map<Integer, String> toMap() {
+        Map<Integer, String> map = Maps.newHashMap();
+        map.put(code, description);
+
+        return map;
     }
 }
