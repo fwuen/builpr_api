@@ -61,7 +61,7 @@ public class UserModelToProfileResponseConverter {
                 .setDescription(user.getDescription().isPresent() ? user.getDescription().get() : null)
                 .setAvatarURL(gravatarWrapper.getUrl(user.getEmail()))
                 .setPrintables(printablePayloadList)
-                .setRating((double)addedUpRating / (double)ratingcount)
+                .setRating(ratingcount == 0 ? 0 : (double)addedUpRating / (double)ratingcount)
                 .setRatingCount(ratingcount)
                 .setRegistrationDate(user.getRegtime().toLocalDateTime().toString());
     }

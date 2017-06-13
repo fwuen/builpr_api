@@ -18,6 +18,7 @@ public class Constants {
     public static final String URL_SIMPLEPAYLOAD = "/simplepayload";
     public static final String URL_GRAVATAR = "/gravatar";
     public static final String URL_REGISTER = "/register";
+    public static final String URL_PROFILE = "/profile";
 
 
 

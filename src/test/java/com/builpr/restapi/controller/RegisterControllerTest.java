@@ -65,7 +65,7 @@ public class RegisterControllerTest extends ControllerTest {
 
 
     @After
-    public void clearDatabase() {
+    public void setUpDatabase() {
         DatabaseUserManager databaseUserManager = new DatabaseUserManager();
 
         if (databaseUserManager.isPresent(REGISTER_USERNAME)) {

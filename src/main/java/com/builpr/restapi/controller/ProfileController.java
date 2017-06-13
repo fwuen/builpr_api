@@ -9,6 +9,7 @@ import com.builpr.restapi.model.Response.profile.ProfilePayload;
 import org.springframework.web.bind.annotation.*;
 
 import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
+import static com.builpr.Constants.URL_PROFILE;
 
 /**
  * profile controller
@@ -24,7 +25,7 @@ public class ProfileController {
     }
 
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    @RequestMapping(value = URL_PROFILE, method = RequestMethod.GET)
     @ResponseBody
     public Response<ProfilePayload> showProfile(
             @RequestParam(
