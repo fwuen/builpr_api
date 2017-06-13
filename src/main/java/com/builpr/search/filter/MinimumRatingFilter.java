@@ -17,7 +17,7 @@ public class MinimumRatingFilter extends Filter {
     /**
      * Creates a MinimumRatingFilter-object
      *
-     * @param minimumRating The minimum Rating that should be applied to the Filter
+     * @param minimumRating The minimum rating that should be applied to the Filter
      */
     public MinimumRatingFilter(int minimumRating) {
         Preconditions.checkArgument(minimumRating >= 0);

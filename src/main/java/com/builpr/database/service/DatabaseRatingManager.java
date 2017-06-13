@@ -23,7 +23,7 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
 
     /**
      * @param printableID int
-     * @return List<Rating>
+     * @return List<rating>
      */
     public List<Rating> getRatingsForPrintable(int printableID) {
         return getDao().stream().filter(Rating.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
@@ -47,7 +47,7 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     /**
      * @param printableID int
      * @param userID      int
-     * @return Rating
+     * @return rating
      */
     public Rating getRatingByIds(int printableID, int userID) {
         Optional<Rating> list = getDao().stream().filter(Rating.PRINTABLE_ID.equal(printableID)).filter(Rating.USER_ID.equal(userID)).findFirst();
@@ -56,7 +56,7 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
 
     /**
      * @param ratingID int
-     * @return Rating
+     * @return rating
      */
     public Rating getRatingByRatingID(int ratingID) {
         Optional<Rating> list = getDao().stream().filter(Rating.RATING_ID.equal(ratingID)).findFirst();

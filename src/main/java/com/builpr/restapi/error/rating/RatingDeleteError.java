@@ -1,10 +1,10 @@
-package com.builpr.restapi.error.Rating;
+package com.builpr.restapi.error.rating;
 
 /**
  *
  */
 public enum RatingDeleteError {
-    RATING_NOT_FOUND(1, "Rating cannot be found"),
+    RATING_NOT_FOUND(1, "rating cannot be found"),
     NO_AUTHORIZATION(2, "No authorization"),
     USER_INVALID(3, "User invalid");
     private final int code;

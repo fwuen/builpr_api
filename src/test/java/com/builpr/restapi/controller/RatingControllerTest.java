@@ -1,13 +1,12 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.Constants;
-import com.builpr.restapi.error.Rating.RatingDeleteError;
-import com.builpr.restapi.error.Rating.RatingNewError;
+import com.builpr.restapi.error.rating.RatingDeleteError;
+import com.builpr.restapi.error.rating.RatingNewError;
 import com.builpr.restapi.model.Request.Rating.RatingDeleteRequest;
 import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
@@ -61,5 +60,7 @@ public class RatingControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         Response<RatingPayload, RatingDeleteError> resonse = getResponseBodyOf(result, Response.class);
+
+
     }
 }

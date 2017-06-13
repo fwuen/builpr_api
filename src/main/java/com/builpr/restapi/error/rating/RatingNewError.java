@@ -1,4 +1,4 @@
-package com.builpr.restapi.error.Rating;
+package com.builpr.restapi.error.rating;
 
 /**
  *
