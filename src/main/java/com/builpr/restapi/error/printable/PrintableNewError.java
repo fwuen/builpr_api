@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- *
+ * PrintableNewError
  */
 public enum PrintableNewError implements MappableError {
     TITLE_INVALID(1, "Title is invalid"),

@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- *
+ * PrintableDownloadError
  */
 public enum PrintableDownloadError implements MappableError {
     PRINTABLE_ID_INVALID(1, "The ID is invalid");

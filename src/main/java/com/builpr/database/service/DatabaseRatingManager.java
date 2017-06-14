@@ -81,6 +81,10 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
         );
     }
 
+    /**
+     * @param ratings List<Rating>
+     * @return double
+     */
     public double getAverageRating(List<Rating> ratings) {
         double average = 0.0;
         int ratingCounter = 0;

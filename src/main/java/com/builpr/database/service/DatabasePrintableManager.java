@@ -20,10 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -108,15 +105,18 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      */
     public List<String> checkCategories(List<String> categories) {
         List<String> newCategories = new ArrayList<>();
+
         for (String category : categories) {
-            category = category.replaceAll("[^A-Za-z0-9]", " ");
-            category = category.toLowerCase();
-            if (Objects.equals(category, " ")) {
-                categories.remove(categories);
-            } else {
+            if (category.matches("^[\\pL\\pN\\p{Pc}]*$")) {
+                category = category.toLowerCase();
                 newCategories.add(category);
             }
         }
+        // add elements to setOfCategories in order to delete duplicates
+        Set<String> setOfCategories = new HashSet<>();
+        setOfCategories.addAll(newCategories);
+        newCategories.clear();
+        newCategories.addAll(setOfCategories);
         return newCategories;
     }
 
@@ -199,7 +199,10 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         getDao().stream().filter(Printable.PRINTABLE_ID.equal(printableID)).forEach(getDao().remover());
     }
 
-
+    /**
+     * @return void
+     * @throws SearchManagerException exception
+     */
     public void indexPrintables() throws SearchManagerException {
         List<Printable> printables = getDao().stream().collect(Collectors.toList());
         List<Indexable> solrPrintableList = new ArrayList<>();
@@ -213,6 +216,10 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         }
     }
 
+    /**
+     * @param printableID Int
+     * @return void
+     */
     public void updateDownloads(int printableID) {
         this.getDao().stream().
                 filter(Printable.PRINTABLE_ID.equal(printableID))

@@ -176,8 +176,8 @@ public class PrintableController {
             response.setSuccess(false);
             response.addError(PrintableNewError.USER_INVALID);
         }
-        request.setCategories(databasePrintableManager.checkCategories(request.getCategories()));
-        if (request.getCategories().size() < 3) {
+        List<String> categoryList = databasePrintableManager.checkCategories(request.getCategories());
+        if (categoryList.size() < 3) {
             response.setSuccess(false);
             response.addError(PrintableNewError.CATEGORIES_INVALID);
         }
@@ -197,17 +197,17 @@ public class PrintableController {
             response.addError(PrintableNewError.FILE_INVALID);
         }
 
-        if (!response.isSuccess())
-
-        {
+        if (!response.isSuccess()) {
             return response;
         }
-
+        int userID = 0;
+        if (user != null) {
+            userID = user.getUserId();
+        }
         String path = databasePrintableManager.uploadFile(request.getFile());
-        assert user != null;
-        Printable printable = databasePrintableManager.createPrintable(request, user.getUserId(), path);
-        databaseCategoryManager.update(request.getCategories());
-        List<Category> list = databaseCategoryManager.getCategoriesByList(request.getCategories());
+        Printable printable = databasePrintableManager.createPrintable(request, userID, path);
+        databaseCategoryManager.update(categoryList);
+        List<Category> list = databaseCategoryManager.getCategoriesByList(categoryList);
         databasePrintableCategoryManager.createCategories(list, printable.getPrintableId());
         PrintableNewResponse printableNewResponse = PrintableToPrintableNewResponseConverter.from(printable);
         printableNewResponse.setCategories(CategoryToStringConverter.convertCategoriesToString(list));

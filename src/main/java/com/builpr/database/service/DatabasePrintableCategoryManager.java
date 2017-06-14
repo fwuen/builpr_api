@@ -35,13 +35,18 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
     public void update(PrintableEditRequest request, List<String> categoryList) {
         // Kategorien (id, name)
         DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();
+        DatabasePrintableCategoryManager databasePrintableCategoryManager = new DatabasePrintableCategoryManager();
         List<Category> categories = databaseCategoryManager.getCategoriesByList(categoryList);
         // bestehende löschen
         List<PrintableCategory> printableCategories = getListByID(request.getPrintableID());
         boolean success = false;
         if (printableCategories != null) {
             for (PrintableCategory printableCategory : printableCategories) {
-                delete(printableCategory);
+                databasePrintableCategoryManager.getDao().stream()
+                        .filter(PrintableCategory.PRINTABLE_ID.equal(printableCategory.getPrintableId()))
+                        .filter(PrintableCategory.CATEGORY_ID.equal(printableCategory.getCategoryId()))
+                        .forEach(databasePrintableCategoryManager.getDao().remover());
+//                delete(printableCategory);
             }
         }
         if (categories != null && success) {
@@ -78,6 +83,6 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
     }
 
     private void delete(PrintableCategory printableCategory) {
-        getDao().remove(printableCategory);
+        this.getDao().remove(printableCategory);
     }
 }

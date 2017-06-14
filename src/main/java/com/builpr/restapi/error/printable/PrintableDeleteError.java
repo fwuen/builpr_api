@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- *
+ * PrintableDeleteError
  */
 public enum PrintableDeleteError implements MappableError {
     USER_INVALID(1, "Invalid user"),
