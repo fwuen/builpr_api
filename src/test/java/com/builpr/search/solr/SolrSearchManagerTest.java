@@ -2,6 +2,7 @@ package com.builpr.search.solr;
 
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
+import com.builpr.search.SearchManager;
 import com.builpr.search.SearchManagerException;
 import com.builpr.search.filter.CategoryFilter;
 import com.builpr.search.filter.Filter;
@@ -28,7 +29,7 @@ public class SolrSearchManagerTest {
     private static final String REMOTE_BASE_URL_EXTERN = "http://192.168.1.50:8983/solr";
 
     @BeforeClass
-    public void prepareSolrSearchManagerTest() {
+    public static void prepareSolrSearchManagerTest() {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         
     }
@@ -653,14 +654,38 @@ public class SolrSearchManagerTest {
     //Delete/Clear Index Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     //TODO Delete Tests
-    @Test
-    public void testDeleteFromIndex() {
+    @Test (expected = NullPointerException.class)
+    public void testDeleteFromIndexSinglePrintableNull() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        PrintableReference printableReference = null;
+        solrSearchManager.deleteFromIndex(printableReference);
+    }
 
+    @Test (expected = NullPointerException.class)
+    public void testDeleteFromIndexMultiplePrintablesListNull() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        List<PrintableReference> list = null;
+        solrSearchManager.deleteFromIndex(list);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void testDeleteFromINdexMultiplePrintablesOneIsNull() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        List<PrintableReference> list = Lists.newArrayList();
+        PrintableReference printableReference = null;
+        list.add(printableReference);
+        solrSearchManager.deleteFromIndex(list);
+    }
+
+    @Test
+    public void testClearIndex() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
+        Preconditions.checkNotNull(solrSearchManager);
+        solrSearchManager.clearIndex();
     }
 
     @AfterClass
-    @Test
-    public void testClearIndex() throws SearchManagerException {
+    public static void clearIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
