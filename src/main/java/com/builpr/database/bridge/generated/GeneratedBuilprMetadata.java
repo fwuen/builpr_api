@@ -793,12 +793,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"primaryKeyColumns\" : [",
             "                  {",
             "                    \"expanded\" : true,",
-            "                    \"name\" : \"register_confirmation_token_id\",",
-            "                    \"id\" : \"register_confirmation_token_id\",",
-            "                    \"ordinalPosition\" : 1",
-            "                  },",
-            "                  {",
-            "                    \"expanded\" : true,",
             "                    \"name\" : \"token\",",
             "                    \"id\" : \"token\",",
             "                    \"ordinalPosition\" : 2",
@@ -835,13 +829,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                      {",
             "                        \"orderType\" : \"ASC\",",
             "                        \"expanded\" : true,",
-            "                        \"name\" : \"register_confirmation_token_id\",",
-            "                        \"id\" : \"register_confirmation_token_id\",",
-            "                        \"ordinalPosition\" : 1",
-            "                      },",
-            "                      {",
-            "                        \"orderType\" : \"ASC\",",
-            "                        \"expanded\" : true,",
             "                        \"name\" : \"token\",",
             "                        \"id\" : \"token\",",
             "                        \"ordinalPosition\" : 2",
@@ -864,16 +851,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"expanded\" : true,",
             "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
-            "                    \"name\" : \"register_confirmation_token_id\",",
-            "                    \"id\" : \"register_confirmation_token_id\",",
-            "                    \"ordinalPosition\" : 1,",
-            "                    \"enabled\" : true",
-            "                  },",
-            "                  {",
-            "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"expanded\" : true,",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
-            "                    \"nullable\" : false,",
             "                    \"name\" : \"user_id\",",
             "                    \"id\" : \"user_id\",",
             "                    \"ordinalPosition\" : 1,",
@@ -885,12 +862,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"nullable\" : false,",
             "                    \"autoIncrement\" : false,",
             "                    \"name\" : \"token\",",
-            "                    \"nullableImplementation\" : \"OPTIONAL\","
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart8(StringBuilder sb) {
-        Stream.of(
+            "                    \"nullableImplementation\" : \"OPTIONAL\",",
             "                    \"id\" : \"token\",",
             "                    \"ordinalPosition\" : 2,",
             "                    \"enabled\" : true",
@@ -913,7 +885,12 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                ],",
             "                \"indexes\" : [",
             "                  {",
-            "                    \"expanded\" : false,",
+            "                    \"expanded\" : false,"
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart8(StringBuilder sb) {
+        Stream.of(
             "                    \"unique\" : true,",
             "                    \"name\" : \"PRIMARY\",",
             "                    \"indexColumns\" : [",
@@ -991,12 +968,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"id\" : \"password\",",
             "                    \"ordinalPosition\" : 3,",
             "                    \"enabled\" : true",
-            "                  },"
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart9(StringBuilder sb) {
-        Stream.of(
+            "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.String\",",
             "                    \"expanded\" : true,",
@@ -1019,7 +991,12 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"databaseType\" : \"java.sql.Date\",",
             "                    \"expanded\" : true,",
             "                    \"nullable\" : false,",
-            "                    \"name\" : \"birthday\",",
+            "                    \"name\" : \"birthday\","
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart9(StringBuilder sb) {
+        Stream.of(
             "                    \"id\" : \"birthday\",",
             "                    \"ordinalPosition\" : 6,",
             "                    \"enabled\" : true",
@@ -1097,12 +1074,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  },",
             "                  {",
-            "                    \"databaseType\" : \"java.lang.Integer\","
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart10(StringBuilder sb) {
-        Stream.of(
+            "                    \"databaseType\" : \"java.lang.Integer\",",
             "                    \"expanded\" : true,",
             "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper\",",
             "                    \"nullable\" : false,",
@@ -1125,7 +1097,12 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"ordinalPosition\" : 15,",
             "                    \"enabled\" : true",
             "                  }",
-            "                ],",
+            "                ],"
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart10(StringBuilder sb) {
+        Stream.of(
             "                \"name\" : \"user\",",
             "                \"id\" : \"user\",",
             "                \"packageName\" : \"com.builpr.database.bridge.user\",",

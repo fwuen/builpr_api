@@ -19,17 +19,11 @@ import java.util.StringJoiner;
 @GeneratedCode("Speedment")
 public abstract class GeneratedRegisterConfirmationTokenImpl implements RegisterConfirmationToken {
     
-    private int registerConfirmationTokenId;
     private int userId;
     private String token;
     
     protected GeneratedRegisterConfirmationTokenImpl() {
         
-    }
-    
-    @Override
-    public int getRegisterConfirmationTokenId() {
-        return registerConfirmationTokenId;
     }
     
     @Override
@@ -40,12 +34,6 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     @Override
     public String getToken() {
         return token;
-    }
-    
-    @Override
-    public RegisterConfirmationToken setRegisterConfirmationTokenId(int registerConfirmationTokenId) {
-        this.registerConfirmationTokenId = registerConfirmationTokenId;
-        return this;
     }
     
     @Override
@@ -68,9 +56,8 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
-        sj.add("registerConfirmationTokenId = " + Objects.toString(getRegisterConfirmationTokenId()));
-        sj.add("userId = "                      + Objects.toString(getUserId()));
-        sj.add("token = "                       + Objects.toString(getToken()));
+        sj.add("userId = " + Objects.toString(getUserId()));
+        sj.add("token = "  + Objects.toString(getToken()));
         return "RegisterConfirmationTokenImpl " + sj.toString();
     }
     
@@ -79,7 +66,6 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
         if (this == that) { return true; }
         if (!(that instanceof RegisterConfirmationToken)) { return false; }
         final RegisterConfirmationToken thatRegisterConfirmationToken = (RegisterConfirmationToken)that;
-        if (this.getRegisterConfirmationTokenId() != thatRegisterConfirmationToken.getRegisterConfirmationTokenId()) {return false; }
         if (this.getUserId() != thatRegisterConfirmationToken.getUserId()) {return false; }
         if (!Objects.equals(this.getToken(), thatRegisterConfirmationToken.getToken())) {return false; }
         return true;
@@ -88,7 +74,6 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 31 * hash + Integer.hashCode(getRegisterConfirmationTokenId());
         hash = 31 * hash + Integer.hashCode(getUserId());
         hash = 31 * hash + Objects.hashCode(getToken());
         return hash;

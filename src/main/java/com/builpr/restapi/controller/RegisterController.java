@@ -1,12 +1,18 @@
 package com.builpr.restapi.controller;
 import com.builpr.Constants;
+import com.builpr.database.bridge.register_confirmation_token.RegisterConfirmationTokenImpl;
+import com.builpr.database.service.DatabaseRegisterConfirmationTokenManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.database.bridge.user.User;
 import com.builpr.restapi.converter.AccountRequestToUserModelConverter;
 import com.builpr.restapi.model.Request.RegisterRequest;
 import com.builpr.restapi.model.Response.Response;
+import com.builpr.restapi.utils.MailHelper;
+import com.builpr.restapi.utils.TokenGenerator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,7 +42,7 @@ public class RegisterController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_REGISTER, method = RequestMethod.POST)
     @ResponseBody
-    public Response<String> register(@RequestBody RegisterRequest registerRequest) throws ParseException {
+    public Response<String> register(@RequestBody RegisterRequest registerRequest) throws ParseException, MessagingException {
 
         Response<String> response = new Response<>();
 
@@ -90,8 +96,19 @@ public class RegisterController {
         }
 
         if (response.isSuccess()) {
-            User registeredUser = AccountRequestToUserModelConverter.from(registerRequest);
-            databaseUserManager.persist(registeredUser);
+
+            User registeredUser = databaseUserManager.persist(AccountRequestToUserModelConverter.from(registerRequest));
+
+            TokenGenerator tokenGenerator = new TokenGenerator(60, true);
+            // send activation mail
+            String confirmation_token = tokenGenerator.generate();
+            String subject = "Your confirmation link";
+            String mail = BASE_URL + URL_REDEEM_CONFIRMATION_TOKEN + "?key=" + confirmation_token + registeredUser.getUserId();
+
+            new DatabaseRegisterConfirmationTokenManager().persist(new RegisterConfirmationTokenImpl().setUserId(registeredUser.getUserId()).setToken(confirmation_token));
+
+            MailHelper.send(registeredUser.getEmail(), subject, mail);
+
         }
 
         return response;

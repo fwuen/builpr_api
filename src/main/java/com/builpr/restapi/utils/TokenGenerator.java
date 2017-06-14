@@ -11,8 +11,21 @@ import java.util.Random;
 public class TokenGenerator {
 
     private static final char[] ALLOWED_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-+!$%&/()={}?".toCharArray();
+    private static final char[] ALLOWED_CHARS_NO_SPECIAL_CASES = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".toCharArray();
+    private static char[] USED_CHARS;
 
+    public TokenGenerator() {
+        USED_CHARS = ALLOWED_CHARS;
+    }
 
+    public TokenGenerator(int tokenSize, boolean limited) {
+        if (limited) {
+            USED_CHARS = ALLOWED_CHARS_NO_SPECIAL_CASES;
+        } else {
+            USED_CHARS = ALLOWED_CHARS;
+        }
+        setTokenSize(tokenSize);
+    }
 
     @Getter
     private int tokenSize = 128;
@@ -20,22 +33,21 @@ public class TokenGenerator {
     private Random random = new Random();
 
 
-    
     public void setTokenSize(int tokenSize) {
         Preconditions.checkArgument(tokenSize > 0);
         Preconditions.checkArgument(tokenSize < 512);
 
         this.tokenSize = tokenSize;
     }
-    
+
     public String generate() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for(int i = 0; i < tokenSize; i++)
+        for (int i = 0; i < tokenSize; i++)
             stringBuilder.append(getRandomChar());
-        
+
         String token = stringBuilder.toString();
-        
+
         Verify.verifyNotNull(token);
         Verify.verify(token.length() == tokenSize);
 
@@ -43,7 +55,7 @@ public class TokenGenerator {
     }
 
     private char getRandomChar() {
-        return ALLOWED_CHARS[random.nextInt(ALLOWED_CHARS.length)];
+        return USED_CHARS[random.nextInt(USED_CHARS.length)];
     }
 
 }

@@ -41,8 +41,8 @@ public class DatabaseUserManager extends DatabaseManager<UserManager> {
         return getByUsername(name) != null;
     }
 
-    public void persist(User user) {
-        getDao().persist(user);
+    public User persist(User user) {
+        return getDao().persist(user);
     }
 
     public void update(User user) {

@@ -37,7 +37,7 @@ public class ProfileController {
             @RequestParam(
                     value = "id",
                     defaultValue = "0",
-                    required = true
+                    required = false
             ) int id
     ) throws UserNotFoundException {
         User user = userService.getByID(id);

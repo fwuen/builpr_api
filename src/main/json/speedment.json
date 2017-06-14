@@ -713,12 +713,6 @@
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
-                    "name" : "register_confirmation_token_id",
-                    "id" : "register_confirmation_token_id",
-                    "ordinalPosition" : 1
-                  },
-                  {
-                    "expanded" : true,
                     "name" : "token",
                     "id" : "token",
                     "ordinalPosition" : 2
@@ -755,13 +749,6 @@
                       {
                         "orderType" : "ASC",
                         "expanded" : true,
-                        "name" : "register_confirmation_token_id",
-                        "id" : "register_confirmation_token_id",
-                        "ordinalPosition" : 1
-                      },
-                      {
-                        "orderType" : "ASC",
-                        "expanded" : true,
                         "name" : "token",
                         "id" : "token",
                         "ordinalPosition" : 2
@@ -779,16 +766,6 @@
                   }
                 ],
                 "columns" : [
-                  {
-                    "databaseType" : "java.lang.Integer",
-                    "expanded" : true,
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
-                    "nullable" : false,
-                    "name" : "register_confirmation_token_id",
-                    "id" : "register_confirmation_token_id",
-                    "ordinalPosition" : 1,
-                    "enabled" : true
-                  },
                   {
                     "databaseType" : "java.lang.Integer",
                     "expanded" : true,
