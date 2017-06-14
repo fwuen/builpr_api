@@ -13,6 +13,7 @@
         "port" : 3306,
         "schemas" : [
           {
+            "expanded" : true,
             "tables" : [
               {
                 "expanded" : false,
@@ -61,8 +62,8 @@
                 "columns" : [
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "autoIncrement" : true,
                     "name" : "category_id",
@@ -86,6 +87,7 @@
                 "enabled" : true
               },
               {
+                "expanded" : true,
                 "foreignKeys" : [
                   {
                     "expanded" : false,
@@ -124,7 +126,6 @@
                     "enabled" : true
                   }
                 ],
-                "expanded" : false,
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
@@ -186,8 +187,8 @@
                 "columns" : [
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "autoIncrement" : true,
                     "name" : "message_id",
@@ -197,8 +198,8 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "sender_id",
                     "id" : "sender_id",
@@ -207,8 +208,8 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "receiver_id",
                     "id" : "receiver_id",
@@ -223,6 +224,16 @@
                     "id" : "text",
                     "ordinalPosition" : 4,
                     "enabled" : true
+                  },
+                  {
+                    "databaseType" : "java.lang.Integer",
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
+                    "expanded" : true,
+                    "nullable" : false,
+                    "name" : "read",
+                    "id" : "read",
+                    "ordinalPosition" : 5,
+                    "enabled" : true
                   }
                 ],
                 "name" : "message",
@@ -231,6 +242,7 @@
                 "enabled" : true
               },
               {
+                "expanded" : false,
                 "foreignKeys" : [
                   {
                     "expanded" : false,
@@ -251,7 +263,6 @@
                     "enabled" : true
                   }
                 ],
-                "expanded" : false,
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
@@ -313,8 +324,8 @@
                 "columns" : [
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "autoIncrement" : true,
                     "name" : "printable_id",
@@ -342,8 +353,8 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "uploader_id",
                     "id" : "uploader_id",
@@ -370,8 +381,8 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "num_downloads",
                     "id" : "num_downloads",
@@ -385,6 +396,7 @@
                 "enabled" : true
               },
               {
+                "expanded" : false,
                 "foreignKeys" : [
                   {
                     "expanded" : false,
@@ -423,7 +435,6 @@
                     "enabled" : true
                   }
                 ],
-                "expanded" : false,
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
@@ -482,8 +493,8 @@
                 "columns" : [
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "printable_id",
                     "id" : "printable_id",
@@ -492,8 +503,8 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "category_id",
                     "id" : "category_id",
@@ -507,6 +518,7 @@
                 "enabled" : true
               },
               {
+                "expanded" : false,
                 "foreignKeys" : [
                   {
                     "expanded" : false,
@@ -545,7 +557,6 @@
                     "enabled" : true
                   }
                 ],
-                "expanded" : false,
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
@@ -607,14 +618,15 @@
                         "ordinalPosition" : 1
                       }
                     ],
-                    "id" : "Rating_Printable_printable_id_fk"
+                    "id" : "Rating_Printable_printable_id_fk",
+                    "enabled" : true
                   }
                 ],
                 "columns" : [
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "user_id",
                     "id" : "user_id",
@@ -623,8 +635,8 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "printable_id",
                     "id" : "printable_id",
@@ -633,8 +645,8 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "rating",
                     "id" : "rating",
@@ -661,8 +673,8 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "autoIncrement" : true,
                     "name" : "rating_id",
@@ -678,31 +690,47 @@
               },
               {
                 "expanded" : false,
+                "foreignKeys" : [
+                  {
+                    "expanded" : false,
+                    "foreignKeyColumns" : [
+                      {
+                        "foreignDatabaseName" : "builpr",
+                        "foreignSchemaName" : "builpr",
+                        "expanded" : true,
+                        "name" : "user_id",
+                        "foreignColumnName" : "user_id",
+                        "id" : "user_id",
+                        "foreignTableName" : "user",
+                        "ordinalPosition" : 1
+                      }
+                    ],
+                    "name" : "register_confirmation_token_user_user_id_fk",
+                    "id" : "register_confirmation_token_user_user_id_fk",
+                    "enabled" : true
+                  }
+                ],
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
                     "name" : "register_confirmation_token_id",
                     "id" : "register_confirmation_token_id",
                     "ordinalPosition" : 1
+                  },
+                  {
+                    "expanded" : true,
+                    "name" : "token",
+                    "id" : "token",
+                    "ordinalPosition" : 2
+                  },
+                  {
+                    "expanded" : true,
+                    "name" : "user_id",
+                    "id" : "user_id",
+                    "ordinalPosition" : 1
                   }
                 ],
                 "indexes" : [
-                  {
-                    "expanded" : false,
-                    "unique" : true,
-                    "name" : "PRIMARY",
-                    "indexColumns" : [
-                      {
-                        "orderType" : "ASC",
-                        "expanded" : true,
-                        "name" : "register_confirmation_token_id",
-                        "id" : "register_confirmation_token_id",
-                        "ordinalPosition" : 1
-                      }
-                    ],
-                    "id" : "PRIMARY",
-                    "enabled" : true
-                  },
                   {
                     "expanded" : false,
                     "unique" : true,
@@ -718,13 +746,43 @@
                     ],
                     "id" : "register_confirmation_token_token_uindex",
                     "enabled" : true
+                  },
+                  {
+                    "expanded" : false,
+                    "unique" : true,
+                    "name" : "PRIMARY",
+                    "indexColumns" : [
+                      {
+                        "orderType" : "ASC",
+                        "expanded" : true,
+                        "name" : "register_confirmation_token_id",
+                        "id" : "register_confirmation_token_id",
+                        "ordinalPosition" : 1
+                      },
+                      {
+                        "orderType" : "ASC",
+                        "expanded" : true,
+                        "name" : "token",
+                        "id" : "token",
+                        "ordinalPosition" : 2
+                      },
+                      {
+                        "orderType" : "ASC",
+                        "expanded" : true,
+                        "name" : "user_id",
+                        "id" : "user_id",
+                        "ordinalPosition" : 1
+                      }
+                    ],
+                    "id" : "PRIMARY",
+                    "enabled" : true
                   }
                 ],
                 "columns" : [
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "name" : "register_confirmation_token_id",
                     "id" : "register_confirmation_token_id",
@@ -732,10 +790,22 @@
                     "enabled" : true
                   },
                   {
+                    "databaseType" : "java.lang.Integer",
+                    "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
+                    "nullable" : false,
+                    "name" : "user_id",
+                    "id" : "user_id",
+                    "ordinalPosition" : 1,
+                    "enabled" : true
+                  },
+                  {
                     "databaseType" : "java.lang.String",
                     "expanded" : true,
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "token",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "token",
                     "ordinalPosition" : 2,
                     "enabled" : true
@@ -776,22 +846,6 @@
                   {
                     "expanded" : false,
                     "unique" : true,
-                    "name" : "user_access_token_uindex",
-                    "indexColumns" : [
-                      {
-                        "orderType" : "ASC",
-                        "expanded" : true,
-                        "name" : "access_token",
-                        "id" : "access_token",
-                        "ordinalPosition" : 1
-                      }
-                    ],
-                    "id" : "user_access_token_uindex",
-                    "enabled" : true
-                  },
-                  {
-                    "expanded" : false,
-                    "unique" : true,
                     "name" : "User_email_uindex",
                     "indexColumns" : [
                       {
@@ -825,11 +879,12 @@
                 "columns" : [
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
                     "autoIncrement" : true,
                     "name" : "user_id",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "user_id",
                     "ordinalPosition" : 1,
                     "enabled" : true
@@ -952,14 +1007,27 @@
                     "enabled" : true
                   },
                   {
-                    "databaseType" : "java.lang.String",
+                    "databaseType" : "java.lang.Integer",
                     "expanded" : true,
-                    "nullable" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
+                    "nullable" : false,
                     "autoIncrement" : false,
-                    "name" : "access_token",
+                    "name" : "activated",
                     "nullableImplementation" : "OPTIONAL",
-                    "id" : "access_token",
+                    "id" : "activated",
                     "ordinalPosition" : 14,
+                    "enabled" : true
+                  },
+                  {
+                    "databaseType" : "java.lang.Integer",
+                    "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
+                    "nullable" : false,
+                    "autoIncrement" : false,
+                    "name" : "deleted",
+                    "nullableImplementation" : "OPTIONAL",
+                    "id" : "deleted",
+                    "ordinalPosition" : 15,
                     "enabled" : true
                   }
                 ],
@@ -969,7 +1037,6 @@
                 "enabled" : true
               }
             ],
-            "expanded" : true,
             "name" : "builpr",
             "id" : "builpr",
             "enabled" : true

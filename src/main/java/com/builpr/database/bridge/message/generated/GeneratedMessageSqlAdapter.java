@@ -44,6 +44,7 @@ public abstract class GeneratedMessageSqlAdapter {
             entity.setSenderId(   resultSet.getInt(2)    );
             entity.setReceiverId( resultSet.getInt(3)    );
             entity.setText(       resultSet.getString(4) );
+            entity.setRead(       resultSet.getInt(5)    );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }

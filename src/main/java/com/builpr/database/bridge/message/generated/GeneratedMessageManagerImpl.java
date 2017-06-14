@@ -36,7 +36,8 @@ public abstract class GeneratedMessageManagerImpl extends AbstractManager<Messag
             Message.MESSAGE_ID,
             Message.SENDER_ID,
             Message.RECEIVER_ID,
-            Message.TEXT
+            Message.TEXT,
+            Message.READ
         );
     }
     

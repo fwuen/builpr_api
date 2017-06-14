@@ -173,14 +173,25 @@ public interface GeneratedUser {
     );
     /**
      * This Field corresponds to the {@link User} field that can be obtained
-     * using the {@link User#getAccessToken()} method.
+     * using the {@link User#getActivated()} method.
      */
-    StringField<User, String> ACCESS_TOKEN = StringField.create(
-        Identifier.ACCESS_TOKEN,
-        o -> OptionalUtil.unwrap(o.getAccessToken()),
-        User::setAccessToken,
-        TypeMapper.identity(), 
-        true
+    BooleanField<User, Integer> ACTIVATED = BooleanField.create(
+        Identifier.ACTIVATED,
+        User::getActivated,
+        User::setActivated,
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
+        false
+    );
+    /**
+     * This Field corresponds to the {@link User} field that can be obtained
+     * using the {@link User#getDeleted()} method.
+     */
+    BooleanField<User, Integer> DELETED = BooleanField.create(
+        Identifier.DELETED,
+        User::getDeleted,
+        User::setDeleted,
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
+        false
     );
     
     /**
@@ -288,12 +299,20 @@ public interface GeneratedUser {
     boolean getShowEmail();
     
     /**
-     * Returns the accessToken of this User. The accessToken field corresponds
-     * to the database column builpr.builpr.user.access_token.
+     * Returns the activated of this User. The activated field corresponds to
+     * the database column builpr.builpr.user.activated.
      * 
-     * @return the accessToken of this User
+     * @return the activated of this User
      */
-    Optional<String> getAccessToken();
+    boolean getActivated();
+    
+    /**
+     * Returns the deleted of this User. The deleted field corresponds to the
+     * database column builpr.builpr.user.deleted.
+     * 
+     * @return the deleted of this User
+     */
+    boolean getDeleted();
     
     /**
      * Sets the userId of this User. The userId field corresponds to the
@@ -413,13 +432,22 @@ public interface GeneratedUser {
     User setShowEmail(boolean showEmail);
     
     /**
-     * Sets the accessToken of this User. The accessToken field corresponds to
-     * the database column builpr.builpr.user.access_token.
+     * Sets the activated of this User. The activated field corresponds to the
+     * database column builpr.builpr.user.activated.
      * 
-     * @param accessToken to set of this User
-     * @return            this User instance
+     * @param activated to set of this User
+     * @return          this User instance
      */
-    User setAccessToken(String accessToken);
+    User setActivated(boolean activated);
+    
+    /**
+     * Sets the deleted of this User. The deleted field corresponds to the
+     * database column builpr.builpr.user.deleted.
+     * 
+     * @param deleted to set of this User
+     * @return        this User instance
+     */
+    User setDeleted(boolean deleted);
     
     enum Identifier implements ColumnIdentifier<User> {
         
@@ -436,7 +464,8 @@ public interface GeneratedUser {
         SHOW_NAME     ("show_name"),
         SHOW_BIRTHDAY ("show_birthday"),
         SHOW_EMAIL    ("show_email"),
-        ACCESS_TOKEN  ("access_token");
+        ACTIVATED     ("activated"),
+        DELETED       ("deleted");
         
         private final String columnName;
         private final TableIdentifier<User> tableIdentifier;

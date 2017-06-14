@@ -70,6 +70,17 @@ public interface GeneratedMessage {
         TypeMapper.identity(), 
         false
     );
+    /**
+     * This Field corresponds to the {@link Message} field that can be obtained
+     * using the {@link Message#getRead()} method.
+     */
+    IntField<Message, Integer> READ = IntField.create(
+        Identifier.READ,
+        Message::getRead,
+        Message::setRead,
+        TypeMapper.primitive(), 
+        false
+    );
     
     /**
      * Returns the messageId of this Message. The messageId field corresponds to
@@ -102,6 +113,14 @@ public interface GeneratedMessage {
      * @return the text of this Message
      */
     String getText();
+    
+    /**
+     * Returns the read of this Message. The read field corresponds to the
+     * database column builpr.builpr.message.read.
+     * 
+     * @return the read of this Message
+     */
+    int getRead();
     
     /**
      * Sets the messageId of this Message. The messageId field corresponds to
@@ -140,6 +159,15 @@ public interface GeneratedMessage {
     Message setText(String text);
     
     /**
+     * Sets the read of this Message. The read field corresponds to the database
+     * column builpr.builpr.message.read.
+     * 
+     * @param read to set of this Message
+     * @return     this Message instance
+     */
+    Message setRead(int read);
+    
+    /**
      * Queries the specified manager for the referenced User. If no such User
      * exists, an {@code NullPointerException} will be thrown.
      * 
@@ -162,7 +190,8 @@ public interface GeneratedMessage {
         MESSAGE_ID  ("message_id"),
         SENDER_ID   ("sender_id"),
         RECEIVER_ID ("receiver_id"),
-        TEXT        ("text");
+        TEXT        ("text"),
+        READ        ("read");
         
         private final String columnName;
         private final TableIdentifier<Message> tableIdentifier;

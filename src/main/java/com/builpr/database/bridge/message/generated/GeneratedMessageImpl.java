@@ -23,6 +23,7 @@ public abstract class GeneratedMessageImpl implements Message {
     private int senderId;
     private int receiverId;
     private String text;
+    private int read;
     
     protected GeneratedMessageImpl() {
         
@@ -46,6 +47,11 @@ public abstract class GeneratedMessageImpl implements Message {
     @Override
     public String getText() {
         return text;
+    }
+    
+    @Override
+    public int getRead() {
+        return read;
     }
     
     @Override
@@ -73,6 +79,12 @@ public abstract class GeneratedMessageImpl implements Message {
     }
     
     @Override
+    public Message setRead(int read) {
+        this.read = read;
+        return this;
+    }
+    
+    @Override
     public User findSenderId(Manager<User> foreignManager) {
         return foreignManager.stream().filter(User.USER_ID.equal(getSenderId())).findAny().orElse(null);
     }
@@ -89,6 +101,7 @@ public abstract class GeneratedMessageImpl implements Message {
         sj.add("senderId = "   + Objects.toString(getSenderId()));
         sj.add("receiverId = " + Objects.toString(getReceiverId()));
         sj.add("text = "       + Objects.toString(getText()));
+        sj.add("read = "       + Objects.toString(getRead()));
         return "MessageImpl " + sj.toString();
     }
     
@@ -101,6 +114,7 @@ public abstract class GeneratedMessageImpl implements Message {
         if (this.getSenderId() != thatMessage.getSenderId()) {return false; }
         if (this.getReceiverId() != thatMessage.getReceiverId()) {return false; }
         if (!Objects.equals(this.getText(), thatMessage.getText())) {return false; }
+        if (this.getRead() != thatMessage.getRead()) {return false; }
         return true;
     }
     
@@ -111,6 +125,7 @@ public abstract class GeneratedMessageImpl implements Message {
         hash = 31 * hash + Integer.hashCode(getSenderId());
         hash = 31 * hash + Integer.hashCode(getReceiverId());
         hash = 31 * hash + Objects.hashCode(getText());
+        hash = 31 * hash + Integer.hashCode(getRead());
         return hash;
     }
 }

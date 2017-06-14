@@ -1,7 +1,9 @@
 package com.builpr.database.bridge.register_confirmation_token.generated;
 
 import com.builpr.database.bridge.register_confirmation_token.RegisterConfirmationToken;
+import com.builpr.database.bridge.user.User;
 import com.speedment.common.annotation.GeneratedCode;
+import com.speedment.runtime.core.manager.Manager;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -18,6 +20,7 @@ import java.util.StringJoiner;
 public abstract class GeneratedRegisterConfirmationTokenImpl implements RegisterConfirmationToken {
     
     private int registerConfirmationTokenId;
+    private int userId;
     private String token;
     
     protected GeneratedRegisterConfirmationTokenImpl() {
@@ -27,6 +30,11 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     @Override
     public int getRegisterConfirmationTokenId() {
         return registerConfirmationTokenId;
+    }
+    
+    @Override
+    public int getUserId() {
+        return userId;
     }
     
     @Override
@@ -41,15 +49,27 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     }
     
     @Override
+    public RegisterConfirmationToken setUserId(int userId) {
+        this.userId = userId;
+        return this;
+    }
+    
+    @Override
     public RegisterConfirmationToken setToken(String token) {
         this.token = token;
         return this;
     }
     
     @Override
+    public User findUserId(Manager<User> foreignManager) {
+        return foreignManager.stream().filter(User.USER_ID.equal(getUserId())).findAny().orElse(null);
+    }
+    
+    @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
         sj.add("registerConfirmationTokenId = " + Objects.toString(getRegisterConfirmationTokenId()));
+        sj.add("userId = "                      + Objects.toString(getUserId()));
         sj.add("token = "                       + Objects.toString(getToken()));
         return "RegisterConfirmationTokenImpl " + sj.toString();
     }
@@ -60,6 +80,7 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
         if (!(that instanceof RegisterConfirmationToken)) { return false; }
         final RegisterConfirmationToken thatRegisterConfirmationToken = (RegisterConfirmationToken)that;
         if (this.getRegisterConfirmationTokenId() != thatRegisterConfirmationToken.getRegisterConfirmationTokenId()) {return false; }
+        if (this.getUserId() != thatRegisterConfirmationToken.getUserId()) {return false; }
         if (!Objects.equals(this.getToken(), thatRegisterConfirmationToken.getToken())) {return false; }
         return true;
     }
@@ -68,6 +89,7 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     public int hashCode() {
         int hash = 7;
         hash = 31 * hash + Integer.hashCode(getRegisterConfirmationTokenId());
+        hash = 31 * hash + Integer.hashCode(getUserId());
         hash = 31 * hash + Objects.hashCode(getToken());
         return hash;
     }

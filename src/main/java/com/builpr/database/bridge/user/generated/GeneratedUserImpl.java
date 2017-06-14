@@ -34,7 +34,8 @@ public abstract class GeneratedUserImpl implements User {
     private boolean showName;
     private boolean showBirthday;
     private boolean showEmail;
-    private String accessToken;
+    private boolean activated;
+    private boolean deleted;
     
     protected GeneratedUserImpl() {
         
@@ -106,8 +107,13 @@ public abstract class GeneratedUserImpl implements User {
     }
     
     @Override
-    public Optional<String> getAccessToken() {
-        return Optional.ofNullable(accessToken);
+    public boolean getActivated() {
+        return activated;
+    }
+    
+    @Override
+    public boolean getDeleted() {
+        return deleted;
     }
     
     @Override
@@ -189,8 +195,14 @@ public abstract class GeneratedUserImpl implements User {
     }
     
     @Override
-    public User setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public User setActivated(boolean activated) {
+        this.activated = activated;
+        return this;
+    }
+    
+    @Override
+    public User setDeleted(boolean deleted) {
+        this.deleted = deleted;
         return this;
     }
     
@@ -210,7 +222,8 @@ public abstract class GeneratedUserImpl implements User {
         sj.add("showName = "     + Objects.toString(getShowName()));
         sj.add("showBirthday = " + Objects.toString(getShowBirthday()));
         sj.add("showEmail = "    + Objects.toString(getShowEmail()));
-        sj.add("accessToken = "  + Objects.toString(OptionalUtil.unwrap(getAccessToken())));
+        sj.add("activated = "    + Objects.toString(getActivated()));
+        sj.add("deleted = "      + Objects.toString(getDeleted()));
         return "UserImpl " + sj.toString();
     }
     
@@ -232,7 +245,8 @@ public abstract class GeneratedUserImpl implements User {
         if (this.getShowName() != thatUser.getShowName()) {return false; }
         if (this.getShowBirthday() != thatUser.getShowBirthday()) {return false; }
         if (this.getShowEmail() != thatUser.getShowEmail()) {return false; }
-        if (!Objects.equals(this.getAccessToken(), thatUser.getAccessToken())) {return false; }
+        if (this.getActivated() != thatUser.getActivated()) {return false; }
+        if (this.getDeleted() != thatUser.getDeleted()) {return false; }
         return true;
     }
     
@@ -252,7 +266,8 @@ public abstract class GeneratedUserImpl implements User {
         hash = 31 * hash + Boolean.hashCode(getShowName());
         hash = 31 * hash + Boolean.hashCode(getShowBirthday());
         hash = 31 * hash + Boolean.hashCode(getShowEmail());
-        hash = 31 * hash + Objects.hashCode(getAccessToken());
+        hash = 31 * hash + Boolean.hashCode(getActivated());
+        hash = 31 * hash + Boolean.hashCode(getDeleted());
         return hash;
     }
 }

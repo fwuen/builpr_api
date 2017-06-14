@@ -32,6 +32,8 @@ public abstract class GeneratedUserSqlAdapter {
     private SqlTypeMapperHelper<Integer, Boolean> showNameHelper;
     private SqlTypeMapperHelper<Integer, Boolean> showBirthdayHelper;
     private SqlTypeMapperHelper<Integer, Boolean> showEmailHelper;
+    private SqlTypeMapperHelper<Integer, Boolean> activatedHelper;
+    private SqlTypeMapperHelper<Integer, Boolean> deletedHelper;
     
     protected GeneratedUserSqlAdapter() {
         this.tableIdentifier = TableIdentifier.of("builpr", "builpr", "user");
@@ -59,7 +61,8 @@ public abstract class GeneratedUserSqlAdapter {
             entity.setShowName(     showNameHelper.apply(resultSet.getInt(11))     );
             entity.setShowBirthday( showBirthdayHelper.apply(resultSet.getInt(12)) );
             entity.setShowEmail(    showEmailHelper.apply(resultSet.getInt(13))    );
-            entity.setAccessToken(  resultSet.getString(14)                        );
+            entity.setActivated(    activatedHelper.apply(resultSet.getInt(14))    );
+            entity.setDeleted(      deletedHelper.apply(resultSet.getInt(15))      );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }
@@ -76,5 +79,7 @@ public abstract class GeneratedUserSqlAdapter {
         showNameHelper = SqlTypeMapperHelper.create(project, User.SHOW_NAME, User.class);
         showBirthdayHelper = SqlTypeMapperHelper.create(project, User.SHOW_BIRTHDAY, User.class);
         showEmailHelper = SqlTypeMapperHelper.create(project, User.SHOW_EMAIL, User.class);
+        activatedHelper = SqlTypeMapperHelper.create(project, User.ACTIVATED, User.class);
+        deletedHelper = SqlTypeMapperHelper.create(project, User.DELETED, User.class);
     }
 }

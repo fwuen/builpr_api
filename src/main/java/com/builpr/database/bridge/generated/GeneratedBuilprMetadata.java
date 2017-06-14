@@ -32,6 +32,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
         initPart7(sb);
         initPart8(sb);
         initPart9(sb);
+        initPart10(sb);
         return sb.toString();
     }
     
@@ -57,6 +58,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "        \"port\" : 3306,",
             "        \"schemas\" : [",
             "          {",
+            "            \"expanded\" : true,",
             "            \"tables\" : [",
             "              {",
             "                \"expanded\" : false,",
@@ -105,8 +107,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"columns\" : [",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"autoIncrement\" : true,",
             "                    \"name\" : \"category_id\",",
@@ -130,6 +132,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"enabled\" : true",
             "              },",
             "              {",
+            "                \"expanded\" : true,",
             "                \"foreignKeys\" : [",
             "                  {",
             "                    \"expanded\" : false,",
@@ -140,14 +143,14 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"expanded\" : true,",
             "                        \"name\" : \"sender_id\",",
             "                        \"foreignColumnName\" : \"user_id\",",
-            "                        \"id\" : \"sender_id\",",
-            "                        \"foreignTableName\" : \"user\",",
-            "                        \"ordinalPosition\" : 1"
+            "                        \"id\" : \"sender_id\","
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart1(StringBuilder sb) {
         Stream.of(
+            "                        \"foreignTableName\" : \"user\",",
+            "                        \"ordinalPosition\" : 1",
             "                      }",
             "                    ],",
             "                    \"name\" : \"Message_User_user_id_fk\",",
@@ -173,7 +176,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  }",
             "                ],",
-            "                \"expanded\" : false,",
             "                \"primaryKeyColumns\" : [",
             "                  {",
             "                    \"expanded\" : true,",
@@ -235,8 +237,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"columns\" : [",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"autoIncrement\" : true,",
             "                    \"name\" : \"message_id\",",
@@ -246,14 +248,14 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
-            "                    \"nullable\" : false,"
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\","
         ).forEachOrdered(sb::append);
     }
     
     private static void initPart2(StringBuilder sb) {
         Stream.of(
+            "                    \"nullable\" : false,",
             "                    \"name\" : \"sender_id\",",
             "                    \"id\" : \"sender_id\",",
             "                    \"ordinalPosition\" : 2,",
@@ -261,8 +263,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"receiver_id\",",
             "                    \"id\" : \"receiver_id\",",
@@ -277,6 +279,16 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"id\" : \"text\",",
             "                    \"ordinalPosition\" : 4,",
             "                    \"enabled\" : true",
+            "                  },",
+            "                  {",
+            "                    \"databaseType\" : \"java.lang.Integer\",",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
+            "                    \"expanded\" : true,",
+            "                    \"nullable\" : false,",
+            "                    \"name\" : \"read\",",
+            "                    \"id\" : \"read\",",
+            "                    \"ordinalPosition\" : 5,",
+            "                    \"enabled\" : true",
             "                  }",
             "                ],",
             "                \"name\" : \"message\",",
@@ -285,6 +297,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"enabled\" : true",
             "              },",
             "              {",
+            "                \"expanded\" : false,",
             "                \"foreignKeys\" : [",
             "                  {",
             "                    \"expanded\" : false,",
@@ -305,7 +318,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  }",
             "                ],",
-            "                \"expanded\" : false,",
             "                \"primaryKeyColumns\" : [",
             "                  {",
             "                    \"expanded\" : true,",
@@ -343,7 +355,12 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"id\" : \"printable_id\",",
             "                        \"ordinalPosition\" : 1",
             "                      }",
-            "                    ],",
+            "                    ],"
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart3(StringBuilder sb) {
+        Stream.of(
             "                    \"id\" : \"PRIMARY\",",
             "                    \"enabled\" : true",
             "                  },",
@@ -354,12 +371,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"indexColumns\" : [",
             "                      {",
             "                        \"orderType\" : \"ASC\",",
-            "                        \"expanded\" : true,"
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart3(StringBuilder sb) {
-        Stream.of(
+            "                        \"expanded\" : true,",
             "                        \"name\" : \"uploader_id\",",
             "                        \"id\" : \"uploader_id\",",
             "                        \"ordinalPosition\" : 1",
@@ -372,8 +384,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"columns\" : [",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"autoIncrement\" : true,",
             "                    \"name\" : \"printable_id\",",
@@ -401,8 +413,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"uploader_id\",",
             "                    \"id\" : \"uploader_id\",",
@@ -429,8 +441,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"num_downloads\",",
             "                    \"id\" : \"num_downloads\",",
@@ -444,11 +456,17 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"enabled\" : true",
             "              },",
             "              {",
+            "                \"expanded\" : false,",
             "                \"foreignKeys\" : [",
             "                  {",
             "                    \"expanded\" : false,",
             "                    \"foreignKeyColumns\" : [",
-            "                      {",
+            "                      {"
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart4(StringBuilder sb) {
+        Stream.of(
             "                        \"foreignDatabaseName\" : \"builpr\",",
             "                        \"foreignSchemaName\" : \"builpr\",",
             "                        \"expanded\" : true,",
@@ -460,12 +478,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                      }",
             "                    ],",
             "                    \"name\" : \"PrintableCategorie_Printable_printable_id_fk\",",
-            "                    \"id\" : \"PrintableCategorie_Printable_printable_id_fk\","
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart4(StringBuilder sb) {
-        Stream.of(
+            "                    \"id\" : \"PrintableCategorie_Printable_printable_id_fk\",",
             "                    \"enabled\" : true",
             "                  },",
             "                  {",
@@ -487,7 +500,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  }",
             "                ],",
-            "                \"expanded\" : false,",
             "                \"primaryKeyColumns\" : [",
             "                  {",
             "                    \"expanded\" : true,",
@@ -546,8 +558,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"columns\" : [",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"printable_id\",",
             "                    \"id\" : \"printable_id\",",
@@ -555,9 +567,14 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  },",
             "                  {",
-            "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
+            "                    \"databaseType\" : \"java.lang.Integer\","
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart5(StringBuilder sb) {
+        Stream.of(
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"category_id\",",
             "                    \"id\" : \"category_id\",",
@@ -566,16 +583,12 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  }",
             "                ],",
             "                \"name\" : \"printable_category\",",
-            "                \"id\" : \"printable_category\","
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart5(StringBuilder sb) {
-        Stream.of(
+            "                \"id\" : \"printable_category\",",
             "                \"packageName\" : \"com.builpr.database.bridge.printable_category\",",
             "                \"enabled\" : true",
             "              },",
             "              {",
+            "                \"expanded\" : false,",
             "                \"foreignKeys\" : [",
             "                  {",
             "                    \"expanded\" : false,",
@@ -614,7 +627,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  }",
             "                ],",
-            "                \"expanded\" : false,",
             "                \"primaryKeyColumns\" : [",
             "                  {",
             "                    \"expanded\" : true,",
@@ -661,7 +673,12 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                      }",
             "                    ],",
             "                    \"id\" : \"Rating_uid_mid_uindex\",",
-            "                    \"enabled\" : true",
+            "                    \"enabled\" : true"
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart6(StringBuilder sb) {
+        Stream.of(
             "                  },",
             "                  {",
             "                    \"expanded\" : false,",
@@ -672,23 +689,19 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                        \"orderType\" : \"ASC\",",
             "                        \"expanded\" : true,",
             "                        \"name\" : \"printable_id\",",
-            "                        \"id\" : \"printable_id\","
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart6(StringBuilder sb) {
-        Stream.of(
+            "                        \"id\" : \"printable_id\",",
             "                        \"ordinalPosition\" : 1",
             "                      }",
             "                    ],",
-            "                    \"id\" : \"Rating_Printable_printable_id_fk\"",
+            "                    \"id\" : \"Rating_Printable_printable_id_fk\",",
+            "                    \"enabled\" : true",
             "                  }",
             "                ],",
             "                \"columns\" : [",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"user_id\",",
             "                    \"id\" : \"user_id\",",
@@ -697,8 +710,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"printable_id\",",
             "                    \"id\" : \"printable_id\",",
@@ -707,8 +720,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"rating\",",
             "                    \"id\" : \"rating\",",
@@ -735,8 +748,8 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  },",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"autoIncrement\" : true,",
             "                    \"name\" : \"rating_id\",",
@@ -752,38 +765,54 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "              },",
             "              {",
             "                \"expanded\" : false,",
+            "                \"foreignKeys\" : [",
+            "                  {",
+            "                    \"expanded\" : false,",
+            "                    \"foreignKeyColumns\" : [",
+            "                      {",
+            "                        \"foreignDatabaseName\" : \"builpr\",",
+            "                        \"foreignSchemaName\" : \"builpr\",",
+            "                        \"expanded\" : true,",
+            "                        \"name\" : \"user_id\",",
+            "                        \"foreignColumnName\" : \"user_id\",",
+            "                        \"id\" : \"user_id\",",
+            "                        \"foreignTableName\" : \"user\",",
+            "                        \"ordinalPosition\" : 1",
+            "                      }",
+            "                    ],"
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart7(StringBuilder sb) {
+        Stream.of(
+            "                    \"name\" : \"register_confirmation_token_user_user_id_fk\",",
+            "                    \"id\" : \"register_confirmation_token_user_user_id_fk\",",
+            "                    \"enabled\" : true",
+            "                  }",
+            "                ],",
             "                \"primaryKeyColumns\" : [",
             "                  {",
             "                    \"expanded\" : true,",
             "                    \"name\" : \"register_confirmation_token_id\",",
             "                    \"id\" : \"register_confirmation_token_id\",",
             "                    \"ordinalPosition\" : 1",
+            "                  },",
+            "                  {",
+            "                    \"expanded\" : true,",
+            "                    \"name\" : \"token\",",
+            "                    \"id\" : \"token\",",
+            "                    \"ordinalPosition\" : 2",
+            "                  },",
+            "                  {",
+            "                    \"expanded\" : true,",
+            "                    \"name\" : \"user_id\",",
+            "                    \"id\" : \"user_id\",",
+            "                    \"ordinalPosition\" : 1",
             "                  }",
             "                ],",
             "                \"indexes\" : [",
             "                  {",
             "                    \"expanded\" : false,",
-            "                    \"unique\" : true,",
-            "                    \"name\" : \"PRIMARY\",",
-            "                    \"indexColumns\" : [",
-            "                      {",
-            "                        \"orderType\" : \"ASC\",",
-            "                        \"expanded\" : true,",
-            "                        \"name\" : \"register_confirmation_token_id\",",
-            "                        \"id\" : \"register_confirmation_token_id\",",
-            "                        \"ordinalPosition\" : 1",
-            "                      }",
-            "                    ],",
-            "                    \"id\" : \"PRIMARY\",",
-            "                    \"enabled\" : true",
-            "                  },",
-            "                  {",
-            "                    \"expanded\" : false,"
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart7(StringBuilder sb) {
-        Stream.of(
             "                    \"unique\" : true,",
             "                    \"name\" : \"register_confirmation_token_token_uindex\",",
             "                    \"indexColumns\" : [",
@@ -797,13 +826,43 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    ],",
             "                    \"id\" : \"register_confirmation_token_token_uindex\",",
             "                    \"enabled\" : true",
+            "                  },",
+            "                  {",
+            "                    \"expanded\" : false,",
+            "                    \"unique\" : true,",
+            "                    \"name\" : \"PRIMARY\",",
+            "                    \"indexColumns\" : [",
+            "                      {",
+            "                        \"orderType\" : \"ASC\",",
+            "                        \"expanded\" : true,",
+            "                        \"name\" : \"register_confirmation_token_id\",",
+            "                        \"id\" : \"register_confirmation_token_id\",",
+            "                        \"ordinalPosition\" : 1",
+            "                      },",
+            "                      {",
+            "                        \"orderType\" : \"ASC\",",
+            "                        \"expanded\" : true,",
+            "                        \"name\" : \"token\",",
+            "                        \"id\" : \"token\",",
+            "                        \"ordinalPosition\" : 2",
+            "                      },",
+            "                      {",
+            "                        \"orderType\" : \"ASC\",",
+            "                        \"expanded\" : true,",
+            "                        \"name\" : \"user_id\",",
+            "                        \"id\" : \"user_id\",",
+            "                        \"ordinalPosition\" : 1",
+            "                      }",
+            "                    ],",
+            "                    \"id\" : \"PRIMARY\",",
+            "                    \"enabled\" : true",
             "                  }",
             "                ],",
             "                \"columns\" : [",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"name\" : \"register_confirmation_token_id\",",
             "                    \"id\" : \"register_confirmation_token_id\",",
@@ -811,10 +870,27 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  },",
             "                  {",
+            "                    \"databaseType\" : \"java.lang.Integer\",",
+            "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
+            "                    \"nullable\" : false,",
+            "                    \"name\" : \"user_id\",",
+            "                    \"id\" : \"user_id\",",
+            "                    \"ordinalPosition\" : 1,",
+            "                    \"enabled\" : true",
+            "                  },",
+            "                  {",
             "                    \"databaseType\" : \"java.lang.String\",",
             "                    \"expanded\" : true,",
             "                    \"nullable\" : false,",
+            "                    \"autoIncrement\" : false,",
             "                    \"name\" : \"token\",",
+            "                    \"nullableImplementation\" : \"OPTIONAL\","
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart8(StringBuilder sb) {
+        Stream.of(
             "                    \"id\" : \"token\",",
             "                    \"ordinalPosition\" : 2,",
             "                    \"enabled\" : true",
@@ -855,22 +931,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                  {",
             "                    \"expanded\" : false,",
             "                    \"unique\" : true,",
-            "                    \"name\" : \"user_access_token_uindex\",",
-            "                    \"indexColumns\" : [",
-            "                      {",
-            "                        \"orderType\" : \"ASC\",",
-            "                        \"expanded\" : true,",
-            "                        \"name\" : \"access_token\",",
-            "                        \"id\" : \"access_token\",",
-            "                        \"ordinalPosition\" : 1",
-            "                      }",
-            "                    ],",
-            "                    \"id\" : \"user_access_token_uindex\",",
-            "                    \"enabled\" : true",
-            "                  },",
-            "                  {",
-            "                    \"expanded\" : false,",
-            "                    \"unique\" : true,",
             "                    \"name\" : \"User_email_uindex\",",
             "                    \"indexColumns\" : [",
             "                      {",
@@ -884,12 +944,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"id\" : \"User_email_uindex\",",
             "                    \"enabled\" : true",
             "                  },",
-            "                  {"
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart8(StringBuilder sb) {
-        Stream.of(
+            "                  {",
             "                    \"expanded\" : false,",
             "                    \"unique\" : true,",
             "                    \"name\" : \"User_username_uindex\",",
@@ -909,11 +964,12 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"columns\" : [",
             "                  {",
             "                    \"databaseType\" : \"java.lang.Integer\",",
-            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper\",",
             "                    \"nullable\" : false,",
             "                    \"autoIncrement\" : true,",
             "                    \"name\" : \"user_id\",",
+            "                    \"nullableImplementation\" : \"OPTIONAL\",",
             "                    \"id\" : \"user_id\",",
             "                    \"ordinalPosition\" : 1,",
             "                    \"enabled\" : true",
@@ -935,7 +991,12 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"id\" : \"password\",",
             "                    \"ordinalPosition\" : 3,",
             "                    \"enabled\" : true",
-            "                  },",
+            "                  },"
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart9(StringBuilder sb) {
+        Stream.of(
             "                  {",
             "                    \"databaseType\" : \"java.lang.String\",",
             "                    \"expanded\" : true,",
@@ -990,12 +1051,7 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"ordinalPosition\" : 9,",
             "                    \"enabled\" : true",
             "                  },",
-            "                  {"
-        ).forEachOrdered(sb::append);
-    }
-    
-    private static void initPart9(StringBuilder sb) {
-        Stream.of(
+            "                  {",
             "                    \"databaseType\" : \"java.lang.String\",",
             "                    \"expanded\" : true,",
             "                    \"nullable\" : true,",
@@ -1041,14 +1097,32 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                    \"enabled\" : true",
             "                  },",
             "                  {",
-            "                    \"databaseType\" : \"java.lang.String\",",
+            "                    \"databaseType\" : \"java.lang.Integer\","
+        ).forEachOrdered(sb::append);
+    }
+    
+    private static void initPart10(StringBuilder sb) {
+        Stream.of(
             "                    \"expanded\" : true,",
-            "                    \"nullable\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper\",",
+            "                    \"nullable\" : false,",
             "                    \"autoIncrement\" : false,",
-            "                    \"name\" : \"access_token\",",
+            "                    \"name\" : \"activated\",",
             "                    \"nullableImplementation\" : \"OPTIONAL\",",
-            "                    \"id\" : \"access_token\",",
+            "                    \"id\" : \"activated\",",
             "                    \"ordinalPosition\" : 14,",
+            "                    \"enabled\" : true",
+            "                  },",
+            "                  {",
+            "                    \"databaseType\" : \"java.lang.Integer\",",
+            "                    \"expanded\" : true,",
+            "                    \"typeMapper\" : \"com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper\",",
+            "                    \"nullable\" : false,",
+            "                    \"autoIncrement\" : false,",
+            "                    \"name\" : \"deleted\",",
+            "                    \"nullableImplementation\" : \"OPTIONAL\",",
+            "                    \"id\" : \"deleted\",",
+            "                    \"ordinalPosition\" : 15,",
             "                    \"enabled\" : true",
             "                  }",
             "                ],",
@@ -1058,7 +1132,6 @@ public class GeneratedBuilprMetadata extends AbstractApplicationMetadata {
             "                \"enabled\" : true",
             "              }",
             "            ],",
-            "            \"expanded\" : true,",
             "            \"name\" : \"builpr\",",
             "            \"id\" : \"builpr\",",
             "            \"enabled\" : true",

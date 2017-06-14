@@ -46,7 +46,8 @@ public abstract class GeneratedUserManagerImpl extends AbstractManager<User> imp
             User.SHOW_NAME,
             User.SHOW_BIRTHDAY,
             User.SHOW_EMAIL,
-            User.ACCESS_TOKEN
+            User.ACTIVATED,
+            User.DELETED
         );
     }
     

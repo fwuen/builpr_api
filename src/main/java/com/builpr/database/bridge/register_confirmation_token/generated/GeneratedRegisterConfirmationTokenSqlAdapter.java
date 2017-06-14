@@ -42,7 +42,8 @@ public abstract class GeneratedRegisterConfirmationTokenSqlAdapter {
         final RegisterConfirmationToken entity = createEntity();
         try {
             entity.setRegisterConfirmationTokenId( resultSet.getInt(1)    );
-            entity.setToken(                       resultSet.getString(2) );
+            entity.setUserId(                      resultSet.getInt(2)    );
+            entity.setToken(                       resultSet.getString(3) );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }
