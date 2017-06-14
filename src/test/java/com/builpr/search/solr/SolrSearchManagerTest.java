@@ -678,6 +678,16 @@ public class SolrSearchManagerTest {
     }
 
     @Test
+    public void deleteSinglePrintableFromIndex() {
+
+    }
+
+    @Test
+    public void deleteMultiplePrintablesFromIndex() {
+
+    }
+
+    @Test
     public void testClearIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
