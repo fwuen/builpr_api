@@ -30,6 +30,14 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     }
 
     /**
+     * @param rating Rating
+     * @return void
+     */
+    public void persist(Rating rating) {
+        getDao().persist(rating);
+    }
+
+    /**
      * @param request RatingNewRequest
      * @param userID  int
      */
@@ -41,7 +49,7 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
         rating.setRatingTime(new Date(System.currentTimeMillis()));
         rating.setUserId(userID);
 
-        getDao().persist(rating);
+        persist(rating);
     }
 
     /**
@@ -71,5 +79,19 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
         getDao().remove(
                 this.getRatingByRatingID(ratingId)
         );
+    }
+
+    public double getAverageRating(List<Rating> ratings) {
+        double average = 0.0;
+        int ratingCounter = 0;
+        for (Rating rating : ratings) {
+            average = +rating.getRating();
+            ratingCounter++;
+        }
+        if (ratingCounter == 0) {
+            return 0;
+        }
+        average = average / ratingCounter;
+        return average;
     }
 }

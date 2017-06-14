@@ -89,7 +89,7 @@ public class SearchController {
             Filter categoryFilter = new CategoryFilter(request.getCategories());
             filter.add(categoryFilter);
         }
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("192.168.1.50:8983/solr");
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
         List<PrintableReference> foundPrintable;
         try {
             if (sort == null && order == null && filter.isEmpty()) {

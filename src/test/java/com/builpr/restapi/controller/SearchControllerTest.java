@@ -1,8 +1,10 @@
 package com.builpr.restapi.controller;
 
+import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.restapi.error.search.SearchError;
 import com.builpr.restapi.model.Request.Search.SearchRequest;
 import com.builpr.restapi.model.Response.Response;
+import com.builpr.search.SearchManagerException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,13 +42,14 @@ public class SearchControllerTest extends ControllerTest {
     private static final String INVALID_SORT = "abcdefg";
 
     private SearchRequest searchRequest;
+    private DatabasePrintableManager databasePrintableManager;
 
     public void fillCategoryFilter() {
         VALID_CATEGORY_FILTER.add("test");
         INVALID_CATEGORY_FILTER.add("");
     }
 
-    public SearchControllerTest() {
+    public SearchControllerTest() throws SearchManagerException {
         fillCategoryFilter();
         searchRequest = new SearchRequest();
         searchRequest.setQuery(VALID_QUERY);
@@ -54,6 +57,10 @@ public class SearchControllerTest extends ControllerTest {
         searchRequest.setCategories(VALID_CATEGORY_FILTER);
         searchRequest.setOrder(VALID_ORDER);
         searchRequest.setSort(VALID_SORT);
+
+            databasePrintableManager = new DatabasePrintableManager();
+            databasePrintableManager.indexPrintables();
+
     }
 
     @Test

@@ -5,6 +5,7 @@ import com.builpr.database.bridge.category.Category;
 import com.builpr.database.bridge.category.CategoryImpl;
 import com.builpr.database.bridge.category.CategoryManager;
 import com.builpr.database.bridge.printable_category.PrintableCategory;
+import com.builpr.restapi.converter.CategoryToStringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,12 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
         List<Category> categoryList = new ArrayList<>();
         for (String categoryName : list) {
             List<Category> foundCategory = getDao().stream().filter(Category.CATEGORY_NAME.equal(categoryName)).collect(Collectors.toList());
-            categoryList.add(foundCategory.get(0));
+            if (foundCategory != null && !foundCategory.isEmpty()) {
+                categoryList.add(foundCategory.get(0));
+            }
+        }
+        if (categoryList.isEmpty()) {
+            return null;
         }
         return categoryList;
     }
@@ -64,10 +70,11 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
      * @return void
      */
     public void update(List<String> categories) {
-        List<String> existingCategories = getDao().stream().map(Category.CATEGORY_NAME.getter()).collect(Collectors.toList());
-        for (String categoryName : categories) {
-            if (!existingCategories.contains(categoryName)) {
-                create(categoryName);
+        List<Category> existingCategories = getDao().stream().collect(Collectors.toList());
+        List<String> categoryNames = CategoryToStringConverter.convertCategoriesToString(existingCategories);
+        for (String category : categories) {
+            if (!categoryNames.contains(category)) {
+                create(category);
             }
         }
     }

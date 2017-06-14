@@ -3,12 +3,17 @@ package com.builpr.database.service;
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.bridge.printable.PrintableImpl;
 import com.builpr.database.bridge.printable.PrintableManager;
+import com.builpr.restapi.converter.PrintableToSolrPrintableConverter;
 import com.builpr.restapi.model.CustomMultipartFile;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.utils.TokenGenerator;
+import com.builpr.search.SearchManagerException;
+import com.builpr.search.model.Indexable;
 import com.builpr.search.model.PrintableReference;
+import com.builpr.search.solr.SolrSearchManager;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 
 import java.io.File;
@@ -47,6 +52,10 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         return list.orElse(null);
     }
 
+    /**
+     * @param printableReferences PrintableReference
+     * @return List<Printable>
+     */
     public List<Printable> getPrintableList(List<PrintableReference> printableReferences) {
         List<Printable> list = new ArrayList<>();
         for (PrintableReference reference : printableReferences) {
@@ -98,14 +107,17 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      * @return List<String>
      */
     public List<String> checkCategories(List<String> categories) {
+        List<String> newCategories = new ArrayList<>();
         for (String category : categories) {
-            category = category.replaceAll("\\P{L}+", "");
+            category = category.replaceAll("[^A-Za-z0-9]", " ");
             category = category.toLowerCase();
-            if (Objects.equals(category, "")) {
+            if (Objects.equals(category, " ")) {
                 categories.remove(categories);
+            } else {
+                newCategories.add(category);
             }
         }
-        return categories;
+        return newCategories;
     }
 
     /**
@@ -140,21 +152,24 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
-     * @param multipartFile MultiPartFile
+     * @param data byte[]
      * @return String
      * @throws IOException Exception
      */
-    public String uploadFile(MultipartFile multipartFile) throws IOException {
+    public String uploadFile(byte[] data) throws IOException {
 //         Filename = token + timestamp
         TokenGenerator tokenGenerator = new TokenGenerator(true);
         String token = tokenGenerator.generate();
         long timestamp = System.currentTimeMillis();
         String filename = token + timestamp + ".stl";
         String path = "C:\\Users\\Markus\\Desktop\\Modells\\" + filename;
+
+        MultipartFile multipartFile = new CustomMultipartFile(data, path);
         File file = new File(path);
-        Path path1 = Paths.get(path);
+        Path filePath = Paths.get(path);
+
         try {
-            Files.createFile(path1);
+            Files.createFile(filePath);
         } catch (FileAlreadyExistsException e) {
             throw new FileAlreadyExistsException("File alreads existent");
         }
@@ -181,8 +196,27 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      * @return void
      */
     public void deletePrintable(int printableID) {
-        getDao().remove(
-                this.getPrintableById(printableID)
-        );
+        getDao().stream().filter(Printable.PRINTABLE_ID.equal(printableID)).forEach(getDao().remover());
+    }
+
+
+    public void indexPrintables() throws SearchManagerException {
+        List<Printable> printables = getDao().stream().collect(Collectors.toList());
+        List<Indexable> solrPrintableList = new ArrayList<>();
+        for (Printable printable : printables) {
+            com.builpr.search.model.Printable solrPrintable = PrintableToSolrPrintableConverter.getSolrPrintable(printable);
+            solrPrintableList.add(solrPrintable);
+        }
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
+        if (!solrPrintableList.isEmpty()) {
+            solrSearchManager.addToIndex(solrPrintableList);
+        }
+    }
+
+    public void updateDownloads(int printableID) {
+        this.getDao().stream().
+                filter(Printable.PRINTABLE_ID.equal(printableID))
+                .map(f -> f.setNumDownloads(f.getNumDownloads() + 1))
+                .forEach(this.getDao().updater());
     }
 }

@@ -11,6 +11,7 @@ import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.converter.*;
 import com.builpr.restapi.error.exception.PrintableNotFoundException;
 import com.builpr.restapi.error.printable.*;
+import com.builpr.restapi.model.CustomMultipartFile;
 import com.builpr.restapi.model.Request.Printable.PrintableDeleteRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
@@ -19,15 +20,18 @@ import com.builpr.restapi.model.Response.printable.PrintableDeleteResponse;
 import com.builpr.restapi.model.Response.printable.PrintableEditResponse;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 import com.builpr.restapi.model.Response.printable.PrintableResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.Principal;
 import java.util.List;
 
 import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
-import static com.builpr.restapi.error.printable.PrintableDownloadError.PRINTABLE_ID_INVALID;
 
 /**
  * PrintableController
@@ -67,16 +71,11 @@ public class PrintableController {
 
         if (printableID == 0 || !databasePrintableManager.checkPrintableId(printableID)) {
             response.setSuccess(false);
-            response.addError(PrintableError.PRINTABLE_NOT_EXISTING);
+            response.addError(PrintableError.INVALID_PRINTABLEID);
             return response;
         }
 
         Printable printable = databasePrintableManager.getPrintableById(printableID);
-        if (printable == null) {
-            response.setSuccess(false);
-            response.addError(PrintableError.PRINTABLE_NOT_EXISTING);
-            return response;
-        }
         User user = databaseUserManager.getByUsername(principal.getName());
         if (user != null) {
             if (user.getUserId() == printable.getUploaderId()) {
@@ -105,8 +104,9 @@ public class PrintableController {
             response.setSuccess(false);
             response.addError(PrintableEditError.PRINTABLE_NOT_EXISTING);
         }
-        request.setCategories(databasePrintableManager.checkCategories(request.getCategories()));
-        if (request.getCategories().size() < 3) {
+        List<String> categories = databasePrintableManager.checkCategories(request.getCategories());
+
+        if (categories.size() < 3) {
             response.setSuccess(false);
             response.addError(PrintableEditError.CATEGORIES_INVALID);
         }
@@ -134,10 +134,15 @@ public class PrintableController {
         if (!response.isSuccess()) {
             return response;
         }
+        // UPDATE the printable
         databasePrintableManager.update(request);
+
         if (request.getCategories().size() > 0) {
-            databaseCategoryManager.update(request.getCategories());
-            databasePrintableCategoryManager.update(request);
+            // UPDATE the CATEGORY-table
+            databaseCategoryManager.update(categories);
+            // DELETE ALL PRINTABLE_CATEGORIES WITH PRINTABLE_ID
+            // CREATE NEW PRINTABLE_CATEGORIES
+            databasePrintableCategoryManager.update(request, categories);
         }
         PrintableEditResponse printableEditResponse = PrintableEditRequestToResponseConverter.from(request);
         response.setPayload(printableEditResponse);
@@ -147,21 +152,18 @@ public class PrintableController {
     /**
      * @param principal Principal
      * @param request   PrintableNewRequest
-     * @param file      MultipartFile
      * @return response Response<PrintableNewResponse>
      */
     @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = Constants.URL_NEW_PRINTABLE, method = RequestMethod.POST)
     @ResponseBody
-    public Response<PrintableNewResponse> createPrintable(Principal principal, @RequestBody MultipartFile file, @RequestBody PrintableNewRequest request) throws IOException {
+    public Response<PrintableNewResponse> createPrintable(Principal principal, @RequestBody PrintableNewRequest request) throws IOException {
         Response<PrintableNewResponse> response = new Response<>();
         User user = null;
-//        Path p = FileSystems.getDefault().getPath("C:\\Users\\Markus\\Desktop\\Modells\\testFile.stl");
-//        byte[] fileData = Files.readAllBytes(p);
-//        file = new CustomMultipartFile(fileData, "C:\\Users\\Markus\\Desktop\\Modells\\testFile.stl");
+
         if (principal == null) {
             response.setSuccess(false);
-            response.addError(PrintableNewError.NO_AUTHORIZATION);
+            response.addError(PrintableNewError.USER_INVALID);
             return response;
         }
         if (databaseUserManager.isPresent(principal.getName())) {
@@ -187,18 +189,21 @@ public class PrintableController {
             response.setSuccess(false);
             response.addError(PrintableNewError.DESCRIPTION_INVALID);
         }
-        if (file == null) {
+        if (request.getFile() == null) {
             response.setSuccess(false);
-            response.addError(PrintableNewError.FILE_NOT_EXISTING);
-        } else if (file.isEmpty() || file.getBytes().length < 1) {
+            response.addError(PrintableNewError.FILE_INVALID);
+        } else if (request.getFile().length < 1) {
             response.setSuccess(false);
             response.addError(PrintableNewError.FILE_INVALID);
         }
-        if (!response.isSuccess()) {
+
+        if (!response.isSuccess())
+
+        {
             return response;
         }
 
-        String path = databasePrintableManager.uploadFile(file);
+        String path = databasePrintableManager.uploadFile(request.getFile());
         assert user != null;
         Printable printable = databasePrintableManager.createPrintable(request, user.getUserId(), path);
         databaseCategoryManager.update(request.getCategories());
@@ -217,12 +222,12 @@ public class PrintableController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/printable/download", method = RequestMethod.GET)
     @ResponseBody
-    public Response<MultipartFile> downloadFile(@RequestParam(
+    public Response<byte[]> downloadFile(@RequestParam(
             value = "id",
             defaultValue = "0"
     ) int printableID) throws IOException {
 
-        Response<MultipartFile> response = new Response<>();
+        Response<byte[]> response = new Response<>();
 
         if (printableID == 0 || !databasePrintableManager.checkPrintableId(printableID)) {
             response.setSuccess(false);
@@ -234,7 +239,8 @@ public class PrintableController {
         }
 
         MultipartFile multipartFile = databasePrintableManager.downloadFile(printableID);
-        response.setPayload(multipartFile);
+        databasePrintableManager.updateDownloads(printableID);
+        response.setPayload(multipartFile.getBytes());
         return response;
     }
 

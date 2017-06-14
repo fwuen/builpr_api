@@ -178,7 +178,7 @@ public class Printable extends Indexable {
          * @return Builder-object with the new parameter added to it
          */
         public Builder withNumberOfDownloads(int numberOfDownloads) {
-            Preconditions.checkArgument(numberOfDownloads > 0);
+            Preconditions.checkArgument(numberOfDownloads >= 0);
 
             toBuild.numberOfDownloads = numberOfDownloads;
             return this;

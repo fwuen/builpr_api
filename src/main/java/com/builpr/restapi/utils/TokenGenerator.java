@@ -19,6 +19,11 @@ public class TokenGenerator {
         USED_CHARS = ALLOWED_CHARS;
     }
 
+    public TokenGenerator(int tokenSize) {
+        USED_CHARS = ALLOWED_CHARS;
+        setTokenSize(tokenSize);
+    }
+
     public TokenGenerator(int tokenSize, boolean limited) {
         if (limited) {
             USED_CHARS = ALLOWED_CHARS_NO_SPECIAL_CASES;

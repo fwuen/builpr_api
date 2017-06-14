@@ -90,8 +90,7 @@ public class RatingController {
     @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/rating/delete", method = RequestMethod.DELETE)
     @ResponseBody
-    public Response<RatingPayload> createRating(Principal
-                                                                           principal, @RequestBody RatingDeleteRequest request) {
+    public Response<RatingPayload> createRating(Principal principal, @RequestBody RatingDeleteRequest request) {
         Response<RatingPayload> response = new Response<>();
         if (request.getRatingID() == 0 || databaseRatingManager.getRatingByRatingID(request.getRatingID()) == null) {
             response.setSuccess(false);
@@ -109,6 +108,9 @@ public class RatingController {
         } else {
             response.setSuccess(false);
             response.addError(RatingDeleteError.USER_INVALID);
+        }
+        if (!response.isSuccess()) {
+            return response;
         }
         Rating rating = databaseRatingManager.getRatingByRatingID(request.getRatingID());
         databaseRatingManager.deleteRating(request.getRatingID());

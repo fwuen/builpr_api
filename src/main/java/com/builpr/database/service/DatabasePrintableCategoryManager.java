@@ -25,28 +25,29 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
      * @return List<PrintableCategory>
      */
     public List<PrintableCategory> getListByID(int printableID) {
-        List<PrintableCategory> list = getDao().stream().filter(PrintableCategory.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
-        return list;
+        return getDao().stream().filter(PrintableCategory.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
     }
 
     /**
      * @param request PrintableEditRequest
      * @return void
      */
-    public void update(PrintableEditRequest request) {
-        // neue Kategorien (namen)
-        List<String> newCategories = request.getCategories();
+    public void update(PrintableEditRequest request, List<String> categoryList) {
         // Kategorien (id, name)
         DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();
-        List<Category> categories = databaseCategoryManager.getCategoriesByList(newCategories);
+        List<Category> categories = databaseCategoryManager.getCategoriesByList(categoryList);
         // bestehende löschen
-        List<PrintableCategory> printableCategories = getListByID(188);
-        for (PrintableCategory printableCategory : printableCategories) {
-            getDao().remove(printableCategory);
+        List<PrintableCategory> printableCategories = getListByID(request.getPrintableID());
+        boolean success = false;
+        if (printableCategories != null) {
+            for (PrintableCategory printableCategory : printableCategories) {
+                delete(printableCategory);
+            }
         }
-//TODO
-//        // neue Kategorien erstellen
-//        createCategories(categories, request.getPrintableID());
+        if (categories != null && success) {
+            // neue Kategorien erstellen
+            createCategories(categories, request.getPrintableID());
+        }
     }
 
     /**
@@ -55,7 +56,8 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
      */
     public void createCategories(List<Category> list, int printableID) {
         for (Category category : list) {
-            create(printableID, category.getCategoryId());
+            if (category.getCategoryId() != 0)
+                create(printableID, category.getCategoryId());
         }
     }
 
@@ -71,4 +73,11 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
         this.getDao().persist(category);
     }
 
+    public void deleteCategoriesForPrintable(int printableID) {
+        this.getDao().stream().filter(PrintableCategory.PRINTABLE_ID.equal(printableID)).forEach(this.getDao().remover());
+    }
+
+    private void delete(PrintableCategory printableCategory) {
+        getDao().remove(printableCategory);
+    }
 }

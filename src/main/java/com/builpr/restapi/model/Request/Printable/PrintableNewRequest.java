@@ -33,10 +33,11 @@ public class PrintableNewRequest {
     @Getter
     @Setter
     List<String> categories;
+
     /**
-     * Printable-file
+     * Printable-file stored in a byte-array
      */
     @Getter
     @Setter
-    File file;
+    byte[] file;
 }
