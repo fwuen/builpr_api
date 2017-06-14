@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- *
+ * RatingNewError
  */
 public enum RatingNewError implements MappableError {
     RATING_INVALID(1, "The given rating is invalid"),

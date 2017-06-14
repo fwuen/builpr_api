@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- *
+ * RatingDeleteError
  */
 public enum RatingDeleteError implements MappableError {
     RATING_NOT_FOUND(1, "rating cannot be found"),
