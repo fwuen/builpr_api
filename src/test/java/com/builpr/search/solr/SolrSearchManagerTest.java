@@ -650,8 +650,14 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
     }
 
-    //Clear Index Tests
+    //Delete/Clear Index Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //TODO Delete Tests
+    @Test
+    public void testDeleteFromIndex() {
+
+    }
+
     @AfterClass
     @Test
     public void testClearIndex() throws SearchManagerException {
