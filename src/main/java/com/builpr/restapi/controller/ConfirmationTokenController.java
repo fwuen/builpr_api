@@ -3,7 +3,6 @@ package com.builpr.restapi.controller;
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.service.DatabaseRegisterConfirmationTokenManager;
 import com.builpr.database.service.DatabaseUserManager;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +17,11 @@ public class ConfirmationTokenController {
 
     private DatabaseUserManager userManager;
 
+    private DatabaseRegisterConfirmationTokenManager registerConfirmationTokenManager;
+
     public ConfirmationTokenController() {
         userManager = new DatabaseUserManager();
+        registerConfirmationTokenManager = new DatabaseRegisterConfirmationTokenManager();
     }
 
     @CrossOrigin(SECURITY_CROSS_ORIGIN)
@@ -29,13 +31,11 @@ public class ConfirmationTokenController {
         String token = tokenAndID.substring(0, 60);
         int user_id = Integer.parseInt(tokenAndID.substring(60));
 
-        if (new DatabaseRegisterConfirmationTokenManager().isPresent(user_id, token)) {
+        if (registerConfirmationTokenManager.isPresent(user_id, token)) {
+            registerConfirmationTokenManager.delete(registerConfirmationTokenManager.getByUserIDandToken(user_id, token));
             User updateUser = userManager.getByID(user_id);
-
             updateUser.setActivated(true);
-
             userManager.update(updateUser);
-
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();
