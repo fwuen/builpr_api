@@ -100,7 +100,7 @@ public class PrintableControllerTest extends ControllerTest {
         databasePrintableManager.deletePrintable(TEST_PRINTABLE_ID);
     }
     //-----------------------------------------------------------------------------------------------------------//
-    //        /printable/get                                                                                                   //
+    //        /printable/get                                                                                     //
     //-----------------------------------------------------------------------------------------------------------//
 
     @Test
@@ -159,7 +159,7 @@ public class PrintableControllerTest extends ControllerTest {
     }
 
     //-----------------------------------------------------------------------------------------------------------//
-    //        /printable/new                                                                                                   //
+    //        /printable/new                                                                                     //
     //-----------------------------------------------------------------------------------------------------------//
     @Test
     public void createPrintableWithNull() throws Exception {
@@ -344,7 +344,7 @@ public class PrintableControllerTest extends ControllerTest {
     }
 
     //-----------------------------------------------------------------------------------------------------------//
-    //                      /printable/download                                                                                     //
+    //                      /printable/download                                                                  //
     //-----------------------------------------------------------------------------------------------------------//
     @Test
     public void downloadPrinitabeWithValidId() throws Exception {
@@ -380,7 +380,7 @@ public class PrintableControllerTest extends ControllerTest {
 
 
     //-----------------------------------------------------------------------------------------------------------//
-    //                      /printable/edit                                                                                          //
+    //                      /printable/edit                                                                      //
     //-----------------------------------------------------------------------------------------------------------//
     @Test
     @WithMockUser(DB_TEST_USER_NAME)
@@ -406,7 +406,7 @@ public class PrintableControllerTest extends ControllerTest {
     }
 
     //-----------------------------------------------------------------------------------------------------------//
-    //                      /printable/delete                                                                                                           //
+    //                      /printable/delete                                                                    //
     //-----------------------------------------------------------------------------------------------------------//
     @Test
     @WithMockUser(DB_TEST_USER_NAME)
