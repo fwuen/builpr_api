@@ -4,6 +4,7 @@ import com.builpr.database.bridge.message.Message;
 import com.builpr.database.bridge.user.User;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.core.manager.Manager;
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -23,7 +24,8 @@ public abstract class GeneratedMessageImpl implements Message {
     private int senderId;
     private int receiverId;
     private String text;
-    private int read;
+    private boolean read;
+    private Timestamp sendTime;
     
     protected GeneratedMessageImpl() {
         
@@ -50,8 +52,13 @@ public abstract class GeneratedMessageImpl implements Message {
     }
     
     @Override
-    public int getRead() {
+    public boolean getRead() {
         return read;
+    }
+    
+    @Override
+    public Timestamp getSendTime() {
+        return sendTime;
     }
     
     @Override
@@ -79,8 +86,14 @@ public abstract class GeneratedMessageImpl implements Message {
     }
     
     @Override
-    public Message setRead(int read) {
+    public Message setRead(boolean read) {
         this.read = read;
+        return this;
+    }
+    
+    @Override
+    public Message setSendTime(Timestamp sendTime) {
+        this.sendTime = sendTime;
         return this;
     }
     
@@ -102,6 +115,7 @@ public abstract class GeneratedMessageImpl implements Message {
         sj.add("receiverId = " + Objects.toString(getReceiverId()));
         sj.add("text = "       + Objects.toString(getText()));
         sj.add("read = "       + Objects.toString(getRead()));
+        sj.add("sendTime = "   + Objects.toString(getSendTime()));
         return "MessageImpl " + sj.toString();
     }
     
@@ -115,6 +129,7 @@ public abstract class GeneratedMessageImpl implements Message {
         if (this.getReceiverId() != thatMessage.getReceiverId()) {return false; }
         if (!Objects.equals(this.getText(), thatMessage.getText())) {return false; }
         if (this.getRead() != thatMessage.getRead()) {return false; }
+        if (!Objects.equals(this.getSendTime(), thatMessage.getSendTime())) {return false; }
         return true;
     }
     
@@ -125,7 +140,8 @@ public abstract class GeneratedMessageImpl implements Message {
         hash = 31 * hash + Integer.hashCode(getSenderId());
         hash = 31 * hash + Integer.hashCode(getReceiverId());
         hash = 31 * hash + Objects.hashCode(getText());
-        hash = 31 * hash + Integer.hashCode(getRead());
+        hash = 31 * hash + Boolean.hashCode(getRead());
+        hash = 31 * hash + Objects.hashCode(getSendTime());
         return hash;
     }
 }

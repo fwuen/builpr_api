@@ -22,6 +22,7 @@ public class Constants {
     public static final String URL_PROFILE = "/profile";
     public static final String URL_PROFILE_EDIT = "/profile/edit";
     public static final String URL_REDEEM_CONFIRMATION_TOKEN = "/redeem";
+    public static final String URL_MESSAGE = "/message";
 
 
 

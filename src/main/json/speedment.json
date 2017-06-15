@@ -227,12 +227,23 @@
                   },
                   {
                     "databaseType" : "java.lang.Integer",
-                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "read",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "read",
                     "ordinalPosition" : 5,
+                    "enabled" : true
+                  },
+                  {
+                    "databaseType" : "java.sql.Timestamp",
+                    "expanded" : true,
+                    "nullable" : false,
+                    "name" : "send_time",
+                    "id" : "send_time",
+                    "ordinalPosition" : 6,
                     "enabled" : true
                   }
                 ],

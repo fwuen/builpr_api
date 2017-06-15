@@ -6,10 +6,14 @@ import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
 import com.speedment.runtime.core.manager.Manager;
+import com.speedment.runtime.field.BooleanField;
+import com.speedment.runtime.field.ComparableField;
 import com.speedment.runtime.field.IntField;
 import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
+import com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper;
+import java.sql.Timestamp;
 
 /**
  * The generated base for the {@link
@@ -74,11 +78,22 @@ public interface GeneratedMessage {
      * This Field corresponds to the {@link Message} field that can be obtained
      * using the {@link Message#getRead()} method.
      */
-    IntField<Message, Integer> READ = IntField.create(
+    BooleanField<Message, Integer> READ = BooleanField.create(
         Identifier.READ,
         Message::getRead,
         Message::setRead,
-        TypeMapper.primitive(), 
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
+        false
+    );
+    /**
+     * This Field corresponds to the {@link Message} field that can be obtained
+     * using the {@link Message#getSendTime()} method.
+     */
+    ComparableField<Message, Timestamp, Timestamp> SEND_TIME = ComparableField.create(
+        Identifier.SEND_TIME,
+        Message::getSendTime,
+        Message::setSendTime,
+        TypeMapper.identity(), 
         false
     );
     
@@ -120,7 +135,15 @@ public interface GeneratedMessage {
      * 
      * @return the read of this Message
      */
-    int getRead();
+    boolean getRead();
+    
+    /**
+     * Returns the sendTime of this Message. The sendTime field corresponds to
+     * the database column builpr.builpr.message.send_time.
+     * 
+     * @return the sendTime of this Message
+     */
+    Timestamp getSendTime();
     
     /**
      * Sets the messageId of this Message. The messageId field corresponds to
@@ -165,7 +188,16 @@ public interface GeneratedMessage {
      * @param read to set of this Message
      * @return     this Message instance
      */
-    Message setRead(int read);
+    Message setRead(boolean read);
+    
+    /**
+     * Sets the sendTime of this Message. The sendTime field corresponds to the
+     * database column builpr.builpr.message.send_time.
+     * 
+     * @param sendTime to set of this Message
+     * @return         this Message instance
+     */
+    Message setSendTime(Timestamp sendTime);
     
     /**
      * Queries the specified manager for the referenced User. If no such User
@@ -191,7 +223,8 @@ public interface GeneratedMessage {
         SENDER_ID   ("sender_id"),
         RECEIVER_ID ("receiver_id"),
         TEXT        ("text"),
-        READ        ("read");
+        READ        ("read"),
+        SEND_TIME   ("send_time");
         
         private final String columnName;
         private final TableIdentifier<Message> tableIdentifier;

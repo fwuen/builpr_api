@@ -41,6 +41,10 @@ public class DatabaseUserManager extends DatabaseManager<UserManager> {
         return getByUsername(name) != null;
     }
 
+    public boolean isPresent(int userID) {
+        return getByID(userID) != null;
+    }
+
     public User persist(User user) {
         return getDao().persist(user);
     }
