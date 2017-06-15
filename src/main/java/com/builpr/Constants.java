@@ -30,7 +30,8 @@ public class Constants {
     public static final String SECURITY_CROSS_ORIGIN = "http://localhost:8081";
     public static final List<String> SECURITY_URLS = Lists.newArrayList(
             URL_SIMPLEPAYLOAD,
-            URL_PROFILE_EDIT
+            URL_PROFILE_EDIT,
+            URL_MESSAGE
     );
 
 
