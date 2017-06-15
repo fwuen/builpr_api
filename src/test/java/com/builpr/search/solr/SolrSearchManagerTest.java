@@ -336,7 +336,9 @@ public class SolrSearchManagerTest {
     
         List<PrintableReference> res = Lists.newArrayList();
         res = solrSearchManager.search("tower");
-        System.out.println(res.get(0).getId());
+        for(PrintableReference pr : res) {
+            System.out.println(pr.getId() + " " + pr.toString());
+        }
     }
 
     @Test
@@ -353,7 +355,7 @@ public class SolrSearchManagerTest {
         List<PrintableReference> res = Lists.newArrayList();
         res = solrSearchManager.search("car", filters);
         for(PrintableReference pr : res) {
-            System.out.println("" + pr.getId());
+            System.out.println(pr.getId() + " " + pr.toString());
         }
     }
 
