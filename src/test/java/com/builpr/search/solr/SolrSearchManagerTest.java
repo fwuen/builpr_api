@@ -696,7 +696,7 @@ public class SolrSearchManagerTest {
     public void deleteMultiplePrintablesFromIndex() {
 
     }
-    
+    */
     
     @Test
     public void testClearIndex() throws SearchManagerException {
@@ -704,7 +704,7 @@ public class SolrSearchManagerTest {
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
     }
-    */
+
 
     /*
     @AfterClass
