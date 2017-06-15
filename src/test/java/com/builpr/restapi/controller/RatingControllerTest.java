@@ -1,7 +1,6 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.Constants;
-import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.bridge.printable.PrintableImpl;
 import com.builpr.database.bridge.rating.RatingImpl;
 import com.builpr.database.bridge.user.User;
@@ -9,20 +8,16 @@ import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.database.service.DatabaseUserManager;
-import com.builpr.restapi.error.Rating.RatingDeleteError;
-import com.builpr.restapi.error.Rating.RatingNewError;
-import com.builpr.restapi.error.printable.PrintableNewError;
+import com.builpr.restapi.error.rating.RatingDeleteError;
+import com.builpr.restapi.error.rating.RatingNewError;
 import com.builpr.restapi.model.Request.Rating.RatingDeleteRequest;
 import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 import com.builpr.restapi.model.Response.Response;
-import com.builpr.restapi.model.Response.rating.RatingPayload;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.*;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.sql.Date;
@@ -253,9 +248,7 @@ public class RatingControllerTest extends ControllerTest {
         request.setConfirmation(true);
 
         MvcResult result = mockMvc.perform(
-                delete(Constants.URL_DELETE_RATING)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                delete(Constants.URL_DELETE_RATING).param("id", "123456789"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -269,14 +262,8 @@ public class RatingControllerTest extends ControllerTest {
     @Test
     @WithMockUser(DB_TEST_USER)
     public void deleteRatingWithInvalidID() throws Exception {
-        RatingDeleteRequest request = new RatingDeleteRequest();
-        request.setRatingID(0);
-        request.setConfirmation(true);
-
         MvcResult result = mockMvc.perform(
-                delete(Constants.URL_DELETE_RATING)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                delete(Constants.URL_DELETE_RATING).param("id", "0"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -291,14 +278,8 @@ public class RatingControllerTest extends ControllerTest {
 
     @Test
     public void deleteRatingWithoutUser() throws Exception {
-        RatingDeleteRequest request = new RatingDeleteRequest();
-        request.setRatingID(123456789);
-        request.setConfirmation(true);
-
         mockMvc.perform(
-                delete(Constants.URL_DELETE_RATING)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                delete(Constants.URL_DELETE_RATING).param("id", "123456789"))
                 .andExpect(status().isForbidden())
                 .andReturn();
     }
@@ -307,14 +288,8 @@ public class RatingControllerTest extends ControllerTest {
     @WithMockUser(TEST_USER_NAME)
     public void deleteRatingWithoutAuthorization() throws Exception {
         setTestRatingUp();
-        RatingDeleteRequest request = new RatingDeleteRequest();
-        request.setRatingID(123456789);
-        request.setConfirmation(true);
-
-        MvcResult result = mockMvc.perform(
-                delete(Constants.URL_DELETE_RATING)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+         MvcResult result = mockMvc.perform(
+                delete(Constants.URL_DELETE_RATING).param("id", "123456789"))
                 .andExpect(status().isOk())
                 .andReturn();
 

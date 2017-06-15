@@ -90,9 +90,12 @@ public class RatingController {
     @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = "/rating/delete", method = RequestMethod.DELETE)
     @ResponseBody
-    public Response<RatingPayload> createRating(Principal principal, @RequestBody RatingDeleteRequest request) {
+    public Response<RatingPayload> deleteRating(Principal principal, @RequestParam(
+            value = "id",
+            defaultValue = "0"
+    ) int ratingID) {
         Response<RatingPayload> response = new Response<>();
-        if (request.getRatingID() == 0 || databaseRatingManager.getRatingByRatingID(request.getRatingID()) == null) {
+        if (ratingID == 0 || databaseRatingManager.getRatingByRatingID(ratingID) == null) {
             response.setSuccess(false);
             response.addError(RatingDeleteError.RATING_NOT_FOUND);
             return response;
@@ -101,7 +104,7 @@ public class RatingController {
             if (databaseUserManager.getByUsername(principal.getName()) == null) {
                 response.setSuccess(false);
                 response.addError(RatingDeleteError.NO_AUTHORIZATION);
-            } else if (databaseRatingManager.getRatingByRatingID(request.getRatingID()).getUserId() == databaseUserManager.getByUsername(principal.getName()).getUserId()) {
+            } else if (databaseRatingManager.getRatingByRatingID(ratingID).getUserId() == databaseUserManager.getByUsername(principal.getName()).getUserId()) {
                 response.setSuccess(false);
                 response.addError(RatingDeleteError.NO_AUTHORIZATION);
             }
@@ -112,8 +115,8 @@ public class RatingController {
         if (!response.isSuccess()) {
             return response;
         }
-        Rating rating = databaseRatingManager.getRatingByRatingID(request.getRatingID());
-        databaseRatingManager.deleteRating(request.getRatingID());
+        Rating rating = databaseRatingManager.getRatingByRatingID(ratingID);
+        databaseRatingManager.deleteRating(ratingID);
         RatingPayload payload = RatingModelToRatingPayloadConverter.from(rating);
         response.setPayload(payload);
         return response;
