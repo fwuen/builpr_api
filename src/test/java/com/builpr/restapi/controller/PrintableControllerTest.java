@@ -443,19 +443,13 @@ public class PrintableControllerTest extends ControllerTest {
         printable.setUploadDate(new Date(System.currentTimeMillis()));
         printable.setPrintableId(888888888);
         printable.setUploaderId(databaseUserManager.getByUsername(DB_TEST_USER_NAME).getUserId());
-        printable.setFilePath(PATH + "testFileDelete.stl");
+        printable.setFilePath(PATH + tokenGenerator.generate() + ".stl");
         printable.setNumDownloads(99);
         databasePrintableManager.persist(printable);
 
-        PrintableDeleteRequest request = new PrintableDeleteRequest();
-        request.setConfirmation(true);
-        request.setPrintableID(888888888);
-
 
         MvcResult result = mockMvc.perform(
-                delete(Constants.URL_DELETE_PRINTABLE)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(request)))
+                delete(Constants.URL_DELETE_PRINTABLE).param("id", "888888888"))
                 .andExpect(status().isOk())
                 .andReturn();
 

@@ -178,16 +178,18 @@ public class PrintableController {
 
     /**
      * @param principal Principal
-     * @param request   PrintableDeleteRequest
      * @return response Response<PrintableDeleteResponse>
      */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_DELETE_PRINTABLE, method = RequestMethod.DELETE)
     @ResponseBody
-    public Response<PrintableDeleteResponse> delete(Principal principal, @RequestBody PrintableDeleteRequest request) {
+    public Response<PrintableDeleteResponse> delete(Principal principal, @RequestParam(
+            value = "id",
+            defaultValue = "0"
+    ) int printableID) {
         Response<PrintableDeleteResponse> response = new Response<>();
 
-        if (request.getPrintableID() == 0 || !databasePrintableManager.checkPrintableId(request.getPrintableID())) {
+        if (printableID == 0 || !databasePrintableManager.checkPrintableId(printableID)) {
             response.setSuccess(false);
             response.addError(PrintableDeleteError.PRINTABLE_NOT_EXISTING);
             return response;
@@ -202,7 +204,7 @@ public class PrintableController {
             response.addError(PrintableDeleteError.USER_INVALID);
             return response;
         }
-        if (databaseUserManager.getByUsername(principal.getName()).getUserId() != databasePrintableManager.getPrintableById(request.getPrintableID()).getUploaderId()) {
+        if (databaseUserManager.getByUsername(principal.getName()).getUserId() != databasePrintableManager.getPrintableById(printableID).getUploaderId()) {
             response.setSuccess(false);
             response.addError(PrintableDeleteError.NO_AUTHORIZATION);
         }
@@ -210,8 +212,8 @@ public class PrintableController {
         if (!response.isSuccess()) {
             return response;
         }
-        response.setPayload(PrintableDeleteRequestToPrintableDeleteResponseConverter.from(databasePrintableManager.getPrintableById(request.getPrintableID())));
-        databasePrintableManager.deletePrintable(request.getPrintableID());
+        response.setPayload(PrintableDeleteRequestToPrintableDeleteResponseConverter.from(databasePrintableManager.getPrintableById(printableID)));
+        databasePrintableManager.deletePrintable(printableID);
         return response;
     }
 }

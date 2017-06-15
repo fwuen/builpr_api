@@ -1,4 +1,4 @@
-package com.builpr.restapi.error.Rating;
+package com.builpr.restapi.error.rating;
 
 import com.builpr.restapi.error.response.MappableError;
 import com.google.common.collect.Maps;
