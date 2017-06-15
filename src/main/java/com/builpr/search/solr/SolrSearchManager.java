@@ -11,11 +11,14 @@ import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.request.SolrPing;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrInputDocument;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 // TODO: Doku für @Override-Methode erben
 
@@ -70,19 +73,24 @@ public class SolrSearchManager implements SearchManager {
     @Override
     public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull SORT sort, @NonNull ORDER order) throws SearchManagerException
     {
-        try {
+        List<PrintableReference> results = Lists.newArrayList();
+
+        try
+        {
             SolrQuery solrQuery = solrQueryFactory.getQueryWith(term, filter, sort, order);
 
             QueryResponse queryResponse = solrClient.query(COLLECTION, solrQuery);
 
-            List<PrintableReference> results = printableReferenceFactory.get(queryResponse.getResults());
-
-            return results;
-
-        } catch (Exception exception) {
+            results = printableReferenceFactory.get(queryResponse.getResults());
+        }
+        catch (Exception exception)
+        {
             throw new SearchManagerException(exception);
         }
-
+        finally
+        {
+            return results;
+        }
     }
 
     @Override
@@ -98,6 +106,7 @@ public class SolrSearchManager implements SearchManager {
         this.addToIndex(indexable, true);
     }
 
+    //TODO toLowerCase vor Indexierung
     /**
      * Adds an print model to the Solr index
      *
@@ -195,5 +204,15 @@ public class SolrSearchManager implements SearchManager {
 
         if (commit)
             commit();
+    }
+
+    @Override
+    public void clearIndex() throws SearchManagerException {
+        try {
+            solrClient.deleteByQuery(COLLECTION, "*:*");
+            commit();
+        } catch (Exception exception) {
+            throw new SearchManagerException(exception);
+        }
     }
 }

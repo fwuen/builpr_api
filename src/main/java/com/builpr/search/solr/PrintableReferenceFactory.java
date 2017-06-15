@@ -31,6 +31,7 @@ public class PrintableReferenceFactory {
         return results;
     }
 
+    // TODO dem müssen wir sagen, dass er der PrintableReference die richtige ID zuweist, die er von Solr bekommen hat, sonst haben alle References ID 0
     /**
      * Creates and returns a single PrintableReference-object
      *
@@ -43,6 +44,7 @@ public class PrintableReferenceFactory {
         DocumentObjectBinder documentObjectBinder = new DocumentObjectBinder();
 
         return documentObjectBinder.getBean(PrintableReference.class, data);
+
     }
 
 }
