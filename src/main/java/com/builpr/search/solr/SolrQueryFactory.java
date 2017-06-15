@@ -26,6 +26,7 @@ public class SolrQueryFactory {
         query.setQuery(buildQueryString(term));
 
         for (Filter filter : filters) {
+            Preconditions.checkNotNull(filter);
             if (filter instanceof MinimumRatingFilter) {
                 query.addFilterQuery(SolrFields.PRINT_MODEL_RATING + ":[" + ((MinimumRatingFilter) filter).getMinimumRating() + " TO " + MinimumRatingFilter.HIGHEST_POSSIBLE_RATING + "]");
             } else if (filter instanceof CategoryFilter) {
