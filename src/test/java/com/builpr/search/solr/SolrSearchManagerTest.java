@@ -26,7 +26,7 @@ public class SolrSearchManagerTest {
 
     private static final String LOCAL_BASE_URL = "http://localhost/solr";
     private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
-    private static final String REMOTE_BASE_URL_EXTERN = "http://192.168.1.50:8983/solr";
+    private static final String REMOTE_BASE_URL_EXTERN = "http://builpr.com:8983/solr";
 
     /*
     @BeforeClass
@@ -138,7 +138,6 @@ public class SolrSearchManagerTest {
         solrSearchManager.addToIndex(p5);
     }
 
-    //TODO Test korrigieren, der testet aktuell nicht wirklich was
     @Test
     public void indexWithCommit() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -171,7 +170,6 @@ public class SolrSearchManagerTest {
         solrSearchManager.addToIndex(p1);
     }
 
-    //TODO Test korrigieren, der testet aktuell nicht wirklich was
     @Test
     public void indexWithMultipleFilesAndCommit() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -244,7 +242,6 @@ public class SolrSearchManagerTest {
         solrSearchManager.addToIndex(indexables);
     }
 
-    //TODO Test korrigieren, der testet aktuell nicht wirklich was
     @Test
     public void indexWithMultipleFilesAndSameCategoriesAndCommit() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -329,7 +326,7 @@ public class SolrSearchManagerTest {
 
     //Search Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //TODO Test korrigieren, der testet aktuell nicht wirklich was
+
     @Test
     public void searchWithSimpleTerm() throws SearchManagerException {
 
@@ -342,24 +339,24 @@ public class SolrSearchManagerTest {
         System.out.println(res.get(0).getId());
     }
 
-    //TODO Test korrigieren, der testet aktuell nicht wirklich was
     @Test
     public void searchWithTermAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
 
         List<Filter> filters = new ArrayList<>();
-        filters.add(new MinimumRatingFilter(2));
+        filters.add(new MinimumRatingFilter(3));
 
         Preconditions.checkNotNull(solrSearchManager);
         Preconditions.checkNotNull(filters);
         Preconditions.checkState(filters.size() == 1);
     
         List<PrintableReference> res = Lists.newArrayList();
-        res = solrSearchManager.search("shisha", filters);
-        System.out.println(res.get(0).getId());
+        res = solrSearchManager.search("car", filters);
+        for(PrintableReference pr : res) {
+            System.out.println("" + pr.getId());
+        }
     }
 
-    //TODO Test korrigieren, der testet aktuell nicht wirklich was
     @Test
     public void searchWithTermAndCategory() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -385,7 +382,6 @@ public class SolrSearchManagerTest {
         }
     }
 
-    //TODO Test korrigieren, der testet aktuell nicht wirklich was
     @Test
     public void searchWithTermAndCategoryAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
@@ -662,7 +658,7 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
     }
     
-    /*
+/*
     //Delete/Clear Index Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     //TODO Delete Tests
@@ -681,7 +677,7 @@ public class SolrSearchManagerTest {
     }
 
     @Test (expected = NullPointerException.class)
-    public void testDeleteFromINdexMultiplePrintablesOneIsNull() throws SearchManagerException {
+    public void testDeleteFromIndexMultiplePrintablesOneIsNull() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> list = Lists.newArrayList();
         PrintableReference printableReference = null;
