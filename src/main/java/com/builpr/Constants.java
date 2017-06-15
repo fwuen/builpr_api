@@ -39,7 +39,9 @@ public class Constants {
     public static final List<String> SECURITY_URLS = Lists.newArrayList(
             URL_SIMPLEPAYLOAD,
             URL_PROFILE_EDIT,
-            URL_MESSAGE
+            URL_MESSAGE,
+            URL_DELETE_RATING,
+            URL_NEW_RATING
     );
 
 

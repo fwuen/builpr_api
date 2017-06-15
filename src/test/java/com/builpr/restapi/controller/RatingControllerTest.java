@@ -239,7 +239,7 @@ public class RatingControllerTest extends ControllerTest {
     //                      /rating/delete                                                                       //
     //-----------------------------------------------------------------------------------------------------------//
     @Test
-    @WithMockUser(DB_TEST_USER)
+    @WithMockUser(TEST_USER_NAME)
     public void deleteRating() throws Exception {
         setTestRatingUp();
         RatingDeleteRequest request = new RatingDeleteRequest();
@@ -284,7 +284,7 @@ public class RatingControllerTest extends ControllerTest {
     }
 
     @Test
-    @WithMockUser(TEST_USER_NAME)
+    @WithMockUser(DB_TEST_USER)
     public void deleteRatingWithoutAuthorization() throws Exception {
         setTestRatingUp();
          MvcResult result = mockMvc.perform(

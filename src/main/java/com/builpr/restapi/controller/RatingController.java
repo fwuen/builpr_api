@@ -102,7 +102,7 @@ public class RatingController {
             if (databaseUserManager.getByUsername(principal.getName()) == null) {
                 response.setSuccess(false);
                 response.addError(RatingDeleteError.NO_AUTHORIZATION);
-            } else if (databaseRatingManager.getRatingByRatingID(ratingID).getUserId() == databaseUserManager.getByUsername(principal.getName()).getUserId()) {
+            } else if (databaseRatingManager.getRatingByRatingID(ratingID).getUserId() != databaseUserManager.getByUsername(principal.getName()).getUserId()) {
                 response.setSuccess(false);
                 response.addError(RatingDeleteError.NO_AUTHORIZATION);
             }
