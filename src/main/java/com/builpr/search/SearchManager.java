@@ -113,5 +113,12 @@ public interface SearchManager {
      * @throws SearchManagerException SearchManagerException
      */
     public boolean isReachable() throws SearchManagerException;
+
+    /**
+     * Clears the Solr index
+     *
+     * @throws SearchManagerException SearchManagerException
+     */
+    public void clearIndex() throws SearchManagerException;
     
 }
