@@ -51,7 +51,7 @@ public class MessageController {
     @CrossOrigin(SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_MESSAGE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<ListMessagePayload> listMessages(@RequestParam(value = "receiverID") int receiverID, Principal principal) throws UserNotFoundException {
+    public ResponseEntity<ListMessagePayload> listMessages(@RequestParam(value = "id") int receiverID, Principal principal) throws UserNotFoundException {
         User loggedInUser = userManager.getByUsername(principal.getName());
 
         if (!userManager.isPresent(receiverID)) {

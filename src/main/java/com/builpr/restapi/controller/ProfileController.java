@@ -9,6 +9,7 @@ import com.builpr.restapi.model.Request.ProfileEditRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.profile.ProfilePayload;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class ProfileController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_PROFILE, method = RequestMethod.GET)
     @ResponseBody
-    public Response<ProfilePayload> showProfile(
+    public ResponseEntity<ProfilePayload> showProfile(
             @RequestParam(
                     value = "id",
                     defaultValue = "0",
@@ -48,11 +49,8 @@ public class ProfileController {
 
         ProfilePayload profilePayload = UserModelToProfileResponseConverter.from(user);
 
-        Response<ProfilePayload> response = new Response<>();
 
-        response.setPayload(profilePayload);
-
-        return response;
+        return ResponseEntity.ok(profilePayload);
     }
 
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
