@@ -140,15 +140,11 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
-     * @param request PrintableEditRequest
+     * @param printable Printable
      * @return void
      */
-    public void update(PrintableEditRequest request) {
-        this.getDao().stream().
-                filter(Printable.PRINTABLE_ID.equal(request.getPrintableID()))
-                .map(Printable.TITLE.setTo(request.getTitle()))
-                .map(Printable.DESCRIPTION.setTo(request.getDescription()))
-                .forEach(this.getDao().updater());
+    public void update(Printable printable) {
+        this.getDao().update(printable);
     }
 
     /**
@@ -158,7 +154,7 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      */
     public String uploadFile(byte[] data) throws IOException {
 //         Filename = token + timestamp
-        TokenGenerator tokenGenerator = new TokenGenerator(true);
+        TokenGenerator tokenGenerator = new TokenGenerator(126, true);
         String token = tokenGenerator.generate();
         long timestamp = System.currentTimeMillis();
         String filename = token + timestamp + ".stl";

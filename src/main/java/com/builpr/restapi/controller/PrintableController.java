@@ -11,7 +11,6 @@ import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.converter.*;
 import com.builpr.restapi.error.exception.PrintableNotFoundException;
 import com.builpr.restapi.error.printable.*;
-import com.builpr.restapi.model.CustomMultipartFile;
 import com.builpr.restapi.model.Request.Printable.PrintableDeleteRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
@@ -20,14 +19,10 @@ import com.builpr.restapi.model.Response.printable.PrintableDeleteResponse;
 import com.builpr.restapi.model.Response.printable.PrintableEditResponse;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 import com.builpr.restapi.model.Response.printable.PrintableResponse;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.Principal;
 import java.util.List;
 
@@ -134,15 +129,22 @@ public class PrintableController {
         if (!response.isSuccess()) {
             return response;
         }
+
         // UPDATE the printable
-        databasePrintableManager.update(request);
+        printable.setDescription(request.getDescription());
+        printable.setTitle(request.getTitle());
+
+        databasePrintableManager.update(printable);
 
         if (request.getCategories().size() > 0) {
             // UPDATE the CATEGORY-table
             databaseCategoryManager.update(categories);
             // DELETE ALL PRINTABLE_CATEGORIES WITH PRINTABLE_ID
+            databasePrintableCategoryManager.deleteCategoriesForPrintable(request.getPrintableID());
+            // GET CATEGORIES FOR PRINTABLE
+            List<Category> categoryList = databaseCategoryManager.getCategoriesByList(categories);
             // CREATE NEW PRINTABLE_CATEGORIES
-            databasePrintableCategoryManager.update(request, categories);
+            databasePrintableCategoryManager.createCategories(categoryList, request.getPrintableID());
         }
         PrintableEditResponse printableEditResponse = PrintableEditRequestToResponseConverter.from(request);
         response.setPayload(printableEditResponse);

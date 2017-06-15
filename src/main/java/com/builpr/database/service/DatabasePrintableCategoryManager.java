@@ -24,35 +24,8 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
      * @param printableID int
      * @return List<PrintableCategory>
      */
-    public List<PrintableCategory> getListByID(int printableID) {
+    private List<PrintableCategory> getListByID(int printableID) {
         return getDao().stream().filter(PrintableCategory.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
-    }
-
-    /**
-     * @param request PrintableEditRequest
-     * @return void
-     */
-    public void update(PrintableEditRequest request, List<String> categoryList) {
-        // Kategorien (id, name)
-        DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();
-        DatabasePrintableCategoryManager databasePrintableCategoryManager = new DatabasePrintableCategoryManager();
-        List<Category> categories = databaseCategoryManager.getCategoriesByList(categoryList);
-        // bestehende löschen
-        List<PrintableCategory> printableCategories = getListByID(request.getPrintableID());
-        boolean success = false;
-        if (printableCategories != null) {
-            for (PrintableCategory printableCategory : printableCategories) {
-                databasePrintableCategoryManager.getDao().stream()
-                        .filter(PrintableCategory.PRINTABLE_ID.equal(printableCategory.getPrintableId()))
-                        .filter(PrintableCategory.CATEGORY_ID.equal(printableCategory.getCategoryId()))
-                        .forEach(databasePrintableCategoryManager.getDao().remover());
-//                delete(printableCategory);
-            }
-        }
-        if (categories != null && success) {
-            // neue Kategorien erstellen
-            createCategories(categories, request.getPrintableID());
-        }
     }
 
     /**
@@ -78,10 +51,23 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
         this.getDao().persist(category);
     }
 
+    /**
+     * @param printableID int
+     * @return void
+     */
     public void deleteCategoriesForPrintable(int printableID) {
-        this.getDao().stream().filter(PrintableCategory.PRINTABLE_ID.equal(printableID)).forEach(this.getDao().remover());
+        List<PrintableCategory> printableCategories = getListByID(printableID);
+        if (printableCategories != null) {
+            for (PrintableCategory printableCategory : printableCategories) {
+                delete(printableCategory);
+            }
+        }
     }
 
+    /**
+     * @param printableCategory PrintableCategory
+     * @return void
+     */
     private void delete(PrintableCategory printableCategory) {
         this.getDao().remove(printableCategory);
     }
