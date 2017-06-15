@@ -48,7 +48,7 @@ public class RatingController {
         if (principal != null) {
             if (databaseUserManager.getByUsername(principal.getName()) == null) {
                 response.setSuccess(false);
-                response.addError(RatingNewError.USER_INVALID);
+                response.addError(RatingNewError.NO_AUTHORIZATION);
             } else if (request.getPrintableID() == databaseUserManager.getByUsername(principal.getName()).getUserId()) {
                 response.setSuccess(false);
                 response.addError(RatingNewError.NO_AUTHORIZATION);
@@ -58,14 +58,14 @@ public class RatingController {
             }
         } else {
             response.setSuccess(false);
-            response.addError(RatingNewError.USER_INVALID);
+            response.addError(RatingNewError.NO_AUTHORIZATION);
         }
 
         if (request.getRating() < 1 || request.getRating() > 5) {
             response.setSuccess(false);
             response.addError(RatingNewError.RATING_INVALID);
         }
-        if (Objects.equals(request.getText(), "")) {
+        if (request.getText().length() < 5) {
             response.setSuccess(false);
             response.addError(RatingNewError.TEXT_INVALID);
         }
@@ -100,14 +100,14 @@ public class RatingController {
         if (principal != null) {
             if (databaseUserManager.getByUsername(principal.getName()) == null) {
                 response.setSuccess(false);
-                response.addError(RatingDeleteError.USER_INVALID);
+                response.addError(RatingDeleteError.NO_AUTHORIZATION);
             } else if (databaseRatingManager.getRatingByRatingID(request.getRatingID()).getUserId() == databaseUserManager.getByUsername(principal.getName()).getUserId()) {
                 response.setSuccess(false);
                 response.addError(RatingDeleteError.NO_AUTHORIZATION);
             }
         } else {
             response.setSuccess(false);
-            response.addError(RatingDeleteError.USER_INVALID);
+            response.addError(RatingDeleteError.NO_AUTHORIZATION);
         }
         if (!response.isSuccess()) {
             return response;

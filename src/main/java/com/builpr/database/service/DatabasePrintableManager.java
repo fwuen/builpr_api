@@ -12,6 +12,7 @@ import com.builpr.search.SearchManagerException;
 import com.builpr.search.model.Indexable;
 import com.builpr.search.model.PrintableReference;
 import com.builpr.search.solr.SolrSearchManager;
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -22,6 +23,8 @@ import java.nio.file.*;
 import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.builpr.Constants.TEST_PATH;
 
 /**
  * printable service
@@ -158,7 +161,7 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         String token = tokenGenerator.generate();
         long timestamp = System.currentTimeMillis();
         String filename = token + timestamp + ".stl";
-        String path = "C:\\Users\\Markus\\Desktop\\Modells\\" + filename;
+        String path = TEST_PATH + filename;
 
         MultipartFile multipartFile = new CustomMultipartFile(data, path);
         File file = new File(path);
@@ -169,7 +172,9 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         } catch (FileAlreadyExistsException e) {
             throw new FileAlreadyExistsException("File alreads existent");
         }
+
         multipartFile.transferTo(file);
+
 
         return path;
     }
@@ -179,12 +184,11 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      * @return MultipartFile
      * @throws IOException Exception
      */
-    public MultipartFile downloadFile(int printableID) throws IOException {
+    public byte[] downloadFile(int printableID) throws IOException {
         Printable printable = getPrintableById(printableID);
         String path = printable.getFilePath();
         Path p = FileSystems.getDefault().getPath(path);
-        byte[] fileData = Files.readAllBytes(p);
-        return new CustomMultipartFile(fileData, path);
+        return Files.readAllBytes(p);
     }
 
     /**
@@ -210,6 +214,15 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         if (!solrPrintableList.isEmpty()) {
             solrSearchManager.addToIndex(solrPrintableList);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public void deletePrintableFromIndex() {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
+        // TODO clear methode aufrufe
+
     }
 
     /**

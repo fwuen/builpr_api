@@ -22,10 +22,9 @@ public class PrintableToResponseConverter {
      * Convert a Printable object to an PrintableResponse object
      *
      * @param printable Printable
-     * @param isMine    boolean
      * @return PrintableResponse
      */
-    public static PrintableResponse from(Printable printable, boolean isMine) {
+    public static PrintableResponse from(Printable printable) {
         DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();
         DatabaseRatingManager databaseRatingManager = new DatabaseRatingManager();
         List<String> categories = CategoryToStringConverter.convertCategoriesToString(databaseCategoryManager.getCategoriesByID(printable.getPrintableId()));
@@ -42,7 +41,6 @@ public class PrintableToResponseConverter {
         response.setUploadDate(printable.getUploadDate());
         response.setRatings(ratings);
         response.setCategories(categories);
-        response.setMine(isMine);
 
         return response;
     }

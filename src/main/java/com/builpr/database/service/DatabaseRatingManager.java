@@ -22,6 +22,23 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     }
 
     /**
+     * @param ratingID int
+     * @return boolean
+     */
+    public boolean isPresent(int ratingID) {
+        return getRatingByRatingID(ratingID) != null;
+    }
+
+    /**
+     * @param printableID int
+     * @param userID      int
+     * @return boolean
+     */
+    public boolean isPresentByIDs(int printableID, int userID) {
+        return getRatingByIds(printableID, userID) != null;
+    }
+
+    /**
      * @param printableID int
      * @return List<rating>
      */

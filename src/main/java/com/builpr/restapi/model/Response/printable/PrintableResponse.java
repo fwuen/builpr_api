@@ -8,10 +8,4 @@ import lombok.Setter;
  */
 public class PrintableResponse extends PrintablePayload {
 
-    /**
-     * Flag if the printable is mine
-     */
-    @Getter
-    @Setter
-    boolean isMine;
 }

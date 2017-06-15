@@ -24,7 +24,7 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
      * @param printableID int
      * @return List<PrintableCategory>
      */
-    private List<PrintableCategory> getListByID(int printableID) {
+    public List<PrintableCategory> getListByID(int printableID) {
         return getDao().stream().filter(PrintableCategory.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
     }
 

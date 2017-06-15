@@ -58,9 +58,8 @@ public class SearchControllerTest extends ControllerTest {
         searchRequest.setOrder(VALID_ORDER);
         searchRequest.setSort(VALID_SORT);
 
-            databasePrintableManager = new DatabasePrintableManager();
-            databasePrintableManager.indexPrintables();
-
+        databasePrintableManager = new DatabasePrintableManager();
+        databasePrintableManager.indexPrintables();
     }
 
     @Test

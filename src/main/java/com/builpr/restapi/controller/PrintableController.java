@@ -9,7 +9,6 @@ import com.builpr.database.service.DatabasePrintableCategoryManager;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.converter.*;
-import com.builpr.restapi.error.exception.PrintableNotFoundException;
 import com.builpr.restapi.error.printable.*;
 import com.builpr.restapi.model.Request.Printable.PrintableDeleteRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
@@ -26,7 +25,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
-import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
+import static com.builpr.Constants.*;
 
 /**
  * PrintableController
@@ -49,18 +48,16 @@ public class PrintableController {
 
 
     /**
-     * @param principal   Principal
      * @param printableID int
      * @return response Response<PrintableResponse>
-     * @throws PrintableNotFoundException Exception
      */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/printable", method = RequestMethod.GET)
+    @RequestMapping(value = URL_GET_PRINTABLE, method = RequestMethod.GET)
     @ResponseBody
-    public Response<PrintableResponse> getPrintable(Principal principal, @RequestParam(
+    public Response<PrintableResponse> getPrintable(@RequestParam(
             value = "id",
             defaultValue = "0"
-    ) int printableID) throws PrintableNotFoundException {
+    ) int printableID) {
         Response<PrintableResponse> response = new Response<>();
         boolean isMine = false;
 
@@ -71,83 +68,12 @@ public class PrintableController {
         }
 
         Printable printable = databasePrintableManager.getPrintableById(printableID);
-        User user = databaseUserManager.getByUsername(principal.getName());
-        if (user != null) {
-            if (user.getUserId() == printable.getUploaderId()) {
-                isMine = true;
-            }
-        }
-        PrintableResponse printableResponse = PrintableToResponseConverter.from(printable, isMine);
+
+        PrintableResponse printableResponse = PrintableToResponseConverter.from(printable);
+
         response.setSuccess(true);
         response.setPayload(printableResponse);
-        return response;
-    }
 
-    /**
-     * @param principal Principal
-     * @param request   PrintableEditRequest
-     * @return response Response<PrintableEditResponse>
-     */
-    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/printable/edit", method = RequestMethod.PUT)
-    @ResponseBody
-    public Response<PrintableEditResponse> editPrintable(Principal principal, @RequestBody PrintableEditRequest request) {
-        Response<PrintableEditResponse> response = new Response<>();
-
-
-        if (request.getPrintableID() == 0 || !databasePrintableManager.checkPrintableId(request.getPrintableID())) {
-            response.setSuccess(false);
-            response.addError(PrintableEditError.PRINTABLE_NOT_EXISTING);
-        }
-        List<String> categories = databasePrintableManager.checkCategories(request.getCategories());
-
-        if (categories.size() < 3) {
-            response.setSuccess(false);
-            response.addError(PrintableEditError.CATEGORIES_INVALID);
-        }
-        if (!databasePrintableManager.checkDescription(request.getDescription())) {
-            response.setSuccess(false);
-            response.addError(PrintableEditError.DESCRIPTION_INVALID);
-        }
-        if (!databasePrintableManager.checkTitle(request.getTitle())) {
-            response.setSuccess(false);
-            response.addError(PrintableEditError.TITLE_INVALID);
-        }
-
-        User user = databaseUserManager.getByUsername(principal.getName());
-        Printable printable = databasePrintableManager.getPrintableById(request.getPrintableID());
-        if (user != null) {
-            if (user.getUserId() == 0) {
-                response.setSuccess(false);
-                response.addError(PrintableEditError.USER_INVALID);
-            }
-            if (user.getUserId() != printable.getUploaderId()) {
-                response.setSuccess(false);
-                response.addError(PrintableEditError.NO_AUTHORIZATION);
-            }
-        }
-        if (!response.isSuccess()) {
-            return response;
-        }
-
-        // UPDATE the printable
-        printable.setDescription(request.getDescription());
-        printable.setTitle(request.getTitle());
-
-        databasePrintableManager.update(printable);
-
-        if (request.getCategories().size() > 0) {
-            // UPDATE the CATEGORY-table
-            databaseCategoryManager.update(categories);
-            // DELETE ALL PRINTABLE_CATEGORIES WITH PRINTABLE_ID
-            databasePrintableCategoryManager.deleteCategoriesForPrintable(request.getPrintableID());
-            // GET CATEGORIES FOR PRINTABLE
-            List<Category> categoryList = databaseCategoryManager.getCategoriesByList(categories);
-            // CREATE NEW PRINTABLE_CATEGORIES
-            databasePrintableCategoryManager.createCategories(categoryList, request.getPrintableID());
-        }
-        PrintableEditResponse printableEditResponse = PrintableEditRequestToResponseConverter.from(request);
-        response.setPayload(printableEditResponse);
         return response;
     }
 
@@ -159,7 +85,8 @@ public class PrintableController {
     @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = Constants.URL_NEW_PRINTABLE, method = RequestMethod.POST)
     @ResponseBody
-    public Response<PrintableNewResponse> createPrintable(Principal principal, @RequestBody PrintableNewRequest request) throws IOException {
+    public Response<PrintableNewResponse> createPrintable(
+            Principal principal, @RequestBody PrintableNewRequest request) throws IOException {
         Response<PrintableNewResponse> response = new Response<>();
         User user = null;
 
@@ -168,15 +95,11 @@ public class PrintableController {
             response.addError(PrintableNewError.USER_INVALID);
             return response;
         }
-        if (databaseUserManager.isPresent(principal.getName())) {
-            user = databaseUserManager.getByUsername(principal.getName());
-            if (user.getUserId() == 0) {
-                response.setSuccess(false);
-                response.addError(PrintableNewError.USER_INVALID);
-            }
-        } else {
+        if (!databaseUserManager.isPresent(principal.getName())) {
             response.setSuccess(false);
             response.addError(PrintableNewError.USER_INVALID);
+        } else {
+            user = databaseUserManager.getByUsername(principal.getName());
         }
         List<String> categoryList = databasePrintableManager.checkCategories(request.getCategories());
         if (categoryList.size() < 3) {
@@ -194,9 +117,6 @@ public class PrintableController {
         if (request.getFile() == null) {
             response.setSuccess(false);
             response.addError(PrintableNewError.FILE_INVALID);
-        } else if (request.getFile().length < 1) {
-            response.setSuccess(false);
-            response.addError(PrintableNewError.FILE_INVALID);
         }
 
         if (!response.isSuccess()) {
@@ -206,14 +126,22 @@ public class PrintableController {
         if (user != null) {
             userID = user.getUserId();
         }
+
+        // UPLOADING FILE
         String path = databasePrintableManager.uploadFile(request.getFile());
+        // CREATING PRINTABLE
         Printable printable = databasePrintableManager.createPrintable(request, userID, path);
+        // UPDATE THE LIST OF CATEGORIES
         databaseCategoryManager.update(categoryList);
+        // GETTING CATEGORIES
         List<Category> list = databaseCategoryManager.getCategoriesByList(categoryList);
+        // CREATE CONNECTIONS BETWEEN PRINTABLE AND CATEGORIES
         databasePrintableCategoryManager.createCategories(list, printable.getPrintableId());
-        PrintableNewResponse printableNewResponse = PrintableToPrintableNewResponseConverter.from(printable);
-        printableNewResponse.setCategories(CategoryToStringConverter.convertCategoriesToString(list));
+
+
+        PrintableNewResponse printableNewResponse = PrintableToPrintableNewResponseConverter.from(printable, list);
         response.setPayload(printableNewResponse);
+
         return response;
     }
 
@@ -222,7 +150,7 @@ public class PrintableController {
      * @return response Respones<PrintableDownloadResponse>
      */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/printable/download", method = RequestMethod.GET)
+    @RequestMapping(value = URL_DOWNLOAD, method = RequestMethod.GET)
     @ResponseBody
     public Response<byte[]> downloadFile(@RequestParam(
             value = "id",
@@ -240,9 +168,11 @@ public class PrintableController {
             return response;
         }
 
-        MultipartFile multipartFile = databasePrintableManager.downloadFile(printableID);
+        byte[] fileData = databasePrintableManager.downloadFile(printableID);
         databasePrintableManager.updateDownloads(printableID);
-        response.setPayload(multipartFile.getBytes());
+
+        response.setPayload(fileData);
+
         return response;
     }
 
@@ -252,7 +182,7 @@ public class PrintableController {
      * @return response Response<PrintableDeleteResponse>
      */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/printable/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = URL_DELETE_PRINTABLE, method = RequestMethod.DELETE)
     @ResponseBody
     public Response<PrintableDeleteResponse> delete(Principal principal, @RequestBody PrintableDeleteRequest request) {
         Response<PrintableDeleteResponse> response = new Response<>();

@@ -1,24 +1,19 @@
 package com.builpr.restapi.converter;
 
+import com.builpr.database.bridge.category.Category;
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.service.DatabaseCategoryManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 
+import java.util.List;
+
 /**
- *
+ * Converting a printable to printablenewresponse
  */
 public class PrintableToPrintableNewResponseConverter {
-    private static DatabaseCategoryManager databaseCategoryManager;
-    private static DatabaseRatingManager databaseRatingManager;
 
-    public PrintableToPrintableNewResponseConverter() {
-        databaseCategoryManager = new DatabaseCategoryManager();
-        databaseRatingManager = new DatabaseRatingManager();
-    }
-
-    public static PrintableNewResponse from(Printable printable) {
-
+    public static PrintableNewResponse from(Printable printable, List<Category> categoryList) {
         PrintableNewResponse printableNewResponse = new PrintableNewResponse();
         printableNewResponse.setPrintableID(printable.getPrintableId());
         printableNewResponse.setOwnerID(printable.getUploaderId());
@@ -27,6 +22,8 @@ public class PrintableToPrintableNewResponseConverter {
         }
         printableNewResponse.setTitle(printable.getTitle());
         printableNewResponse.setUploadDate(printable.getUploadDate());
+        printableNewResponse.setCategories(CategoryToStringConverter.convertCategoriesToString(categoryList));
+
         return printableNewResponse;
     }
 }
