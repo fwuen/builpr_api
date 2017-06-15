@@ -59,8 +59,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     public List<Printable> getPrintableList(List<PrintableReference> printableReferences) {
         List<Printable> list = new ArrayList<>();
         for (PrintableReference reference : printableReferences) {
-            if (getPrintableById(reference.getId()) != null) {
-                list.add(getPrintableById(reference.getId()));
+            if (getPrintableById(Integer.parseInt(reference.getId())) != null) {
+                list.add(getPrintableById(Integer.parseInt(reference.getId())));
             }
         }
         return list;
