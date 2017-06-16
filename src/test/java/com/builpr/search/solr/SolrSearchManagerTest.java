@@ -28,13 +28,12 @@ public class SolrSearchManagerTest {
     private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
     private static final String REMOTE_BASE_URL_EXTERN = "http://builpr.com:8983/solr";
 
-    /*
+    
     @BeforeClass
     public static void prepareSolrSearchManagerTest() {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         
     }
-    */
     
     //Creation Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -335,10 +334,7 @@ public class SolrSearchManagerTest {
         Preconditions.checkNotNull(solrSearchManager);
     
         List<PrintableReference> res = Lists.newArrayList();
-        res = solrSearchManager.search("tower");
-        for(PrintableReference pr : res) {
-            System.out.println(pr.getId() + " " + pr.toString());
-        }
+        solrSearchManager.search("tower");
     }
 
     @Test
@@ -353,10 +349,7 @@ public class SolrSearchManagerTest {
         Preconditions.checkState(filters.size() == 1);
     
         List<PrintableReference> res = Lists.newArrayList();
-        res = solrSearchManager.search("car", filters);
-        for(PrintableReference pr : res) {
-            System.out.println(pr.getId() + " " + pr.toString());
-        }
+        solrSearchManager.search("car", filters);
     }
 
     @Test
@@ -373,15 +366,7 @@ public class SolrSearchManagerTest {
         Preconditions.checkNotNull(categories);
         Preconditions.checkState(categories.size() == 1);
         Preconditions.checkState(filters.size() == 1);
-        List<PrintableReference> pr = solrSearchManager.search("car", filters);
-
-        Verify.verifyNotNull(pr);
-        Verify.verify(pr.size() > 0);
-
-        // Does not belong to the actual test; for the developer to see the found Printables
-        for (PrintableReference prf : pr) {
-            System.out.println(prf.getId() + " " + prf.toString());
-        }
+        solrSearchManager.search("car", filters);
     }
 
     @Test
@@ -399,10 +384,7 @@ public class SolrSearchManagerTest {
         Preconditions.checkNotNull(categories);
         Preconditions.checkState(filters.size() == 2);
         Preconditions.checkState(categories.size() == 1);
-        List<PrintableReference> pref = solrSearchManager.search("car", filters);
-        for (PrintableReference prf : pref) {
-            System.out.println(prf.getId() + " " + prf.toString());
-        }
+        solrSearchManager.search("car", filters);
     }
     
     @Test
@@ -413,10 +395,7 @@ public class SolrSearchManagerTest {
         CategoryFilter cf = new CategoryFilter(categories);
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(cf);
-        List<PrintableReference> pref = solrSearchManager.search("", filterList);
-        for (PrintableReference prf : pref) {
-            System.out.println(prf.getId() + " " + prf.toString());
-        }
+        solrSearchManager.search("", filterList);
     }
     
     @Test
@@ -429,10 +408,7 @@ public class SolrSearchManagerTest {
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(cf);
         filterList.add(mrf);
-        List<PrintableReference> pref = solrSearchManager.search("", filterList);
-        for (PrintableReference prf : pref) {
-            System.out.println(prf.getId() + " " + prf.toString());
-        }
+        solrSearchManager.search("", filterList);
     }
     
     @Test
@@ -441,10 +417,7 @@ public class SolrSearchManagerTest {
         MinimumRatingFilter mrf = new MinimumRatingFilter(1);
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(mrf);
-        List<PrintableReference> pref = solrSearchManager.search("", filterList);
-        for (PrintableReference prf : pref) {
-            System.out.println(prf.getId() + " " + prf.toString());
-        }
+        solrSearchManager.search("", filterList);
     }
     
     @Test(expected = NullPointerException.class)
@@ -660,7 +633,6 @@ public class SolrSearchManagerTest {
         solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
     }
     
-/*
     //Delete/Clear Index Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     //TODO Delete Tests
@@ -696,7 +668,6 @@ public class SolrSearchManagerTest {
     public void deleteMultiplePrintablesFromIndex() {
 
     }
-    */
     
     @Test
     public void testClearIndex() throws SearchManagerException {
@@ -705,13 +676,10 @@ public class SolrSearchManagerTest {
         solrSearchManager.clearIndex();
     }
 
-
-    /*
     @AfterClass
     public static void clearIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
     }
-    */
 }
