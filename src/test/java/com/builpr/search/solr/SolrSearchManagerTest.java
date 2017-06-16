@@ -28,6 +28,9 @@ public class SolrSearchManagerTest {
     private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
     private static final String REMOTE_BASE_URL_EXTERN = "http://builpr.com:8983/solr";
 
+    //TODO Indexieren von zu durchsuchenden Modellen für die Tests
+    //TODO wie testet man dann das Indexieren?
+    //TODO Tests erweitern
     
     @BeforeClass
     public static void prepareSolrSearchManagerTest() {
