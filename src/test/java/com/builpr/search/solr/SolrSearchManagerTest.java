@@ -28,15 +28,18 @@ public class SolrSearchManagerTest {
     private static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
     private static final String REMOTE_BASE_URL_EXTERN = "http://builpr.com:8983/solr";
 
+    //TODO Festlegen von Testdaten für die Suchtests
     //TODO Indexieren von zu durchsuchenden Modellen für die Tests
     //TODO wie testet man dann das Indexieren?
     //TODO Tests erweitern
+    //TODO Tests auf Datenintigrität (sind Daten wirdklich indexiert, kommen bei der Suche die richtigen Daten zurück?) oder nur auf Exceptions?
+    //TODO Alle Null-Tests nochmal überprüfen. Aktuell wird fast überall tatsächlich gesucht und eine leere Liste zurückgegeben --> gewollt?
     
+    /*
     @BeforeClass
     public static void prepareSolrSearchManagerTest() {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
-        
-    }
+    }*/
     
     //Creation Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -337,7 +340,8 @@ public class SolrSearchManagerTest {
         Preconditions.checkNotNull(solrSearchManager);
     
         List<PrintableReference> res = Lists.newArrayList();
-        solrSearchManager.search("tower");
+        res = solrSearchManager.search("customizable");
+        System.out.println(res.get(0) + " " + res.get(0).getId());
     }
 
     @Test
@@ -533,7 +537,6 @@ public class SolrSearchManagerTest {
     public void searchWithTermAndSortByName() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
-
         solrSearchManager.search("shisha", SORT.ALPHABETICAL);
     }
 
@@ -679,10 +682,11 @@ public class SolrSearchManagerTest {
         solrSearchManager.clearIndex();
     }
 
+    /*
     @AfterClass
     public static void clearIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
-    }
+    }*/
 }

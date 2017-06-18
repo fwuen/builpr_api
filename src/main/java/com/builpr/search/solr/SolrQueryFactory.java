@@ -29,7 +29,8 @@ public class SolrQueryFactory {
             Preconditions.checkNotNull(filter);
             if (filter instanceof MinimumRatingFilter) {
                 query.addFilterQuery(SolrFields.PRINT_MODEL_RATING + ":[" + ((MinimumRatingFilter) filter).getMinimumRating() + " TO " + MinimumRatingFilter.HIGHEST_POSSIBLE_RATING + "]");
-            } else if (filter instanceof CategoryFilter) {
+            }
+            else if (filter instanceof CategoryFilter) {
                 CategoryFilter concreteFilter = (CategoryFilter) filter;
                 for (String category : concreteFilter.getCategories())
                     query.addFilterQuery(SolrFields.PRINT_MODEL_CATEGORIES + ":" + category);
@@ -52,7 +53,7 @@ public class SolrQueryFactory {
 
     private String buildQueryString(String term) {
         StringBuilder builder = new StringBuilder();
-        term = term.toLowerCase();
+        //term = term.toLowerCase();
         term = term.trim();
         term = term.replaceAll("(\\s)(\\s)+", " ");
         ArrayList<String> terms = Lists.newArrayList(Arrays.asList(term.split(" ")));

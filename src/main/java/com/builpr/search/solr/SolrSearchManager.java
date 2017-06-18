@@ -31,7 +31,7 @@ public class SolrSearchManager implements SearchManager {
     private SolrClient solrClient;
     private SolrQueryFactory solrQueryFactory;
     private PrintableReferenceFactory printableReferenceFactory;
-    private static final String COLLECTION = "testing";
+    private static final String COLLECTION = "testing2";
 
     /**
      * Creates and returns a SolrSearchManager-object

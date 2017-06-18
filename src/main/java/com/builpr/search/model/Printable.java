@@ -100,7 +100,8 @@ public class Printable extends Indexable {
         public Builder withTitle(String title) {
             Preconditions.checkNotNull(title);
             
-            toBuild.title = title.toLowerCase();
+            //toBuild.title = title.toLowerCase();
+            toBuild.title = title;
             return this;
         }
         
@@ -113,7 +114,8 @@ public class Printable extends Indexable {
         public Builder withDescription(String description) {
             Preconditions.checkNotNull(description);
             
-            toBuild.description = description.toLowerCase();
+            //toBuild.description = description.toLowerCase();
+            toBuild.description = description;
             return this;
         }
 
