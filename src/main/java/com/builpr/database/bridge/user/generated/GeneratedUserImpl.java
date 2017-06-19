@@ -31,11 +31,11 @@ public abstract class GeneratedUserImpl implements User {
     private String lastname;
     private String avatar;
     private String description;
-    private boolean showName;
-    private boolean showBirthday;
-    private boolean showEmail;
-    private boolean activated;
-    private boolean deleted;
+    private Boolean showName;
+    private Boolean showBirthday;
+    private Boolean showEmail;
+    private Boolean activated;
+    private Boolean deleted;
     
     protected GeneratedUserImpl() {
         
@@ -92,27 +92,27 @@ public abstract class GeneratedUserImpl implements User {
     }
     
     @Override
-    public boolean getShowName() {
+    public Boolean getShowName() {
         return showName;
     }
     
     @Override
-    public boolean getShowBirthday() {
+    public Boolean getShowBirthday() {
         return showBirthday;
     }
     
     @Override
-    public boolean getShowEmail() {
+    public Boolean getShowEmail() {
         return showEmail;
     }
     
     @Override
-    public boolean getActivated() {
+    public Boolean getActivated() {
         return activated;
     }
     
     @Override
-    public boolean getDeleted() {
+    public Boolean getDeleted() {
         return deleted;
     }
     
@@ -177,31 +177,31 @@ public abstract class GeneratedUserImpl implements User {
     }
     
     @Override
-    public User setShowName(boolean showName) {
+    public User setShowName(Boolean showName) {
         this.showName = showName;
         return this;
     }
     
     @Override
-    public User setShowBirthday(boolean showBirthday) {
+    public User setShowBirthday(Boolean showBirthday) {
         this.showBirthday = showBirthday;
         return this;
     }
     
     @Override
-    public User setShowEmail(boolean showEmail) {
+    public User setShowEmail(Boolean showEmail) {
         this.showEmail = showEmail;
         return this;
     }
     
     @Override
-    public User setActivated(boolean activated) {
+    public User setActivated(Boolean activated) {
         this.activated = activated;
         return this;
     }
     
     @Override
-    public User setDeleted(boolean deleted) {
+    public User setDeleted(Boolean deleted) {
         this.deleted = deleted;
         return this;
     }
@@ -242,11 +242,11 @@ public abstract class GeneratedUserImpl implements User {
         if (!Objects.equals(this.getLastname(), thatUser.getLastname())) {return false; }
         if (!Objects.equals(this.getAvatar(), thatUser.getAvatar())) {return false; }
         if (!Objects.equals(this.getDescription(), thatUser.getDescription())) {return false; }
-        if (this.getShowName() != thatUser.getShowName()) {return false; }
-        if (this.getShowBirthday() != thatUser.getShowBirthday()) {return false; }
-        if (this.getShowEmail() != thatUser.getShowEmail()) {return false; }
-        if (this.getActivated() != thatUser.getActivated()) {return false; }
-        if (this.getDeleted() != thatUser.getDeleted()) {return false; }
+        if (!Objects.equals(this.getShowName(), thatUser.getShowName())) {return false; }
+        if (!Objects.equals(this.getShowBirthday(), thatUser.getShowBirthday())) {return false; }
+        if (!Objects.equals(this.getShowEmail(), thatUser.getShowEmail())) {return false; }
+        if (!Objects.equals(this.getActivated(), thatUser.getActivated())) {return false; }
+        if (!Objects.equals(this.getDeleted(), thatUser.getDeleted())) {return false; }
         return true;
     }
     
@@ -263,11 +263,11 @@ public abstract class GeneratedUserImpl implements User {
         hash = 31 * hash + Objects.hashCode(getLastname());
         hash = 31 * hash + Objects.hashCode(getAvatar());
         hash = 31 * hash + Objects.hashCode(getDescription());
-        hash = 31 * hash + Boolean.hashCode(getShowName());
-        hash = 31 * hash + Boolean.hashCode(getShowBirthday());
-        hash = 31 * hash + Boolean.hashCode(getShowEmail());
-        hash = 31 * hash + Boolean.hashCode(getActivated());
-        hash = 31 * hash + Boolean.hashCode(getDeleted());
+        hash = 31 * hash + Objects.hashCode(getShowName());
+        hash = 31 * hash + Objects.hashCode(getShowBirthday());
+        hash = 31 * hash + Objects.hashCode(getShowEmail());
+        hash = 31 * hash + Objects.hashCode(getActivated());
+        hash = 31 * hash + Objects.hashCode(getDeleted());
         return hash;
     }
 }

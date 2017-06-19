@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,8 +71,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      * @param printable int
      * @return void
      */
-    public void persist(Printable printable) {
-        getDao().persist(printable);
+    public Printable persist(Printable printable) {
+        return getDao().persist(printable);
     }
 
     /**
@@ -134,8 +135,7 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         printable.setTitle(request.getTitle());
         printable.setDescription(request.getDescription());
         printable.setUploaderId(userID);
-        Date currentDate = new Date(System.currentTimeMillis());
-        printable.setUploadDate(currentDate);
+        printable.setUploadTime(new Timestamp(System.currentTimeMillis()));
         printable.setFilePath(path);
 
         persist(printable);
@@ -234,5 +234,9 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
                 filter(Printable.PRINTABLE_ID.equal(printableID))
                 .map(f -> f.setNumDownloads(f.getNumDownloads() + 1))
                 .forEach(this.getDao().updater());
+    }
+
+    public boolean isPresent(int printableID) {
+        return getDao().stream().anyMatch(Printable.PRINTABLE_ID.equal(printableID));
     }
 }

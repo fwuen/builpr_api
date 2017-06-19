@@ -10,16 +10,35 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 public class ProfileEditRequestToUserModelConverter {
 
-    public static User from(ProfileEditRequest request) {
-        return new UserImpl()
-                .setEmail(request.getEmail())
-                .setPassword(new BCryptPasswordEncoder().encode(request.getPassword()))
-                .setFirstname(request.getFirstName())
-                .setLastname(request.getLastName())
-                .setDescription(request.getDescription())
-                .setShowEmail(request.isShowName())
-                .setShowEmail(request.isShowEmail())
-                .setShowBirthday(request.isShowBirthday());
+    public static User editUser(User editUser, ProfileEditRequest request) {
+
+        if (request.getEmail() != null) {
+            editUser.setEmail(request.getEmail());
+        }
+        // the correctness of the old and the new password is already checked in the controller
+        if (request.getPassword() != null) {
+            editUser.setPassword(request.getPassword());
+        }
+        if (request.getFirstName() != null) {
+            editUser.setFirstname(request.getFirstName());
+        }
+        if (request.getLastName() != null) {
+            editUser.setLastname(request.getLastName());
+        }
+        if (request.getDescription() != null) {
+            editUser.setDescription(request.getDescription());
+        }
+        if (request.getShowName() != null) {
+            editUser.setShowName(request.getShowName());
+        }
+        if (request.getShowBirthday() != null) {
+            editUser.setShowName(request.getShowName());
+        }
+        if (request.getShowEmail() != null) {
+            editUser.setShowEmail(request.getShowEmail());
+        }
+
+        return editUser;
     }
 
 }

@@ -37,7 +37,7 @@ public abstract class GeneratedPrintableManagerImpl extends AbstractManager<Prin
             Printable.TITLE,
             Printable.DESCRIPTION,
             Printable.UPLOADER_ID,
-            Printable.UPLOAD_DATE,
+            Printable.UPLOAD_TIME,
             Printable.FILE_PATH,
             Printable.NUM_DOWNLOADS
         );

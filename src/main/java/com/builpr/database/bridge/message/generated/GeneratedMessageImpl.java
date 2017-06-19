@@ -24,7 +24,7 @@ public abstract class GeneratedMessageImpl implements Message {
     private int senderId;
     private int receiverId;
     private String text;
-    private boolean read;
+    private Boolean read;
     private Timestamp sendTime;
     
     protected GeneratedMessageImpl() {
@@ -52,7 +52,7 @@ public abstract class GeneratedMessageImpl implements Message {
     }
     
     @Override
-    public boolean getRead() {
+    public Boolean getRead() {
         return read;
     }
     
@@ -86,7 +86,7 @@ public abstract class GeneratedMessageImpl implements Message {
     }
     
     @Override
-    public Message setRead(boolean read) {
+    public Message setRead(Boolean read) {
         this.read = read;
         return this;
     }
@@ -128,7 +128,7 @@ public abstract class GeneratedMessageImpl implements Message {
         if (this.getSenderId() != thatMessage.getSenderId()) {return false; }
         if (this.getReceiverId() != thatMessage.getReceiverId()) {return false; }
         if (!Objects.equals(this.getText(), thatMessage.getText())) {return false; }
-        if (this.getRead() != thatMessage.getRead()) {return false; }
+        if (!Objects.equals(this.getRead(), thatMessage.getRead())) {return false; }
         if (!Objects.equals(this.getSendTime(), thatMessage.getSendTime())) {return false; }
         return true;
     }
@@ -140,7 +140,7 @@ public abstract class GeneratedMessageImpl implements Message {
         hash = 31 * hash + Integer.hashCode(getSenderId());
         hash = 31 * hash + Integer.hashCode(getReceiverId());
         hash = 31 * hash + Objects.hashCode(getText());
-        hash = 31 * hash + Boolean.hashCode(getRead());
+        hash = 31 * hash + Objects.hashCode(getRead());
         hash = 31 * hash + Objects.hashCode(getSendTime());
         return hash;
     }

@@ -5,7 +5,7 @@ import com.builpr.database.bridge.user.User;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.core.manager.Manager;
 import com.speedment.runtime.core.util.OptionalUtil;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
@@ -26,7 +26,7 @@ public abstract class GeneratedPrintableImpl implements Printable {
     private String title;
     private String description;
     private int uploaderId;
-    private Date uploadDate;
+    private Timestamp uploadTime;
     private String filePath;
     private int numDownloads;
     
@@ -55,8 +55,8 @@ public abstract class GeneratedPrintableImpl implements Printable {
     }
     
     @Override
-    public Date getUploadDate() {
-        return uploadDate;
+    public Timestamp getUploadTime() {
+        return uploadTime;
     }
     
     @Override
@@ -94,8 +94,8 @@ public abstract class GeneratedPrintableImpl implements Printable {
     }
     
     @Override
-    public Printable setUploadDate(Date uploadDate) {
-        this.uploadDate = uploadDate;
+    public Printable setUploadTime(Timestamp uploadTime) {
+        this.uploadTime = uploadTime;
         return this;
     }
     
@@ -123,7 +123,7 @@ public abstract class GeneratedPrintableImpl implements Printable {
         sj.add("title = "        + Objects.toString(getTitle()));
         sj.add("description = "  + Objects.toString(OptionalUtil.unwrap(getDescription())));
         sj.add("uploaderId = "   + Objects.toString(getUploaderId()));
-        sj.add("uploadDate = "   + Objects.toString(getUploadDate()));
+        sj.add("uploadTime = "   + Objects.toString(getUploadTime()));
         sj.add("filePath = "     + Objects.toString(getFilePath()));
         sj.add("numDownloads = " + Objects.toString(getNumDownloads()));
         return "PrintableImpl " + sj.toString();
@@ -138,7 +138,7 @@ public abstract class GeneratedPrintableImpl implements Printable {
         if (!Objects.equals(this.getTitle(), thatPrintable.getTitle())) {return false; }
         if (!Objects.equals(this.getDescription(), thatPrintable.getDescription())) {return false; }
         if (this.getUploaderId() != thatPrintable.getUploaderId()) {return false; }
-        if (!Objects.equals(this.getUploadDate(), thatPrintable.getUploadDate())) {return false; }
+        if (!Objects.equals(this.getUploadTime(), thatPrintable.getUploadTime())) {return false; }
         if (!Objects.equals(this.getFilePath(), thatPrintable.getFilePath())) {return false; }
         if (this.getNumDownloads() != thatPrintable.getNumDownloads()) {return false; }
         return true;
@@ -151,7 +151,7 @@ public abstract class GeneratedPrintableImpl implements Printable {
         hash = 31 * hash + Objects.hashCode(getTitle());
         hash = 31 * hash + Objects.hashCode(getDescription());
         hash = 31 * hash + Integer.hashCode(getUploaderId());
-        hash = 31 * hash + Objects.hashCode(getUploadDate());
+        hash = 31 * hash + Objects.hashCode(getUploadTime());
         hash = 31 * hash + Objects.hashCode(getFilePath());
         hash = 31 * hash + Integer.hashCode(getNumDownloads());
         return hash;

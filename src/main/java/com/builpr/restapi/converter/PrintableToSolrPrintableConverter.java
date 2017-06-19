@@ -4,6 +4,8 @@ import com.builpr.database.service.DatabaseCategoryManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.search.model.Printable;
 
+import java.util.Date;
+
 /**
  *
  */
@@ -25,7 +27,7 @@ public class PrintableToSolrPrintableConverter {
                 .withNumberOfDownloads(printable.getNumDownloads())
                 .withRating(rating)
                 .withTitle(printable.getTitle())
-                .withUploadDate(printable.getUploadDate())
+                .withUploadDate(new Date(printable.getUploadTime().getTime()))
                 .withUploaderId(printable.getUploaderId())
                 .build();
     }

@@ -29,13 +29,13 @@ public class ProfileEditRequest {
     private String description;
 
     @Getter
-    private boolean showName;
+    private Boolean showName;
 
     @Getter
-    private boolean showEmail;
+    private Boolean showEmail;
 
     @Getter
-    private boolean showBirthday;
+    private Boolean showBirthday;
 
     public ProfileEditRequest setEmail(String email) {
         this.email = email;

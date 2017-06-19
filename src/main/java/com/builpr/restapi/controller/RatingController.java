@@ -9,14 +9,12 @@ import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.converter.RatingModelToRatingPayloadConverter;
 import com.builpr.restapi.error.rating.RatingDeleteError;
 import com.builpr.restapi.error.rating.RatingNewError;
-import com.builpr.restapi.model.Request.Rating.RatingDeleteRequest;
 import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Objects;
 
 /**
  * RatingController
@@ -116,7 +114,7 @@ public class RatingController {
             return response;
         }
         Rating rating = databaseRatingManager.getRatingByRatingID(ratingID);
-        databaseRatingManager.deleteRating(ratingID);
+        databaseRatingManager.deleteRatingByID(ratingID);
         RatingPayload payload = RatingModelToRatingPayloadConverter.from(rating);
         response.setPayload(payload);
         return response;
