@@ -45,14 +45,19 @@ public class SolrSearchTest {
     public static void prepareIndexForSearch() throws SearchManagerException {
         
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        List<String> categories = Lists.newArrayList();
+        List<String> categoriesCar1 = Lists.newArrayList();
+        List<String> categoriesCarsWithSameCategory = Lists.newArrayList();
+        List<String> categoriesTower = Lists.newArrayList();
+        List<String> categoriesShisha = Lists.newArrayList();
+        List<String> categoriesFidget = Lists.newArrayList();
+        List<String> categoriesPlane = Lists.newArrayList();
         List<Indexable> indexables = new ArrayList<>();
-        categories.add("3D");
-        categories.add("car");
-        categories.add("faberdashery");
-        categories.add("makerbot");
-        categories.add("PLA");
-        categories.add("vehicle");
+        categoriesCar1.add("3D");
+        categoriesCar1.add("car");
+        categoriesCar1.add("faberdashery");
+        categoriesCar1.add("makerbot");
+        categoriesCar1.add("PLA");
+        categoriesCar1.add("vehicle");
     
         Date date = new Date(System.currentTimeMillis());
     
@@ -61,15 +66,14 @@ public class SolrSearchTest {
                 withTitle(SolrTestConstants.p1Title).
                 withDescription(SolrTestConstants.p1Description).
                 withRating(1).
-                withCategories(categories).
+                withCategories(categoriesCar1).
                 withUploaderId(car1Id).
                 withUploadDate(date).
                 withNumberOfDownloads(27442).
                 build());
-    
-        categories.clear();
+
         indexables.add(Printable.getBuilder().
-                withCategories(categories).
+                withCategories(categoriesTower).
                 withDescription("Tower").
                 withId(towerId).
                 withNumberOfDownloads(13).
@@ -79,10 +83,10 @@ public class SolrSearchTest {
                 withUploaderId(1).
                 build());
     
-        categories.add("plane");
-        categories.add("ww1");
+        categoriesPlane.add("plane");
+        categoriesPlane.add("ww1");
         indexables.add(Printable.getBuilder().
-                withCategories(categories).
+                withCategories(categoriesPlane).
                 withDescription(SolrTestConstants.p2Description).
                 withRating(5).
                 withNumberOfDownloads(30).
@@ -91,10 +95,9 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withUploaderId(1).
                 build());
-    
-        categories.clear();
+
         indexables.add(Printable.getBuilder().
-                withCategories(categories).
+                withCategories(categoriesShisha).
                 withDescription(SolrTestConstants.p3Description).
                 withRating(3).
                 withNumberOfDownloads(526).
@@ -105,7 +108,7 @@ public class SolrSearchTest {
                 build());
     
         indexables.add(Printable.getBuilder().
-                withCategories(categories).
+                withCategories(categoriesFidget).
                 withDescription(SolrTestConstants.p4Description).
                 withRating(2).
                 withNumberOfDownloads(18340).
@@ -115,9 +118,9 @@ public class SolrSearchTest {
                 withTitle(SolrTestConstants.p4Title).
                 build());
     
-        categories.add("car");
+        categoriesCarsWithSameCategory.add("car");
         indexables.add(Printable.getBuilder().
-                withCategories(categories).
+                withCategories(categoriesCarsWithSameCategory).
                 withDescription("car2").
                 withId(car2Id).
                 withNumberOfDownloads(13).
@@ -128,7 +131,7 @@ public class SolrSearchTest {
                 build());
     
         indexables.add(Printable.getBuilder().
-                withCategories(categories).
+                withCategories(categoriesCarsWithSameCategory).
                 withDescription("car3").
                 withRating(5).
                 withNumberOfDownloads(30).
@@ -139,7 +142,7 @@ public class SolrSearchTest {
                 build());
     
         indexables.add(Printable.getBuilder().
-                withCategories(categories).
+                withCategories(categoriesCarsWithSameCategory).
                 withDescription("car4").
                 withRating(3).
                 withNumberOfDownloads(526).
@@ -150,7 +153,7 @@ public class SolrSearchTest {
                 build());
     
         indexables.add(Printable.getBuilder().
-                withCategories(categories).
+                withCategories(categoriesCarsWithSameCategory).
                 withDescription("car5").
                 withRating(2).
                 withNumberOfDownloads(18340).
@@ -168,8 +171,8 @@ public class SolrSearchTest {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         List<PrintableReference> res = solrSearchManager.search("tower");
-        Verify.verify(res.size() == 0);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == car1Id);
+        Verify.verify(res.size() == 1);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == towerId);
     }
 
     @Test
@@ -180,8 +183,10 @@ public class SolrSearchTest {
         Preconditions.checkNotNull(solrSearchManager);
         Preconditions.checkNotNull(filters);
         Preconditions.checkState(filters.size() == 1);
-        List<PrintableReference> res = Lists.newArrayList();
-        solrSearchManager.search("car", filters);
+        List<PrintableReference> res = solrSearchManager.search("car", filters);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == car3Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == car4Id);
     }
 
     @Test
@@ -196,7 +201,13 @@ public class SolrSearchTest {
         Preconditions.checkNotNull(categories);
         Preconditions.checkState(categories.size() == 1);
         Preconditions.checkState(filters.size() == 1);
-        solrSearchManager.search("car", filters);
+        List<PrintableReference> res = solrSearchManager.search("car", filters);
+        Verify.verify(res.size() == 5);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == car1Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == car2Id);
+        Verify.verify(Integer.parseInt(res.get(2).getId()) == car3Id);
+        Verify.verify(Integer.parseInt(res.get(3).getId()) == car4Id);
+        Verify.verify(Integer.parseInt(res.get(4).getId()) == car5Id);
     }
 
     @Test
@@ -212,7 +223,11 @@ public class SolrSearchTest {
         Preconditions.checkNotNull(categories);
         Preconditions.checkState(filters.size() == 2);
         Preconditions.checkState(categories.size() == 1);
-        solrSearchManager.search("car", filters);
+        List<PrintableReference> res = solrSearchManager.search("car", filters);
+        Verify.verify(res.size() == 3);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == car3Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == car4Id);
+        Verify.verify(Integer.parseInt(res.get(2).getId()) == car5Id);
     }
     
     @Test
@@ -223,7 +238,13 @@ public class SolrSearchTest {
         CategoryFilter cf = new CategoryFilter(categories);
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(cf);
-        solrSearchManager.search("", filterList);
+        List<PrintableReference> res = solrSearchManager.search("", filterList);
+        Verify.verify(res.size() == 5);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == car1Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == car2Id);
+        Verify.verify(Integer.parseInt(res.get(2).getId()) == car3Id);
+        Verify.verify(Integer.parseInt(res.get(3).getId()) == car4Id);
+        Verify.verify(Integer.parseInt(res.get(4).getId()) == car5Id);
     }
     
     @Test
@@ -236,16 +257,28 @@ public class SolrSearchTest {
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(cf);
         filterList.add(mrf);
-        solrSearchManager.search("", filterList);
+        List<PrintableReference> res = solrSearchManager.search("", filterList);
+        Verify.verify(res.size() == 4);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == car1Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == car3Id);
+        Verify.verify(Integer.parseInt(res.get(2).getId()) == car4Id);
+        Verify.verify(Integer.parseInt(res.get(3).getId()) == car5Id);
     }
     
     @Test
     public void searchWithMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        MinimumRatingFilter mrf = new MinimumRatingFilter(1);
+        MinimumRatingFilter mrf = new MinimumRatingFilter(2);
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(mrf);
-        solrSearchManager.search("", filterList);
+        List<PrintableReference> res = solrSearchManager.search("", filterList);
+        Verify.verify(res.size() == 6);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == planeId);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Verify.verify(Integer.parseInt(res.get(2).getId()) == fidgetId);
+        Verify.verify(Integer.parseInt(res.get(3).getId()) == car3Id);
+        Verify.verify(Integer.parseInt(res.get(4).getId()) == car4Id);
+        Verify.verify(Integer.parseInt(res.get(5).getId()) == car5Id);
     }
     
     @Test(expected = NullPointerException.class)
@@ -350,8 +383,8 @@ public class SolrSearchTest {
         filterList.add(mrf);
         solrSearchManager.search(null, filterList);
     }
-
-    //TODO: Test zu Test machen
+    
+    //TODO ab hier
     @Test
     public void searchWithTermAndSortByName() throws SearchManagerException
     {
@@ -359,7 +392,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.ALPHABETICAL);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByRating() throws SearchManagerException
     {
@@ -367,7 +399,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.RATING);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByDownloads() throws SearchManagerException
     {
@@ -375,7 +406,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.DOWNLOADS);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByUploadDate() throws SearchManagerException
     {
@@ -383,7 +413,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.UPLOAD_DATE);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByNameAndOrderAsc() throws SearchManagerException
     {
@@ -391,7 +420,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.ASC);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByRatingAndOrderAsc() throws SearchManagerException
     {
@@ -399,7 +427,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.RATING, ORDER.ASC);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderAsc() throws SearchManagerException
     {
@@ -407,7 +434,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.ASC);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderAsc() throws SearchManagerException
     {
@@ -415,7 +441,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.ASC);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByNameAndOrderDesc() throws SearchManagerException
     {
@@ -423,7 +448,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.DESC);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByRatingAndOrderDesc() throws SearchManagerException
     {
@@ -431,7 +455,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.RATING, ORDER.DESC);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderDesc() throws SearchManagerException
     {
@@ -439,7 +462,6 @@ public class SolrSearchTest {
         solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.DESC);
     }
 
-    //TODO: Test zu Test machen
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderDesc() throws SearchManagerException
     {
