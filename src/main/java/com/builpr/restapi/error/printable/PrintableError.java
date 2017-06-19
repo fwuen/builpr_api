@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public enum PrintableError implements MappableError {
 
-    INVALID_PRINTABLEID(1, "The given id is invalid");
+    PRINTABLE_NOT_FOUND(1, "Printable coould not be found");
     private final int code;
     private final String description;
 

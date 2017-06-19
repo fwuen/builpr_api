@@ -1,4 +1,4 @@
-package com.builpr.restapi.model;
+package com.builpr.restapi.utils;
 
 import org.springframework.web.multipart.MultipartFile;
 

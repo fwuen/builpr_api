@@ -12,9 +12,14 @@ import com.builpr.restapi.error.rating.RatingNewError;
 import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
+import com.builpr.restapi.utils.CategoryValidator;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+
+import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
+import static com.builpr.Constants.URL_DELETE_RATING;
+import static com.builpr.Constants.URL_NEW_RATING;
 
 /**
  * RatingController
@@ -33,12 +38,12 @@ public class RatingController {
     }
 
 
-    @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/rating/new", method = RequestMethod.POST)
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
+    @RequestMapping(value = URL_NEW_RATING, method = RequestMethod.POST)
     @ResponseBody
     public Response<RatingPayload> createRating(Principal principal, @RequestBody RatingNewRequest request) {
         Response<RatingPayload> response = new Response<>();
-        if (request.getPrintableID() == 0 || !databasePrintableManager.checkPrintableId(request.getPrintableID())) {
+        if (databasePrintableManager.getPrintableById(request.getPrintableID()) == null) {
             response.setSuccess(false);
             response.addError(RatingNewError.PRINTABLE_NOT_EXISTING);
         }
@@ -85,8 +90,8 @@ public class RatingController {
         return response;
     }
 
-    @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/rating/delete", method = RequestMethod.DELETE)
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
+    @RequestMapping(value = URL_DELETE_RATING, method = RequestMethod.DELETE)
     @ResponseBody
     public Response<RatingPayload> deleteRating(Principal principal, @RequestParam(
             value = "id",
@@ -102,7 +107,7 @@ public class RatingController {
             if (databaseUserManager.getByUsername(principal.getName()) == null) {
                 response.setSuccess(false);
                 response.addError(RatingDeleteError.NO_AUTHORIZATION);
-            } else if (databaseRatingManager.getRatingByRatingID(ratingID).getUserId() == databaseUserManager.getByUsername(principal.getName()).getUserId()) {
+            } else if (databaseRatingManager.getRatingByRatingID(ratingID).getUserId() != databaseUserManager.getByUsername(principal.getName()).getUserId()) {
                 response.setSuccess(false);
                 response.addError(RatingDeleteError.NO_AUTHORIZATION);
             }
@@ -113,10 +118,12 @@ public class RatingController {
         if (!response.isSuccess()) {
             return response;
         }
+
         Rating rating = databaseRatingManager.getRatingByRatingID(ratingID);
         databaseRatingManager.deleteRatingByID(ratingID);
         RatingPayload payload = RatingModelToRatingPayloadConverter.from(rating);
         response.setPayload(payload);
+
         return response;
     }
 }

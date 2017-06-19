@@ -22,7 +22,6 @@ public class PrintableToPrintableNewResponseConverter {
             printableNewResponse.setDescription(printable.getDescription().get());
         }
         printableNewResponse.setTitle(printable.getTitle());
-        printableNewResponse.setUploadDate(new Date(printable.getUploadTime().getTime()));
         printableNewResponse.setCategories(CategoryToStringConverter.convertCategoriesToString(categoryList));
 
         return printableNewResponse;

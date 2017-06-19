@@ -9,9 +9,8 @@ import java.util.Map;
  * PrintableDeleteError
  */
 public enum PrintableDeleteError implements MappableError {
-    USER_INVALID(1, "Invalid user"),
-    PRINTABLE_NOT_EXISTING(2, "The printable is not exisiting"),
-    NO_AUTHORIZATION(3, "No authorization to delete the printable");
+    PRINTABLE_NOT_EXISTING(1, "The printable is not exisiting"),
+    NO_AUTHORIZATION(2, "No authorization to delete the printable");
 
     private final int code;
     private final String description;

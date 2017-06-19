@@ -45,11 +45,16 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
      * @return void
      */
     public void create(int printableID, int categoryID) {
-        PrintableCategoryImpl category = new PrintableCategoryImpl();
-        category.setPrintableId(printableID);
-        category.setCategoryId(categoryID);
-        this.getDao().persist(category);
+        PrintableCategoryImpl printableCategory = new PrintableCategoryImpl();
+        printableCategory.setPrintableId(printableID);
+        printableCategory.setCategoryId(categoryID);
+        getDao().persist(printableCategory);
     }
+
+    public void persist(PrintableCategory printableCategory) {
+        getDao().persist(printableCategory);
+    }
+
 
     /**
      * @param printableID int
@@ -69,6 +74,6 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
      * @return void
      */
     private void delete(PrintableCategory printableCategory) {
-        this.getDao().remove(printableCategory);
+        getDao().remove(printableCategory);
     }
 }

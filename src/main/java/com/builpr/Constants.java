@@ -18,6 +18,8 @@ public class Constants {
 
     public static final String BASE_URL = "http://localhost:8080";
 
+    public static final String SOLR_BASE_URL = "http://192.168.1.50:8983/solr";
+
     public static final String URL_DELETE_PRINTABLE = "/printable/delete";
     public static final String URL_GET_PRINTABLE = "/printable";
     public static final String URL_EDIT_PRINTABLE = "/printable/edit";
@@ -39,7 +41,12 @@ public class Constants {
     public static final List<String> SECURITY_URLS = Lists.newArrayList(
             URL_SIMPLEPAYLOAD,
             URL_PROFILE_EDIT,
-            URL_MESSAGE
+            URL_MESSAGE,
+            URL_DELETE_RATING,
+            URL_NEW_RATING,
+            URL_DELETE_PRINTABLE,
+            URL_NEW_PRINTABLE,
+            URL_EDIT_PRINTABLE
     );
 
 
@@ -49,7 +56,7 @@ public class Constants {
     public static final String USERNAME_PATTERN = "[A-Za-z][A-Za-z0-9_]{3,}[A-Z-a-z0-9]";
     public static final int MIN_PASSWD_LENGTH = 6;
 
-    public static final String TEST_PATH = "C:\\Users\\Markus\\Desktop\\Modells\\";
+    public static final String TEST_PATH = "C:\\Users\\Public\\";
 
     public static final String SMTP_SERVER = "smtp.gmail.com";
     public static final int TLS_PORT = 587;
