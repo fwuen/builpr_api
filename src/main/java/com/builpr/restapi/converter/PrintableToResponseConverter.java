@@ -3,8 +3,6 @@ package com.builpr.restapi.converter;
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.service.DatabaseCategoryManager;
 import com.builpr.database.service.DatabaseRatingManager;
-import com.builpr.restapi.converter.CategoryToStringConverter;
-import com.builpr.restapi.converter.RatingModelToRatingPayloadConverter;
 import com.builpr.restapi.model.Response.printable.PrintableResponse;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
 
@@ -38,7 +36,7 @@ public class PrintableToResponseConverter {
             response.setDescription(printable.getDescription().get());
         }
         response.setDownloads(printable.getNumDownloads());
-        response.setUploadDate(printable.getUploadDate());
+        response.setUploadTime(printable.getUploadTime());
         response.setRatings(ratings);
         response.setCategories(categories);
 

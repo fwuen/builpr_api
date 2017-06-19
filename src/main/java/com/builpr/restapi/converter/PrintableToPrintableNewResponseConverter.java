@@ -6,6 +6,7 @@ import com.builpr.database.service.DatabaseCategoryManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class PrintableToPrintableNewResponseConverter {
             printableNewResponse.setDescription(printable.getDescription().get());
         }
         printableNewResponse.setTitle(printable.getTitle());
-        printableNewResponse.setUploadDate(printable.getUploadDate());
+        printableNewResponse.setUploadDate(new Date(printable.getUploadTime().getTime()));
         printableNewResponse.setCategories(CategoryToStringConverter.convertCategoriesToString(categoryList));
 
         return printableNewResponse;

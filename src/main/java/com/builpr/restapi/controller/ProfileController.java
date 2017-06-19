@@ -34,7 +34,7 @@ public class ProfileController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_PROFILE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<ProfilePayload> showProfile(
+    public Response<ProfilePayload> showProfile(
             @RequestParam(
                     value = "id",
                     defaultValue = "0",
@@ -42,22 +42,21 @@ public class ProfileController {
             ) int id
     ) throws UserNotFoundException {
         User user = userService.getByID(id);
-
         if (user == null) {
             throw new UserNotFoundException("user not found");
         }
-
         ProfilePayload profilePayload = UserModelToProfileResponseConverter.from(user);
+        Response<ProfilePayload> response = new Response<>();
+        response.setPayload(profilePayload);
 
-
-        return ResponseEntity.ok(profilePayload);
+        return response;
     }
 
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_PROFILE_EDIT, method = RequestMethod.PUT)
     @ResponseBody
     public Response<String> editProfile(
-            @RequestBody ProfileEditRequest request,
+            @RequestBody(required = false) ProfileEditRequest request,
             Principal principal
             ) throws UserNotFoundException {
 
@@ -93,33 +92,11 @@ public class ProfileController {
             response.addError(LASTNAME_EMPTY);
             response.setSuccess(false);
         }
-
         if (response.isSuccess()) {
-            User update_data = ProfileEditRequestToUserModelConverter.from(request);
-            update_data.setUserId(user.getUserId());
-            update_data.setUsername(user.getUsername());
-            update_data.setRegtime(user.getRegtime());
-            update_data.setBirthday(user.getBirthday());
-
-            if (request.getEmail() == null) {
-                update_data.setEmail(user.getEmail());
-            }
-            if (request.getOldPassword() == null) {
-                update_data.setPassword(user.getPassword());
-            }
-            if (request.getFirstName() == null) {
-                update_data.setFirstname(user.getFirstname());
-            }
-            if (request.getLastName() == null) {
-                update_data.setLastname(user.getLastname());
-            }
-            if (request.getDescription() == null) {
-                update_data.setDescription(user.getDescription().get());
-            }
+            User update_data = ProfileEditRequestToUserModelConverter.editUser(user, request);
             userService.update(update_data);
         }
 
         return response;
-
     }
 }

@@ -57,7 +57,6 @@ public class RatingControllerTest extends ControllerTest {
         DatabaseUserManager userManager = new DatabaseUserManager();
         DatabasePrintableManager databasePrintableManager = new DatabasePrintableManager();
         PrintableImpl printable = new PrintableImpl();
-        printable.setUploadDate(new Date(System.currentTimeMillis()));
         printable.setFilePath("testPath");
         printable.setUploaderId(userManager.getByUsername(DB_TEST_USER).getUserId());
         printable.setDescription("testDescription");
@@ -85,7 +84,7 @@ public class RatingControllerTest extends ControllerTest {
         rating.setRatingId(123456789);
 
         if (databaseRatingManager.isPresent(123456789)) {
-            databaseRatingManager.deleteRating(123456789);
+            databaseRatingManager.deleteRatingByID(123456789);
         }
 
         databaseRatingManager.persist(rating);

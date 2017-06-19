@@ -40,13 +40,13 @@ public abstract class GeneratedPrintableSqlAdapter {
     protected Printable apply(ResultSet resultSet) throws SpeedmentException {
         final Printable entity = createEntity();
         try {
-            entity.setPrintableId(  resultSet.getInt(1)    );
-            entity.setTitle(        resultSet.getString(2) );
-            entity.setDescription(  resultSet.getString(3) );
-            entity.setUploaderId(   resultSet.getInt(4)    );
-            entity.setUploadDate(   resultSet.getDate(5)   );
-            entity.setFilePath(     resultSet.getString(6) );
-            entity.setNumDownloads( resultSet.getInt(7)    );
+            entity.setPrintableId(  resultSet.getInt(1)       );
+            entity.setTitle(        resultSet.getString(2)    );
+            entity.setDescription(  resultSet.getString(3)    );
+            entity.setUploaderId(   resultSet.getInt(4)       );
+            entity.setUploadTime(   resultSet.getTimestamp(5) );
+            entity.setFilePath(     resultSet.getString(6)    );
+            entity.setNumDownloads( resultSet.getInt(7)       );
         } catch (final SQLException sqle) {
             throw new SpeedmentException(sqle);
         }

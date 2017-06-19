@@ -105,7 +105,6 @@ public class PrintableControllerTest extends ControllerTest {
         PrintableImpl printable = new PrintableImpl();
         printable.setTitle("Printable only for testing");
         printable.setDescription("This printable is only for testing purpose");
-        printable.setUploadDate(new Date(System.currentTimeMillis()));
         printable.setPrintableId(TEST_PRINTABLE_ID);
         printable.setUploaderId(databaseUserManager.getByUsername(DB_TEST_USER_NAME).getUserId());
         printable.setFilePath(PATH + "testFile.stl");
@@ -440,7 +439,6 @@ public class PrintableControllerTest extends ControllerTest {
         PrintableImpl printable = new PrintableImpl();
         printable.setTitle("Printable only for testing");
         printable.setDescription("This printable is only for testing purpose");
-        printable.setUploadDate(new Date(System.currentTimeMillis()));
         printable.setPrintableId(888888888);
         printable.setUploaderId(databaseUserManager.getByUsername(DB_TEST_USER_NAME).getUserId());
         printable.setFilePath(PATH + tokenGenerator.generate() + ".stl");

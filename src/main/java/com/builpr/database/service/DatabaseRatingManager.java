@@ -92,7 +92,7 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
      * @param ratingId int
      * @return void
      */
-    public void deleteRating(int ratingId) {
+    public void deleteRatingByID(int ratingId) {
         getDao().remove(
                 this.getRatingByRatingID(ratingId)
         );

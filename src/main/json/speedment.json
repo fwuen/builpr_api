@@ -192,6 +192,7 @@
                     "nullable" : false,
                     "autoIncrement" : true,
                     "name" : "message_id",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "message_id",
                     "ordinalPosition" : 1,
                     "enabled" : true
@@ -211,7 +212,9 @@
                     "expanded" : true,
                     "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "receiver_id",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "receiver_id",
                     "ordinalPosition" : 3,
                     "enabled" : true
@@ -220,7 +223,9 @@
                     "databaseType" : "java.lang.String",
                     "expanded" : true,
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "text",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "text",
                     "ordinalPosition" : 4,
                     "enabled" : true
@@ -241,7 +246,9 @@
                     "databaseType" : "java.sql.Timestamp",
                     "expanded" : true,
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "send_time",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "send_time",
                     "ordinalPosition" : 6,
                     "enabled" : true
@@ -334,6 +341,17 @@
                 ],
                 "columns" : [
                   {
+                    "databaseType" : "java.sql.Date",
+                    "expanded" : true,
+                    "nullable" : false,
+                    "autoIncrement" : false,
+                    "name" : "upload_date",
+                    "nullableImplementation" : "OPTIONAL",
+                    "id" : "upload_date",
+                    "ordinalPosition" : 5,
+                    "enabled" : false
+                  },
+                  {
                     "databaseType" : "java.lang.Integer",
                     "expanded" : true,
                     "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
@@ -373,11 +391,11 @@
                     "enabled" : true
                   },
                   {
-                    "databaseType" : "java.sql.Date",
+                    "databaseType" : "java.sql.Timestamp",
                     "expanded" : true,
                     "nullable" : false,
-                    "name" : "upload_date",
-                    "id" : "upload_date",
+                    "name" : "upload_time",
+                    "id" : "upload_time",
                     "ordinalPosition" : 5,
                     "enabled" : true
                   },
@@ -782,7 +800,9 @@
                     "expanded" : true,
                     "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "user_id",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "user_id",
                     "ordinalPosition" : 1,
                     "enabled" : true
@@ -805,7 +825,7 @@
                 "enabled" : true
               },
               {
-                "expanded" : true,
+                "expanded" : false,
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
@@ -953,7 +973,9 @@
                     "databaseType" : "java.lang.String",
                     "expanded" : true,
                     "nullable" : true,
+                    "autoIncrement" : false,
                     "name" : "description",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "description",
                     "ordinalPosition" : 10,
                     "enabled" : true

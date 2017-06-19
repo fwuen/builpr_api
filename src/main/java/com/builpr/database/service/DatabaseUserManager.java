@@ -37,6 +37,12 @@ public class DatabaseUserManager extends DatabaseManager<UserManager> {
         );
     }
 
+    public void deleteByID(int id) {
+        getDao().remove(
+                this.getByID(id)
+        );
+    }
+
     public boolean isPresent(String name) {
         return getByUsername(name) != null;
     }

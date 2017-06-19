@@ -12,7 +12,7 @@ import com.speedment.runtime.field.IntField;
 import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 /**
@@ -75,12 +75,12 @@ public interface GeneratedPrintable {
     );
     /**
      * This Field corresponds to the {@link Printable} field that can be
-     * obtained using the {@link Printable#getUploadDate()} method.
+     * obtained using the {@link Printable#getUploadTime()} method.
      */
-    ComparableField<Printable, Date, Date> UPLOAD_DATE = ComparableField.create(
-        Identifier.UPLOAD_DATE,
-        Printable::getUploadDate,
-        Printable::setUploadDate,
+    ComparableField<Printable, Timestamp, Timestamp> UPLOAD_TIME = ComparableField.create(
+        Identifier.UPLOAD_TIME,
+        Printable::getUploadTime,
+        Printable::setUploadTime,
         TypeMapper.identity(), 
         false
     );
@@ -140,12 +140,12 @@ public interface GeneratedPrintable {
     int getUploaderId();
     
     /**
-     * Returns the uploadDate of this Printable. The uploadDate field
-     * corresponds to the database column builpr.builpr.printable.upload_date.
+     * Returns the uploadTime of this Printable. The uploadTime field
+     * corresponds to the database column builpr.builpr.printable.upload_time.
      * 
-     * @return the uploadDate of this Printable
+     * @return the uploadTime of this Printable
      */
-    Date getUploadDate();
+    Timestamp getUploadTime();
     
     /**
      * Returns the filePath of this Printable. The filePath field corresponds to
@@ -200,13 +200,13 @@ public interface GeneratedPrintable {
     Printable setUploaderId(int uploaderId);
     
     /**
-     * Sets the uploadDate of this Printable. The uploadDate field corresponds
-     * to the database column builpr.builpr.printable.upload_date.
+     * Sets the uploadTime of this Printable. The uploadTime field corresponds
+     * to the database column builpr.builpr.printable.upload_time.
      * 
-     * @param uploadDate to set of this Printable
+     * @param uploadTime to set of this Printable
      * @return           this Printable instance
      */
-    Printable setUploadDate(Date uploadDate);
+    Printable setUploadTime(Timestamp uploadTime);
     
     /**
      * Sets the filePath of this Printable. The filePath field corresponds to
@@ -241,7 +241,7 @@ public interface GeneratedPrintable {
         TITLE         ("title"),
         DESCRIPTION   ("description"),
         UPLOADER_ID   ("uploader_id"),
-        UPLOAD_DATE   ("upload_date"),
+        UPLOAD_TIME   ("upload_time"),
         FILE_PATH     ("file_path"),
         NUM_DOWNLOADS ("num_downloads");
         
