@@ -1,6 +1,11 @@
 package com.builpr.search.solr;
 
 public class SolrTestConstants {
+    
+    static final String LOCAL_BASE_URL = "http://localhost/solr";
+    static final String REMOTE_BASE_URL = "http://192.168.1.50:8983/solr";
+    static final String REMOTE_BASE_URL_EXTERN = "http://builpr.com:8983/solr";
+    
     static String p1Title = "car (mercedes c9 inspired)";
     static String p1Description = "This car model is loosely based on a mercedes C9 le man car.\n" +
             "\n" +
