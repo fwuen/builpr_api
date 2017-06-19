@@ -176,8 +176,8 @@ public class PrintableControllerTest extends ControllerTest {
         Assert.assertTrue(!response.isSuccess());
         Assert.assertNull(response.getPayload());
         Assert.assertTrue(!response.getErrorMap().isEmpty());
-        Assert.assertTrue(response.getErrorMap().containsKey(PrintableError.INVALID_PRINTABLEID.getCode()));
-        Assert.assertTrue(response.getErrorMap().containsValue(PrintableError.INVALID_PRINTABLEID.getDescription()));
+        Assert.assertTrue(response.getErrorMap().containsKey(PrintableError.PRINTABLE_NOT_FOUND.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(PrintableError.PRINTABLE_NOT_FOUND.getDescription()));
     }
 
     //-----------------------------------------------------------------------------------------------------------//

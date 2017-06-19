@@ -56,6 +56,7 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     /**
      * @param printableReferences PrintableReference
      * @return List<Printable>
+     *     TODO refactoren bzw name ändern
      */
     public List<Printable> getPrintableList(List<PrintableReference> printableReferences) {
         List<Printable> list = new ArrayList<>();
@@ -80,9 +81,6 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
      * @return boolean
      */
     public boolean checkPrintableId(int printableID) {
-        if (printableID < 1) {
-            return false;
-        }
         Printable printable = getPrintableById(printableID);
         return printable != null;
     }
@@ -179,17 +177,7 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
         return path;
     }
 
-    /**
-     * @param printableID int
-     * @return MultipartFile
-     * @throws IOException Exception
-     */
-    public byte[] downloadFile(int printableID) throws IOException {
-        Printable printable = getPrintableById(printableID);
-        String path = printable.getFilePath();
-        Path p = FileSystems.getDefault().getPath(path);
-        return Files.readAllBytes(p);
-    }
+
 
     /**
      * @param printableID int
@@ -219,9 +207,9 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     /**
      * @return void
      */
-    public void deletePrintableFromIndex() {
+    public void deletePrintableFromIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
-        // TODO clear methode aufrufe
+        solrSearchManager.clearIndex();
 
     }
 

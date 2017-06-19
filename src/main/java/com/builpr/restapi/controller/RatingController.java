@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
+import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
+import static com.builpr.Constants.URL_DELETE_RATING;
+import static com.builpr.Constants.URL_NEW_RATING;
+
 /**
  * RatingController
  */
@@ -33,8 +37,8 @@ public class RatingController {
     }
 
 
-    @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/rating/new", method = RequestMethod.POST)
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
+    @RequestMapping(value = URL_NEW_RATING, method = RequestMethod.POST)
     @ResponseBody
     public Response<RatingPayload> createRating(Principal principal, @RequestBody RatingNewRequest request) {
         Response<RatingPayload> response = new Response<>();
@@ -85,8 +89,8 @@ public class RatingController {
         return response;
     }
 
-    @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/rating/delete", method = RequestMethod.DELETE)
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
+    @RequestMapping(value = URL_DELETE_RATING, method = RequestMethod.DELETE)
     @ResponseBody
     public Response<RatingPayload> deleteRating(Principal principal, @RequestParam(
             value = "id",
@@ -113,10 +117,12 @@ public class RatingController {
         if (!response.isSuccess()) {
             return response;
         }
+
         Rating rating = databaseRatingManager.getRatingByRatingID(ratingID);
         databaseRatingManager.deleteRatingByID(ratingID);
         RatingPayload payload = RatingModelToRatingPayloadConverter.from(rating);
         response.setPayload(payload);
+
         return response;
     }
 }

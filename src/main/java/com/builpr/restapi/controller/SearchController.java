@@ -1,6 +1,5 @@
 package com.builpr.restapi.controller;
 
-import com.builpr.Constants;
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.restapi.error.search.SearchError;
@@ -21,6 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
+import static com.builpr.Constants.SOLR_BASE_URL;
+import static com.builpr.Constants.URL_SEARCH;
+
 /**
  * SearchController
  */
@@ -32,8 +35,8 @@ public class SearchController {
         databasePrintableManager = new DatabasePrintableManager();
     }
 
-    @CrossOrigin(origins = Constants.SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
+    @RequestMapping(value = URL_SEARCH, method = RequestMethod.GET)
     @ResponseBody
     public Response<SearchResponse> search(@RequestBody SearchRequest request) throws SearchManagerException {
         Response<SearchResponse> response = new Response<>();
@@ -72,6 +75,7 @@ public class SearchController {
             response.setPayload(searchResponse);
             return response;
         }
+
         List<Filter> filter = new ArrayList<>();
         ORDER order = null;
         SORT sort = null;
@@ -89,7 +93,7 @@ public class SearchController {
             Filter categoryFilter = new CategoryFilter(request.getCategories());
             filter.add(categoryFilter);
         }
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SOLR_BASE_URL);
         List<PrintableReference> foundPrintable;
         try {
             if (sort == null && order == null && filter.isEmpty()) {
@@ -112,6 +116,7 @@ public class SearchController {
         if (foundPrintable.isEmpty()) {
             searchResponse.setResults(null);
         } else {
+
             List<Printable> printableList = databasePrintableManager.getPrintableList(foundPrintable);
             searchResponse.setResults(printableList);
         }
