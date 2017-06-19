@@ -40,6 +40,7 @@ public class SolrSearchTest {
     private static final int car3Id = 7;
     private static final int car4Id = 8;
     private static final int car5Id = 9;
+    private static final int shisha2Id = 10;
     
     @BeforeClass
     public static void prepareIndexForSearch() throws SearchManagerException {
@@ -161,6 +162,17 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withUploaderId(1).
                 withTitle("car5").
+                build());
+    
+        indexables.add(Printable.getBuilder().
+                withCategories(categoriesShisha).
+                withDescription(SolrTestConstants.p3Description).
+                withRating(1).
+                withNumberOfDownloads(1).
+                withId(shisha2Id).
+                withTitle("A Shisha").
+                withUploadDate(new Date(System.currentTimeMillis()-10000)).
+                withUploaderId(1).
                 build());
         
         solrSearchManager.addToIndex(indexables);
@@ -384,99 +396,148 @@ public class SolrSearchTest {
         solrSearchManager.search(null, filterList);
     }
     
-    //TODO ab hier
     @Test
     public void searchWithTermAndSortByName() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.ALPHABETICAL);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
 
     @Test
     public void searchWithTermAndSortByRating() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.RATING);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
 
     @Test
     public void searchWithTermAndSortByDownloads() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.DOWNLOADS);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
 
     @Test
     public void searchWithTermAndSortByUploadDate() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.UPLOAD_DATE);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
 
     @Test
     public void searchWithTermAndSortByNameAndOrderAsc() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.ASC);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.ASC);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
 
     @Test
     public void searchWithTermAndSortByRatingAndOrderAsc() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.RATING, ORDER.ASC);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING, ORDER.ASC);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
 
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderAsc() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.ASC);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.ASC);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
 
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderAsc() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.ASC);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.ASC);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
 
     @Test
     public void searchWithTermAndSortByNameAndOrderDesc() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.DESC);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.DESC);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shishaId);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
 
     @Test
     public void searchWithTermAndSortByRatingAndOrderDesc() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.RATING, ORDER.DESC);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING, ORDER.DESC);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shishaId);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
 
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderDesc() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.DESC);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.DESC);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shishaId);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
 
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderDesc() throws SearchManagerException
     {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
-        solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
+        List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
+        Verify.verify(res.size() == 2);
+        Verify.verify(Integer.parseInt(res.get(0).getId()) == shishaId);
+        Verify.verify(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
     
+    //TODO wie?
     @Test
-    public void searchWithTermAndInvalidOrder() {
-    
+    public void searchWithTermAndInvalidOrder() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
     }
     
+    @Test (expected = NullPointerException.class)
+    public void searchWithTermAndNullOrder() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        solrSearchManager.search("shisha", SORT.ALPHABETICAL, null);
+    }
+    
+    //TODO wie?
     @Test
     public void searchWithTermAndInvalidSort() {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+    }
     
+    //TODO wie?
+    @Test
+    public void searchWithTermAndNullSort() {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
     }
     
     @AfterClass
