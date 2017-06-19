@@ -17,7 +17,9 @@ import com.builpr.restapi.model.Response.printable.PrintableDeleteResponse;
 import com.builpr.restapi.model.Response.printable.PrintableEditResponse;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 import com.builpr.restapi.model.Response.printable.PrintableResponse;
+import com.builpr.restapi.utils.CategoryValidator;
 import com.builpr.restapi.utils.PrintableDownloader;
+import com.builpr.restapi.utils.PrintableUploader;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -37,6 +39,8 @@ public class PrintableController {
     private DatabasePrintableCategoryManager databasePrintableCategoryManager;
     private DatabaseUserManager databaseUserManager;
     private PrintableDownloader printableDownloader;
+    private PrintableUploader printableUploader;
+    private CategoryValidator categoryValidator;
 
     public PrintableController() {
         databasePrintableManager = new DatabasePrintableManager();
@@ -44,6 +48,8 @@ public class PrintableController {
         databasePrintableCategoryManager = new DatabasePrintableCategoryManager();
         databaseUserManager = new DatabaseUserManager();
         printableDownloader = new PrintableDownloader();
+        printableUploader = new PrintableUploader();
+        categoryValidator = new CategoryValidator();
     }
 
 
@@ -88,25 +94,21 @@ public class PrintableController {
             Principal principal, @RequestBody PrintableNewRequest request) throws IOException {
         Response<PrintableNewResponse> response = new Response<>();
 
-        if (principal == null) {
+        if (!databaseUserManager.isPresent(principal.getName())) {
             response.setSuccess(false);
             response.addError(PrintableNewError.USER_INVALID);
             return response;
         }
-        if (!databaseUserManager.isPresent(principal.getName())) {
-            response.setSuccess(false);
-            response.addError(PrintableNewError.USER_INVALID);
-        }
-        List<String> categoryList = databasePrintableManager.checkCategories(request.getCategories());
+        List<String> categoryList = categoryValidator.checkCategories(request.getCategories());
         if (categoryList.size() < 3) {
             response.setSuccess(false);
             response.addError(PrintableNewError.CATEGORIES_INVALID);
         }
-        if (!databasePrintableManager.checkTitle(request.getTitle())) {
+        if (request.getTitle().length() < 5 || request.getTitle().length() > 100) {
             response.setSuccess(false);
             response.addError(PrintableNewError.TITLE_INVALID);
         }
-        if (!databasePrintableManager.checkDescription((request.getDescription()))) {
+        if (request.getDescription().length() > 1000) {
             response.setSuccess(false);
             response.addError(PrintableNewError.DESCRIPTION_INVALID);
         }
@@ -122,7 +124,7 @@ public class PrintableController {
         User user = databaseUserManager.getByUsername(principal.getName());
 
         // UPLOADING FILE
-        String path = databasePrintableManager.uploadFile(request.getFile());
+        String path = printableUploader.uploadFile(request.getFile());
         // CREATING PRINTABLE
         Printable printable = PrintableNewRequestToPrintableConverter.from(request, user.getUserId(), path);/*databasePrintableManager.createPrintable(request, userID, path);*/
         databasePrintableManager.persist(printable);
@@ -152,21 +154,21 @@ public class PrintableController {
         Response<PrintableEditResponse> response = new Response<>();
 
 
-        if (request.getPrintableID() < 1 || !databasePrintableManager.checkPrintableId(request.getPrintableID())) {
+        if (databasePrintableManager.getPrintableById(request.getPrintableID()) == null) {
             response.setSuccess(false);
             response.addError(PrintableEditError.PRINTABLE_NOT_EXISTING);
         }
 
-        List<String> categories = databasePrintableManager.checkCategories(request.getCategories());
+        List<String> categories = categoryValidator.checkCategories(request.getCategories());
         if (categories.size() < 3) {
             response.setSuccess(false);
             response.addError(PrintableEditError.CATEGORIES_INVALID);
         }
-        if (!databasePrintableManager.checkDescription(request.getDescription())) {
+        if (request.getDescription().length() > 1000) {
             response.setSuccess(false);
             response.addError(PrintableEditError.DESCRIPTION_INVALID);
         }
-        if (!databasePrintableManager.checkTitle(request.getTitle())) {
+        if (request.getTitle().length() < 5 || request.getTitle().length() > 100) {
             response.setSuccess(false);
             response.addError(PrintableEditError.TITLE_INVALID);
         }
@@ -222,7 +224,7 @@ public class PrintableController {
 
         Response<byte[]> response = new Response<>();
 
-        if (printableID == 0 || !databasePrintableManager.checkPrintableId(printableID)) {
+        if (databasePrintableManager.getPrintableById(printableID) == null) {
             response.setSuccess(false);
             response.addError(PrintableDownloadError.PRINTABLE_ID_INVALID);
         }
@@ -253,19 +255,9 @@ public class PrintableController {
     ) int printableID) {
         Response<PrintableDeleteResponse> response = new Response<>();
 
-        if (printableID == 0 || !databasePrintableManager.checkPrintableId(printableID)) {
+        if (databasePrintableManager.getPrintableById(printableID) == null) {
             response.setSuccess(false);
             response.addError(PrintableDeleteError.PRINTABLE_NOT_EXISTING);
-            return response;
-        }
-        if (principal == null) {
-            response.setSuccess(false);
-            response.addError(PrintableDeleteError.USER_INVALID);
-            return response;
-        }
-        if (databaseUserManager.getByUsername(principal.getName()) == null) {
-            response.setSuccess(false);
-            response.addError(PrintableDeleteError.USER_INVALID);
             return response;
         }
         if (databaseUserManager.getByUsername(principal.getName()).getUserId() != databasePrintableManager.getPrintableById(printableID).getUploaderId()) {

@@ -7,7 +7,7 @@ import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.error.printable.*;
-import com.builpr.restapi.model.Request.Printable.PrintableDeleteRequest;
+import com.builpr.restapi.utils.CustomMultipartFile;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.utils.TokenGenerator;
@@ -17,12 +17,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 public class PrintableControllerTest extends ControllerTest {
+
+
     private static DatabasePrintableManager databasePrintableManager = new DatabasePrintableManager();
     private static DatabaseUserManager databaseUserManager = new DatabaseUserManager();
     private static TokenGenerator tokenGenerator = new TokenGenerator(510);
@@ -47,6 +49,9 @@ public class PrintableControllerTest extends ControllerTest {
 
     private static final int TEST_PRINTABLE_ID = 123456789;
     private static final String TEST_PRINTABLE_ID_STRING = "123456789";
+    private static final int TEST_DELETE_PRINTABLE_ID = 888888888;
+    private static final String TEST_DELETE_PRINTABLE_ID_STRING = "888888888";
+
     private static final String INVALID_PRINTABLE_ID_STRING = "0";
 
     private static List<String> VALID_LIST = new ArrayList<>();
@@ -55,36 +60,26 @@ public class PrintableControllerTest extends ControllerTest {
     private static String VALID_TITLE = "testTitle";
     private static final String INVALID_TITLE = "test";
 
-    private static byte[] VALID_FILE;
-
     private static String VALID_DESCRIPTION = "testDescription";
     private static final String INVALID_DESCRIPTION = tokenGenerator.generate() + tokenGenerator.generate();
 
-
     private static final String PATH = TEST_PATH;
 
+    private static byte[] VALID_FILE = new byte[]{(byte) 115, (byte) 111, (byte) 108, (byte) 105, (byte) 100, (byte) 32, (byte) 79, (byte) 112, (byte) 101, (byte) 110, (byte) 83, (byte) 67, (byte) 65, (byte) 68, (byte) 95, (byte) 77, (byte) 111, (byte) 100, (byte) 101, (byte) 108, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 45, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 45, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 45, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 49, (byte) 32, (byte) 45, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 49, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 45, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 45, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 45, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 45, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 32, (byte) 45, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 32, (byte) 45, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 48, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 57, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 49, (byte) 32, (byte) 45, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 49, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 45, (byte) 49, (byte) 32, (byte) 45, (byte) 48, (byte) 32, (byte) 48, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 54, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 45, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 32, (byte) 32, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 32, (byte) 110, (byte) 111, (byte) 114, (byte) 109, (byte) 97, (byte) 108, (byte) 32, (byte) 48, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 111, (byte) 117, (byte) 116, (byte) 101, (byte) 114, (byte) 32, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 55, (byte) 46, (byte) 53, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 51, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 118, (byte) 101, (byte) 114, (byte) 116, (byte) 101, (byte) 120, (byte) 32, (byte) 50, (byte) 32, (byte) 48, (byte) 32, (byte) 49, (byte) 10, (byte) 32, (byte) 32, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 108, (byte) 111, (byte) 111, (byte) 112, (byte) 10, (byte) 32, (byte) 32, (byte) 101, (byte) 110, (byte) 100, (byte) 102, (byte) 97, (byte) 99, (byte) 101, (byte) 116, (byte) 10, (byte) 101, (byte) 110, (byte) 100, (byte) 115, (byte) 111, (byte) 108, (byte) 105, (byte) 100, (byte) 32, (byte) 79, (byte) 112, (byte) 101, (byte) 110, (byte) 83, (byte) 67, (byte) 65, (byte) 68, (byte) 95, (byte) 77, (byte) 111, (byte) 100, (byte) 101, (byte) 108, (byte) 10};
 
-    public void fillFill() throws IOException {
-        String path = PATH + "testFile.stl";
-        Path p = FileSystems.getDefault().getPath(path);
-        VALID_FILE = Files.readAllBytes(p);
-    }
-
-    public void setValidList() {
+    @BeforeClass
+    public static void setUpDatabase() throws IOException {
+        // VALID_LIST füllen
         VALID_LIST.add("Tag1");
         VALID_LIST.add("Tag2");
         VALID_LIST.add("Tag3");
         VALID_LIST.add("Tag4");
         VALID_LIST.add("NeuerTestTag");
-    }
 
-    public void setInvalidList() {
+        // INVALID_LIST füllen
         INVALID_LIST.add("  b  ");
         INVALID_LIST.add(".ß3---___");
-    }
 
-    @BeforeClass
-    public static void setUpDatabase() {
         // User anlegen
         PRINTABLE_TEST_USER = new UserImpl()
                 .setUsername(DB_TEST_USER_NAME)
@@ -101,6 +96,17 @@ public class PrintableControllerTest extends ControllerTest {
             databaseUserManager.deleteByUsername(DB_TEST_USER_NAME);
         }
         databaseUserManager.persist(PRINTABLE_TEST_USER);
+        // TestFile hochladen
+        // TODO eine datei muss vor dem Test immer abgelegt werden und wieder gelöscht werden
+        MultipartFile multipartFile = new CustomMultipartFile(VALID_FILE, TEST_PATH + "testFile.stl");
+        File file = new File(TEST_PATH + "testFile.stl");
+        Path filePath = Paths.get(TEST_PATH + "testFile.stl");
+
+        try {
+            Files.createFile(filePath);
+            multipartFile.transferTo(file);
+        } catch (FileAlreadyExistsException ignored) {
+        }
         // Printable anlegen
         PrintableImpl printable = new PrintableImpl();
         printable.setTitle("Printable only for testing");
@@ -115,6 +121,20 @@ public class PrintableControllerTest extends ControllerTest {
         }
 
         databasePrintableManager.persist(printable);
+
+        // Printable für den DELETE-Request anlegen
+        PrintableImpl printableForDelete = new PrintableImpl();
+        printableForDelete.setTitle("Printable only for testing");
+        printableForDelete.setDescription("This printable is only for testing purpose");
+        printableForDelete.setPrintableId(TEST_DELETE_PRINTABLE_ID);
+        printableForDelete.setUploaderId(databaseUserManager.getByUsername(DB_TEST_USER_NAME).getUserId());
+        printableForDelete.setFilePath(PATH + "zuloeschendesPrintable.stl");
+        printableForDelete.setNumDownloads(99);
+        if (databasePrintableManager.getPrintableById(TEST_DELETE_PRINTABLE_ID) != null) {
+            databasePrintableManager.deletePrintable(TEST_DELETE_PRINTABLE_ID);
+        }
+
+        databasePrintableManager.persist(printableForDelete);
     }
 
     @AfterClass
@@ -125,6 +145,9 @@ public class PrintableControllerTest extends ControllerTest {
         if (databasePrintableManager.getPrintableById(TEST_PRINTABLE_ID) != null) {
             databasePrintableManager.deletePrintable(TEST_PRINTABLE_ID);
         }
+        // TODO testFile.stl wieder löschen + andere hochgeladenen Datein wieder löschen
+
+        // TODO Category-Tabelle leeren
     }
     //-----------------------------------------------------------------------------------------------------------//
     //        /printable/get                                                                                     //
@@ -195,8 +218,6 @@ public class PrintableControllerTest extends ControllerTest {
     @Test
     @WithMockUser(DB_TEST_USER_NAME)
     public void createPrintableWithValidInput() throws Exception {
-        setValidList();
-        fillFill();
         PrintableNewRequest printableNewRequest = new PrintableNewRequest();
         printableNewRequest.setDescription(VALID_DESCRIPTION);
         printableNewRequest.setTitle(VALID_TITLE);
@@ -219,8 +240,6 @@ public class PrintableControllerTest extends ControllerTest {
     @Test
     @WithMockUser(DB_TEST_USER_NAME)
     public void createPrintableWithInvalidTitle() throws Exception {
-        setValidList();
-        fillFill();
         PrintableNewRequest printableNewRequest = new PrintableNewRequest();
         printableNewRequest.setDescription(VALID_DESCRIPTION);
         printableNewRequest.setTitle(INVALID_TITLE);
@@ -246,8 +265,6 @@ public class PrintableControllerTest extends ControllerTest {
     @Test
     @WithMockUser(DB_TEST_USER_NAME)
     public void createPrintableWithInvalidDescription() throws Exception {
-        fillFill();
-        setValidList();
         PrintableNewRequest printableNewRequest = new PrintableNewRequest();
         printableNewRequest.setTitle(VALID_TITLE);
         printableNewRequest.setDescription(INVALID_DESCRIPTION);
@@ -272,7 +289,6 @@ public class PrintableControllerTest extends ControllerTest {
     @Test
     @WithMockUser(DB_TEST_USER_NAME)
     public void createPrintableWithInvalidFile() throws Exception {
-        setValidList();
         PrintableNewRequest printableNewRequest = new PrintableNewRequest();
         printableNewRequest.setTitle(VALID_TITLE);
         printableNewRequest.setDescription(VALID_DESCRIPTION);
@@ -298,13 +314,12 @@ public class PrintableControllerTest extends ControllerTest {
     @Test
     @WithMockUser("FakeUser")
     public void createPrintableWithInvalidUser() throws Exception {
-        setValidList();
-        fillFill();
         PrintableNewRequest printableNewRequest = new PrintableNewRequest();
         printableNewRequest.setCategories(VALID_LIST);
         printableNewRequest.setTitle(VALID_TITLE);
         printableNewRequest.setDescription(VALID_DESCRIPTION);
         printableNewRequest.setFile(VALID_FILE);
+
         MvcResult result = mockMvc.perform(post(Constants.URL_NEW_PRINTABLE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(printableNewRequest))
@@ -323,8 +338,6 @@ public class PrintableControllerTest extends ControllerTest {
     @Test
     @WithMockUser(DB_TEST_USER_NAME)
     public void createPrintableWithInvalidCategories() throws Exception {
-        setInvalidList();
-        fillFill();
         PrintableNewRequest printableNewRequest = new PrintableNewRequest();
         printableNewRequest.setCategories(INVALID_LIST);
         printableNewRequest.setTitle(VALID_TITLE);
@@ -347,23 +360,21 @@ public class PrintableControllerTest extends ControllerTest {
         Assert.assertTrue(response.getErrorMap().containsValue(PrintableNewError.CATEGORIES_INVALID.getDescription()));
     }
 
-//    @Test
-//    public void createPrintableWithoutAuthorization() throws Exception {
-//        setValidList();
-//        fillFill();
-//        PrintableNewRequest printableNewRequest = new PrintableNewRequest();
-//        printableNewRequest.setTitle(VALID_TITLE);
-//        printableNewRequest.setDescription(VALID_DESCRIPTION);
-//        printableNewRequest.setCategories(VALID_LIST);
-//        printableNewRequest.setFile(VALID_FILE);
-//
-//        MvcResult result = mockMvc.perform(
-//                post(Constants.URL_NEW_PRINTABLE)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(mapper.writeValueAsString(printableNewRequest)))
-//                .andExpect(status().isForbidden())
-//                .andReturn();
-//    }
+    @Test
+    public void createPrintableWithoutAuthorization() throws Exception {
+        PrintableNewRequest printableNewRequest = new PrintableNewRequest();
+        printableNewRequest.setTitle(VALID_TITLE);
+        printableNewRequest.setDescription(VALID_DESCRIPTION);
+        printableNewRequest.setCategories(VALID_LIST);
+        printableNewRequest.setFile(VALID_FILE);
+
+        MvcResult result = mockMvc.perform(
+                post(Constants.URL_NEW_PRINTABLE)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(printableNewRequest)))
+                .andExpect(status().isForbidden())
+                .andReturn();
+    }
 
     //-----------------------------------------------------------------------------------------------------------//
     //                      /printable/download                                                                  //
@@ -433,21 +444,8 @@ public class PrintableControllerTest extends ControllerTest {
     @Test
     @WithMockUser(DB_TEST_USER_NAME)
     public void deletePrintableWithValidInput() throws Exception {
-        DatabasePrintableManager databasePrintableManager = new DatabasePrintableManager();
-        DatabaseUserManager databaseUserManager = new DatabaseUserManager();
-
-        PrintableImpl printable = new PrintableImpl();
-        printable.setTitle("Printable only for testing");
-        printable.setDescription("This printable is only for testing purpose");
-        printable.setPrintableId(888888888);
-        printable.setUploaderId(databaseUserManager.getByUsername(DB_TEST_USER_NAME).getUserId());
-        printable.setFilePath(PATH + tokenGenerator.generate() + ".stl");
-        printable.setNumDownloads(99);
-        databasePrintableManager.persist(printable);
-
-
         MvcResult result = mockMvc.perform(
-                delete(Constants.URL_DELETE_PRINTABLE).param("id", "888888888"))
+                delete(Constants.URL_DELETE_PRINTABLE).param("id", TEST_DELETE_PRINTABLE_ID_STRING))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -457,4 +455,31 @@ public class PrintableControllerTest extends ControllerTest {
         Assert.assertNotNull(response.getPayload());
         Assert.assertTrue(response.getErrorMap().isEmpty());
     }
+
+    @Test
+    public void deletePrintableWithoutAuthorization() throws Exception {
+        MvcResult result = mockMvc.perform(
+                delete(Constants.URL_DELETE_PRINTABLE).param("id", TEST_DELETE_PRINTABLE_ID_STRING))
+                .andExpect(status().isForbidden())
+                .andReturn();
+    }
+
+    @Test
+    @WithMockUser(DB_TEST_USER_NAME)
+    public void deltetPrintableWithInvalidID() throws Exception {
+        MvcResult result = mockMvc.perform(
+                delete(Constants.URL_DELETE_PRINTABLE).param("id", INVALID_PRINTABLE_ID_STRING))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Response response = getResponseBodyOf(result, Response.class);
+
+        Assert.assertNull(response.getPayload());
+        Assert.assertTrue(!response.isSuccess());
+        Assert.assertTrue(!response.getErrorMap().isEmpty());
+        Assert.assertTrue(response.getErrorMap().containsKey(PrintableDeleteError.PRINTABLE_NOT_EXISTING.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(PrintableDeleteError.PRINTABLE_NOT_EXISTING.getDescription()));
+    }
+
+
 }

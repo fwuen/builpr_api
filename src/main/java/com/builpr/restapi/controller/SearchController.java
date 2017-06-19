@@ -2,10 +2,12 @@ package com.builpr.restapi.controller;
 
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.service.DatabasePrintableManager;
+import com.builpr.restapi.converter.PrintableReferenceToPrintableConverter;
 import com.builpr.restapi.error.search.SearchError;
 import com.builpr.restapi.model.Request.Search.SearchRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.Search.SearchResponse;
+import com.builpr.restapi.utils.CategoryValidator;
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
 import com.builpr.search.SearchManagerException;
@@ -20,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
-import static com.builpr.Constants.SOLR_BASE_URL;
-import static com.builpr.Constants.URL_SEARCH;
+import static com.builpr.Constants.*;
 
 /**
  * SearchController
@@ -30,9 +30,13 @@ import static com.builpr.Constants.URL_SEARCH;
 @RestController
 public class SearchController {
     private DatabasePrintableManager databasePrintableManager;
+    private CategoryValidator categoryValidator;
+    private PrintableReferenceToPrintableConverter converter;
 
     public SearchController() {
         databasePrintableManager = new DatabasePrintableManager();
+        categoryValidator = new CategoryValidator();
+        converter = new PrintableReferenceToPrintableConverter();
     }
 
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
@@ -48,7 +52,7 @@ public class SearchController {
             response.setSuccess(false);
             response.addError(SearchError.INVALID_RATING_FILTER);
         }
-        request.setCategories(databasePrintableManager.checkCategories(request.getCategories()));
+        request.setCategories(categoryValidator.checkCategories(request.getCategories()));
         if (!Objects.equals(request.getOrder(), "asc")
                 && !Objects.equals(request.getOrder(), "desc")
                 && request.getOrder() != null) {
@@ -117,7 +121,7 @@ public class SearchController {
             searchResponse.setResults(null);
         } else {
 
-            List<Printable> printableList = databasePrintableManager.getPrintableList(foundPrintable);
+            List<Printable> printableList = converter.getPrintableList(foundPrintable);
             searchResponse.setResults(printableList);
         }
         response.setPayload(searchResponse);

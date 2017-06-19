@@ -56,7 +56,7 @@ public class Constants {
     public static final String USERNAME_PATTERN = "[A-Za-z][A-Za-z0-9_]{3,}[A-Z-a-z0-9]";
     public static final int MIN_PASSWD_LENGTH = 6;
 
-    public static final String TEST_PATH = "C:\\";
+    public static final String TEST_PATH = "C:\\Users\\Public\\";
 
     public static final String SMTP_SERVER = "smtp.gmail.com";
     public static final int TLS_PORT = 587;

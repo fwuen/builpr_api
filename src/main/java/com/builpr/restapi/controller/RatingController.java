@@ -12,6 +12,7 @@ import com.builpr.restapi.error.rating.RatingNewError;
 import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
+import com.builpr.restapi.utils.CategoryValidator;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -42,7 +43,7 @@ public class RatingController {
     @ResponseBody
     public Response<RatingPayload> createRating(Principal principal, @RequestBody RatingNewRequest request) {
         Response<RatingPayload> response = new Response<>();
-        if (request.getPrintableID() == 0 || !databasePrintableManager.checkPrintableId(request.getPrintableID())) {
+        if (databasePrintableManager.getPrintableById(request.getPrintableID()) == null) {
             response.setSuccess(false);
             response.addError(RatingNewError.PRINTABLE_NOT_EXISTING);
         }

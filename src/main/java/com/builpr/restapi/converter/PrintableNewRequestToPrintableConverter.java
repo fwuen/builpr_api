@@ -17,8 +17,6 @@ public class PrintableNewRequestToPrintableConverter {
         printable.setTitle(request.getTitle());
         printable.setDescription(request.getDescription());
         printable.setUploaderId(userID);
-        Date currentDate = new Date(System.currentTimeMillis());
-        printable.setUploadDate(currentDate);
         printable.setFilePath(path);
 
         return printable;
