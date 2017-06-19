@@ -6,12 +6,13 @@ import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
 import com.speedment.runtime.core.manager.Manager;
+import com.speedment.runtime.field.BooleanField;
 import com.speedment.runtime.field.ComparableField;
 import com.speedment.runtime.field.IntField;
 import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
-import com.speedment.runtime.typemapper.integer.IntegerZeroOneToBooleanMapper;
+import com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper;
 import java.sql.Timestamp;
 
 /**
@@ -77,11 +78,11 @@ public interface GeneratedMessage {
      * This Field corresponds to the {@link Message} field that can be obtained
      * using the {@link Message#getRead()} method.
      */
-    ComparableField<Message, Integer, Boolean> READ = ComparableField.create(
+    BooleanField<Message, Integer> READ = BooleanField.create(
         Identifier.READ,
         Message::getRead,
         Message::setRead,
-        new IntegerZeroOneToBooleanMapper(), 
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
         false
     );
     /**
@@ -134,7 +135,7 @@ public interface GeneratedMessage {
      * 
      * @return the read of this Message
      */
-    Boolean getRead();
+    boolean getRead();
     
     /**
      * Returns the sendTime of this Message. The sendTime field corresponds to
@@ -187,7 +188,7 @@ public interface GeneratedMessage {
      * @param read to set of this Message
      * @return     this Message instance
      */
-    Message setRead(Boolean read);
+    Message setRead(boolean read);
     
     /**
      * Sets the sendTime of this Message. The sendTime field corresponds to the

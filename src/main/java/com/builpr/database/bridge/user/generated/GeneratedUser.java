@@ -5,11 +5,12 @@ import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
 import com.speedment.runtime.core.util.OptionalUtil;
+import com.speedment.runtime.field.BooleanField;
 import com.speedment.runtime.field.ComparableField;
 import com.speedment.runtime.field.IntField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
-import com.speedment.runtime.typemapper.integer.IntegerZeroOneToBooleanMapper;
+import com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Optional;
@@ -141,55 +142,55 @@ public interface GeneratedUser {
      * This Field corresponds to the {@link User} field that can be obtained
      * using the {@link User#getShowName()} method.
      */
-    ComparableField<User, Integer, Boolean> SHOW_NAME = ComparableField.create(
+    BooleanField<User, Integer> SHOW_NAME = BooleanField.create(
         Identifier.SHOW_NAME,
         User::getShowName,
         User::setShowName,
-        new IntegerZeroOneToBooleanMapper(), 
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
         false
     );
     /**
      * This Field corresponds to the {@link User} field that can be obtained
      * using the {@link User#getShowBirthday()} method.
      */
-    ComparableField<User, Integer, Boolean> SHOW_BIRTHDAY = ComparableField.create(
+    BooleanField<User, Integer> SHOW_BIRTHDAY = BooleanField.create(
         Identifier.SHOW_BIRTHDAY,
         User::getShowBirthday,
         User::setShowBirthday,
-        new IntegerZeroOneToBooleanMapper(), 
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
         false
     );
     /**
      * This Field corresponds to the {@link User} field that can be obtained
      * using the {@link User#getShowEmail()} method.
      */
-    ComparableField<User, Integer, Boolean> SHOW_EMAIL = ComparableField.create(
+    BooleanField<User, Integer> SHOW_EMAIL = BooleanField.create(
         Identifier.SHOW_EMAIL,
         User::getShowEmail,
         User::setShowEmail,
-        new IntegerZeroOneToBooleanMapper(), 
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
         false
     );
     /**
      * This Field corresponds to the {@link User} field that can be obtained
      * using the {@link User#getActivated()} method.
      */
-    ComparableField<User, Integer, Boolean> ACTIVATED = ComparableField.create(
+    BooleanField<User, Integer> ACTIVATED = BooleanField.create(
         Identifier.ACTIVATED,
         User::getActivated,
         User::setActivated,
-        new IntegerZeroOneToBooleanMapper(), 
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
         false
     );
     /**
      * This Field corresponds to the {@link User} field that can be obtained
      * using the {@link User#getDeleted()} method.
      */
-    ComparableField<User, Integer, Boolean> DELETED = ComparableField.create(
+    BooleanField<User, Integer> DELETED = BooleanField.create(
         Identifier.DELETED,
         User::getDeleted,
         User::setDeleted,
-        new IntegerZeroOneToBooleanMapper(), 
+        new PrimitiveIntegerZeroOneToBooleanMapper(), 
         false
     );
     
@@ -279,7 +280,7 @@ public interface GeneratedUser {
      * 
      * @return the showName of this User
      */
-    Boolean getShowName();
+    boolean getShowName();
     
     /**
      * Returns the showBirthday of this User. The showBirthday field corresponds
@@ -287,7 +288,7 @@ public interface GeneratedUser {
      * 
      * @return the showBirthday of this User
      */
-    Boolean getShowBirthday();
+    boolean getShowBirthday();
     
     /**
      * Returns the showEmail of this User. The showEmail field corresponds to
@@ -295,7 +296,7 @@ public interface GeneratedUser {
      * 
      * @return the showEmail of this User
      */
-    Boolean getShowEmail();
+    boolean getShowEmail();
     
     /**
      * Returns the activated of this User. The activated field corresponds to
@@ -303,7 +304,7 @@ public interface GeneratedUser {
      * 
      * @return the activated of this User
      */
-    Boolean getActivated();
+    boolean getActivated();
     
     /**
      * Returns the deleted of this User. The deleted field corresponds to the
@@ -311,7 +312,7 @@ public interface GeneratedUser {
      * 
      * @return the deleted of this User
      */
-    Boolean getDeleted();
+    boolean getDeleted();
     
     /**
      * Sets the userId of this User. The userId field corresponds to the
@@ -410,7 +411,7 @@ public interface GeneratedUser {
      * @param showName to set of this User
      * @return         this User instance
      */
-    User setShowName(Boolean showName);
+    User setShowName(boolean showName);
     
     /**
      * Sets the showBirthday of this User. The showBirthday field corresponds to
@@ -419,7 +420,7 @@ public interface GeneratedUser {
      * @param showBirthday to set of this User
      * @return             this User instance
      */
-    User setShowBirthday(Boolean showBirthday);
+    User setShowBirthday(boolean showBirthday);
     
     /**
      * Sets the showEmail of this User. The showEmail field corresponds to the
@@ -428,7 +429,7 @@ public interface GeneratedUser {
      * @param showEmail to set of this User
      * @return          this User instance
      */
-    User setShowEmail(Boolean showEmail);
+    User setShowEmail(boolean showEmail);
     
     /**
      * Sets the activated of this User. The activated field corresponds to the
@@ -437,7 +438,7 @@ public interface GeneratedUser {
      * @param activated to set of this User
      * @return          this User instance
      */
-    User setActivated(Boolean activated);
+    User setActivated(boolean activated);
     
     /**
      * Sets the deleted of this User. The deleted field corresponds to the
@@ -446,7 +447,7 @@ public interface GeneratedUser {
      * @param deleted to set of this User
      * @return        this User instance
      */
-    User setDeleted(Boolean deleted);
+    User setDeleted(boolean deleted);
     
     enum Identifier implements ColumnIdentifier<User> {
         

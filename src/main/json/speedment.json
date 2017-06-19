@@ -192,6 +192,7 @@
                     "nullable" : false,
                     "autoIncrement" : true,
                     "name" : "message_id",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "message_id",
                     "ordinalPosition" : 1,
                     "enabled" : true
@@ -211,7 +212,9 @@
                     "expanded" : true,
                     "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "receiver_id",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "receiver_id",
                     "ordinalPosition" : 3,
                     "enabled" : true
@@ -220,7 +223,9 @@
                     "databaseType" : "java.lang.String",
                     "expanded" : true,
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "text",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "text",
                     "ordinalPosition" : 4,
                     "enabled" : true
@@ -228,7 +233,7 @@
                   {
                     "databaseType" : "java.lang.Integer",
                     "expanded" : true,
-                    "typeMapper" : "com.speedment.runtime.typemapper.integer.IntegerZeroOneToBooleanMapper",
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
                     "autoIncrement" : false,
                     "name" : "read",
@@ -241,7 +246,9 @@
                     "databaseType" : "java.sql.Timestamp",
                     "expanded" : true,
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "send_time",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "send_time",
                     "ordinalPosition" : 6,
                     "enabled" : true
@@ -793,7 +800,9 @@
                     "expanded" : true,
                     "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
                     "nullable" : false,
+                    "autoIncrement" : false,
                     "name" : "user_id",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "user_id",
                     "ordinalPosition" : 1,
                     "enabled" : true
@@ -964,7 +973,9 @@
                     "databaseType" : "java.lang.String",
                     "expanded" : true,
                     "nullable" : true,
+                    "autoIncrement" : false,
                     "name" : "description",
+                    "nullableImplementation" : "OPTIONAL",
                     "id" : "description",
                     "ordinalPosition" : 10,
                     "enabled" : true
@@ -972,7 +983,7 @@
                   {
                     "databaseType" : "java.lang.Integer",
                     "expanded" : true,
-                    "typeMapper" : "com.speedment.runtime.typemapper.integer.IntegerZeroOneToBooleanMapper",
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
                     "autoIncrement" : false,
                     "name" : "show_name",
@@ -984,7 +995,7 @@
                   {
                     "databaseType" : "java.lang.Integer",
                     "expanded" : true,
-                    "typeMapper" : "com.speedment.runtime.typemapper.integer.IntegerZeroOneToBooleanMapper",
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
                     "autoIncrement" : false,
                     "name" : "show_birthday",
@@ -996,7 +1007,7 @@
                   {
                     "databaseType" : "java.lang.Integer",
                     "expanded" : true,
-                    "typeMapper" : "com.speedment.runtime.typemapper.integer.IntegerZeroOneToBooleanMapper",
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
                     "autoIncrement" : false,
                     "name" : "show_email",
@@ -1008,7 +1019,7 @@
                   {
                     "databaseType" : "java.lang.Integer",
                     "expanded" : true,
-                    "typeMapper" : "com.speedment.runtime.typemapper.integer.IntegerZeroOneToBooleanMapper",
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
                     "autoIncrement" : false,
                     "name" : "activated",
@@ -1020,7 +1031,7 @@
                   {
                     "databaseType" : "java.lang.Integer",
                     "expanded" : true,
-                    "typeMapper" : "com.speedment.runtime.typemapper.integer.IntegerZeroOneToBooleanMapper",
+                    "typeMapper" : "com.speedment.runtime.typemapper.integer.PrimitiveIntegerZeroOneToBooleanMapper",
                     "nullable" : false,
                     "autoIncrement" : false,
                     "name" : "deleted",
