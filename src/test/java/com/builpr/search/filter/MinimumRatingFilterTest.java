@@ -3,14 +3,8 @@ package com.builpr.search.filter;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Proves test-methods for MinimumRatingFilter-class
- */
 public class MinimumRatingFilterTest {
 
-    /**
-     * Create a MinimumRatingFilter-object with the lowest possible rating as parameter
-     */
     @Test
     public void createWithLowestPossibleRating() {
         MinimumRatingFilter filter = new MinimumRatingFilter(
@@ -21,19 +15,11 @@ public class MinimumRatingFilterTest {
         Assert.assertEquals(MinimumRatingFilter.LOWEST_POSSIBLE_RATING, filter.getMinimumRating());
     }
 
-    /**
-     * Try to create a MinimumRatingFilter-object with a negative parameter
-     * The test should fail with an IllegalArgumentException
-     */
     @Test(expected = IllegalArgumentException.class)
     public void createWithNegative() {
         new MinimumRatingFilter(-1);
     }
 
-    /**
-     * Try to create a MinimumRatingFilter-object with a too low rating as parameter
-     * The test should fail with an IllegalArgumentException
-     */
     @Test(expected = IllegalArgumentException.class)
     public void createWithTooLowRating() {
         new MinimumRatingFilter(
@@ -41,10 +27,6 @@ public class MinimumRatingFilterTest {
         );
     }
 
-    /**
-     * Try to create a MinimumRatingfilter-object with a too high rating as parameter
-     * The test should fail with an IllegalArgumentException
-     */
     @Test(expected = IllegalArgumentException.class)
     public void createWithTooHighRating() {
         new MinimumRatingFilter(

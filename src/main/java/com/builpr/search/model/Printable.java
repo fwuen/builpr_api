@@ -48,7 +48,7 @@ public class Printable extends Indexable {
 
     
     /**
-     * Creates an Printable-object
+     * Creates a Printable-object
      */
     private Printable() {
     }

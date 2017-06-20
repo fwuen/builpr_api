@@ -12,10 +12,6 @@ import java.util.Date;
 
 public class SolrInputDocumentFactoryTest {
 
-    /**
-     * Tries to get a SolrInputDocument-object from the factory with null as parameter
-     * The test should fail with a NullPointerException
-     */
     @Test(expected = NullPointerException.class)
     public void getInputDocumentWithNull() {
         SolrInputDocumentFactory factory = new SolrInputDocumentFactory();
@@ -23,10 +19,7 @@ public class SolrInputDocumentFactoryTest {
 
         factory.getInputDocumentWith(indexable);
     }
-    /**
-     * Tries to get a SolrInputDocument-object from the factory with a legit Indexable-object as parameter
-     * The test should be successful
-     */
+
     @Test
     public void getInputDocumentWithLegitIndexable() {
         SolrInputDocumentFactory factory = new SolrInputDocumentFactory();

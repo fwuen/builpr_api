@@ -5,6 +5,7 @@ import com.builpr.search.SORT;
 import com.builpr.search.filter.Filter;
 import com.google.common.base.Verify;
 import org.assertj.core.util.Lists;
+import org.junit.Assert;
 import org.junit.Test;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class SolrQueryFactoryTest {
     @Test
     public void testCreate() {
         SolrQueryFactory solrQueryFactory = new SolrQueryFactory();
-        Verify.verifyNotNull(solrQueryFactory);
+        Assert.assertNotNull(solrQueryFactory);
     }
 
     @Test(expected = NullPointerException.class)

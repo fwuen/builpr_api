@@ -41,8 +41,6 @@ public class SolrSearchManagerBasicTest {
     public void reachabilityCheckWithSolrClient() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(SolrTestConstants.REMOTE_BASE_URL_EXTERN).build());
         Assert.assertNotNull(solrSearchManager);
-        
-        System.out.println("" + solrSearchManager.isReachable());
     }
     
     @Test
