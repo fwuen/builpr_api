@@ -9,22 +9,17 @@ import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.database.service.DatabaseUserManager;
+import com.builpr.restapi.converter.PrintableModelToPrintablePayloadConverter;
 import com.builpr.restapi.model.Response.Response;
+import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import com.builpr.restapi.model.Response.profile.ProfilePayload;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.springframework.security.access.method.P;
+import org.junit.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MvcResult;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.builpr.Constants.URL_PROFILE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -32,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * tests the profileController
- * @todo fertigstellen
  */
 public class ProfileControllerTest extends ControllerTest {
 
@@ -68,7 +62,7 @@ public class ProfileControllerTest extends ControllerTest {
 
         testUserNoPrintables = new UserImpl()
                 .setUsername(PROFILE_TEST_NO_PRINTABLES_USERNAME)
-                .setEmail("test_user@mail.de")
+                .setEmail("profile_test1@mail.de")
                 .setPassword(new BCryptPasswordEncoder().encode("password"))
                 .setBirthday(new Date(System.currentTimeMillis() - 1231231))
                 .setFirstname("Test")
@@ -79,7 +73,7 @@ public class ProfileControllerTest extends ControllerTest {
 
         testUserWithPrintables = new UserImpl()
                 .setUsername(PROFILE_TEST_PRINTABLES_USERNAME)
-                .setEmail("test_user2@mail.de")
+                .setEmail("profile_test2@mail.de")
                 .setPassword(new BCryptPasswordEncoder().encode("password"))
                 .setBirthday(new Date(System.currentTimeMillis() - 1123123))
                 .setFirstname("Test")
@@ -128,16 +122,18 @@ public class ProfileControllerTest extends ControllerTest {
         ratingUser1 = userManager.persist(ratingUser1);
         ratingUser2 = userManager.persist(ratingUser2);
 
-        printable1 = new PrintableImpl()
+         printable1 = new PrintableImpl()
                 .setPrintableId(PRINTABLE_1_ID)
                 .setTitle("printable1")
                 .setDescription("Printable")
-                .setUploaderId(testUserWithPrintables.getUserId());
-        printable2 = new PrintableImpl()
+                .setUploaderId(testUserWithPrintables.getUserId())
+                .setFilePath("/path1");
+         printable2 = new PrintableImpl()
                 .setPrintableId(PRINTABLE_2_ID)
                 .setTitle("printable2")
                 .setDescription("Printable")
-                .setUploaderId(testUserWithPrintables.getUserId());
+                .setUploaderId(testUserWithPrintables.getUserId())
+                .setFilePath("/path2");
 
 
         DatabasePrintableManager printableManager = new DatabasePrintableManager();
@@ -158,16 +154,18 @@ public class ProfileControllerTest extends ControllerTest {
                 .setUserId(ratingUser2.getUserId());
 
         if (ratingManager.isPresent(RATING_1_ID)) {
-            ratingManager.persist(rating1);
+            ratingManager.deleteRatingByID(RATING_1_ID);
         }
         if (ratingManager.isPresent(RATING_2_ID)) {
-            ratingManager.persist(rating2);
+            ratingManager.deleteRatingByID(RATING_1_ID);
         }
 
+        rating1 = ratingManager.persist(rating1);
+        rating2 = ratingManager.persist(rating2);
     }
 
     @AfterClass
-    public static void tearDownDatabse() {
+    public static void tearDownDatabase() {
 
         if (userManager.isPresent(PROFILE_TEST_NO_PRINTABLES_USERNAME)) {
             userManager.deleteByUsername(PROFILE_TEST_NO_PRINTABLES_USERNAME);
@@ -223,6 +221,7 @@ public class ProfileControllerTest extends ControllerTest {
         Assert.assertEquals(0, profilePayload.getRatingCount());
     }
 
+    @Test
     public void testShowProfileForUserWithPrintables() throws Exception {
         MvcResult result = mockMvc.perform(
                 get(URL_PROFILE).param(KEY, testUserWithPrintables.getUserId()+"")
@@ -237,17 +236,20 @@ public class ProfileControllerTest extends ControllerTest {
         ProfilePayload profilePayload = objectMapper.convertValue(payload, ProfilePayload.class);
 
         Assert.assertEquals(testUserWithPrintables.getUsername(), profilePayload.getUsername());
-        Assert.assertEquals(testUserWithPrintables.getEmail(), profilePayload.getEmail());
-        Assert.assertEquals(testUserWithPrintables.getBirthday().toString(), profilePayload.getBirthday());
-        Assert.assertEquals(testUserWithPrintables.getFirstname(), profilePayload.getFirstname());
-        Assert.assertEquals(testUserWithPrintables.getLastname(), profilePayload.getLastname());
+        Assert.assertNull(profilePayload.getEmail());
+        Assert.assertNull(profilePayload.getBirthday());
+        Assert.assertNull(profilePayload.getFirstname());
+        Assert.assertNull(profilePayload.getLastname());
         Assert.assertEquals(testUserWithPrintables.getDescription().isPresent() ? testUserNoPrintables.getDescription().get() : null
                 , profilePayload.getDescription());
-        List<Printable> expectedPrintableList = Lists.newArrayList();
-        expectedPrintableList.add(printable1);
-        expectedPrintableList.add(printable2);
-        Assert.assertEquals(new ArrayList<Printable>(), profilePayload.getPrintables());
-        Assert.assertEquals((rating1.getRating() + rating1.getRating()/2), profilePayload.getRating(), 0.001);
+        List<PrintablePayload> expectedPrintableList = Lists.newArrayList();
+        // @todo vll mal rausfinden, wieso man hier nochmal neu auslsesn muss
+        expectedPrintableList.add(PrintableModelToPrintablePayloadConverter.from(printableManager.getPrintableById(PRINTABLE_1_ID)));
+        expectedPrintableList.add(PrintableModelToPrintablePayloadConverter.from(printableManager.getPrintableById(PRINTABLE_2_ID)));
+
+        List<PrintablePayload> actualPrintableList = Lists.newArrayList(profilePayload.getPrintables());
+        Assert.assertEquals(expectedPrintableList, actualPrintableList);
+        Assert.assertEquals(((rating1.getRating() + rating2.getRating())/2.0), profilePayload.getRating(), 0.001);
         Assert.assertEquals(2, profilePayload.getRatingCount());
     }
 }

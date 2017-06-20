@@ -87,7 +87,7 @@
                 "enabled" : true
               },
               {
-                "expanded" : true,
+                "expanded" : false,
                 "foreignKeys" : [
                   {
                     "expanded" : false,
@@ -692,7 +692,7 @@
                     "enabled" : true
                   },
                   {
-                    "databaseType" : "java.sql.Date",
+                    "databaseType" : "java.sql.Timestamp",
                     "expanded" : true,
                     "nullable" : false,
                     "name" : "rating_time",

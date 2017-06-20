@@ -33,7 +33,7 @@ public class PrintableModelToPrintablePayloadConverter {
         }
 
         List<Rating> ratingList = databaseRatingManager.getRatingsForPrintable(printable.getPrintableId());
-        List<RatingPayload> ratingPayloadList= new ArrayList<>();
+        List<RatingPayload> ratingPayloadList = new ArrayList<>();
 
         for (Rating rating :
                 ratingList) {
@@ -46,7 +46,8 @@ public class PrintableModelToPrintablePayloadConverter {
                 .setTitle(printable.getTitle())
                 .setDescription(printable.getDescription().isPresent() ? printable.getDescription().get() : null)
                 .setCategories(categoryNames)
-                .setRatings(ratingPayloadList);
+                .setRatings(ratingPayloadList)
+                .setUploadTime(printable.getUploadTime().toString());
     }
 
 }

@@ -36,7 +36,7 @@ public class PrintableToResponseConverter {
             response.setDescription(printable.getDescription().get());
         }
         response.setDownloads(printable.getNumDownloads());
-        response.setUploadTime(printable.getUploadTime());
+        response.setUploadTime(printable.getUploadTime().toString());
         response.setRatings(ratings);
         response.setCategories(categories);
 

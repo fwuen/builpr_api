@@ -77,7 +77,6 @@ public class RatingControllerTest extends ControllerTest {
         DatabaseRatingManager databaseRatingManager = new DatabaseRatingManager();
         RatingImpl rating = new RatingImpl();
         rating.setUserId(userManager.getByUsername("test").getUserId());
-        rating.setRatingTime(new Date(System.currentTimeMillis()));
         rating.setRating(5);
         rating.setPrintableId(123456789);
         rating.setMsg("testRating");

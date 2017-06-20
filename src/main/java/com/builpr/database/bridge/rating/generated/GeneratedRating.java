@@ -13,7 +13,7 @@ import com.speedment.runtime.field.IntField;
 import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 /**
@@ -79,7 +79,7 @@ public interface GeneratedRating {
      * This Field corresponds to the {@link Rating} field that can be obtained
      * using the {@link Rating#getRatingTime()} method.
      */
-    ComparableField<Rating, Date, Date> RATING_TIME = ComparableField.create(
+    ComparableField<Rating, Timestamp, Timestamp> RATING_TIME = ComparableField.create(
         Identifier.RATING_TIME,
         Rating::getRatingTime,
         Rating::setRatingTime,
@@ -136,7 +136,7 @@ public interface GeneratedRating {
      * 
      * @return the ratingTime of this Rating
      */
-    Date getRatingTime();
+    Timestamp getRatingTime();
     
     /**
      * Returns the ratingId of this Rating. The ratingId field corresponds to
@@ -189,7 +189,7 @@ public interface GeneratedRating {
      * @param ratingTime to set of this Rating
      * @return           this Rating instance
      */
-    Rating setRatingTime(Date ratingTime);
+    Rating setRatingTime(Timestamp ratingTime);
     
     /**
      * Sets the ratingId of this Rating. The ratingId field corresponds to the

@@ -35,7 +35,7 @@ public class PrintablePayload {
     private List<RatingPayload> ratings;
 
     @Getter
-    private Timestamp uploadTime;
+    private String uploadTime;
 
     public PrintablePayload setPrintableID(int printableID) {
         this.printableID = printableID;
@@ -72,8 +72,38 @@ public class PrintablePayload {
         return this;
     }
 
-    public PrintablePayload setUploadTime(Timestamp timestamp) {
+    public PrintablePayload setUploadTime(String uploadTime) {
         this.uploadTime = uploadTime;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PrintablePayload that = (PrintablePayload) o;
+
+        if (printableID != that.printableID) return false;
+        if (ownerID != that.ownerID) return false;
+        if (downloads != that.downloads) return false;
+        if (!title.equals(that.title)) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (!categories.equals(that.categories)) return false;
+        if (ratings != null ? !ratings.equals(that.ratings) : that.ratings != null) return false;
+        return uploadTime.equals(that.uploadTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = printableID;
+        result = 31 * result + ownerID;
+        result = 31 * result + title.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + categories.hashCode();
+        result = 31 * result + downloads;
+        result = 31 * result + (ratings != null ? ratings.hashCode() : 0);
+        result = 31 * result + uploadTime.hashCode();
+        return result;
     }
 }

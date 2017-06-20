@@ -6,7 +6,7 @@ import com.builpr.database.bridge.user.User;
 import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.core.manager.Manager;
 import com.speedment.runtime.core.util.OptionalUtil;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
@@ -27,7 +27,7 @@ public abstract class GeneratedRatingImpl implements Rating {
     private int printableId;
     private int rating;
     private String msg;
-    private Date ratingTime;
+    private Timestamp ratingTime;
     private int ratingId;
     
     protected GeneratedRatingImpl() {
@@ -55,7 +55,7 @@ public abstract class GeneratedRatingImpl implements Rating {
     }
     
     @Override
-    public Date getRatingTime() {
+    public Timestamp getRatingTime() {
         return ratingTime;
     }
     
@@ -89,7 +89,7 @@ public abstract class GeneratedRatingImpl implements Rating {
     }
     
     @Override
-    public Rating setRatingTime(Date ratingTime) {
+    public Rating setRatingTime(Timestamp ratingTime) {
         this.ratingTime = ratingTime;
         return this;
     }

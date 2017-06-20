@@ -50,8 +50,8 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
      * @param rating Rating
      * @return void
      */
-    public void persist(Rating rating) {
-        getDao().persist(rating);
+    public Rating persist(Rating rating) {
+        return getDao().persist(rating);
     }
 
     /**
@@ -63,7 +63,6 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
         rating.setMsg(request.getText());
         rating.setPrintableId(request.getPrintableID());
         rating.setRating(request.getRating());
-        rating.setRatingTime(new Date(System.currentTimeMillis()));
         rating.setUserId(userID);
 
         persist(rating);
