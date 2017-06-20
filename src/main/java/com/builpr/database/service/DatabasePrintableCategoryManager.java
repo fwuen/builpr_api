@@ -48,7 +48,7 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
         PrintableCategoryImpl printableCategory = new PrintableCategoryImpl();
         printableCategory.setPrintableId(printableID);
         printableCategory.setCategoryId(categoryID);
-        getDao().persist(printableCategory);
+        persist(printableCategory);
     }
 
     public void persist(PrintableCategory printableCategory) {
@@ -73,7 +73,7 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
      * @param printableCategory PrintableCategory
      * @return void
      */
-    private void delete(PrintableCategory printableCategory) {
+    public void delete(PrintableCategory printableCategory) {
         getDao().remove(printableCategory);
     }
 }
