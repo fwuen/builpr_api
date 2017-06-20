@@ -1,6 +1,7 @@
 package com.builpr.restapi.utils;
 
 import com.builpr.database.bridge.printable.Printable;
+import com.builpr.database.bridge.rating.Rating;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.restapi.converter.PrintableToSolrPrintableConverter;
 import com.builpr.search.SearchManagerException;
@@ -13,10 +14,10 @@ import java.util.List;
 /**
  *
  */
-public class PrintableIndexing {
+public class PrintableSolrHelper {
     private DatabasePrintableManager databasePrintableManager;
 
-    public PrintableIndexing() {
+    public PrintableSolrHelper() {
         databasePrintableManager = new DatabasePrintableManager();
     }
 
@@ -44,5 +45,23 @@ public class PrintableIndexing {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
         solrSearchManager.clearIndex();
 
+    }
+
+    /**
+     * @param ratings List<Rating>
+     * @return double
+     */
+    public double getAverageRating(List<Rating> ratings) {
+        double average = 0.0;
+        int ratingCounter = 0;
+        for (Rating rating : ratings) {
+            average = +rating.getRating();
+            ratingCounter++;
+        }
+        if (ratingCounter == 0) {
+            return 0;
+        }
+        average = average / ratingCounter;
+        return average;
     }
 }
