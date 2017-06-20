@@ -96,22 +96,4 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
                 this.getRatingByRatingID(ratingId)
         );
     }
-
-    /**
-     * @param ratings List<Rating>
-     * @return double
-     */
-    public double getAverageRating(List<Rating> ratings) {
-        double average = 0.0;
-        int ratingCounter = 0;
-        for (Rating rating : ratings) {
-            average = +rating.getRating();
-            ratingCounter++;
-        }
-        if (ratingCounter == 0) {
-            return 0;
-        }
-        average = average / ratingCounter;
-        return average;
-    }
 }

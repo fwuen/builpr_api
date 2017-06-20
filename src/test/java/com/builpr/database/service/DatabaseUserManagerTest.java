@@ -1,7 +1,6 @@
 package com.builpr.database.service;
 
 import com.builpr.Constants;
-import com.builpr.database.bridge.BuilprApplication;
 import com.builpr.database.bridge.BuilprApplicationBuilder;
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserImpl;
