@@ -7,7 +7,8 @@ import lombok.NonNull;
 import java.util.List;
 
 /**
- * Provides the ability to do tag-filtering
+ * @author Felix Wünsche
+ *         Provides the ability to do tag-filtering
  */
 public class CategoryFilter extends Filter {
     

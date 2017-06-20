@@ -1,7 +1,8 @@
 package com.builpr.search;
 
 /**
- * Enum to store sorting order
+ * @author Alexander Zeitler
+ *         Enum to store sorting order
  */
 public enum ORDER {
     ASC, DESC

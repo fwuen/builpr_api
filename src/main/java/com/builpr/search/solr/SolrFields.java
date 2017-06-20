@@ -1,7 +1,8 @@
 package com.builpr.search.solr;
 
 /**
- * Stores Solr-fields and belonging value for boosting
+ * @author Alexander Zeitler
+ *         Stores Solr-fields and belonging value for boosting
  */
 public class SolrFields {
     
@@ -25,9 +26,9 @@ public class SolrFields {
     
     public static final String PRINT_MODEL_RATING = "rating";
     public static final float BOOST_MODEL_RATING = 1.5f;
-
+    
     public static final String PRINT_MODEL_DOWNLOADS = "numberOfDownloads";
     public static final float BOOST_MODEL_DOWNLOADS = 1.2f;
-
+    
     
 }

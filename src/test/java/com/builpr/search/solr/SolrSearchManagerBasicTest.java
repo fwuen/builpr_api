@@ -6,6 +6,9 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Felix Wünsche
+ */
 public class SolrSearchManagerBasicTest {
     //Creation Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -41,8 +44,6 @@ public class SolrSearchManagerBasicTest {
     public void reachabilityCheckWithSolrClient() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(SolrTestConstants.REMOTE_BASE_URL_EXTERN).build());
         Assert.assertNotNull(solrSearchManager);
-        
-        System.out.println("" + solrSearchManager.isReachable());
     }
     
     @Test

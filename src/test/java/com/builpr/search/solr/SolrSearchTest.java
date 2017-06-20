@@ -22,15 +22,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Felix Wünsche
+ */
 public class SolrSearchTest {
-
-    //TODO Festlegen von Testdaten für die Suchtests
-    //TODO Indexieren von zu durchsuchenden Modellen für die Tests
-    //TODO wie testet man dann das Indexieren?
-    //TODO Tests erweitern
-    //TODO Tests auf Datenintigrität (sind Daten wirdklich indexiert, kommen bei der Suche die richtigen Daten zurück?) oder nur auf Exceptions?
-    //TODO Alle Null-Tests nochmal überprüfen. Aktuell wird fast überall tatsächlich gesucht und eine leere Liste zurückgegeben --> gewollt?
-
+    
     private static final int car1Id = 1;
     private static final int towerId = 2;
     private static final int planeId = 3;
@@ -59,9 +55,9 @@ public class SolrSearchTest {
         categoriesCar1.add("makerbot");
         categoriesCar1.add("PLA");
         categoriesCar1.add("vehicle");
-    
+        
         Date date = new Date(System.currentTimeMillis());
-    
+        
         indexables.add(Printable.getBuilder().
                 withId(1).
                 withTitle(SolrTestConstants.p1Title).
@@ -72,7 +68,7 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withNumberOfDownloads(27442).
                 build());
-
+        
         indexables.add(Printable.getBuilder().
                 withCategories(categoriesTower).
                 withDescription("Tower").
@@ -83,7 +79,7 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withUploaderId(1).
                 build());
-    
+        
         categoriesPlane.add("plane");
         categoriesPlane.add("ww1");
         indexables.add(Printable.getBuilder().
@@ -96,7 +92,7 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withUploaderId(1).
                 build());
-
+        
         indexables.add(Printable.getBuilder().
                 withCategories(categoriesShisha).
                 withDescription(SolrTestConstants.p3Description).
@@ -107,7 +103,7 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withUploaderId(1).
                 build());
-    
+        
         indexables.add(Printable.getBuilder().
                 withCategories(categoriesFidget).
                 withDescription(SolrTestConstants.p4Description).
@@ -118,7 +114,7 @@ public class SolrSearchTest {
                 withUploaderId(1).
                 withTitle(SolrTestConstants.p4Title).
                 build());
-    
+        
         categoriesCarsWithSameCategory.add("car");
         indexables.add(Printable.getBuilder().
                 withCategories(categoriesCarsWithSameCategory).
@@ -130,7 +126,7 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withUploaderId(1).
                 build());
-    
+        
         indexables.add(Printable.getBuilder().
                 withCategories(categoriesCarsWithSameCategory).
                 withDescription("car3").
@@ -141,7 +137,7 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withUploaderId(1).
                 build());
-    
+        
         indexables.add(Printable.getBuilder().
                 withCategories(categoriesCarsWithSameCategory).
                 withDescription("car4").
@@ -152,7 +148,7 @@ public class SolrSearchTest {
                 withUploadDate(date).
                 withUploaderId(1).
                 build());
-    
+        
         indexables.add(Printable.getBuilder().
                 withCategories(categoriesCarsWithSameCategory).
                 withDescription("car5").
@@ -163,7 +159,7 @@ public class SolrSearchTest {
                 withUploaderId(1).
                 withTitle("car5").
                 build());
-    
+        
         indexables.add(Printable.getBuilder().
                 withCategories(categoriesShisha).
                 withDescription(SolrTestConstants.p3Description).
@@ -171,7 +167,7 @@ public class SolrSearchTest {
                 withNumberOfDownloads(1).
                 withId(shisha2Id).
                 withTitle("A Shisha").
-                withUploadDate(new Date(System.currentTimeMillis()-10000)).
+                withUploadDate(new Date(System.currentTimeMillis() - 10000)).
                 withUploaderId(1).
                 build());
         
@@ -183,10 +179,10 @@ public class SolrSearchTest {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         List<PrintableReference> res = solrSearchManager.search("tower");
-        Verify.verify(res.size() == 1);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == towerId);
+        Assert.assertTrue(res.size() == 1);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == towerId);
     }
-
+    
     @Test
     public void searchWithTermAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
@@ -196,11 +192,11 @@ public class SolrSearchTest {
         Preconditions.checkNotNull(filters);
         Preconditions.checkState(filters.size() == 1);
         List<PrintableReference> res = solrSearchManager.search("car", filters);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == car3Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == car4Id);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == car3Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == car4Id);
     }
-
+    
     @Test
     public void searchWithTermAndCategory() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
@@ -214,14 +210,14 @@ public class SolrSearchTest {
         Preconditions.checkState(categories.size() == 1);
         Preconditions.checkState(filters.size() == 1);
         List<PrintableReference> res = solrSearchManager.search("car", filters);
-        Verify.verify(res.size() == 5);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == car1Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == car2Id);
-        Verify.verify(Integer.parseInt(res.get(2).getId()) == car3Id);
-        Verify.verify(Integer.parseInt(res.get(3).getId()) == car4Id);
-        Verify.verify(Integer.parseInt(res.get(4).getId()) == car5Id);
+        Assert.assertTrue(res.size() == 5);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == car1Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == car2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(2).getId()) == car3Id);
+        Assert.assertTrue(Integer.parseInt(res.get(3).getId()) == car4Id);
+        Assert.assertTrue(Integer.parseInt(res.get(4).getId()) == car5Id);
     }
-
+    
     @Test
     public void searchWithTermAndCategoryAndMinimumRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
@@ -236,10 +232,10 @@ public class SolrSearchTest {
         Preconditions.checkState(filters.size() == 2);
         Preconditions.checkState(categories.size() == 1);
         List<PrintableReference> res = solrSearchManager.search("car", filters);
-        Verify.verify(res.size() == 3);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == car3Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == car4Id);
-        Verify.verify(Integer.parseInt(res.get(2).getId()) == car5Id);
+        Assert.assertTrue(res.size() == 3);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == car3Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == car4Id);
+        Assert.assertTrue(Integer.parseInt(res.get(2).getId()) == car5Id);
     }
     
     @Test
@@ -251,12 +247,12 @@ public class SolrSearchTest {
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(cf);
         List<PrintableReference> res = solrSearchManager.search("", filterList);
-        Verify.verify(res.size() == 5);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == car1Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == car2Id);
-        Verify.verify(Integer.parseInt(res.get(2).getId()) == car3Id);
-        Verify.verify(Integer.parseInt(res.get(3).getId()) == car4Id);
-        Verify.verify(Integer.parseInt(res.get(4).getId()) == car5Id);
+        Assert.assertTrue(res.size() == 5);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == car1Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == car2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(2).getId()) == car3Id);
+        Assert.assertTrue(Integer.parseInt(res.get(3).getId()) == car4Id);
+        Assert.assertTrue(Integer.parseInt(res.get(4).getId()) == car5Id);
     }
     
     @Test
@@ -270,11 +266,11 @@ public class SolrSearchTest {
         filterList.add(cf);
         filterList.add(mrf);
         List<PrintableReference> res = solrSearchManager.search("", filterList);
-        Verify.verify(res.size() == 4);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == car1Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == car3Id);
-        Verify.verify(Integer.parseInt(res.get(2).getId()) == car4Id);
-        Verify.verify(Integer.parseInt(res.get(3).getId()) == car5Id);
+        Assert.assertTrue(res.size() == 4);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == car1Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == car3Id);
+        Assert.assertTrue(Integer.parseInt(res.get(2).getId()) == car4Id);
+        Assert.assertTrue(Integer.parseInt(res.get(3).getId()) == car5Id);
     }
     
     @Test
@@ -284,13 +280,13 @@ public class SolrSearchTest {
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(mrf);
         List<PrintableReference> res = solrSearchManager.search("", filterList);
-        Verify.verify(res.size() == 6);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == planeId);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
-        Verify.verify(Integer.parseInt(res.get(2).getId()) == fidgetId);
-        Verify.verify(Integer.parseInt(res.get(3).getId()) == car3Id);
-        Verify.verify(Integer.parseInt(res.get(4).getId()) == car4Id);
-        Verify.verify(Integer.parseInt(res.get(5).getId()) == car5Id);
+        Assert.assertTrue(res.size() == 6);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == planeId);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(Integer.parseInt(res.get(2).getId()) == fidgetId);
+        Assert.assertTrue(Integer.parseInt(res.get(3).getId()) == car3Id);
+        Assert.assertTrue(Integer.parseInt(res.get(4).getId()) == car4Id);
+        Assert.assertTrue(Integer.parseInt(res.get(5).getId()) == car5Id);
     }
     
     @Test(expected = NullPointerException.class)
@@ -299,20 +295,18 @@ public class SolrSearchTest {
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.search(null);
     }
-
+    
     @Test(expected = NullPointerException.class)
     public void searchWithTermAndNullFilterList() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         List<Filter> filterList = null;
-
+        
         solrSearchManager.search("test", filterList);
     }
     
-    //TODO entweder komplett entfernen, da mit @NonNull überprüft wird, dass Wert nicht null ist oder funktionsfähig machen
-    
     @Test
-    public void searchWithTermAndNullCategory() throws SearchManagerException{
+    public void searchWithTermAndNullCategory() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         Preconditions.checkNotNull(solrSearchManager);
         List<Filter> filterList = Lists.newArrayList();
@@ -320,7 +314,7 @@ public class SolrSearchTest {
         Preconditions.checkNotNull(filterList);
         filterList.add(f);
         List<PrintableReference> res = solrSearchManager.search("test", filterList);
-        Verify.verify(res.size() == 0);
+        Assert.assertTrue(res.size() == 0);
     }
     
     @Test
@@ -331,7 +325,7 @@ public class SolrSearchTest {
         MinimumRatingFilter mrf = null;
         filterList.add(mrf);
         List<PrintableReference> res = solrSearchManager.search("test", filterList);
-        Verify.verify(res.size() == 0);
+        Assert.assertTrue(res.size() == 0);
     }
     
     @Test
@@ -343,7 +337,7 @@ public class SolrSearchTest {
         filterList.add(cf);
         filterList.add(mrf);
         List<PrintableReference> res = solrSearchManager.search("test", filterList);
-        Verify.verify(res.size() == 0);
+        Assert.assertTrue(res.size() == 0);
     }
     
     @Test
@@ -357,7 +351,7 @@ public class SolrSearchTest {
         filterList.add(cf);
         filterList.add(mrf);
         List<PrintableReference> res = solrSearchManager.search("test", filterList);
-        Verify.verify(res.size() == 0);
+        Assert.assertTrue(res.size() == 0);
     }
     
     @Test
@@ -369,7 +363,7 @@ public class SolrSearchTest {
         filterList.add(mrf);
         filterList.add(cf);
         List<PrintableReference> res = solrSearchManager.search("test", filterList);
-        Verify.verify(res.size() == 0);
+        Assert.assertTrue(res.size() == 0);
     }
     
     @Test(expected = NullPointerException.class)
@@ -397,123 +391,111 @@ public class SolrSearchTest {
     }
     
     @Test
-    public void searchWithTermAndSortByName() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByName() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByRating() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByRating() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByDownloads() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByDownloads() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByUploadDate() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByUploadDate() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByNameAndOrderAsc() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByNameAndOrderAsc() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.ASC);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByRatingAndOrderAsc() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByRatingAndOrderAsc() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING, ORDER.ASC);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByDownloadsAndOrderAsc() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByDownloadsAndOrderAsc() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.ASC);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByUploadDateAndOrderAsc() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByUploadDateAndOrderAsc() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.ASC);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shisha2Id);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shishaId);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shishaId);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByNameAndOrderDesc() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByNameAndOrderDesc() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.DESC);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shishaId);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shisha2Id);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByRatingAndOrderDesc() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByRatingAndOrderDesc() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING, ORDER.DESC);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shishaId);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shisha2Id);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByDownloadsAndOrderDesc() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByDownloadsAndOrderDesc() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.DESC);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shishaId);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shisha2Id);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
-
+    
     @Test
-    public void searchWithTermAndSortByUploadDateAndOrderDesc() throws SearchManagerException
-    {
+    public void searchWithTermAndSortByUploadDateAndOrderDesc() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
-        Verify.verify(res.size() == 2);
-        Verify.verify(Integer.parseInt(res.get(0).getId()) == shishaId);
-        Verify.verify(Integer.parseInt(res.get(1).getId()) == shisha2Id);
+        Assert.assertTrue(res.size() == 2);
+        Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
+        Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
     
     //TODO wie?
@@ -522,7 +504,7 @@ public class SolrSearchTest {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
     }
     
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void searchWithTermAndNullOrder() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         solrSearchManager.search("shisha", SORT.ALPHABETICAL, null);

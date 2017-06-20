@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Felix Wünsche
+ */
 public class SolrIndexDownTest {
     @BeforeClass
     public static void buildIndexForDeletes() throws SearchManagerException {
@@ -20,9 +23,9 @@ public class SolrIndexDownTest {
         List<String> categories = Lists.newArrayList();
         List<Indexable> indexables = Lists.newArrayList();
         categories.add("justdelete");
-    
+        
         Date date = new Date(System.currentTimeMillis());
-    
+        
         Printable p1 = Printable.getBuilder().
                 withId(1).
                 withTitle(SolrTestConstants.p1Title).
@@ -53,11 +56,11 @@ public class SolrIndexDownTest {
                 withUploadDate(date).
                 withNumberOfDownloads(0).
                 build();
-    
+        
         indexables.add(p1);
         indexables.add(p2);
         indexables.add(p3);
-    
+        
         solrSearchManager.addToIndex(indexables);
     }
     
@@ -69,14 +72,14 @@ public class SolrIndexDownTest {
         solrSearchManager.deleteFromIndex(printableReference);
     }
     
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testDeleteFromIndexMultiplePrintablesListNull() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> list = null;
         solrSearchManager.deleteFromIndex(list);
     }
     
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testDeleteFromIndexMultiplePrintablesOneIsNull() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
         List<PrintableReference> list = Lists.newArrayList();
