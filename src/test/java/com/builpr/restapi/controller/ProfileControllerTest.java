@@ -9,20 +9,25 @@ import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.database.service.DatabaseUserManager;
-import com.builpr.restapi.converter.PrintableModelToPrintablePayloadConverter;
+import com.builpr.restapi.converter.UserModelToProfileResponseConverter;
+import com.builpr.restapi.model.Request.ProfileEditRequest;
 import com.builpr.restapi.model.Response.Response;
-import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import com.builpr.restapi.model.Response.profile.ProfilePayload;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.util.Lists;
 import org.junit.*;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 import java.sql.Date;
 import java.util.*;
 
 import static com.builpr.Constants.URL_PROFILE;
+import static com.builpr.Constants.URL_PROFILE_EDIT;
+import static com.builpr.Constants.URL_REGISTER;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -33,21 +38,17 @@ public class ProfileControllerTest extends ControllerTest {
     private static User testUserNoPrintables;
     private static User testUserWithPrintables;
 
-    private static Rating rating1;
-    private static Rating rating2;
-
-    private static Printable printable1;
-    private static Printable printable2;
-
     private static DatabaseUserManager userManager = new DatabaseUserManager();
     private static DatabasePrintableManager printableManager = new DatabasePrintableManager();
     private static DatabaseRatingManager ratingManager = new DatabaseRatingManager();
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static ObjectMapper mapper = new ObjectMapper();
 
     private static final String PROFILE_TEST_NO_PRINTABLES_USERNAME = "no_printables";
     private static final String PROFILE_TEST_PRINTABLES_USERNAME = "printables";
     private static final String PROFILE_TEST_RATING_USERNAME_1 = "ratingUser1";
     private static final String PROFILE_TEST_RATING_USERNAME_2 = "ratingUser2";
+
+    private static final int NON_EXISTING_USER_ID = 1234567;
 
     private static final int PRINTABLE_1_ID = 1234;
     private static final int PRINTABLE_2_ID = 1235;
@@ -57,13 +58,47 @@ public class ProfileControllerTest extends ControllerTest {
 
     private static final String KEY = "id";
 
+
+    // attributes for editProfile()
+
+    private static final String VALID_EMAIL_FOR_EDIT = "newProfileMail@mail.com";
+    private static final String INVALID_EMAIL_FOR_EDIT = "newProfileMail@maio@d.com";
+
+    private static final String PASSWORD = "password";
+    private static final String INCORRECT_PASSWORD = "password123";
+
+    private static final String CORRECT_NEW_PASSWORD = "password1";
+    private static final String[] INCORRECT_NEW_PASSWORD_PAIR = {"password1", "password2"};
+    private static final String INVALID_NEW_PASSWORD = "abc";
+
+    private static final String NEW_FIRST_NAME = "Horst";
+    private static final String NEW_LAST_NAME = "Horstner";
+
+    private static final String NEW_DESCRIPTION = "new description";
+
+    private ProfileEditRequest validProfileEditRequest;
+
+    public ProfileControllerTest() {
+        validProfileEditRequest = new ProfileEditRequest()
+                .setEmail(VALID_EMAIL_FOR_EDIT)
+                .setOldPassword(PASSWORD)
+                .setPassword(CORRECT_NEW_PASSWORD)
+                .setPassword2(CORRECT_NEW_PASSWORD)
+                .setFirstName(NEW_FIRST_NAME)
+                .setLastName(NEW_LAST_NAME)
+                .setDescription(NEW_DESCRIPTION)
+                .setShowName(false)
+                .setShowEmail(false)
+                .setShowBirthday(false);
+    }
+
     @BeforeClass
     public static void setUpDatabase() {
 
         testUserNoPrintables = new UserImpl()
                 .setUsername(PROFILE_TEST_NO_PRINTABLES_USERNAME)
                 .setEmail("profile_test1@mail.de")
-                .setPassword(new BCryptPasswordEncoder().encode("password"))
+                .setPassword(new BCryptPasswordEncoder().encode(PASSWORD))
                 .setBirthday(new Date(System.currentTimeMillis() - 1231231))
                 .setFirstname("Test")
                 .setLastname("User")
@@ -74,10 +109,11 @@ public class ProfileControllerTest extends ControllerTest {
         testUserWithPrintables = new UserImpl()
                 .setUsername(PROFILE_TEST_PRINTABLES_USERNAME)
                 .setEmail("profile_test2@mail.de")
-                .setPassword(new BCryptPasswordEncoder().encode("password"))
+                .setPassword(new BCryptPasswordEncoder().encode(PASSWORD))
                 .setBirthday(new Date(System.currentTimeMillis() - 1123123))
                 .setFirstname("Test")
                 .setLastname("User2")
+                .setDescription("description")
                 .setShowBirthday(false)
                 .setShowName(false)
                 .setShowName(false);
@@ -116,19 +152,22 @@ public class ProfileControllerTest extends ControllerTest {
         if (userManager.isPresent(PROFILE_TEST_RATING_USERNAME_2)) {
             userManager.deleteByUsername(PROFILE_TEST_RATING_USERNAME_2);
         }
+        if (userManager.isPresent(NON_EXISTING_USER_ID)) {
+            userManager.deleteByID(NON_EXISTING_USER_ID);
+        }
 
         userManager.persist(testUserNoPrintables);
         testUserWithPrintables = userManager.persist(testUserWithPrintables);
         ratingUser1 = userManager.persist(ratingUser1);
         ratingUser2 = userManager.persist(ratingUser2);
 
-         printable1 = new PrintableImpl()
+        Printable printable1 = new PrintableImpl()
                 .setPrintableId(PRINTABLE_1_ID)
                 .setTitle("printable1")
                 .setDescription("Printable")
                 .setUploaderId(testUserWithPrintables.getUserId())
                 .setFilePath("/path1");
-         printable2 = new PrintableImpl()
+        Printable printable2 = new PrintableImpl()
                 .setPrintableId(PRINTABLE_2_ID)
                 .setTitle("printable2")
                 .setDescription("Printable")
@@ -140,13 +179,13 @@ public class ProfileControllerTest extends ControllerTest {
         printableManager.persist(printable1);
         printableManager.persist(printable2);
 
-        rating1 = new RatingImpl()
+        Rating rating1 = new RatingImpl()
                 .setRatingId(RATING_1_ID)
                 .setRating(5)
                 .setMsg("Ein suppa Ding")
                 .setPrintableId(PRINTABLE_1_ID)
                 .setUserId(ratingUser1.getUserId());
-        rating2 = new RatingImpl()
+        Rating rating2 = new RatingImpl()
                 .setRatingId(RATING_2_ID)
                 .setRating(2)
                 .setMsg("Ein suppa Ding")
@@ -160,8 +199,8 @@ public class ProfileControllerTest extends ControllerTest {
             ratingManager.deleteRatingByID(RATING_1_ID);
         }
 
-        rating1 = ratingManager.persist(rating1);
-        rating2 = ratingManager.persist(rating2);
+        ratingManager.persist(rating1);
+        ratingManager.persist(rating2);
     }
 
     @AfterClass
@@ -196,7 +235,8 @@ public class ProfileControllerTest extends ControllerTest {
     }
 
     @Test
-    public void testShowProfileForUserWithNoPrintables() throws Exception {
+    @SuppressWarnings("Duplicates")
+    public void showProfileForUserWithNoPrintables() throws Exception {
         MvcResult result = mockMvc.perform(
                 get(URL_PROFILE).param(KEY, testUserNoPrintables.getUserId()+"")
         )
@@ -207,22 +247,18 @@ public class ProfileControllerTest extends ControllerTest {
 
         Map payload = (LinkedHashMap) response.getPayload();
 
-        ProfilePayload profilePayload = objectMapper.convertValue(payload, ProfilePayload.class);
+        ProfilePayload profilePayload = mapper.convertValue(payload, ProfilePayload.class);
 
-        Assert.assertEquals(testUserNoPrintables.getUsername(), profilePayload.getUsername());
-        Assert.assertEquals(testUserNoPrintables.getEmail(), profilePayload.getEmail());
-        Assert.assertEquals(testUserNoPrintables.getBirthday().toString(), profilePayload.getBirthday());
-        Assert.assertEquals(testUserNoPrintables.getFirstname(), profilePayload.getFirstname());
-        Assert.assertEquals(testUserNoPrintables.getLastname(), profilePayload.getLastname());
-        Assert.assertEquals(testUserNoPrintables.getDescription().isPresent() ? testUserNoPrintables.getDescription().get() : null
-                , profilePayload.getDescription());
-        Assert.assertEquals(new ArrayList<Printable>(), profilePayload.getPrintables());
-        Assert.assertEquals(0, profilePayload.getRating(), 0.001);
-        Assert.assertEquals(0, profilePayload.getRatingCount());
+        // get the user directly from the database (for default fields)
+        testUserNoPrintables = userManager.getByUsername(PROFILE_TEST_NO_PRINTABLES_USERNAME);
+        ProfilePayload expectedPayload = UserModelToProfileResponseConverter.from(testUserNoPrintables);
+
+        Assert.assertEquals(expectedPayload, profilePayload);
     }
 
     @Test
-    public void testShowProfileForUserWithPrintables() throws Exception {
+    @SuppressWarnings("Duplicates")
+    public void showProfileForUserWithPrintables() throws Exception {
         MvcResult result = mockMvc.perform(
                 get(URL_PROFILE).param(KEY, testUserWithPrintables.getUserId()+"")
         )
@@ -233,23 +269,37 @@ public class ProfileControllerTest extends ControllerTest {
 
         Map payload = (LinkedHashMap) response.getPayload();
 
-        ProfilePayload profilePayload = objectMapper.convertValue(payload, ProfilePayload.class);
+        ProfilePayload profilePayload = mapper.convertValue(payload, ProfilePayload.class);
 
-        Assert.assertEquals(testUserWithPrintables.getUsername(), profilePayload.getUsername());
-        Assert.assertNull(profilePayload.getEmail());
-        Assert.assertNull(profilePayload.getBirthday());
-        Assert.assertNull(profilePayload.getFirstname());
-        Assert.assertNull(profilePayload.getLastname());
-        Assert.assertEquals(testUserWithPrintables.getDescription().isPresent() ? testUserNoPrintables.getDescription().get() : null
-                , profilePayload.getDescription());
-        List<PrintablePayload> expectedPrintableList = Lists.newArrayList();
-        // @todo vll mal rausfinden, wieso man hier nochmal neu auslsesn muss
-        expectedPrintableList.add(PrintableModelToPrintablePayloadConverter.from(printableManager.getPrintableById(PRINTABLE_1_ID)));
-        expectedPrintableList.add(PrintableModelToPrintablePayloadConverter.from(printableManager.getPrintableById(PRINTABLE_2_ID)));
+        // get the user directly from the database (for default fields)
+        testUserWithPrintables = userManager.getByUsername(PROFILE_TEST_PRINTABLES_USERNAME);
+        ProfilePayload expectedPayload = UserModelToProfileResponseConverter.from(testUserWithPrintables);
 
-        List<PrintablePayload> actualPrintableList = Lists.newArrayList(profilePayload.getPrintables());
-        Assert.assertEquals(expectedPrintableList, actualPrintableList);
-        Assert.assertEquals(((rating1.getRating() + rating2.getRating())/2.0), profilePayload.getRating(), 0.001);
-        Assert.assertEquals(2, profilePayload.getRatingCount());
+        Assert.assertEquals(expectedPayload, profilePayload);
+    }
+
+    @Test
+    public void showProfileForUserForNonExistentUser() throws Exception {
+        mockMvc.perform(
+                get(URL_PROFILE).param(KEY, NON_EXISTING_USER_ID + "")
+        )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(PROFILE_TEST_NO_PRINTABLES_USERNAME)
+    public void editProfile() throws Exception {
+
+        MvcResult result = mockMvc.perform(
+                put(URL_PROFILE_EDIT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(validProfileEditRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Response response = getResponseBodyOf(result, Response.class);
+        Assert.assertTrue(response.isSuccess());
+        Assert.assertNull(response.getPayload());
+        Assert.assertTrue(response.getErrorMap().isEmpty());
     }
 }

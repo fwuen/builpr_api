@@ -106,4 +106,45 @@ public class ProfilePayload {
         this.registrationDate = registrationDate;
         return this;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProfilePayload that = (ProfilePayload) o;
+
+        if (userID != that.userID) return false;
+        if (Double.compare(that.rating, rating) != 0) return false;
+        if (ratingCount != that.ratingCount) return false;
+        if (!username.equals(that.username)) return false;
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (!avatarURL.equals(that.avatarURL)) return false;
+        if (!printables.equals(that.printables)) return false;
+        return registrationDate.equals(that.registrationDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = userID;
+        result = 31 * result + username.hashCode();
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + avatarURL.hashCode();
+        temp = Double.doubleToLongBits(rating);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + ratingCount;
+        result = 31 * result + printables.hashCode();
+        result = 31 * result + registrationDate.hashCode();
+        return result;
+    }
 }
