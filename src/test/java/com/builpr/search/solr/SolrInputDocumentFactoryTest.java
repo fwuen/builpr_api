@@ -15,15 +15,15 @@ import java.util.Date;
  */
 //TODO evtl?
 public class SolrInputDocumentFactoryTest {
-
+    
     @Test(expected = NullPointerException.class)
     public void getInputDocumentWithNull() {
         SolrInputDocumentFactory factory = new SolrInputDocumentFactory();
         Indexable indexable = null;
-
+        
         factory.getInputDocumentWith(indexable);
     }
-
+    
     @Test
     public void getInputDocumentWithLegitIndexable() {
         SolrInputDocumentFactory factory = new SolrInputDocumentFactory();
@@ -36,9 +36,9 @@ public class SolrInputDocumentFactoryTest {
                 .withUploadDate(new Date(0))
                 .withUploaderId(1)
                 .build();
-
-         SolrInputDocument document = factory.getInputDocumentWith(indexable);
-
+        
+        SolrInputDocument document = factory.getInputDocumentWith(indexable);
+        
         Assert.assertNotNull(document);
     }
 }

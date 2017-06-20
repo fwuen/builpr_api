@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Felix Wünsche
- * Provides the ability to do tag-filtering
+ *         Provides the ability to do tag-filtering
  */
 public class CategoryFilter extends Filter {
     

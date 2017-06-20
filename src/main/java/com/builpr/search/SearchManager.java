@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Felix Wünsche, Alexander Zeitler
- * Prescribes methods to be implemented for using search engines
+ *         Prescribes methods to be implemented for using search engines
  */
 public interface SearchManager {
     
@@ -34,13 +34,13 @@ public interface SearchManager {
     /**
      * Searches for data fitting the passed term and sort regulation
      *
-     * @param term  Term to execute the search with
+     * @param term Term to execute the search with
      * @param sort SORT regulation to execute the search with
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
      */
     public List<PrintableReference> search(String term, SORT sort) throws SearchManagerException;
-
+    
     /**
      * Searches for data fitting the passed term, sort and regulations
      *
@@ -50,31 +50,31 @@ public interface SearchManager {
      * @return List of PrintModelReference-objects
      * @throws SearchManagerException SearchManagerException
      */
-    public List<PrintableReference> search(String term, SORT sort, ORDER order) throws  SearchManagerException;
-
+    public List<PrintableReference> search(String term, SORT sort, ORDER order) throws SearchManagerException;
+    
     /**
      * Searches for data fitting the passed term, filters and sort regulation
      *
      * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
-     * @param sort  SORT regulation to execute the search with
+     * @param sort   SORT regulation to execute the search with
      * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */
     public List<PrintableReference> search(String term, List<Filter> filter, SORT sort) throws SearchManagerException;
-
+    
     /**
      * Searches for data fitting the passed term, filters, sort and ORDER regulations
      *
      * @param term   Term to execute the search with
      * @param filter Filter to execute the search with
-     * @param sort  SORT regulation to execute the search with
-     * @param order ORDER regulation to execute the search with
+     * @param sort   SORT regulation to execute the search with
+     * @param order  ORDER regulation to execute the search with
      * @return List of PrintableReference-objects
      * @throws SearchManagerException SearchManagerException
      */
     public List<PrintableReference> search(String term, List<Filter> filter, SORT sort, ORDER order) throws SearchManagerException;
-
+    
     /**
      * Adds print models to the index of the used search engine
      *
@@ -114,7 +114,7 @@ public interface SearchManager {
      * @throws SearchManagerException SearchManagerException
      */
     public boolean isReachable() throws SearchManagerException;
-
+    
     /**
      * Clears the Solr index
      *

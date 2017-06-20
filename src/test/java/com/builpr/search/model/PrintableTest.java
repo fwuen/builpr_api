@@ -10,7 +10,7 @@ import java.util.Date;
  * @author Felix Wünsche
  */
 public class PrintableTest {
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void createPrintableWithAllNull() {
         Printable.getBuilder().
                 withDescription(null).
@@ -24,7 +24,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void createPrintableWithDescriptionNull() {
         Printable.getBuilder().
                 withDescription(null).
@@ -38,7 +38,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void createPrintableWithCategoriesNull() {
         Printable.getBuilder().
                 withDescription("Empty").
@@ -52,7 +52,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void createPrintableWithTitleNull() {
         Printable.getBuilder().
                 withDescription("Empty").
@@ -66,7 +66,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void createPrintableWithDateNull() {
         Printable.getBuilder().
                 withDescription("Empty").
@@ -80,7 +80,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = VerifyException.class)
+    @Test(expected = VerifyException.class)
     public void createPrintableWithEmptyTitle() {
         Printable.getBuilder().
                 withDescription("Empty").
@@ -94,7 +94,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = VerifyException.class)
+    @Test(expected = VerifyException.class)
     public void createPrintableWithEmptyDescription() {
         Printable.getBuilder().
                 withDescription("").
@@ -108,7 +108,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createPrintableWithIdLessThanZero() {
         Printable.getBuilder().
                 withDescription("Empty").
@@ -122,7 +122,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createPrintableWithRatingLowerThanMinimum() {
         Printable.getBuilder().
                 withDescription("Empty").
@@ -136,7 +136,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createPrintableWithRatingLargerThanMaximum() {
         Printable.getBuilder().
                 withDescription("Empty").
@@ -150,7 +150,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createPrintableWithUploaderIdLowerThanZero() {
         Printable.getBuilder().
                 withDescription("Empty").
@@ -164,7 +164,7 @@ public class PrintableTest {
                 build();
     }
     
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createPrintableWithNumberOfDownloadsLowerThanZero() {
         Printable.getBuilder().
                 withDescription("Empty").

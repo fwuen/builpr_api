@@ -11,10 +11,10 @@ import java.util.List;
 
 /**
  * @author Felix Wünsche
- * Class to store data of print-models to add them to the index of the search-engine
+ *         Class to store data of print-models to add them to the index of the search-engine
  */
 public class Printable extends Indexable {
-
+    
     @Getter
     @Field
     private int id;
@@ -26,7 +26,7 @@ public class Printable extends Indexable {
     @Getter
     @Field
     private String description;
-
+    
     @Getter
     @Field
     private int uploaderId;
@@ -42,11 +42,11 @@ public class Printable extends Indexable {
     @Getter
     @Field
     private List<String> categories;
-
+    
     @Getter
     @Field
     private int numberOfDownloads;
-
+    
     
     /**
      * Creates a Printable-object
@@ -117,7 +117,7 @@ public class Printable extends Indexable {
             toBuild.description = description.toLowerCase();
             return this;
         }
-
+        
         /**
          * Adds the new parameter to the Builder-object and returns it
          *
@@ -166,12 +166,12 @@ public class Printable extends Indexable {
          */
         public Builder withCategories(List<String> categories) {
             Preconditions.checkNotNull(categories);
-
+            
             toBuild.categories = categories;
-
+            
             return this;
         }
-
+        
         /**
          * Adds the new parameter to the Builder-object and returns it
          *
@@ -180,7 +180,7 @@ public class Printable extends Indexable {
          */
         public Builder withNumberOfDownloads(int numberOfDownloads) {
             Preconditions.checkArgument(numberOfDownloads >= 0);
-
+            
             toBuild.numberOfDownloads = numberOfDownloads;
             return this;
         }

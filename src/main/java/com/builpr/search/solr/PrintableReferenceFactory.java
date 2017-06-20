@@ -11,10 +11,10 @@ import java.util.List;
 
 /**
  * @author Alexander Zeitler
- * Provides the ability to create Solr-specific PrintableReference-objects
+ *         Provides the ability to create Solr-specific PrintableReference-objects
  */
 public class PrintableReferenceFactory {
-
+    
     /**
      * Creates and returns a List of PrintableReference-objects
      *
@@ -23,16 +23,17 @@ public class PrintableReferenceFactory {
      */
     public List<PrintableReference> get(@NonNull List<SolrDocument> data) {
         Preconditions.checkArgument(data.size() > 0);
-
+        
         List<PrintableReference> results = Lists.newArrayList();
-
+        
         for (SolrDocument solrDocument : data)
             results.add(get(solrDocument));
-
+        
         return results;
     }
-
+    
     // TODO dem müssen wir sagen, dass er der PrintableReference die richtige ID zuweist, die er von Solr bekommen hat, sonst haben alle References ID 0
+    
     /**
      * Creates and returns a single PrintableReference-object
      *
@@ -41,11 +42,11 @@ public class PrintableReferenceFactory {
      */
     public PrintableReference get(@NonNull SolrDocument data) {
         Preconditions.checkArgument(data.containsKey(SolrFields.PRINT_MODEL_ID));
-
+        
         DocumentObjectBinder documentObjectBinder = new DocumentObjectBinder();
-
+        
         return documentObjectBinder.getBean(PrintableReference.class, data);
-
+        
     }
-
+    
 }
