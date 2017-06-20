@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Felix Wünsche
+ */
 public class SolrIndexUpTest {
     @Test
     public void indexRandomStringsWithCommit() throws SearchManagerException {

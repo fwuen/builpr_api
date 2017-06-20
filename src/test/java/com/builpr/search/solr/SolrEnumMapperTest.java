@@ -7,6 +7,9 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Alexander Zeitler
+ */
 public class SolrEnumMapperTest {
     
     @Test(expected = NullPointerException.class)

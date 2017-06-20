@@ -1,6 +1,7 @@
 package com.builpr.search.solr;
 
 /**
+ * @author Alexander Zeitler
  * Stores Solr-fields and belonging value for boosting
  */
 public class SolrFields {

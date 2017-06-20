@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * @author Felix Wünsche
  * Class to store data of print-models to add them to the index of the search-engine
  */
 public class Printable extends Indexable {

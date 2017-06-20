@@ -12,6 +12,9 @@ import java.util.List;
 //Majority of functionality is already Tested by SolrSearchTest class
 //Because of that only some null tests are required for the SolrQueryFactoryTest class
 
+/**
+ * @author Felix Wünsche
+ */
 public class SolrQueryFactoryTest {
     @Test
     public void testCreate() {

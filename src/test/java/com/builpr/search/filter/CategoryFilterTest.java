@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.util.List;
 
+/**
+ * @author Alexander Zeitler
+ */
 public class CategoryFilterTest {
     
     @Test

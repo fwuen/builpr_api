@@ -22,15 +22,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Felix Wünsche
+ */
 public class SolrSearchTest {
-
-    //TODO Festlegen von Testdaten für die Suchtests
-    //TODO Indexieren von zu durchsuchenden Modellen für die Tests
-    //TODO wie testet man dann das Indexieren?
-    //TODO Tests erweitern
-    //TODO Tests auf Datenintigrität (sind Daten wirdklich indexiert, kommen bei der Suche die richtigen Daten zurück?) oder nur auf Exceptions?
-    //TODO Alle Null-Tests nochmal überprüfen. Aktuell wird fast überall tatsächlich gesucht und eine leere Liste zurückgegeben --> gewollt?
-
+    
     private static final int car1Id = 1;
     private static final int towerId = 2;
     private static final int planeId = 3;

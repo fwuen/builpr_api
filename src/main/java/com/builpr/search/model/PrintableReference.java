@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.apache.solr.client.solrj.beans.Field;
 
 /**
+ * @author Alexander Zeitler
  * Provides the ability to use references to PrintModels
  * Primarily used to map Solr-requests to a Java-MVC-model
  */

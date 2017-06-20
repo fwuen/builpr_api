@@ -23,6 +23,7 @@ import java.util.List;
 // TODO: Doku für @Override-Methode erben
 
 /**
+ * @author Felix Wünsche, Alexander Zeitler
  * Provides access to Solr search engine
  * Implements SearchManager-interface
  */

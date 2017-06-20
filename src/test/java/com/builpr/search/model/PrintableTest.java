@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.util.Date;
 
+/**
+ * @author Felix Wünsche
+ */
 public class PrintableTest {
     @Test (expected = NullPointerException.class)
     public void createPrintableWithAllNull() {

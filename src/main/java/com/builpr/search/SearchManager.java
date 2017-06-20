@@ -7,6 +7,7 @@ import com.builpr.search.model.PrintableReference;
 import java.util.List;
 
 /**
+ * @author Felix Wünsche, Alexander Zeitler
  * Prescribes methods to be implemented for using search engines
  */
 public interface SearchManager {

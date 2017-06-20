@@ -10,6 +10,7 @@ import org.apache.solr.common.SolrDocument;
 import java.util.List;
 
 /**
+ * @author Alexander Zeitler
  * Provides the ability to create Solr-specific PrintableReference-objects
  */
 public class PrintableReferenceFactory {

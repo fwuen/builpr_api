@@ -6,6 +6,9 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Felix Wünsche
+ */
 public class SolrSearchManagerBasicTest {
     //Creation Tests
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------

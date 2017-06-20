@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+/**
+ * @author Alexander Zeitler
+ */
+//TODO evtl?
 public class SolrInputDocumentFactoryTest {
 
     @Test(expected = NullPointerException.class)

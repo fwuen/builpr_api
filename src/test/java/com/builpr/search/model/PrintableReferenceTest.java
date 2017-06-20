@@ -3,6 +3,9 @@ package com.builpr.search.model;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Alexander Zeitler
+ */
 public class PrintableReferenceTest {
 
     private static final String VALID_ID = "4";

@@ -3,6 +3,9 @@ package com.builpr.search.filter;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Felix Wünsche
+ */
 public class MinimumRatingFilterTest {
 
     @Test

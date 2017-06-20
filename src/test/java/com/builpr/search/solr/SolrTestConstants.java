@@ -1,5 +1,8 @@
 package com.builpr.search.solr;
 
+/**
+ * @author Felix Wünsche
+ */
 public class SolrTestConstants {
     
     static final String LOCAL_BASE_URL = "http://localhost/solr";

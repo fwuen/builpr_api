@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 
 /**
+ * @author Felix Wünsche
  * Provides the ability to do minimum-rating-filtering
  */
 public class MinimumRatingFilter extends Filter {

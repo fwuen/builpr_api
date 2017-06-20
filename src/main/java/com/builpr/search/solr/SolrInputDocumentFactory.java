@@ -6,6 +6,7 @@ import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
 import org.apache.solr.common.SolrInputDocument;
 
 /**
+ * @author Alexander Zeitler
  * Provides the ability to create Solr-specific input documents
  */
 public class SolrInputDocumentFactory {

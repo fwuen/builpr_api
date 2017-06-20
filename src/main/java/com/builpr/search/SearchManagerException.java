@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 /**
+ * @author Felix Wünsche
  * Provides ability to create custom Exceptions for searching matters
  */
 public class SearchManagerException extends Exception {
