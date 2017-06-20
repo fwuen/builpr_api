@@ -13,10 +13,8 @@ import com.builpr.restapi.error.printable.*;
 import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.model.Response.Response;
-import com.builpr.restapi.model.Response.printable.PrintableDeleteResponse;
-import com.builpr.restapi.model.Response.printable.PrintableEditResponse;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
-import com.builpr.restapi.model.Response.printable.PrintableResponse;
+import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import com.builpr.restapi.utils.CategoryValidator;
 import com.builpr.restapi.utils.PrintableDownloader;
 import com.builpr.restapi.utils.PrintableUploader;
@@ -60,12 +58,12 @@ public class PrintableController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_GET_PRINTABLE, method = RequestMethod.GET)
     @ResponseBody
-    public Response<PrintableResponse> getPrintable(@RequestParam(
+    public Response<PrintablePayload> getPrintable(@RequestParam(
             value = "id",
             defaultValue = "0"
     ) int printableID) {
 
-        Response<PrintableResponse> response = new Response<>();
+        Response<PrintablePayload> response = new Response<>();
 
         Printable printable = databasePrintableManager.getPrintableById(printableID);
         if (printable == null) {
@@ -74,10 +72,10 @@ public class PrintableController {
             return response;
         }
 
-        PrintableResponse printableResponse = PrintableToResponseConverter.from(printable);
+        PrintablePayload printablePayload = PrintableModelToPrintablePayloadConverter.from(printable);
 
         response.setSuccess(true);
-        response.setPayload(printableResponse);
+        response.setPayload(printablePayload);
 
         return response;
     }
@@ -126,7 +124,7 @@ public class PrintableController {
         // UPLOADING FILE
         String path = printableUploader.uploadFile(request.getFile());
         // CREATING PRINTABLE
-        Printable printable = PrintableNewRequestToPrintableConverter.from(request, user.getUserId(), path);/*databasePrintableManager.createPrintable(request, userID, path);*/
+        Printable printable = PrintableNewRequestToPrintableConverter.from(request, user.getUserId(), path);
         databasePrintableManager.persist(printable);
         // UPDATE THE LIST OF CATEGORIES
         databaseCategoryManager.update(categoryList);
@@ -150,8 +148,8 @@ public class PrintableController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_EDIT_PRINTABLE, method = RequestMethod.PUT)
     @ResponseBody
-    public Response<PrintableEditResponse> editPrintable(Principal principal, @RequestBody PrintableEditRequest request) {
-        Response<PrintableEditResponse> response = new Response<>();
+    public Response<PrintablePayload> editPrintable(Principal principal, @RequestBody PrintableEditRequest request) {
+        Response<PrintablePayload> response = new Response<>();
 
 
         if (databasePrintableManager.getPrintableById(request.getPrintableID()) == null) {
@@ -205,8 +203,8 @@ public class PrintableController {
             // CREATE NEW PRINTABLE_CATEGORIES
             databasePrintableCategoryManager.createCategories(categoryList, request.getPrintableID());
         }
-        PrintableEditResponse printableEditResponse = PrintableEditRequestToResponseConverter.from(request);
-        response.setPayload(printableEditResponse);
+        PrintablePayload printablePayload = PrintableModelToPrintablePayloadConverter.from(printable);
+        response.setPayload(printablePayload);
         return response;
     }
 
@@ -249,11 +247,11 @@ public class PrintableController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_DELETE_PRINTABLE, method = RequestMethod.DELETE)
     @ResponseBody
-    public Response<PrintableDeleteResponse> delete(Principal principal, @RequestParam(
+    public Response<PrintablePayload> delete(Principal principal, @RequestParam(
             value = "id",
             defaultValue = "0"
     ) int printableID) {
-        Response<PrintableDeleteResponse> response = new Response<>();
+        Response<PrintablePayload> response = new Response<>();
 
         if (databasePrintableManager.getPrintableById(printableID) == null) {
             response.setSuccess(false);
@@ -268,7 +266,7 @@ public class PrintableController {
         if (!response.isSuccess()) {
             return response;
         }
-        response.setPayload(PrintableDeleteRequestToPrintableDeleteResponseConverter.from(databasePrintableManager.getPrintableById(printableID)));
+        response.setPayload(PrintableModelToPrintablePayloadConverter.from(databasePrintableManager.getPrintableById(printableID)));
         databasePrintableManager.deletePrintable(printableID);
         return response;
     }

@@ -1,10 +1,9 @@
 package com.builpr.restapi.controller;
 
-import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.restapi.error.search.SearchError;
 import com.builpr.restapi.model.Request.Search.SearchRequest;
 import com.builpr.restapi.model.Response.Response;
-import com.builpr.restapi.utils.PrintableIndexing;
+import com.builpr.restapi.utils.PrintableSolrHelper;
 import com.builpr.search.SearchManagerException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
@@ -43,7 +42,7 @@ public class SearchControllerTest extends ControllerTest {
     private static final String INVALID_SORT = "abcdefg";
 
     private SearchRequest searchRequest;
-    private PrintableIndexing printableIndexing;
+    private PrintableSolrHelper printableSolrHelper;
 
     public void fillCategoryFilter() {
         VALID_CATEGORY_FILTER.add("test");
@@ -59,8 +58,8 @@ public class SearchControllerTest extends ControllerTest {
         searchRequest.setOrder(VALID_ORDER);
         searchRequest.setSort(VALID_SORT);
 
-        printableIndexing = new PrintableIndexing();
-        printableIndexing.indexPrintables();
+        printableSolrHelper = new PrintableSolrHelper();
+        printableSolrHelper.indexPrintables();
     }
 
     @Test

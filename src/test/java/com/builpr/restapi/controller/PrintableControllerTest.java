@@ -83,10 +83,10 @@ public class PrintableControllerTest extends ControllerTest {
         // User anlegen
         PRINTABLE_TEST_USER = new UserImpl()
                 .setUsername(DB_TEST_USER_NAME)
-                .setEmail("test_user@mail.de")
+                .setEmail("test_printable@googlemail.de")
                 .setPassword(new BCryptPasswordEncoder().encode("password"))
                 .setBirthday(new Date(System.currentTimeMillis() - 1231231))
-                .setFirstname("Test")
+                .setFirstname("PrintableController")
                 .setLastname("User")
                 .setShowBirthday(true)
                 .setShowEmail(true)

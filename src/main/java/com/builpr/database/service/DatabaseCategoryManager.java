@@ -17,7 +17,6 @@ import static java.util.stream.Collectors.*;
  * printableCategory service
  */
 public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
-
     public DatabaseCategoryManager() {
         super(CategoryManager.class);
     }
@@ -88,5 +87,4 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
         newCategory.setCategoryName(categoryName);
         this.getDao().persist(newCategory);
     }
-
 }
