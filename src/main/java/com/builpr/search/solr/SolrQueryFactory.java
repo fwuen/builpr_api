@@ -72,8 +72,4 @@ public class SolrQueryFactory {
         return builder.toString();
     }
 
-    public SolrQuery getQueryFindAll() {
-        return new SolrQuery("*:*");
-    }
-
 }
