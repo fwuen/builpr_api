@@ -1,5 +1,6 @@
 package com.builpr.restapi.controller;
 
+import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.error.search.SearchError;
 import com.builpr.restapi.model.Request.Search.SearchRequest;
 import com.builpr.restapi.model.Response.Response;

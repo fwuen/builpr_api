@@ -201,7 +201,7 @@ public class PrintableController {
             // GET CATEGORIES FOR PRINTABLE
             List<Category> categoryList = databaseCategoryManager.getCategoriesByList(categories);
             // CREATE NEW PRINTABLE_CATEGORIES
-            databasePrintableCategoryManager.createCategories(categoryList, request.getPrintableID());
+          //  databasePrintableCategoryManager.createCategories(categoryList, request.getPrintableID());
         }
         PrintablePayload printablePayload = PrintableModelToPrintablePayloadConverter.from(printable);
         response.setPayload(printablePayload);
