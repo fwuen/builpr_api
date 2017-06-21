@@ -20,7 +20,6 @@ import org.apache.solr.common.SolrInputDocument;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-// TODO: Doku für @Override-Methode erben
 
 /**
  * @author Felix Wünsche, Alexander Zeitler
@@ -67,7 +66,7 @@ public class SolrSearchManager implements SearchManager {
     
     @Override
     public List<PrintableReference> search(@NonNull String term, @NonNull List<Filter> filter, @NonNull SORT sort) throws SearchManagerException {
-        return search(term, Lists.newArrayList(), sort, ORDER.ASC);
+        return search(term, filter, sort, ORDER.ASC);
     }
     
     @Override
@@ -99,8 +98,6 @@ public class SolrSearchManager implements SearchManager {
     public void addToIndex(@NonNull Indexable indexable) throws SearchManagerException {
         this.addToIndex(indexable, true);
     }
-    
-    //TODO toLowerCase vor Indexierung
     
     /**
      * Adds an print model to the Solr index

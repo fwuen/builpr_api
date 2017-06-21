@@ -2,6 +2,7 @@ package com.builpr.restapi.controller;
 
 import com.builpr.Constants;
 import com.builpr.database.bridge.rating.Rating;
+import com.builpr.database.bridge.rating.RatingImpl;
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseRatingManager;
@@ -81,9 +82,14 @@ public class RatingController {
         }
 
         if (user != null) {
-            databaseRatingManager.createRating(request, user.getUserId());
+            Rating rating = new RatingImpl();
+            rating.setMsg(request.getText());
+            rating.setPrintableId(request.getPrintableID());
+            rating.setRating(request.getRating());
+            rating.setUserId(user.getUserId());
+            databaseRatingManager.persist(rating);
 
-            Rating rating = databaseRatingManager.getRatingByIds(request.getPrintableID(), user.getUserId());
+            rating = databaseRatingManager.getRatingByIds(request.getPrintableID(), user.getUserId());
             RatingPayload payload = RatingModelToRatingPayloadConverter.from(rating);
             response.setPayload(payload);
         }

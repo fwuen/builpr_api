@@ -1,10 +1,9 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.database.bridge.printable.Printable;
-import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.restapi.converter.PrintableReferenceToPrintableConverter;
 import com.builpr.restapi.error.search.SearchError;
-import com.builpr.restapi.model.Request.Search.SearchRequest;
+import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.Search.SearchResponse;
 import com.builpr.restapi.utils.CategoryValidator;
@@ -29,12 +28,10 @@ import static com.builpr.Constants.*;
  */
 @RestController
 public class SearchController {
-    private DatabasePrintableManager databasePrintableManager;
     private CategoryValidator categoryValidator;
     private PrintableReferenceToPrintableConverter converter;
 
     public SearchController() {
-        databasePrintableManager = new DatabasePrintableManager();
         categoryValidator = new CategoryValidator();
         converter = new PrintableReferenceToPrintableConverter();
     }
@@ -42,7 +39,7 @@ public class SearchController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_SEARCH, method = RequestMethod.GET)
     @ResponseBody
-    public Response<SearchResponse> search(@RequestBody SearchRequest request) throws SearchManagerException {
+    public Response<SearchResponse> search(@RequestBody SearchPayload request) throws SearchManagerException {
         Response<SearchResponse> response = new Response<>();
         if (request.getQuery().isEmpty()) {
             response.setSuccess(false);

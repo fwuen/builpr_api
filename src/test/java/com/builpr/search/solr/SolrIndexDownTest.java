@@ -64,7 +64,6 @@ public class SolrIndexDownTest {
         solrSearchManager.addToIndex(indexables);
     }
     
-    //TODO Delete Tests
     @Test(expected = NullPointerException.class)
     public void testDeleteFromIndexSinglePrintableNull() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);

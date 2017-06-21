@@ -28,52 +28,16 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
         return getDao().stream().filter(PrintableCategory.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
     }
 
-    /**
-     * @param list        List<Category>
-     * @param printableID int
-     */
-    public void createCategories(List<Category> list, int printableID) {
-        for (Category category : list) {
-            if (category.getCategoryId() != 0)
-                create(printableID, category.getCategoryId());
-        }
-    }
-
-    /**
-     * @param printableID int
-     * @param categoryID  int
-     * @return void
-     */
-    public void create(int printableID, int categoryID) {
-        PrintableCategoryImpl printableCategory = new PrintableCategoryImpl();
-        printableCategory.setPrintableId(printableID);
-        printableCategory.setCategoryId(categoryID);
-        getDao().persist(printableCategory);
-    }
 
     public void persist(PrintableCategory printableCategory) {
         getDao().persist(printableCategory);
-    }
-
-
-    /**
-     * @param printableID int
-     * @return void
-     */
-    public void deleteCategoriesForPrintable(int printableID) {
-        List<PrintableCategory> printableCategories = getListByID(printableID);
-        if (printableCategories != null) {
-            for (PrintableCategory printableCategory : printableCategories) {
-                delete(printableCategory);
-            }
-        }
     }
 
     /**
      * @param printableCategory PrintableCategory
      * @return void
      */
-    private void delete(PrintableCategory printableCategory) {
+    public void delete(PrintableCategory printableCategory) {
         getDao().remove(printableCategory);
     }
 }

@@ -32,12 +32,10 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
     }
 
     /**
-     * @param printableID int
+     * @param printableCategories List<PrintableCategory>
      * @return List<Category>
      */
-    public List<Category> getCategoriesByID(int printableID) {
-        DatabasePrintableCategoryManager printableCategoryManager = new DatabasePrintableCategoryManager();
-        List<PrintableCategory> printableCategories = printableCategoryManager.getListByID(printableID);
+    public List<Category> getCategoriesByPrintableCategoryList(List<PrintableCategory> printableCategories) {
         List<Category> categories = new ArrayList<>();
         for (PrintableCategory printableCategory : printableCategories) {
             List<Category> found = getDao().stream().filter(Category.CATEGORY_ID.equal(printableCategory.getCategoryId())).collect(Collectors.toList());

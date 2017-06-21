@@ -17,7 +17,7 @@ public class CategoryValidator {
         List<String> newCategories = new ArrayList<>();
 
         for (String category : categories) {
-            if (category.matches("^[\\pL\\pN\\p{Pc}]*$")) {
+            if (category.matches("^[\\pL\\pN\\p{Pc}]*$") && category.length() < 21) {
                 category = category.toLowerCase();
                 newCategories.add(category);
             }

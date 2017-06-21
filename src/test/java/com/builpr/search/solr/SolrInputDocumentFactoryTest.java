@@ -13,7 +13,6 @@ import java.util.Date;
 /**
  * @author Alexander Zeitler
  */
-//TODO evtl?
 public class SolrInputDocumentFactoryTest {
     
     @Test(expected = NullPointerException.class)

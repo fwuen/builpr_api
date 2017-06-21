@@ -42,8 +42,6 @@ public class DatabasePrintableManagerTest {
 
     @Before
     public void setTestUp() {
-        // TODO User erstellen
-
         User testUser = new UserImpl()
                 .setUsername(TEST_USER)
                 .setEmail("markus.goller97@googlemail.com")

@@ -22,6 +22,4 @@ public class SolrInputDocumentFactory {
         
         return documentObjectBinder.toSolrInputDocument(indexable);
     }
-
-    /*TODO: Wo wird das Boosting festgelegt? Bei SolrInputDocument und SolrInputField ist es laut Dokumentation Deprecated.*/
 }

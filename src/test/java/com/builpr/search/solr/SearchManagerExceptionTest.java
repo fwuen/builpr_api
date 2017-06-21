@@ -14,7 +14,7 @@ public class SearchManagerExceptionTest {
     @Test
     public void getExceptionMessageFromSearchManagerException() {
         SearchManagerException exception = new SearchManagerException(new Exception());
-        Assert.assertNotNull(exception.getMessage());
+        Assert.assertNotNull(exception.getException());
     }
 
     @Test (expected = NullPointerException.class)

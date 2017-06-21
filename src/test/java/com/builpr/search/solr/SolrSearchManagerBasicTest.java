@@ -75,8 +75,11 @@ public class SolrSearchManagerBasicTest {
         
         solrSearchManager.isReachable();
     }
-
-
-    //TODO isReachable mit Exception
-    //TODO isReachable mit false
+    
+    @Test(expected = SearchManagerException.class)
+    public void reachabilityCheckWithNotReachableServer() throws SearchManagerException {
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("WRONG_BASE_URL");
+        Assert.assertNotNull(solrSearchManager);
+        solrSearchManager.isReachable();
+    }
 }
