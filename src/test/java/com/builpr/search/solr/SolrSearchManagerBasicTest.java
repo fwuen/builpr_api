@@ -75,5 +75,8 @@ public class SolrSearchManagerBasicTest {
         
         solrSearchManager.isReachable();
     }
-    
+
+
+    //TODO isReachable mit Exception
+    //TODO isReachable mit false
 }

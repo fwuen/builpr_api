@@ -497,7 +497,58 @@ public class SolrSearchTest {
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
         Assert.assertTrue(Integer.parseInt(res.get(1).getId()) == shisha2Id);
     }
-    
+
+    //TODO
+    @Test
+    public void searchWithTermAndCategoryFilterAndSortByTitle() {
+
+    }
+
+    @Test
+    public void searchWithTermAndMinimumRatingFilterAndSortByTitle() {
+
+    }
+
+    @Test
+    public void searchWithTermAndCategoryFilterAndSortByDownloads() {
+
+    }
+
+    @Test
+    public void searchWithTermAndMinimumRatingFilterAndSortByDownloads() {
+
+    }
+
+    @Test
+    public void searchWithTermAndCategoryFilterAndSortByRelevance() {
+
+    }
+
+    @Test
+    public void searchWithTermAndMinimumRatingFilterAndSortByRelevance() {
+
+    }
+
+    @Test
+    public void searchWithTermAndCategoryFilterAndSortByRating() {
+
+    }
+
+    @Test
+    public void searchWithTermAndMinimumRatingFilterAndSortByRating() {
+
+    }
+
+    @Test
+    public void searchWithTermAndCategoryFilterAndSortByUploadDate() {
+
+    }
+
+    @Test
+    public void searchWithTermAndMinimumRatingFilterAndSortByUploadDate() {
+
+    }
+
     //TODO wie?
     @Test
     public void searchWithTermAndInvalidOrder() throws SearchManagerException {

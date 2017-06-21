@@ -112,4 +112,7 @@ public class SolrIndexDownTest {
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
     }
+
+    //TODO delete mit exception
+    //TODO clear mit exception
 }
