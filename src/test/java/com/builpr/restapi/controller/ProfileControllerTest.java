@@ -10,6 +10,7 @@ import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.converter.UserModelToProfileResponseConverter;
+import com.builpr.restapi.error.response.profile.ProfileEditError;
 import com.builpr.restapi.model.Request.ProfileEditRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.profile.ProfilePayload;
@@ -25,6 +26,7 @@ import java.util.*;
 import static com.builpr.Constants.URL_PROFILE;
 import static com.builpr.Constants.URL_PROFILE_EDIT;
 import static com.builpr.Constants.URL_REGISTER;
+import static com.builpr.restapi.error.response.profile.ProfileEditError.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -69,7 +71,7 @@ public class ProfileControllerTest extends ControllerTest {
 
     private static final String CORRECT_NEW_PASSWORD = "password1";
     private static final String[] INCORRECT_NEW_PASSWORD_PAIR = {"password1", "password2"};
-    private static final String INVALID_NEW_PASSWORD = "abc";
+    private static final String TOO_SHORT_NEW_PASSWORD = "abc";
 
     private static final String NEW_FIRST_NAME = "Horst";
     private static final String NEW_LAST_NAME = "Horstner";
@@ -289,7 +291,6 @@ public class ProfileControllerTest extends ControllerTest {
     @Test
     @WithMockUser(PROFILE_TEST_NO_PRINTABLES_USERNAME)
     public void editProfile() throws Exception {
-
         MvcResult result = mockMvc.perform(
                 put(URL_PROFILE_EDIT)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -301,5 +302,130 @@ public class ProfileControllerTest extends ControllerTest {
         Assert.assertTrue(response.isSuccess());
         Assert.assertNull(response.getPayload());
         Assert.assertTrue(response.getErrorMap().isEmpty());
+    }
+
+    @Test
+    @WithMockUser(PROFILE_TEST_NO_PRINTABLES_USERNAME)
+    public void editProfileWithInvalidEmail() throws Exception {
+        validProfileEditRequest.setEmail(INVALID_EMAIL_FOR_EDIT);
+
+        MvcResult result = mockMvc.perform(
+                put(URL_PROFILE_EDIT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(validProfileEditRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Response response = getResponseBodyOf(result, Response.class);
+        Assert.assertFalse(response.isSuccess());
+        Assert.assertNull(response.getPayload());
+        Assert.assertTrue(response.getErrorMap().containsKey(INVALID_EMAIL.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(INVALID_EMAIL.getDescription()));
+        Assert.assertEquals(1, response.getErrorMap().size());
+    }
+
+    @Test
+    @WithMockUser(PROFILE_TEST_NO_PRINTABLES_USERNAME)
+    public void editProfileWithIncorrectOldPassword() throws Exception {
+        validProfileEditRequest.setOldPassword(INCORRECT_PASSWORD);
+
+        MvcResult result = mockMvc.perform(
+                put(URL_PROFILE_EDIT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(validProfileEditRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Response response = getResponseBodyOf(result, Response.class);
+        Assert.assertFalse(response.isSuccess());
+        Assert.assertNull(response.getPayload());
+        Assert.assertTrue(response.getErrorMap().containsKey(OLD_PASSWORD_NOT_CORRECT.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(OLD_PASSWORD_NOT_CORRECT.getDescription()));
+        Assert.assertEquals(1, response.getErrorMap().size());
+    }
+
+    @Test
+    @WithMockUser(PROFILE_TEST_NO_PRINTABLES_USERNAME)
+    public void editProfileWithTooShortNewPassword() throws Exception {
+        validProfileEditRequest.setPassword(TOO_SHORT_NEW_PASSWORD);
+        validProfileEditRequest.setPassword2(TOO_SHORT_NEW_PASSWORD);
+
+        MvcResult result = mockMvc.perform(
+                put(URL_PROFILE_EDIT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(validProfileEditRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Response response = getResponseBodyOf(result, Response.class);
+        Assert.assertFalse(response.isSuccess());
+        Assert.assertNull(response.getPayload());
+        Assert.assertTrue(response.getErrorMap().containsKey(NEW_PASSWORD_TOO_SHORT.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(NEW_PASSWORD_TOO_SHORT.getDescription()));
+        Assert.assertEquals(1, response.getErrorMap().size());
+    }
+
+    @Test
+    @WithMockUser(PROFILE_TEST_NO_PRINTABLES_USERNAME)
+    public void editProfileWithNewPasswordsNotMatching() throws Exception {
+        validProfileEditRequest.setPassword(INCORRECT_NEW_PASSWORD_PAIR[0]);
+        validProfileEditRequest.setPassword2(INCORRECT_NEW_PASSWORD_PAIR[1]);
+
+        MvcResult result = mockMvc.perform(
+                put(URL_PROFILE_EDIT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(validProfileEditRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Response response = getResponseBodyOf(result, Response.class);
+        Assert.assertFalse(response.isSuccess());
+        Assert.assertNull(response.getPayload());
+        Assert.assertTrue(response.getErrorMap().containsKey(NEW_PASSWORDS_NOT_MATCHING.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(NEW_PASSWORDS_NOT_MATCHING.getDescription()));
+        Assert.assertEquals(1, response.getErrorMap().size());
+    }
+
+    @Test
+    @WithMockUser(PROFILE_TEST_NO_PRINTABLES_USERNAME)
+    public void editProfileWithOldPasswordNull() throws Exception {
+        validProfileEditRequest.setOldPassword(null);
+
+        MvcResult result = mockMvc.perform(
+                put(URL_PROFILE_EDIT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(validProfileEditRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Response response = getResponseBodyOf(result, Response.class);
+        Assert.assertFalse(response.isSuccess());
+        Assert.assertNull(response.getPayload());
+        Assert.assertTrue(response.getErrorMap().containsKey(OLD_PASSWORD_NOT_CORRECT.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(OLD_PASSWORD_NOT_CORRECT.getDescription()));
+        Assert.assertEquals(1, response.getErrorMap().size());
+    }
+
+    @Test
+    @WithMockUser(PROFILE_TEST_NO_PRINTABLES_USERNAME)
+    public void editProfileWithEmptyName() throws Exception {
+        validProfileEditRequest.setFirstName("");
+        validProfileEditRequest.setLastName("");
+
+        MvcResult result = mockMvc.perform(
+                put(URL_PROFILE_EDIT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(validProfileEditRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Response response = getResponseBodyOf(result, Response.class);
+        Assert.assertFalse(response.isSuccess());
+        Assert.assertNull(response.getPayload());
+        Assert.assertTrue(response.getErrorMap().containsKey(FIRSTNAME_EMPTY.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(FIRSTNAME_EMPTY.getDescription()));
+        Assert.assertTrue(response.getErrorMap().containsKey(LASTNAME_EMPTY.getCode()));
+        Assert.assertTrue(response.getErrorMap().containsValue(LASTNAME_EMPTY.getDescription()));
+        Assert.assertEquals(2, response.getErrorMap().size());
     }
 }

@@ -70,7 +70,7 @@ public class ProfileController {
             response.addError(INVALID_EMAIL);
             response.setSuccess(false);
         }
-        if (!BCrypt.checkpw(request.getOldPassword(), user.getPassword()) && request.getOldPassword() != null) {
+        if ((!BCrypt.checkpw(request.getOldPassword(), user.getPassword()) && request.getOldPassword() != null) || request.getOldPassword() == null) {
             response.addError(OLD_PASSWORD_NOT_CORRECT);
             response.setSuccess(false);
         } else if (request.getOldPassword() != null) {

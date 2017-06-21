@@ -24,6 +24,14 @@ public enum ProfileEditError implements MappableError {
         DESCRIPTION = description;
     }
 
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
+    public int getCode() {
+        return CODE;
+    }
+
     @Override
     public Map<Integer, String> toMap() {
         Map<Integer, String> map = Maps.newHashMap();
