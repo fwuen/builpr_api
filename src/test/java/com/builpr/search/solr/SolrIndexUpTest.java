@@ -242,5 +242,6 @@ public class SolrIndexUpTest {
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
     }
-    
+
+    //TODO addtoindex mit exception
 }
