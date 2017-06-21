@@ -23,13 +23,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.sql.Date;
 import java.util.*;
 
-import static com.builpr.Constants.URL_PROFILE;
-import static com.builpr.Constants.URL_PROFILE_EDIT;
-import static com.builpr.Constants.URL_REGISTER;
+import static com.builpr.Constants.*;
 import static com.builpr.restapi.error.response.profile.ProfileEditError.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -49,6 +45,7 @@ public class ProfileControllerTest extends ControllerTest {
     private static final String PROFILE_TEST_PRINTABLES_USERNAME = "printables";
     private static final String PROFILE_TEST_RATING_USERNAME_1 = "ratingUser1";
     private static final String PROFILE_TEST_RATING_USERNAME_2 = "ratingUser2";
+    private static final String DELETE_USERNAME = "delete_test";
 
     private static final int NON_EXISTING_USER_ID = 1234567;
 
@@ -80,7 +77,8 @@ public class ProfileControllerTest extends ControllerTest {
 
     private ProfileEditRequest validProfileEditRequest;
 
-    public ProfileControllerTest() {
+    @Before
+    public void setUp() {
         validProfileEditRequest = new ProfileEditRequest()
                 .setEmail(VALID_EMAIL_FOR_EDIT)
                 .setOldPassword(PASSWORD)
@@ -141,6 +139,16 @@ public class ProfileControllerTest extends ControllerTest {
                 .setShowBirthday(false)
                 .setShowName(false)
                 .setShowName(false);
+        User deleteUser = new UserImpl()
+                .setUsername(DELETE_USERNAME)
+                .setEmail("delete@test.de")
+                .setPassword(new BCryptPasswordEncoder().encode("password"))
+                .setBirthday(new Date(System.currentTimeMillis() - 1123123))
+                .setFirstname("delete")
+                .setLastname("test")
+                .setShowBirthday(false)
+                .setShowName(false)
+                .setShowName(false);
 
         if (userManager.isPresent(PROFILE_TEST_NO_PRINTABLES_USERNAME)) {
             userManager.deleteByUsername(PROFILE_TEST_NO_PRINTABLES_USERNAME);
@@ -157,11 +165,15 @@ public class ProfileControllerTest extends ControllerTest {
         if (userManager.isPresent(NON_EXISTING_USER_ID)) {
             userManager.deleteByID(NON_EXISTING_USER_ID);
         }
+        if (userManager.isPresent(DELETE_USERNAME)) {
+            userManager.deleteByUsername(DELETE_USERNAME);
+        }
 
         userManager.persist(testUserNoPrintables);
         testUserWithPrintables = userManager.persist(testUserWithPrintables);
         ratingUser1 = userManager.persist(ratingUser1);
         ratingUser2 = userManager.persist(ratingUser2);
+        userManager.persist(deleteUser);
 
         Printable printable1 = new PrintableImpl()
                 .setPrintableId(PRINTABLE_1_ID)
@@ -219,6 +231,9 @@ public class ProfileControllerTest extends ControllerTest {
         }
         if (userManager.isPresent(PROFILE_TEST_RATING_USERNAME_2)) {
             userManager.deleteByUsername(PROFILE_TEST_RATING_USERNAME_2);
+        }
+        if (userManager.isPresent(DELETE_USERNAME)) {
+            userManager.deleteByUsername(DELETE_USERNAME);
         }
 
         if (printableManager.isPresent(PRINTABLE_1_ID)) {
@@ -427,5 +442,14 @@ public class ProfileControllerTest extends ControllerTest {
         Assert.assertTrue(response.getErrorMap().containsKey(LASTNAME_EMPTY.getCode()));
         Assert.assertTrue(response.getErrorMap().containsValue(LASTNAME_EMPTY.getDescription()));
         Assert.assertEquals(2, response.getErrorMap().size());
+    }
+
+    @Test
+    @WithMockUser(DELETE_USERNAME)
+    public void deleteProfile() throws Exception {
+        mockMvc.perform(
+                delete(URL_PROFILE_DELETE)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }

@@ -58,7 +58,7 @@ public class ProfileController {
     public Response<String> editProfile(
             @RequestBody(required = false) ProfileEditRequest request,
             Principal principal
-            ) throws UserNotFoundException {
+    ) throws UserNotFoundException {
 
         String username = principal.getName();
 
@@ -98,5 +98,12 @@ public class ProfileController {
         }
 
         return response;
+    }
+
+    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
+    @RequestMapping(value = URL_PROFILE_DELETE, method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteProfile(Principal principal) {
+        userService.deleteByUsername(principal.getName());
     }
 }
