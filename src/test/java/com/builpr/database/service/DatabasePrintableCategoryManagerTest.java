@@ -9,7 +9,6 @@ import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.bridge.printable.PrintableImpl;
 import com.builpr.database.bridge.printable_category.PrintableCategory;
 import com.builpr.database.bridge.printable_category.PrintableCategoryImpl;
-import com.builpr.database.bridge.printable_category.PrintableCategoryManager;
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserImpl;
 import org.junit.After;
@@ -18,12 +17,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.swing.text.html.Option;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Tests for the DatabasePrintableCategoryManager
@@ -31,7 +28,6 @@ import java.util.stream.Collectors;
 public class DatabasePrintableCategoryManagerTest {
     private DatabaseUserManager databaseUserManager;
     private DatabasePrintableManager databasePrintableManager;
-    private DatabaseCategoryManager databaseCategoryManager;
     private DatabasePrintableCategoryManager databasePrintableCategoryManager;
     private CategoryManager categoryManager;
 
@@ -40,20 +36,24 @@ public class DatabasePrintableCategoryManagerTest {
     private static final String TEST_CATEGORY = "printcategorytest1";
     private static final String TEST_CATEGORY1 = "printcategorytest2";
     private static final String TEST_CATEGORY2 = "printcategorytest3";
+    private static final String TEST_CATEGORY3 = "printcategorytest4";
 
     private List<PrintableCategory> printableCategories = new ArrayList<>();
-    private Printable testPrintable;
 
     public DatabasePrintableCategoryManagerTest() {
         databaseUserManager = new DatabaseUserManager();
         databasePrintableManager = new DatabasePrintableManager();
-        databaseCategoryManager = new DatabaseCategoryManager();
         databasePrintableCategoryManager = new DatabasePrintableCategoryManager();
         categoryManager = new BuilprApplicationBuilder().withPassword(Constants.DATABASE_PASSWORD).build().getOrThrow(CategoryManager.class);
     }
 
     @Before
     public void setTestUp() {
+
+        if (databaseUserManager.getByUsername(TEST_USER) != null) {
+            databaseUserManager.deleteByUsername(TEST_USER);
+        }
+
         User testUser = new UserImpl()
                 .setUsername(TEST_USER)
                 .setEmail("markus.goller97@googlemail.com")
@@ -65,9 +65,6 @@ public class DatabasePrintableCategoryManagerTest {
                 .setShowName(false)
                 .setShowEmail(false);
 
-        if (databaseUserManager.getByUsername(TEST_USER) != null) {
-            databaseUserManager.deleteByUsername(TEST_USER);
-        }
         databaseUserManager.persist(testUser);
 
         Printable printable = databasePrintableManager.getPrintableById(TEST_ID);
@@ -75,7 +72,7 @@ public class DatabasePrintableCategoryManagerTest {
             databasePrintableManager.deletePrintable(TEST_ID);
         }
 
-        testPrintable = new PrintableImpl()
+        Printable testPrintable = new PrintableImpl()
                 .setPrintableId(TEST_ID)
                 .setDescription("category description")
                 .setTitle("category title")
@@ -109,6 +106,7 @@ public class DatabasePrintableCategoryManagerTest {
                 .setCategoryName(TEST_CATEGORY2);
         categoryManager.persist(category2);
 
+
         PrintableCategory printableCategory = new PrintableCategoryImpl()
                 .setCategoryId(1000)
                 .setPrintableId(TEST_ID);
@@ -127,38 +125,56 @@ public class DatabasePrintableCategoryManagerTest {
         printableCategories.add(printableCategory);
         printableCategories.add(printableCategory1);
         printableCategories.add(printableCategory2);
+
+        list = categoryManager.stream().filter(Category.CATEGORY_ID.equal(1003)).findAny();
+        list.ifPresent(categoryManager::remove);
+
+        Category category3 = new CategoryImpl()
+                .setCategoryId(1003)
+                .setCategoryName(TEST_CATEGORY3);
+        categoryManager.persist(category3);
+
     }
 
     @After
     public void clearDatabase() {
+        if (categoryManager.stream().filter(Category.CATEGORY_ID.equal(1000)) != null) {
+            categoryManager.stream().filter(Category.CATEGORY_ID.equal(1000)).forEach(categoryManager.remover());
+        }
+        if (categoryManager.stream().filter(Category.CATEGORY_ID.equal(1001)) != null) {
+            categoryManager.stream().filter(Category.CATEGORY_ID.equal(1001)).forEach(categoryManager.remover());
+        }
+        if (categoryManager.stream().filter(Category.CATEGORY_ID.equal(1002)) != null) {
+            categoryManager.stream().filter(Category.CATEGORY_ID.equal(1002)).forEach(categoryManager.remover());
+        }
+        if (categoryManager.stream().filter(Category.CATEGORY_NAME.equal("printcategorytest4")) != null) {
+            categoryManager.stream().filter(Category.CATEGORY_NAME.equal("printcategorytest4")).forEach(categoryManager.remover());
+        }
+        if (categoryManager.stream().filter(Category.CATEGORY_NAME.equal("printcategorytest5")) != null) {
+            categoryManager.stream().filter(Category.CATEGORY_NAME.equal("printcategorytest5")).forEach(categoryManager.remover());
+        }
+        if (categoryManager.stream().filter(Category.CATEGORY_NAME.equal("printcategorytest6")) != null) {
+            categoryManager.stream().filter(Category.CATEGORY_NAME.equal("printcategorytest6")).forEach(categoryManager.remover());
+        }
+
+        if (databaseUserManager.getByUsername(TEST_USER) != null) {
+            databaseUserManager.deleteByUsername(TEST_USER);
+        }
     }
 
     @Test
     public void testGetListByID() {
-    }
-
-    @Test
-    public void testCreateCategories() {
-    }
-
-    @Test
-    public void testCreate() {
+        List<PrintableCategory> list = databasePrintableCategoryManager.getListByID(TEST_ID);
+        Assert.assertTrue(list.size() == 3);
     }
 
     @Test
     public void testPersist() {
-    }
-
-    @Test
-    public void testDeleteCategoriesForPrintable() {
-    }
-
-    @Test
-    public void testDelete() {
-        PrintableCategoryManager printableCategoryManager = new BuilprApplicationBuilder().withPassword(Constants.DATABASE_PASSWORD).build().getOrThrow(PrintableCategoryManager.class);
-        printableCategoryManager.stream().filter(PrintableCategory.PRINTABLE_ID.equal(TEST_ID)).forEach(printableCategoryManager.remover());
-        databasePrintableCategoryManager.delete(printableCategories.get(1));
-        List<Category> list = databaseCategoryManager.getCategoriesForPrintable(TEST_ID);
-        Assert.assertTrue(list.size() < 3);
+        PrintableCategory printableCategory = new PrintableCategoryImpl()
+                .setCategoryId(1003)
+                .setPrintableId(TEST_ID);
+        databasePrintableCategoryManager.persist(printableCategory);
+        List<PrintableCategory> list = databasePrintableCategoryManager.getListByID(TEST_ID);
+        Assert.assertTrue(list.size() == 4);
     }
 }

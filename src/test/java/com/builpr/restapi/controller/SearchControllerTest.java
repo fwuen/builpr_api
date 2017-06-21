@@ -1,8 +1,7 @@
 package com.builpr.restapi.controller;
 
-import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.error.search.SearchError;
-import com.builpr.restapi.model.Request.Search.SearchRequest;
+import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.utils.PrintableSolrHelper;
 import com.builpr.search.SearchManagerException;
@@ -42,7 +41,7 @@ public class SearchControllerTest extends ControllerTest {
     private static final String VALID_SORT = "relevance";
     private static final String INVALID_SORT = "abcdefg";
 
-    private SearchRequest searchRequest;
+    private SearchPayload searchRequest;
     private PrintableSolrHelper printableSolrHelper;
 
     public void fillCategoryFilter() {
@@ -52,7 +51,7 @@ public class SearchControllerTest extends ControllerTest {
 
     public SearchControllerTest() throws SearchManagerException {
         fillCategoryFilter();
-        searchRequest = new SearchRequest();
+        searchRequest = new SearchPayload();
         searchRequest.setQuery(VALID_QUERY);
         searchRequest.setMinimumRatingFilter(VALID_RATING);
         searchRequest.setCategories(VALID_CATEGORY_FILTER);

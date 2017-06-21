@@ -15,6 +15,7 @@ import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 import com.builpr.restapi.model.Response.printable.PrintablePayload;
+import com.builpr.restapi.utils.PrintableCategoryHelper;
 import com.builpr.restapi.utils.CategoryValidator;
 import com.builpr.restapi.utils.PrintableDownloader;
 import com.builpr.restapi.utils.PrintableUploader;
@@ -39,6 +40,7 @@ public class PrintableController {
     private PrintableDownloader printableDownloader;
     private PrintableUploader printableUploader;
     private CategoryValidator categoryValidator;
+    private PrintableCategoryHelper printableCategoryHelper;
 
     public PrintableController() {
         databasePrintableManager = new DatabasePrintableManager();
@@ -48,6 +50,7 @@ public class PrintableController {
         printableDownloader = new PrintableDownloader();
         printableUploader = new PrintableUploader();
         categoryValidator = new CategoryValidator();
+        printableCategoryHelper = new PrintableCategoryHelper();
     }
 
 
@@ -131,7 +134,7 @@ public class PrintableController {
         // GETTING CATEGORIES
         List<Category> list = databaseCategoryManager.getCategoriesByList(categoryList);
         // CREATE CONNECTIONS BETWEEN PRINTABLE AND CATEGORIES
-        databasePrintableCategoryManager.createCategories(list, printable.getPrintableId());
+        printableCategoryHelper.createCategories(list, printable.getPrintableId());
 
 
         PrintableNewResponse printableNewResponse = PrintableToPrintableNewResponseConverter.from(printable, list);
@@ -140,73 +143,73 @@ public class PrintableController {
         return response;
     }
 
-    /**
-     * @param principal Principal
-     * @param request   PrintableEditRequest
-     * @return response Response<PrintableEditResponse>
-     */
-    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
-    @RequestMapping(value = URL_EDIT_PRINTABLE, method = RequestMethod.PUT)
-    @ResponseBody
-    public Response<PrintablePayload> editPrintable(Principal principal, @RequestBody PrintableEditRequest request) {
-        Response<PrintablePayload> response = new Response<>();
-
-
-        if (databasePrintableManager.getPrintableById(request.getPrintableID()) == null) {
-            response.setSuccess(false);
-            response.addError(PrintableEditError.PRINTABLE_NOT_EXISTING);
-        }
-
-        List<String> categories = categoryValidator.checkCategories(request.getCategories());
-        if (categories.size() < 3) {
-            response.setSuccess(false);
-            response.addError(PrintableEditError.CATEGORIES_INVALID);
-        }
-        if (request.getDescription().length() > 1000) {
-            response.setSuccess(false);
-            response.addError(PrintableEditError.DESCRIPTION_INVALID);
-        }
-        if (request.getTitle().length() < 5 || request.getTitle().length() > 100) {
-            response.setSuccess(false);
-            response.addError(PrintableEditError.TITLE_INVALID);
-        }
-
-        User user = databaseUserManager.getByUsername(principal.getName());
-        Printable printable = databasePrintableManager.getPrintableById(request.getPrintableID());
-        if (user != null) {
-            if (user.getUserId() == 0) {
-                response.setSuccess(false);
-                response.addError(PrintableEditError.USER_INVALID);
-            }
-            if (user.getUserId() != printable.getUploaderId()) {
-                response.setSuccess(false);
-                response.addError(PrintableEditError.NO_AUTHORIZATION);
-            }
-        }
-        if (!response.isSuccess()) {
-            return response;
-        }
-
-        // UPDATE the printable
-        printable.setDescription(request.getDescription());
-        printable.setTitle(request.getTitle());
-
-        databasePrintableManager.update(printable);
-
-        if (request.getCategories().size() > 0) {
-            // UPDATE the CATEGORY-table
-            databaseCategoryManager.update(categories);
-            // DELETE ALL PRINTABLE_CATEGORIES WITH PRINTABLE_ID
-            databasePrintableCategoryManager.deleteCategoriesForPrintable(request.getPrintableID());
-            // GET CATEGORIES FOR PRINTABLE
-            List<Category> categoryList = databaseCategoryManager.getCategoriesByList(categories);
-            // CREATE NEW PRINTABLE_CATEGORIES
-          //  databasePrintableCategoryManager.createCategories(categoryList, request.getPrintableID());
-        }
-        PrintablePayload printablePayload = PrintableModelToPrintablePayloadConverter.from(printable);
-        response.setPayload(printablePayload);
-        return response;
-    }
+//    /**
+//     * @param principal Principal
+//     * @param request   PrintableEditRequest
+//     * @return response Response<PrintableEditResponse>
+//     */
+//    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
+//    @RequestMapping(value = URL_EDIT_PRINTABLE, method = RequestMethod.PUT)
+//    @ResponseBody
+//    public Response<PrintablePayload> editPrintable(Principal principal, @RequestBody PrintableEditRequest request) {
+//        Response<PrintablePayload> response = new Response<>();
+//
+//
+//        if (databasePrintableManager.getPrintableById(request.getPrintableID()) == null) {
+//            response.setSuccess(false);
+//            response.addError(PrintableEditError.PRINTABLE_NOT_EXISTING);
+//        }
+//
+//        List<String> categories = categoryValidator.checkCategories(request.getCategories());
+//        if (categories.size() < 3) {
+//            response.setSuccess(false);
+//            response.addError(PrintableEditError.CATEGORIES_INVALID);
+//        }
+//        if (request.getDescription().length() > 1000) {
+//            response.setSuccess(false);
+//            response.addError(PrintableEditError.DESCRIPTION_INVALID);
+//        }
+//        if (request.getTitle().length() < 5 || request.getTitle().length() > 100) {
+//            response.setSuccess(false);
+//            response.addError(PrintableEditError.TITLE_INVALID);
+//        }
+//
+//        User user = databaseUserManager.getByUsername(principal.getName());
+//        Printable printable = databasePrintableManager.getPrintableById(request.getPrintableID());
+//        if (user != null) {
+//            if (user.getUserId() == 0) {
+//                response.setSuccess(false);
+//                response.addError(PrintableEditError.USER_INVALID);
+//            }
+//            if (user.getUserId() != printable.getUploaderId()) {
+//                response.setSuccess(false);
+//                response.addError(PrintableEditError.NO_AUTHORIZATION);
+//            }
+//        }
+//        if (!response.isSuccess()) {
+//            return response;
+//        }
+//
+//        // UPDATE the printable
+//        printable.setDescription(request.getDescription());
+//        printable.setTitle(request.getTitle());
+//
+//        databasePrintableManager.update(printable);
+//
+//        if (request.getCategories().size() > 0) {
+//            // UPDATE the CATEGORY-table
+//            databaseCategoryManager.update(categories);
+//            // DELETE ALL PRINTABLE_CATEGORIES WITH PRINTABLE_ID
+//            printableCategoryHelper.deleteCategoriesForPrintable(request.getPrintableID());
+//            // GET CATEGORIES FOR PRINTABLE
+//            List<Category> categoryList = databaseCategoryManager.getCategoriesByList(categories);
+//            // CREATE NEW PRINTABLE_CATEGORIES
+//            //  databasePrintableCategoryManager.createCategories(categoryList, request.getPrintableID());
+//        }
+//        PrintablePayload printablePayload = PrintableModelToPrintablePayloadConverter.from(printable);
+//        response.setPayload(printablePayload);
+//        return response;
+//    }
 
     /**
      * @param printableID int

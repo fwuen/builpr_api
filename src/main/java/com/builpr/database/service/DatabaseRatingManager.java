@@ -31,15 +31,6 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
 
     /**
      * @param printableID int
-     * @param userID      int
-     * @return boolean
-     */
-    public boolean isPresentByIDs(int printableID, int userID) {
-        return getRatingByIds(printableID, userID) != null;
-    }
-
-    /**
-     * @param printableID int
      * @return List<rating>
      */
     public List<Rating> getRatingsForPrintable(int printableID) {
@@ -52,20 +43,6 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
      */
     public Rating persist(Rating rating) {
         return getDao().persist(rating);
-    }
-
-    /**
-     * @param request RatingNewRequest
-     * @param userID  int
-     */
-    public void createRating(RatingNewRequest request, int userID) {
-        RatingImpl rating = new RatingImpl();
-        rating.setMsg(request.getText());
-        rating.setPrintableId(request.getPrintableID());
-        rating.setRating(request.getRating());
-        rating.setUserId(userID);
-
-        persist(rating);
     }
 
     /**
