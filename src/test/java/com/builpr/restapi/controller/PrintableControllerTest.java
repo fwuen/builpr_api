@@ -7,7 +7,6 @@ import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.error.printable.*;
-import com.builpr.restapi.utils.CustomMultipartFile;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.utils.TokenGenerator;
@@ -17,10 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.*;
 import java.sql.Date;
@@ -45,7 +44,6 @@ public class PrintableControllerTest extends ControllerTest {
     private static ObjectMapper mapper = new ObjectMapper();
 
     private static final String DB_TEST_USER_NAME = "DB_printable_test";
-    private static User PRINTABLE_TEST_USER;
 
     private static final int TEST_PRINTABLE_ID = 123456789;
     private static final String TEST_PRINTABLE_ID_STRING = "123456789";
@@ -81,7 +79,7 @@ public class PrintableControllerTest extends ControllerTest {
         INVALID_LIST.add(".ß3---___");
 
         // User anlegen
-        PRINTABLE_TEST_USER = new UserImpl()
+        User PRINTABLE_TEST_USER = new UserImpl()
                 .setUsername(DB_TEST_USER_NAME)
                 .setEmail("test_printable@googlemail.de")
                 .setPassword(new BCryptPasswordEncoder().encode("password"))
@@ -98,13 +96,14 @@ public class PrintableControllerTest extends ControllerTest {
         databaseUserManager.persist(PRINTABLE_TEST_USER);
         // TestFile hochladen
         // TODO eine datei muss vor dem Test immer abgelegt werden und wieder gelöscht werden
-        MultipartFile multipartFile = new CustomMultipartFile(VALID_FILE, TEST_PATH + "testFile.stl");
         File file = new File(TEST_PATH + "testFile.stl");
         Path filePath = Paths.get(TEST_PATH + "testFile.stl");
 
         try {
             Files.createFile(filePath);
-            multipartFile.transferTo(file);
+            Files.createFile(filePath);
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(VALID_FILE);
         } catch (FileAlreadyExistsException ignored) {
         }
         // Printable anlegen

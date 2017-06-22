@@ -7,6 +7,7 @@ import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
 import com.builpr.database.service.DatabaseCategoryManager;
 import com.builpr.database.service.DatabaseRatingManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class PrintableModelToPrintablePayloadConverter {
                 .setDescription(printable.getDescription().isPresent() ? printable.getDescription().get() : null)
                 .setCategories(categoryNames)
                 .setRatings(ratingPayloadList)
+                .setDownloads(printable.getNumDownloads())
                 .setUploadTime(printable.getUploadTime().toString());
     }
 
