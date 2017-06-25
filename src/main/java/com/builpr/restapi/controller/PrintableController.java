@@ -121,9 +121,15 @@ public class PrintableController {
         }
 
         User user = databaseUserManager.getByUsername(principal.getName());
-
-        // UPLOADING FILE
-        String path = printableUploader.uploadFile(request.getFile());
+        String path;
+        try {
+            // UPLOADING FILE
+            path = printableUploader.uploadFile(request.getFile());
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.addError(PrintableNewError.FAILED_UPLOAD);
+            return response;
+        }
         // CREATING PRINTABLE
         Printable printable = PrintableNewRequestToPrintableConverter.from(request, user.getUserId(), path);
         databasePrintableManager.persist(printable);
