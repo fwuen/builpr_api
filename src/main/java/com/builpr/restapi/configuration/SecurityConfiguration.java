@@ -46,7 +46,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .cors().disable()
-                .headers().frameOptions().disable().and()
+                .headers().frameOptions().disable()
+                .xssProtection().disable().and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(Constants.SECURITY_URLS.toArray(new String[Constants.SECURITY_URLS.size()])).authenticated().and()
