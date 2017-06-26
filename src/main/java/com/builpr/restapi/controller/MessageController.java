@@ -8,6 +8,7 @@ import com.builpr.restapi.converter.MessageModelToMessagePayloadConverter;
 import com.builpr.restapi.converter.MessageRequestToMessageModelConverter;
 import com.builpr.restapi.error.exception.UserNotFoundException;
 import com.builpr.restapi.model.Request.SendMessageRequest;
+import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.message.ListMessagePayload;
 import com.builpr.restapi.model.Response.message.MessagePayload;
 import com.google.common.collect.Lists;
@@ -38,27 +39,31 @@ public class MessageController {
     @CrossOrigin(SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_MESSAGE, method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<MessagePayload> sendMessage(@RequestBody SendMessageRequest request, Principal principal) throws UserNotFoundException {
+    public Response<MessagePayload> sendMessage(@RequestBody SendMessageRequest request, Principal principal) throws UserNotFoundException {
         if (!userManager.isPresent(request.getReceiverID())) {
             throw new UserNotFoundException("The given user does not exist");
         }
 
         Message message = MessageRequestToMessageModelConverter.from(request, principal);
+        messageManager.persist(message);
+        Response<MessagePayload> response = new Response<>();
+        response.setSuccess(true);
+        response.setPayload(MessageModelToMessagePayloadConverter.from(message));
 
-        return ResponseEntity.ok(MessageModelToMessagePayloadConverter.from(messageManager.persist(message)));
+        return response;
     }
 
     @CrossOrigin(SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_MESSAGE, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<ListMessagePayload> listMessages(@RequestParam(value = "id") int receiverID, Principal principal) throws UserNotFoundException {
+    public Response<ListMessagePayload> listMessages(@RequestParam(value = "partnerID") int partnerID, Principal principal) throws UserNotFoundException {
         User loggedInUser = userManager.getByUsername(principal.getName());
 
-        if (!userManager.isPresent(receiverID)) {
+        if (!userManager.isPresent(partnerID)) {
             throw new UserNotFoundException("The given user does not exist");
         }
 
-        List<Message> messagesForConversation = messageManager.getMessagesForConversation(loggedInUser.getUserId(), receiverID);
+        List<Message> messagesForConversation = messageManager.getMessagesForConversation(loggedInUser.getUserId(), partnerID);
         List<MessagePayload> messagePayloadList = Lists.newArrayList();
         // convert all the messages to message payloads and mark them as read
         for (Message message :
@@ -70,7 +75,10 @@ public class MessageController {
             messageManager.update(message);
         }
 
-        return ResponseEntity.ok(new ListMessagePayload(messagePayloadList));
+        Response<ListMessagePayload> response = new Response<>();
+        response.setSuccess(true);
+        response.setPayload(new ListMessagePayload(messagePayloadList));
+        return response;
     }
 
 }
