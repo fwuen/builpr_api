@@ -35,7 +35,6 @@ public class PrintableController {
 
     private DatabasePrintableManager databasePrintableManager;
     private DatabaseCategoryManager databaseCategoryManager;
-    private DatabasePrintableCategoryManager databasePrintableCategoryManager;
     private DatabaseUserManager databaseUserManager;
     private PrintableDownloader printableDownloader;
     private PrintableUploader printableUploader;
@@ -45,7 +44,6 @@ public class PrintableController {
     public PrintableController() {
         databasePrintableManager = new DatabasePrintableManager();
         databaseCategoryManager = new DatabaseCategoryManager();
-        databasePrintableCategoryManager = new DatabasePrintableCategoryManager();
         databaseUserManager = new DatabaseUserManager();
         printableDownloader = new PrintableDownloader();
         printableUploader = new PrintableUploader();

@@ -23,7 +23,7 @@ public class PrintableToPrintableNewResponseConverter {
         }
         printableNewResponse.setTitle(printable.getTitle());
         printableNewResponse.setCategories(CategoryToStringConverter.convertCategoriesToString(categoryList));
-
+        printableNewResponse.setUploadDate(printable.getUploadTime());
         return printableNewResponse;
     }
 }

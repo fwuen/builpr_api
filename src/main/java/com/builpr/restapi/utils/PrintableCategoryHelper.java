@@ -35,19 +35,6 @@ public class PrintableCategoryHelper {
 
     /**
      * @param printableID int
-     * @param categoryID  int
-     * @return void
-     */
-
-    public void create(int printableID, int categoryID) {
-        PrintableCategoryImpl printableCategory = new PrintableCategoryImpl();
-        printableCategory.setPrintableId(printableID);
-        printableCategory.setCategoryId(categoryID);
-        databasePrintableCategoryManager.persist(printableCategory);
-    }
-
-    /**
-     * @param printableID int
      * @return void
      */
     public void deleteCategoriesForPrintable(int printableID) {

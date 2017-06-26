@@ -2,7 +2,7 @@ package com.builpr.restapi.model.Response.printable;
 
 import lombok.Getter;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public class PrintableNewResponse {
     private List<String> categories;
 
     @Getter
-    private Date uploadDate;
+    private Timestamp uploadDate;
 
     public PrintableNewResponse setPrintableID(int printableID) {
         this.printableID = printableID;
@@ -53,7 +53,7 @@ public class PrintableNewResponse {
         return this;
     }
 
-    public PrintableNewResponse setUploadDate(Date uploadDate) {
+    public PrintableNewResponse setUploadDate(Timestamp uploadDate) {
         this.uploadDate = uploadDate;
         return this;
     }
