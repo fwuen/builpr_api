@@ -26,9 +26,9 @@ public class PrintableSolrHelper {
      * @throws SearchManagerException exception
      */
     public void indexPrintables() throws SearchManagerException {
-        List<Printable> printables = databasePrintableManager.getAllPrintables();
+        List<Printable> printableList = databasePrintableManager.getAllPrintables();
         List<Indexable> solrPrintableList = new ArrayList<>();
-        for (Printable printable : printables) {
+        for (Printable printable : printableList) {
             com.builpr.search.model.Printable solrPrintable = PrintableToSolrPrintableConverter.getSolrPrintable(printable);
             solrPrintableList.add(solrPrintable);
         }
@@ -38,13 +38,19 @@ public class PrintableSolrHelper {
         }
     }
 
+    public void addPrintableToIndex(Printable printable) throws SearchManagerException {
+        com.builpr.search.model.Printable solrPrintable = PrintableToSolrPrintableConverter.getSolrPrintable(printable);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
+        solrSearchManager.addToIndex(solrPrintable);
+    }
+
+
     /**
      * @return void
      */
     public void deletePrintableFromIndex() throws SearchManagerException {
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
         solrSearchManager.clearIndex();
-
     }
 
     /**

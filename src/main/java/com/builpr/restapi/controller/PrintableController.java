@@ -13,10 +13,8 @@ import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 import com.builpr.restapi.model.Response.printable.PrintablePayload;
-import com.builpr.restapi.utils.PrintableCategoryHelper;
-import com.builpr.restapi.utils.CategoryValidator;
-import com.builpr.restapi.utils.PrintableDownloader;
-import com.builpr.restapi.utils.PrintableUploader;
+import com.builpr.restapi.utils.*;
+import com.builpr.search.SearchManagerException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -88,7 +86,7 @@ public class PrintableController {
     @RequestMapping(value = Constants.URL_NEW_PRINTABLE, method = RequestMethod.POST)
     @ResponseBody
     public Response<PrintableNewResponse> createPrintable(
-            Principal principal, @RequestBody PrintableNewRequest request) throws IOException {
+            Principal principal, @RequestBody PrintableNewRequest request) throws IOException, SearchManagerException {
         Response<PrintableNewResponse> response = new Response<>();
 
         if (!databaseUserManager.isPresent(principal.getName())) {
@@ -138,6 +136,12 @@ public class PrintableController {
         // CREATE CONNECTIONS BETWEEN PRINTABLE AND CATEGORIES
         printableCategoryHelper.createCategories(list, printable.getPrintableId());
 
+        try {
+            PrintableSolrHelper solrHelper = new PrintableSolrHelper();
+            solrHelper.addPrintableToIndex(printable);
+        }catch (Exception e){
+            //
+        }
 
 
         PrintableNewResponse printableNewResponse = PrintableToPrintableNewResponseConverter.from(printable, list);
