@@ -4,6 +4,9 @@ import com.builpr.search.SearchManagerException;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Felix Wünsche
+ */
 public class SearchManagerExceptionTest {
     @Test
     public void createSearchManagerException() {
