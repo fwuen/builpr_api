@@ -104,32 +104,53 @@ public class DatabaseUserManagerTest {
     }
 
     @Test
-    public void testIsPresent() {
+    public void testDeleteByID() {
+        Assert.assertTrue(userManager.stream().anyMatch(User.USERNAME.equal(TEST_USERNAME)));
+
+        databaseUserManager.deleteByID(testUser.getUserId());
+
+        Assert.assertFalse(userManager.stream().anyMatch(User.USERNAME.equal(TEST_USERNAME)));
+    }
+
+    @Test
+    public void testIsPresentByUsername() {
         Assert.assertTrue(databaseUserManager.isPresent(TEST_USERNAME));
 
         Assert.assertFalse(databaseUserManager.isPresent("irgendwas"));
     }
 
     @Test
+    public void testIsPresentByUserID() {
+        Assert.assertTrue(databaseUserManager.isPresent(testUser.getUserId()));
+
+        Assert.assertFalse(databaseUserManager.isPresent(345234534));
+    }
+
+    @Test
     public void persist() {
 
         Optional<User> user = userManager.stream().filter(User.USERNAME.equal(TEST_USERNAME)).findAny();
-
         user.ifPresent(userManager::remove);
 
         Optional<User> user0 = userManager.stream().filter(User.USERNAME.equal(TEST_USERNAME)).findAny();
-
         Assert.assertFalse(user0.isPresent());
-
 
         databaseUserManager.persist(testUser);
 
         Optional<User> user1 = userManager.stream().filter(User.USERNAME.equal(TEST_USERNAME)).findAny();
-
         user.ifPresent(userManager::remove);
-
 
         Assert.assertTrue(user1.isPresent());
     }
 
+    @Test
+    public void update() {
+        User oldTestUser = testUser;
+        testUser.setDescription("new Description");
+        databaseUserManager.update(testUser);
+
+        User newTestUser = userManager.stream().filter(User.USERNAME.equal(TEST_USERNAME)).findFirst().get();
+        Assert.assertNotEquals(oldTestUser, newTestUser);
+        Assert.assertEquals("new Description", newTestUser.getDescription().get());
+    }
 }

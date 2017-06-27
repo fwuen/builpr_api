@@ -32,7 +32,7 @@ public class ConfirmationTokenController {
         int user_id = Integer.parseInt(tokenAndID.substring(60));
 
         if (registerConfirmationTokenManager.isPresent(user_id, token)) {
-            registerConfirmationTokenManager.delete(registerConfirmationTokenManager.getByUserIDandToken(user_id, token));
+            registerConfirmationTokenManager.delete(registerConfirmationTokenManager.getTokenEntry(user_id, token));
             User updateUser = userManager.getByID(user_id);
             updateUser.setActivated(true);
             userManager.update(updateUser);
