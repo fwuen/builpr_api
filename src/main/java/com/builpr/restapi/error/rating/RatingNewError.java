@@ -13,8 +13,7 @@ public enum RatingNewError implements MappableError {
     PRINTABLE_NOT_EXISTING(2, "The printable is not exisiting"),
     TEXT_INVALID(3, "Text invalid"),
     NO_AUTHORIZATION(4, "No authorization"),
-    USER_INVALID(5, "User invalid"),
-    RATING_ALREADY_EXISTS(6, "There is already a rating for this printable");
+    RATING_ALREADY_EXISTS(5, "There is already a rating for this printable");
 
     private final int code;
     private final String description;

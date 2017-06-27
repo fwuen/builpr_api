@@ -1,10 +1,7 @@
 package com.builpr.database.service;
 
-import com.builpr.database.bridge.category.Category;
 import com.builpr.database.bridge.printable_category.PrintableCategory;
-import com.builpr.database.bridge.printable_category.PrintableCategoryImpl;
 import com.builpr.database.bridge.printable_category.PrintableCategoryManager;
-import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 
 
 import java.util.List;

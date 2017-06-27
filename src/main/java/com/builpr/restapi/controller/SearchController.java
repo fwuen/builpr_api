@@ -7,6 +7,7 @@ import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.Search.SearchResponse;
 import com.builpr.restapi.utils.CategoryValidator;
+import com.builpr.restapi.utils.PrintableSolrHelper;
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
 import com.builpr.search.SearchManagerException;
@@ -76,6 +77,9 @@ public class SearchController {
             response.setPayload(searchResponse);
             return response;
         }
+
+        PrintableSolrHelper printableSolrHelper = new PrintableSolrHelper();
+        printableSolrHelper.indexPrintables();
 
         List<Filter> filter = new ArrayList<>();
         ORDER order = null;

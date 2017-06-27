@@ -3,9 +3,6 @@ package com.builpr.restapi.model.Response.printable;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
 import lombok.Getter;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**

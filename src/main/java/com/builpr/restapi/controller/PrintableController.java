@@ -5,12 +5,10 @@ import com.builpr.database.bridge.category.Category;
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.service.DatabaseCategoryManager;
-import com.builpr.database.service.DatabasePrintableCategoryManager;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.converter.*;
 import com.builpr.restapi.error.printable.*;
-import com.builpr.restapi.model.Request.Printable.PrintableEditRequest;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
@@ -141,6 +139,7 @@ public class PrintableController {
         printableCategoryHelper.createCategories(list, printable.getPrintableId());
 
 
+
         PrintableNewResponse printableNewResponse = PrintableToPrintableNewResponseConverter.from(printable, list);
         response.setPayload(printableNewResponse);
 
@@ -217,7 +216,7 @@ public class PrintableController {
 
     /**
      * @param printableID int
-     * @return response Respones<PrintableDownloadResponse>
+     * @return response Response<PrintableDownloadResponse>
      */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_DOWNLOAD, method = RequestMethod.GET)
@@ -239,7 +238,15 @@ public class PrintableController {
         }
 
         Printable printable = databasePrintableManager.getPrintableById(printableID);
-        byte[] fileData = printableDownloader.downloadFile(printable.getFilePath());
+        byte[] fileData;
+        try {
+            fileData = printableDownloader.downloadFile(printable.getFilePath());
+        } catch (IOException e) {
+            response.setSuccess(false);
+            response.addError(PrintableDownloadError.DOWNLOAD_FAILED);
+            return response;
+        }
+
         databasePrintableManager.updateDownloads(printableID);
 
         response.setPayload(fileData);
