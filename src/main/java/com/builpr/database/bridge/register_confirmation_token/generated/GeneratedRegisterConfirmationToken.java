@@ -6,6 +6,7 @@ import com.speedment.common.annotation.GeneratedCode;
 import com.speedment.runtime.config.identifier.ColumnIdentifier;
 import com.speedment.runtime.config.identifier.TableIdentifier;
 import com.speedment.runtime.core.manager.Manager;
+import com.speedment.runtime.field.IntField;
 import com.speedment.runtime.field.IntForeignKeyField;
 import com.speedment.runtime.field.StringField;
 import com.speedment.runtime.typemapper.TypeMapper;
@@ -35,7 +36,7 @@ public interface GeneratedRegisterConfirmationToken {
         RegisterConfirmationToken::setUserId,
         User.USER_ID,
         TypeMapper.primitive(), 
-        false
+        true
     );
     /**
      * This Field corresponds to the {@link RegisterConfirmationToken} field
@@ -47,6 +48,18 @@ public interface GeneratedRegisterConfirmationToken {
         RegisterConfirmationToken::getToken,
         RegisterConfirmationToken::setToken,
         TypeMapper.identity(), 
+        true
+    );
+    /**
+     * This Field corresponds to the {@link RegisterConfirmationToken} field
+     * that can be obtained using the {@link
+     * RegisterConfirmationToken#getTokenId()} method.
+     */
+    IntField<RegisterConfirmationToken, Integer> TOKEN_ID = IntField.create(
+        Identifier.TOKEN_ID,
+        RegisterConfirmationToken::getTokenId,
+        RegisterConfirmationToken::setTokenId,
+        TypeMapper.primitive(), 
         true
     );
     
@@ -69,6 +82,15 @@ public interface GeneratedRegisterConfirmationToken {
     String getToken();
     
     /**
+     * Returns the tokenId of this RegisterConfirmationToken. The tokenId field
+     * corresponds to the database column
+     * builpr.builpr.register_confirmation_token.token_id.
+     * 
+     * @return the tokenId of this RegisterConfirmationToken
+     */
+    int getTokenId();
+    
+    /**
      * Sets the userId of this RegisterConfirmationToken. The userId field
      * corresponds to the database column
      * builpr.builpr.register_confirmation_token.user_id.
@@ -89,6 +111,16 @@ public interface GeneratedRegisterConfirmationToken {
     RegisterConfirmationToken setToken(String token);
     
     /**
+     * Sets the tokenId of this RegisterConfirmationToken. The tokenId field
+     * corresponds to the database column
+     * builpr.builpr.register_confirmation_token.token_id.
+     * 
+     * @param tokenId to set of this RegisterConfirmationToken
+     * @return        this RegisterConfirmationToken instance
+     */
+    RegisterConfirmationToken setTokenId(int tokenId);
+    
+    /**
      * Queries the specified manager for the referenced User. If no such User
      * exists, an {@code NullPointerException} will be thrown.
      * 
@@ -99,8 +131,9 @@ public interface GeneratedRegisterConfirmationToken {
     
     enum Identifier implements ColumnIdentifier<RegisterConfirmationToken> {
         
-        USER_ID ("user_id"),
-        TOKEN   ("token");
+        USER_ID  ("user_id"),
+        TOKEN    ("token"),
+        TOKEN_ID ("token_id");
         
         private final String columnName;
         private final TableIdentifier<RegisterConfirmationToken> tableIdentifier;

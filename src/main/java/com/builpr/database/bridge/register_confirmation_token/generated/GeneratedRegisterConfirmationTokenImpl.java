@@ -21,6 +21,7 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     
     private int userId;
     private String token;
+    private int tokenId;
     
     protected GeneratedRegisterConfirmationTokenImpl() {
         
@@ -37,6 +38,11 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     }
     
     @Override
+    public int getTokenId() {
+        return tokenId;
+    }
+    
+    @Override
     public RegisterConfirmationToken setUserId(int userId) {
         this.userId = userId;
         return this;
@@ -49,6 +55,12 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     }
     
     @Override
+    public RegisterConfirmationToken setTokenId(int tokenId) {
+        this.tokenId = tokenId;
+        return this;
+    }
+    
+    @Override
     public User findUserId(Manager<User> foreignManager) {
         return foreignManager.stream().filter(User.USER_ID.equal(getUserId())).findAny().orElse(null);
     }
@@ -56,8 +68,9 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
     @Override
     public String toString() {
         final StringJoiner sj = new StringJoiner(", ", "{ ", " }");
-        sj.add("userId = " + Objects.toString(getUserId()));
-        sj.add("token = "  + Objects.toString(getToken()));
+        sj.add("userId = "  + Objects.toString(getUserId()));
+        sj.add("token = "   + Objects.toString(getToken()));
+        sj.add("tokenId = " + Objects.toString(getTokenId()));
         return "RegisterConfirmationTokenImpl " + sj.toString();
     }
     
@@ -68,6 +81,7 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
         final RegisterConfirmationToken thatRegisterConfirmationToken = (RegisterConfirmationToken)that;
         if (this.getUserId() != thatRegisterConfirmationToken.getUserId()) {return false; }
         if (!Objects.equals(this.getToken(), thatRegisterConfirmationToken.getToken())) {return false; }
+        if (this.getTokenId() != thatRegisterConfirmationToken.getTokenId()) {return false; }
         return true;
     }
     
@@ -76,6 +90,7 @@ public abstract class GeneratedRegisterConfirmationTokenImpl implements Register
         int hash = 7;
         hash = 31 * hash + Integer.hashCode(getUserId());
         hash = 31 * hash + Objects.hashCode(getToken());
+        hash = 31 * hash + Integer.hashCode(getTokenId());
         return hash;
     }
 }

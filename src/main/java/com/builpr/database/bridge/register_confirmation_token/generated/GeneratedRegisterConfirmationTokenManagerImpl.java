@@ -35,15 +35,15 @@ public abstract class GeneratedRegisterConfirmationTokenManagerImpl extends Abst
     public Stream<Field<RegisterConfirmationToken>> fields() {
         return Stream.of(
             RegisterConfirmationToken.USER_ID,
-            RegisterConfirmationToken.TOKEN
+            RegisterConfirmationToken.TOKEN,
+            RegisterConfirmationToken.TOKEN_ID
         );
     }
     
     @Override
     public Stream<Field<RegisterConfirmationToken>> primaryKeyFields() {
         return Stream.of(
-            RegisterConfirmationToken.TOKEN,
-            RegisterConfirmationToken.USER_ID
+            RegisterConfirmationToken.TOKEN_ID
         );
     }
 }
