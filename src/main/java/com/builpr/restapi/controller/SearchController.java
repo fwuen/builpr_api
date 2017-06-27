@@ -40,7 +40,7 @@ public class SearchController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_SEARCH, method = RequestMethod.GET)
     @ResponseBody
-    public Response<SearchResponse> search(@RequestBody SearchPayload request) throws SearchManagerException {
+    public Response<SearchResponse> search(SearchPayload request) throws SearchManagerException {
         Response<SearchResponse> response = new Response<>();
         if (request.getQuery().isEmpty()) {
             response.setSuccess(false);
