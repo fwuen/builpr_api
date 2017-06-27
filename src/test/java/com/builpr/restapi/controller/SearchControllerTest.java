@@ -28,9 +28,9 @@ public class SearchControllerTest extends ControllerTest {
     private static final String VALID_QUERY = "domi";
     private static final String INVALID_QUERY = "";
 
-    private static final int VALID_RATING = 5;
+    private static final int VALID_RATING = 0;
     private static final int TOO_BIG_RATING = 10;
-    private static final int TOO_SHORT_RATING = 0;
+    private static final int TOO_SHORT_RATING = -5;
 
     private List<String> VALID_CATEGORY_FILTER = new ArrayList<>();
     private List<String> INVALID_CATEGORY_FILTER = new ArrayList<>();
@@ -66,9 +66,10 @@ public class SearchControllerTest extends ControllerTest {
     public void searchWithValidInput() throws Exception {
 
         MvcResult result = mockMvc.perform(
-                get(URL_SEARCH)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(searchRequest)))
+                get(URL_SEARCH).param("query", VALID_QUERY)
+                        .param("minimumRatingFilter", "0")
+                        .param("order", VALID_ORDER)
+                        .param("sort", VALID_SORT))
                 .andExpect(status().isOk())
                 .andReturn();
 

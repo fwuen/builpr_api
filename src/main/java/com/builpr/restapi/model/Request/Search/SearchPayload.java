@@ -35,6 +35,7 @@ public class SearchPayload {
     /**
      * value of the order of the printables
      */
+
     @Getter
     @Setter
     private String order;
@@ -45,4 +46,6 @@ public class SearchPayload {
     @Getter
     @Setter
     private String sort;
+
+
 }
