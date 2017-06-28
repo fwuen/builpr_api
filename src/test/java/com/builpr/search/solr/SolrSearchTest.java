@@ -1,5 +1,6 @@
 package com.builpr.search.solr;
 
+import com.builpr.Constants;
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
 import com.builpr.search.SearchManager;
@@ -41,7 +42,7 @@ public class SolrSearchTest {
     @BeforeClass
     public static void prepareIndexForSearch() throws SearchManagerException {
         
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<String> categoriesCar1 = Lists.newArrayList();
         List<String> categoriesCarsWithSameCategory = Lists.newArrayList();
         List<String> categoriesTower = Lists.newArrayList();
@@ -174,7 +175,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithSimpleTerm() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Preconditions.checkNotNull(solrSearchManager);
         List<PrintableReference> res = solrSearchManager.search("tower");
         Assert.assertTrue(res.size() == 1);
@@ -183,7 +184,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermWithMultipleWords() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Preconditions.checkNotNull(solrSearchManager);
         List<PrintableReference> res = solrSearchManager.search("customizable tower");
         Assert.assertTrue(res.size() == 1);
@@ -192,7 +193,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         filters.add(new MinimumRatingFilter(3));
         Preconditions.checkNotNull(solrSearchManager);
@@ -206,7 +207,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndCategory() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = new ArrayList<>();
         List<String> categories = new ArrayList<>();
         categories.add("car");
@@ -227,7 +228,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndCategoryAndMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = new ArrayList<>();
         List<String> categories = new ArrayList<>();
         categories.add("car");
@@ -247,7 +248,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithCategory() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<String> categories = Lists.newArrayList();
         categories.add("car");
         CategoryFilter cf = new CategoryFilter(categories);
@@ -264,7 +265,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithCategoryAndMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<String> categories = Lists.newArrayList();
         categories.add("car");
         CategoryFilter cf = new CategoryFilter(categories);
@@ -282,7 +283,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         MinimumRatingFilter mrf = new MinimumRatingFilter(2);
         List<Filter> filterList = Lists.newArrayList();
         filterList.add(mrf);
@@ -298,14 +299,14 @@ public class SolrSearchTest {
     
     @Test(expected = NullPointerException.class)
     public void searchWithNullTerm() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.search(null);
     }
     
     @Test(expected = NullPointerException.class)
     public void searchWithTermAndNullFilterList() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Preconditions.checkNotNull(solrSearchManager);
         List<Filter> filterList = null;
         
@@ -314,7 +315,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndNullCategory() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Preconditions.checkNotNull(solrSearchManager);
         List<Filter> filterList = Lists.newArrayList();
         CategoryFilter f = null;
@@ -326,7 +327,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndNullMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Preconditions.checkNotNull(solrSearchManager);
         List<Filter> filterList = Lists.newArrayList();
         MinimumRatingFilter mrf = null;
@@ -337,7 +338,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndNullCategoryAndNullMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         MinimumRatingFilter mrf = null;
         CategoryFilter cf = null;
         List<Filter> filterList = Lists.newArrayList();
@@ -349,7 +350,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndCategoryAndNullMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         MinimumRatingFilter mrf = null;
         List<String> categories = Lists.newArrayList();
         categories.add("cat");
@@ -363,7 +364,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndNullCategoryAndMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         MinimumRatingFilter mrf = new MinimumRatingFilter(1);
         CategoryFilter cf = null;
         List<Filter> filterList = Lists.newArrayList();
@@ -375,7 +376,7 @@ public class SolrSearchTest {
     
     @Test(expected = NullPointerException.class)
     public void searchWithNullTermAndCategoryAndMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         MinimumRatingFilter mrf = new MinimumRatingFilter(1);
         List<String> categories = Lists.newArrayList();
         categories.add("cat");
@@ -388,7 +389,7 @@ public class SolrSearchTest {
     
     @Test(expected = NullPointerException.class)
     public void searchWithNullTermAndNullCategoryAndMinimumRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         MinimumRatingFilter mrf = new MinimumRatingFilter(1);
         CategoryFilter cf = null;
         List<Filter> filterList = Lists.newArrayList();
@@ -399,7 +400,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByName() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
@@ -408,7 +409,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
@@ -417,7 +418,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByDownloads() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
@@ -426,7 +427,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByUploadDate() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
@@ -435,7 +436,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByNameAndOrderAsc() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.ASC);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
@@ -444,7 +445,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByRatingAndOrderAsc() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING, ORDER.ASC);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
@@ -453,7 +454,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderAsc() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.ASC);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
@@ -462,7 +463,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderAsc() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.ASC);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shisha2Id);
@@ -471,7 +472,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByNameAndOrderDesc() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.ALPHABETICAL, ORDER.DESC);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
@@ -480,7 +481,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByRatingAndOrderDesc() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.RATING, ORDER.DESC);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
@@ -489,7 +490,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByDownloadsAndOrderDesc() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.DOWNLOADS, ORDER.DESC);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
@@ -498,7 +499,7 @@ public class SolrSearchTest {
     
     @Test
     public void searchWithTermAndSortByUploadDateAndOrderDesc() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<PrintableReference> res = solrSearchManager.search("shisha", SORT.UPLOAD_DATE, ORDER.DESC);
         Assert.assertTrue(res.size() == 2);
         Assert.assertTrue(Integer.parseInt(res.get(0).getId()) == shishaId);
@@ -508,7 +509,7 @@ public class SolrSearchTest {
     //TODO
     @Test
     public void searchWithTermAndCategoryFilterAndSortByTitle() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         List<String> categories = Lists.newArrayList();
         categories.add("car");
@@ -524,7 +525,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndMinimumRatingFilterAndSortByTitle() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         filters.add(new MinimumRatingFilter(3));
         List<PrintableReference> res = solrSearchManager.search("car", filters, SORT.ALPHABETICAL);
@@ -535,7 +536,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndCategoryFilterAndSortByDownloads() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         List<String> categories = Lists.newArrayList();
         categories.add("car");
@@ -551,7 +552,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndMinimumRatingFilterAndSortByDownloads() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         filters.add(new MinimumRatingFilter(3));
         List<PrintableReference> res = solrSearchManager.search("car", filters, SORT.DOWNLOADS);
@@ -562,7 +563,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndCategoryFilterAndSortByRelevance() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         List<String> categories = Lists.newArrayList();
         categories.add("car");
@@ -578,7 +579,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndMinimumRatingFilterAndSortByRelevance() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         filters.add(new MinimumRatingFilter(3));
         List<PrintableReference> res = solrSearchManager.search("car", filters, SORT.RELEVANCE);
@@ -589,7 +590,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndCategoryFilterAndSortByRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         List<String> categories = Lists.newArrayList();
         categories.add("car");
@@ -605,7 +606,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndMinimumRatingFilterAndSortByRating() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         filters.add(new MinimumRatingFilter(3));
         List<PrintableReference> res = solrSearchManager.search("car", filters, SORT.RATING);
@@ -616,7 +617,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndCategoryFilterAndSortByUploadDate() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         List<String> categories = Lists.newArrayList();
         categories.add("car");
@@ -632,7 +633,7 @@ public class SolrSearchTest {
 
     @Test
     public void searchWithTermAndMinimumRatingFilterAndSortByUploadDate() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Filter> filters = Lists.newArrayList();
         filters.add(new MinimumRatingFilter(3));
         List<PrintableReference> res = solrSearchManager.search("car", filters, SORT.UPLOAD_DATE);
@@ -644,30 +645,30 @@ public class SolrSearchTest {
     //TODO wie?
     @Test
     public void searchWithTermAndInvalidOrder() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
     }
     
     @Test(expected = NullPointerException.class)
     public void searchWithTermAndNullOrder() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         solrSearchManager.search("shisha", SORT.ALPHABETICAL, null);
     }
     
     //TODO wie?
     @Test
     public void searchWithTermAndInvalidSort() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
     }
     
     //TODO wie?
     @Test
     public void searchWithTermAndNullSort() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
     }
     
     @AfterClass
     public static void clearIndex() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
     }
