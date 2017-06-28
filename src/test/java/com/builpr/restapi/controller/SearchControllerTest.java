@@ -70,7 +70,7 @@ public class SearchControllerTest extends ControllerTest {
                         .param("minimumRatingFilter", "0")
                         .param("order", VALID_ORDER)
                         .param("sort", VALID_SORT)
-                        .param("categories[]", "test, neuertesttag")
+                        .param("categories", "test, neuertesttag")
 )
                 .andExpect(status().isOk())
                 .andReturn();
