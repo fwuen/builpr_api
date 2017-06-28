@@ -19,6 +19,7 @@ import com.builpr.search.solr.SolrSearchManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,10 +60,14 @@ public class SearchController {
                     required = false
             ) String sort,
             @RequestParam(
-                    value = "categories",
+                    value = "categories[]",
                     required = false
-            ) List<String> categories) throws SearchManagerException {
+            ) String[] categories) throws SearchManagerException {
         Response<SearchResponse> response = new Response<>();
+        List<String> categoryList = null;
+        if (categories != null) {
+           categoryList =  new ArrayList<>(Arrays.asList(categories));
+        }
 
         if (query.isEmpty()) {
             response.setSuccess(false);
@@ -72,7 +77,9 @@ public class SearchController {
             response.setSuccess(false);
             response.addError(SearchError.INVALID_RATING_FILTER);
         }
-        categories = categoryValidator.checkCategories(categories);
+        if (categoryList != null) {
+            categoryList = categoryValidator.checkCategories(categoryList);
+        }
         if (!Objects.equals(order, "asc")
                 && !Objects.equals(order, "desc")
                 && order != null) {
@@ -92,7 +99,7 @@ public class SearchController {
         searchResponse.setSort(sort);
         searchResponse.setOrder(order);
         searchResponse.setQuery(query);
-        searchResponse.setCategories(categories);
+        searchResponse.setCategories(categoryList);
         searchResponse.setMinimumRatingFilter(minimumRatingFilter);
 
         if (!response.isSuccess()) {
@@ -116,8 +123,8 @@ public class SearchController {
             Filter ratingFiler = new MinimumRatingFilter(minimumRatingFilter);
             filter.add(ratingFiler);
         }
-        if (categories != null) {
-            Filter categoryFilter = new CategoryFilter(categories);
+        if (categoryList != null) {
+            Filter categoryFilter = new CategoryFilter(categoryList);
             filter.add(categoryFilter);
         }
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SOLR_BASE_URL);
