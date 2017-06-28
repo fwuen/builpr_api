@@ -2,6 +2,7 @@ package com.builpr.restapi.converter;
 
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.service.DatabasePrintableManager;
+import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import com.builpr.search.model.PrintableReference;
 
 import java.util.ArrayList;
@@ -22,11 +23,11 @@ public class PrintableReferenceToPrintableConverter {
      * @return List<Printable>
      * TODO refactoren bzw name ändern
      */
-    public List<Printable> getPrintableList(List<PrintableReference> printableReferences) {
-        List<Printable> list = new ArrayList<>();
+    public List<PrintablePayload> getPrintableList(List<PrintableReference> printableReferences) {
+        List<PrintablePayload> list = new ArrayList<>();
         for (PrintableReference reference : printableReferences) {
             if (databasePrintableManager.getPrintableById(Integer.parseInt(reference.getId())) != null) {
-                list.add(databasePrintableManager.getPrintableById(Integer.parseInt(reference.getId())));
+                list.add(PrintableModelToPrintablePayloadConverter.from(databasePrintableManager.getPrintableById(Integer.parseInt(reference.getId()))));
             }
         }
         return list;

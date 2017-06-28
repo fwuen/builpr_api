@@ -6,6 +6,7 @@ import com.builpr.restapi.error.search.SearchError;
 import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.Search.SearchResponse;
+import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import com.builpr.restapi.utils.CategoryValidator;
 import com.builpr.restapi.utils.PrintableSolrHelper;
 import com.builpr.search.ORDER;
@@ -59,14 +60,13 @@ public class SearchController {
                     value = "sort",
                     required = false
             ) String sort,
-            @RequestParam(
-                    value = "categories[]",
-                    required = false
+            @ModelAttribute(
+                    value = "categories"
             ) String[] categories) throws SearchManagerException {
         Response<SearchResponse> response = new Response<>();
         List<String> categoryList = null;
         if (categories != null) {
-           categoryList =  new ArrayList<>(Arrays.asList(categories));
+            categoryList = new ArrayList<>(Arrays.asList(categories));
         }
 
         if (query.isEmpty()) {
@@ -107,8 +107,8 @@ public class SearchController {
             return response;
         }
 
-//        PrintableSolrHelper printableSolrHelper = new PrintableSolrHelper();
-//        printableSolrHelper.indexPrintables();
+        PrintableSolrHelper printableSolrHelper = new PrintableSolrHelper();
+        printableSolrHelper.indexPrintables();
 
         List<Filter> filter = new ArrayList<>();
         ORDER order_ = null;
@@ -149,7 +149,7 @@ public class SearchController {
             searchResponse.setResults(null);
         } else {
 
-            List<Printable> printableList = converter.getPrintableList(foundPrintable);
+            List<PrintablePayload> printableList = converter.getPrintableList(foundPrintable);
             searchResponse.setResults(printableList);
         }
         response.setPayload(searchResponse);

@@ -64,7 +64,6 @@ public class SearchControllerTest extends ControllerTest {
 
     @Test
     public void searchWithValidInput() throws Exception {
-
         MvcResult result = mockMvc.perform(
                 get(URL_SEARCH).param("query", VALID_QUERY)
                         .param("minimumRatingFilter", "0")
