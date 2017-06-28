@@ -60,8 +60,9 @@ public class SearchController {
                     value = "sort",
                     required = false
             ) String sort,
-            @ModelAttribute(
-                    value = "categories"
+            @RequestParam(
+                    value = "categories",
+                    required = false
             ) String[] categories) throws SearchManagerException {
         Response<SearchResponse> response = new Response<>();
         List<String> categoryList = null;
