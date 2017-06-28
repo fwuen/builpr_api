@@ -1,9 +1,7 @@
 package com.builpr.restapi.controller;
 
-import com.builpr.database.bridge.printable.Printable;
 import com.builpr.restapi.converter.PrintableReferenceToPrintableConverter;
 import com.builpr.restapi.error.search.SearchError;
-import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.Search.SearchResponse;
 import com.builpr.restapi.model.Response.printable.PrintablePayload;
@@ -63,13 +61,13 @@ public class SearchController {
             @RequestParam(
                     value = "categories",
                     required = false
-            ) String[] categories) throws SearchManagerException {
+            ) String categoriesAsString) throws SearchManagerException {
+
         Response<SearchResponse> response = new Response<>();
         List<String> categoryList = null;
-        if (categories != null) {
-            categoryList = new ArrayList<>(Arrays.asList(categories));
+        if (categoriesAsString != null) {
+            categoryList = new ArrayList<>(Arrays.asList(categoriesAsString.split(",")));
         }
-
         if (query.isEmpty()) {
             response.setSuccess(false);
             response.addError(SearchError.INVALID_QUERY);

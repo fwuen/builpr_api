@@ -6,6 +6,7 @@ import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseUserManager;
+import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import com.builpr.search.model.PrintableReference;
 import org.junit.After;
 import org.junit.Assert;
@@ -125,20 +126,18 @@ public class PrintableReferenceToPrintableConverterTest {
         referenceList.add(reference);
         referenceList.add(reference2);
 
-        List<Printable> printableList = converter.getPrintableList(referenceList);
+        List<PrintablePayload> printableList = converter.getPrintableList(referenceList);
 
         Assert.assertTrue(printableList.size() == referenceList.size());
-        Assert.assertTrue(Objects.equals(printableList.get(0).getDescription().get(), TEST_DESCRIPTION));
-        Assert.assertTrue(Objects.equals(printableList.get(1).getDescription().get(), TEST_DESCRIPTION));
+        Assert.assertTrue(Objects.equals(printableList.get(0).getDescription(), TEST_DESCRIPTION));
+        Assert.assertTrue(Objects.equals(printableList.get(1).getDescription(), TEST_DESCRIPTION));
         Assert.assertTrue(Objects.equals(printableList.get(0).getTitle(), TEST_TITLE));
         Assert.assertTrue(Objects.equals(printableList.get(1).getTitle(), TEST_TITLE));
-        Assert.assertTrue(Objects.equals(printableList.get(0).getFilePath(), "C:\\test\\not\\existing.stl"));
-        Assert.assertTrue(Objects.equals(printableList.get(1).getFilePath(), "C:\\test2\\not\\existing.stl"));
-        Assert.assertTrue(printableList.get(0).getUploaderId() == databaseUserManager.getByUsername(TEST_USER).getUserId());
-        Assert.assertTrue(printableList.get(1).getUploaderId() == databaseUserManager.getByUsername(TEST_USER2).getUserId());
-        Assert.assertTrue(printableList.get(0).getPrintableId() == TEST_ID);
-        Assert.assertTrue(printableList.get(1).getPrintableId() == TEST_ID2);
-        Assert.assertTrue(printableList.get(0).getNumDownloads() == 1);
-        Assert.assertTrue(printableList.get(1).getNumDownloads() == 1);
+        Assert.assertTrue(printableList.get(0).getOwnerID() == databaseUserManager.getByUsername(TEST_USER).getUserId());
+        Assert.assertTrue(printableList.get(1).getOwnerID() == databaseUserManager.getByUsername(TEST_USER2).getUserId());
+        Assert.assertTrue(printableList.get(0).getPrintableID() == TEST_ID);
+        Assert.assertTrue(printableList.get(1).getPrintableID() == TEST_ID2);
+        Assert.assertTrue(printableList.get(0).getDownloads() == 1);
+        Assert.assertTrue(printableList.get(1).getDownloads() == 1);
     }
 }

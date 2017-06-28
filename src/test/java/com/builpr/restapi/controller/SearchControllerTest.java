@@ -44,32 +44,15 @@ public class SearchControllerTest extends ControllerTest {
     private SearchPayload searchRequest;
     private PrintableSolrHelper printableSolrHelper;
 
-    public void fillCategoryFilter() {
-        VALID_CATEGORY_FILTER.add("test");
-        INVALID_CATEGORY_FILTER.add("");
-    }
-
-    public SearchControllerTest() throws SearchManagerException {
-        fillCategoryFilter();
-        searchRequest = new SearchPayload();
-        searchRequest.setQuery(VALID_QUERY);
-        searchRequest.setMinimumRatingFilter(VALID_RATING);
-        searchRequest.setCategories(VALID_CATEGORY_FILTER);
-        searchRequest.setOrder(VALID_ORDER);
-        searchRequest.setSort(VALID_SORT);
-
-//        printableSolrHelper = new PrintableSolrHelper();
-//        printableSolrHelper.indexPrintables();
-    }
-
     @Test
     public void searchWithValidInput() throws Exception {
         MvcResult result = mockMvc.perform(
-                get(URL_SEARCH).param("query", VALID_QUERY)
+                get(URL_SEARCH)
+                        .param("query", VALID_QUERY)
                         .param("minimumRatingFilter", "0")
                         .param("order", VALID_ORDER)
                         .param("sort", VALID_SORT)
-                        .param("categories", "test, neuertesttag")
+                        .param("categories", "test,neuertesttag")
 )
                 .andExpect(status().isOk())
                 .andReturn();
