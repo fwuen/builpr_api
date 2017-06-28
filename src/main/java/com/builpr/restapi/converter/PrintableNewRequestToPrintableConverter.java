@@ -4,7 +4,6 @@ import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.bridge.printable.PrintableImpl;
 import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 
-import java.sql.Date;
 
 /**
  *

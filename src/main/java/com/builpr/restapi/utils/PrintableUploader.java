@@ -1,7 +1,5 @@
 package com.builpr.restapi.utils;
 
-import org.apache.tomcat.util.http.fileupload.FileUploadBase;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

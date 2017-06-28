@@ -2,11 +2,8 @@ package com.builpr.restapi.converter;
 
 import com.builpr.database.bridge.category.Category;
 import com.builpr.database.bridge.printable.Printable;
-import com.builpr.database.service.DatabaseCategoryManager;
-import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 
-import java.sql.Date;
 import java.util.List;
 
 /**

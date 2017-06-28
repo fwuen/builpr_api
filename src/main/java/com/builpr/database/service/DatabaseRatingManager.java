@@ -2,12 +2,8 @@ package com.builpr.database.service;
 
 
 import com.builpr.database.bridge.rating.Rating;
-import com.builpr.database.bridge.rating.RatingImpl;
 import com.builpr.database.bridge.rating.RatingManager;
-import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 
-import javax.swing.text.html.Option;
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

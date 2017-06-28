@@ -462,6 +462,23 @@
                     "name" : "printable_category_category_category_id_fk",
                     "id" : "printable_category_category_category_id_fk",
                     "enabled" : true
+                  },
+                  {
+                    "expanded" : false,
+                    "foreignKeyColumns" : [
+                      {
+                        "foreignDatabaseName" : "builpr",
+                        "foreignSchemaName" : "builpr",
+                        "expanded" : true,
+                        "name" : "printable_id",
+                        "foreignColumnName" : "printable_id",
+                        "id" : "printable_id",
+                        "foreignTableName" : "printable",
+                        "ordinalPosition" : 1
+                      }
+                    ],
+                    "name" : "printable_category_printable_printable_id_fk",
+                    "id" : "printable_category_printable_printable_id_fk"
                   }
                 ],
                 "primaryKeyColumns" : [
@@ -742,18 +759,28 @@
                 "primaryKeyColumns" : [
                   {
                     "expanded" : true,
-                    "name" : "token",
-                    "id" : "token",
-                    "ordinalPosition" : 2
-                  },
-                  {
-                    "expanded" : true,
-                    "name" : "user_id",
-                    "id" : "user_id",
+                    "name" : "token_id",
+                    "id" : "token_id",
                     "ordinalPosition" : 1
                   }
                 ],
                 "indexes" : [
+                  {
+                    "expanded" : false,
+                    "unique" : true,
+                    "name" : "PRIMARY",
+                    "indexColumns" : [
+                      {
+                        "orderType" : "ASC",
+                        "expanded" : true,
+                        "name" : "token_id",
+                        "id" : "token_id",
+                        "ordinalPosition" : 1
+                      }
+                    ],
+                    "id" : "PRIMARY",
+                    "enabled" : true
+                  },
                   {
                     "expanded" : false,
                     "unique" : true,
@@ -773,15 +800,8 @@
                   {
                     "expanded" : false,
                     "unique" : true,
-                    "name" : "PRIMARY",
+                    "name" : "register_confirmation_token_user_id_uindex",
                     "indexColumns" : [
-                      {
-                        "orderType" : "ASC",
-                        "expanded" : true,
-                        "name" : "token",
-                        "id" : "token",
-                        "ordinalPosition" : 2
-                      },
                       {
                         "orderType" : "ASC",
                         "expanded" : true,
@@ -790,7 +810,7 @@
                         "ordinalPosition" : 1
                       }
                     ],
-                    "id" : "PRIMARY",
+                    "id" : "register_confirmation_token_user_id_uindex",
                     "enabled" : true
                   }
                 ],
@@ -816,6 +836,18 @@
                     "nullableImplementation" : "OPTIONAL",
                     "id" : "token",
                     "ordinalPosition" : 2,
+                    "enabled" : true
+                  },
+                  {
+                    "databaseType" : "java.lang.Integer",
+                    "expanded" : true,
+                    "typeMapper" : "com.speedment.runtime.typemapper.primitive.PrimitiveTypeMapper",
+                    "nullable" : false,
+                    "autoIncrement" : true,
+                    "name" : "token_id",
+                    "nullableImplementation" : "OPTIONAL",
+                    "id" : "token_id",
+                    "ordinalPosition" : 3,
                     "enabled" : true
                   }
                 ],

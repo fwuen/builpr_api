@@ -2,6 +2,7 @@ package com.builpr.restapi.model.Response.Search;
 
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.restapi.model.Request.Search.SearchPayload;
+import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +18,5 @@ public class SearchResponse extends SearchPayload {
      */
     @Getter
     @Setter
-    private List<Printable> results;
+    private List<PrintablePayload> results;
 }

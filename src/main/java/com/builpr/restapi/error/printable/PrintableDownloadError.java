@@ -9,7 +9,8 @@ import java.util.Map;
  * PrintableDownloadError
  */
 public enum PrintableDownloadError implements MappableError {
-    PRINTABLE_ID_INVALID(1, "The ID is invalid");
+    PRINTABLE_ID_INVALID(1, "The ID is invalid"),
+    DOWNLOAD_FAILED(2, "The download failed");
 
     private final int code;
     private final String description;

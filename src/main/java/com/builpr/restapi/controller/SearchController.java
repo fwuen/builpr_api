@@ -6,7 +6,9 @@ import com.builpr.restapi.error.search.SearchError;
 import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.Search.SearchResponse;
+import com.builpr.restapi.model.Response.printable.PrintablePayload;
 import com.builpr.restapi.utils.CategoryValidator;
+import com.builpr.restapi.utils.PrintableSolrHelper;
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
 import com.builpr.search.SearchManagerException;
@@ -18,6 +20,7 @@ import com.builpr.search.solr.SolrSearchManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,86 +42,115 @@ public class SearchController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_SEARCH, method = RequestMethod.GET)
     @ResponseBody
-    public Response<SearchResponse> search(@RequestBody SearchPayload request) throws SearchManagerException {
+    public Response<SearchResponse> search(
+            @RequestParam(
+                    value = "query",
+                    required = true
+            ) String query,
+            @RequestParam(
+                    value = "minimumRatingFilter",
+                    defaultValue = "0",
+                    required = false
+            ) int minimumRatingFilter,
+            @RequestParam(
+                    value = "order",
+                    required = false
+            ) String order,
+            @RequestParam(
+                    value = "sort",
+                    required = false
+            ) String sort,
+            @RequestParam(
+                    value = "categories",
+                    required = false
+            ) String[] categories) throws SearchManagerException {
         Response<SearchResponse> response = new Response<>();
-        if (request.getQuery().isEmpty()) {
+        List<String> categoryList = null;
+        if (categories != null) {
+            categoryList = new ArrayList<>(Arrays.asList(categories));
+        }
+
+        if (query.isEmpty()) {
             response.setSuccess(false);
             response.addError(SearchError.INVALID_QUERY);
         }
-        if (request.getMinimumRatingFilter() < 1 || request.getMinimumRatingFilter() > 5) {
+        if (minimumRatingFilter < 0 || minimumRatingFilter > 5) {
             response.setSuccess(false);
             response.addError(SearchError.INVALID_RATING_FILTER);
         }
-        request.setCategories(categoryValidator.checkCategories(request.getCategories()));
-        if (!Objects.equals(request.getOrder(), "asc")
-                && !Objects.equals(request.getOrder(), "desc")
-                && request.getOrder() != null) {
+        if (categoryList != null) {
+            categoryList = categoryValidator.checkCategories(categoryList);
+        }
+        if (!Objects.equals(order, "asc")
+                && !Objects.equals(order, "desc")
+                && order != null) {
             response.setSuccess(false);
             response.addError(SearchError.INVALID_ORDER);
         }
-        if (!Objects.equals(request.getSort(), "relevance")
-                && !Objects.equals(request.getSort(), "rating")
-                && !Objects.equals(request.getSort(), "alphabetical")
-                && !Objects.equals(request.getSort(), "downloads")
-                && request.getSort() != null) {
+        if (!Objects.equals(sort, "relevance")
+                && !Objects.equals(sort, "rating")
+                && !Objects.equals(sort, "alphabetical")
+                && !Objects.equals(sort, "downloads")
+                && sort != null) {
             response.setSuccess(false);
             response.addError(SearchError.INVALID_SORT);
         }
 
         SearchResponse searchResponse = new SearchResponse();
-        searchResponse.setSort(request.getSort());
-        searchResponse.setOrder(request.getOrder());
-        searchResponse.setQuery(request.getQuery());
-        searchResponse.setCategories(request.getCategories());
-        searchResponse.setMinimumRatingFilter(request.getMinimumRatingFilter());
+        searchResponse.setSort(sort);
+        searchResponse.setOrder(order);
+        searchResponse.setQuery(query);
+        searchResponse.setCategories(categoryList);
+        searchResponse.setMinimumRatingFilter(minimumRatingFilter);
 
         if (!response.isSuccess()) {
             response.setPayload(searchResponse);
             return response;
         }
 
+        PrintableSolrHelper printableSolrHelper = new PrintableSolrHelper();
+        printableSolrHelper.indexPrintables();
+
         List<Filter> filter = new ArrayList<>();
-        ORDER order = null;
-        SORT sort = null;
-        if (request.getOrder() != null) {
-            order = ORDER.valueOf(request.getOrder().toUpperCase());
+        ORDER order_ = null;
+        SORT sort_ = null;
+        if (order != null) {
+            order_ = ORDER.valueOf(order.toUpperCase());
         }
-        if (request.getSort() != null) {
-            sort = SORT.valueOf(request.getSort().toUpperCase());
+        if (sort != null) {
+            sort_ = SORT.valueOf(sort.toUpperCase());
         }
-        if (request.getMinimumRatingFilter() != 0) {
-            Filter ratingFiler = new MinimumRatingFilter(request.getMinimumRatingFilter());
+        if (minimumRatingFilter != 0) {
+            Filter ratingFiler = new MinimumRatingFilter(minimumRatingFilter);
             filter.add(ratingFiler);
         }
-        if (request.getCategories() != null || !request.getCategories().isEmpty()) {
-            Filter categoryFilter = new CategoryFilter(request.getCategories());
+        if (categoryList != null) {
+            Filter categoryFilter = new CategoryFilter(categoryList);
             filter.add(categoryFilter);
         }
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SOLR_BASE_URL);
         List<PrintableReference> foundPrintable;
-        try {
-            if (sort == null && order == null && filter.isEmpty()) {
-                foundPrintable = solrSearchManager.search(request.getQuery());
-            } else if (sort == null && order == null) {
-                foundPrintable = solrSearchManager.search(request.getQuery(), filter);
-            } else if (order == null && filter.isEmpty()) {
-                foundPrintable = solrSearchManager.search(request.getQuery(), sort);
-            } else if (filter.isEmpty()) {
-                foundPrintable = solrSearchManager.search(request.getQuery(), sort, order);
-            } else if (order == null) {
-                foundPrintable = solrSearchManager.search(request.getQuery(), filter, sort);
-            } else {
-                foundPrintable = solrSearchManager.search(request.getQuery(), filter, sort, order);
-            }
-        } catch (Exception e) {
-            foundPrintable = new ArrayList<>();
+
+        if (sort == null && order == null && filter.isEmpty()) {
+            foundPrintable = solrSearchManager.search(query);
+        } else if (sort == null && order == null) {
+            foundPrintable = solrSearchManager.search(query, filter);
+        } else if (order == null && filter.isEmpty()) {
+            foundPrintable = solrSearchManager.search(query, sort_);
+        } else if (filter.isEmpty()) {
+            foundPrintable = solrSearchManager.search(query, sort_, order_);
+        } else if (order == null) {
+            foundPrintable = solrSearchManager.search(query, filter, sort_);
+        } else {
+            foundPrintable = solrSearchManager.search(query, filter, sort_, order_);
         }
+
 
         if (foundPrintable.isEmpty()) {
             searchResponse.setResults(null);
         } else {
 
-            List<Printable> printableList = converter.getPrintableList(foundPrintable);
+            List<PrintablePayload> printableList = converter.getPrintableList(foundPrintable);
             searchResponse.setResults(printableList);
         }
         response.setPayload(searchResponse);
