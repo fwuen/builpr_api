@@ -18,11 +18,10 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'war'
 
-war {
-    baseName = 'builpr'
-    version =  '0.99'
+
+bootRepackage {
+    mainClass = 'com.builpr.restapi.SpringStarter'
 }
 
 sourceCompatibility = 1.8
@@ -42,7 +41,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.16'
     compile 'com.speedment:runtime:3.0.8'
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat:1.5.2.RELEASE'
 
     compile 'org.apache.solr:solr-solrj:6.5.1'
     compile 'org.springframework.boot:spring-boot-starter-security:1.5.2.RELEASE'

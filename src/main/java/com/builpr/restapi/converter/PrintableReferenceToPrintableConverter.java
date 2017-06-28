@@ -2,10 +2,7 @@ package com.builpr.restapi.converter;
 
 import com.builpr.database.bridge.printable.Printable;
 import com.builpr.database.service.DatabasePrintableManager;
-import com.builpr.search.SearchManagerException;
-import com.builpr.search.model.Indexable;
 import com.builpr.search.model.PrintableReference;
-import com.builpr.search.solr.SolrSearchManager;
 
 import java.util.ArrayList;
 import java.util.List;

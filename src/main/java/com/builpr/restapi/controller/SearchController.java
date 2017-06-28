@@ -7,6 +7,7 @@ import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.Search.SearchResponse;
 import com.builpr.restapi.utils.CategoryValidator;
+import com.builpr.restapi.utils.PrintableSolrHelper;
 import com.builpr.search.ORDER;
 import com.builpr.search.SORT;
 import com.builpr.search.SearchManagerException;
@@ -39,7 +40,7 @@ public class SearchController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_SEARCH, method = RequestMethod.GET)
     @ResponseBody
-    public Response<SearchResponse> search(@RequestBody SearchPayload request) throws SearchManagerException {
+    public Response<SearchResponse> search(SearchPayload request) throws SearchManagerException {
         Response<SearchResponse> response = new Response<>();
         if (request.getQuery().isEmpty()) {
             response.setSuccess(false);
@@ -77,6 +78,9 @@ public class SearchController {
             return response;
         }
 
+        PrintableSolrHelper printableSolrHelper = new PrintableSolrHelper();
+        printableSolrHelper.indexPrintables();
+
         List<Filter> filter = new ArrayList<>();
         ORDER order = null;
         SORT sort = null;
@@ -96,23 +100,21 @@ public class SearchController {
         }
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SOLR_BASE_URL);
         List<PrintableReference> foundPrintable;
-        try {
-            if (sort == null && order == null && filter.isEmpty()) {
-                foundPrintable = solrSearchManager.search(request.getQuery());
-            } else if (sort == null && order == null) {
-                foundPrintable = solrSearchManager.search(request.getQuery(), filter);
-            } else if (order == null && filter.isEmpty()) {
-                foundPrintable = solrSearchManager.search(request.getQuery(), sort);
-            } else if (filter.isEmpty()) {
-                foundPrintable = solrSearchManager.search(request.getQuery(), sort, order);
-            } else if (order == null) {
-                foundPrintable = solrSearchManager.search(request.getQuery(), filter, sort);
-            } else {
-                foundPrintable = solrSearchManager.search(request.getQuery(), filter, sort, order);
-            }
-        } catch (Exception e) {
-            foundPrintable = new ArrayList<>();
+
+        if (sort == null && order == null && filter.isEmpty()) {
+            foundPrintable = solrSearchManager.search(request.getQuery());
+        } else if (sort == null && order == null) {
+            foundPrintable = solrSearchManager.search(request.getQuery(), filter);
+        } else if (order == null && filter.isEmpty()) {
+            foundPrintable = solrSearchManager.search(request.getQuery(), sort);
+        } else if (filter.isEmpty()) {
+            foundPrintable = solrSearchManager.search(request.getQuery(), sort, order);
+        } else if (order == null) {
+            foundPrintable = solrSearchManager.search(request.getQuery(), filter, sort);
+        } else {
+            foundPrintable = solrSearchManager.search(request.getQuery(), filter, sort, order);
         }
+
 
         if (foundPrintable.isEmpty()) {
             searchResponse.setResults(null);

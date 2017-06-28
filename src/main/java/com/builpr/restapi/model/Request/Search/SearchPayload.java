@@ -45,6 +45,4 @@ public class SearchPayload {
     @Getter
     @Setter
     private String sort;
-
-
 }

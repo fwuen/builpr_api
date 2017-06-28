@@ -16,11 +16,8 @@ public class SimplePayloadController {
                     value = "payload",
                     defaultValue = "Benutze den Parameter 'account' um das Payload-Attribut zu befüllen.",
                     required = false
-            ) String payload,
-            Principal principal
+            ) String payload
     ) {
-        // principal.getName() gibt Name des eingeloggten Users zurück.
-
         return new SimplePayload(payload);
     }
 

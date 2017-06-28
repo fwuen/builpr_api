@@ -1,17 +1,8 @@
 package com.builpr.database.service;
 
 import com.builpr.database.bridge.printable.Printable;
-import com.builpr.database.bridge.printable.PrintableImpl;
 import com.builpr.database.bridge.printable.PrintableManager;
-import com.builpr.restapi.converter.PrintableToSolrPrintableConverter;
-import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
-import com.builpr.search.SearchManagerException;
-import com.builpr.search.model.Indexable;
-import com.builpr.search.model.PrintableReference;
-import com.builpr.search.solr.SolrSearchManager;
 
-
-import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 

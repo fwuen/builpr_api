@@ -25,7 +25,7 @@ public class SearchControllerTest extends ControllerTest {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
-    private static final String VALID_QUERY = "test";
+    private static final String VALID_QUERY = "domi";
     private static final String INVALID_QUERY = "";
 
     private static final int VALID_RATING = 5;
