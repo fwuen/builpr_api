@@ -107,8 +107,8 @@ public class SearchController {
             return response;
         }
 
-        PrintableSolrHelper printableSolrHelper = new PrintableSolrHelper();
-        printableSolrHelper.indexPrintables();
+//        PrintableSolrHelper printableSolrHelper = new PrintableSolrHelper();
+//        printableSolrHelper.indexPrintables();
 
         List<Filter> filter = new ArrayList<>();
         ORDER order_ = null;
