@@ -1,14 +1,11 @@
 package com.builpr.restapi.controller;
 
-import com.builpr.restapi.error.search.SearchError;
 import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.utils.PrintableSolrHelper;
-import com.builpr.search.SearchManagerException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
@@ -52,7 +49,7 @@ public class SearchControllerTest extends ControllerTest {
                         .param("minimumRatingFilter", "0")
                         .param("order", VALID_ORDER)
                         .param("sort", VALID_SORT)
-                        .param("categories", "test,neuertesttag")
+                        .param("categories", "test,neuertestag")
 )
                 .andExpect(status().isOk())
                 .andReturn();
