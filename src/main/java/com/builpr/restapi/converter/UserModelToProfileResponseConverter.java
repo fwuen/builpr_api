@@ -10,7 +10,11 @@ import com.builpr.database.service.DatabaseCategoryManager;
 import com.builpr.database.service.DatabasePrintableManager;
 import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.restapi.utils.GravatarWrapper;
+
+import java.text.DecimalFormat;
 import java.util.*;
+
+import static java.lang.Math.round;
 
 /**
  * maps a speedment user model to a profile payload model
@@ -52,6 +56,8 @@ public class UserModelToProfileResponseConverter {
             printablePayloadList.add(PrintableModelToPrintablePayloadConverter.from(printable));
         }
 
+        double rating = (double)addedUpRating / (double)ratingcount;
+
         return new ProfilePayload().setUserID(user.getUserId())
                 .setUsername(user.getUsername())
                 .setFirstname(showName ? user.getFirstname() : null)
@@ -61,7 +67,7 @@ public class UserModelToProfileResponseConverter {
                 .setDescription(user.getDescription().isPresent() ? user.getDescription().get() : null)
                 .setAvatarURL(gravatarWrapper.getUrl(user.getEmail()))
                 .setPrintables(printablePayloadList)
-                .setRating(ratingcount == 0 ? 0 : (double)addedUpRating / (double)ratingcount)
+                .setRating(ratingcount == 0 ? 0 : Math.round(rating*100)/100.0)
                 .setRatingCount(ratingcount)
                 .setRegistrationDate(user.getRegtime().toLocalDateTime().toString());
     }
