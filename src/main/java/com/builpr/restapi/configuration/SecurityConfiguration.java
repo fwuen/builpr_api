@@ -52,10 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(Constants.SECURITY_URLS.toArray(new String[Constants.SECURITY_URLS.size()])).authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .addFilterBefore(new JWTLoginFilter(Constants.URL_LOGIN, authenticationManager()),
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+                .formLogin().defaultSuccessUrl("/", true).permitAll().and()
+                .httpBasic();
     }
 
 }
