@@ -4,8 +4,10 @@ import com.builpr.database.bridge.rating.Rating;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * converts a speedment rating model to a rating payload
@@ -16,7 +18,8 @@ public class RatingModelToRatingPayloadConverter {
     public static RatingPayload from(Rating rating) {
         DatabaseUserManager userManager = new DatabaseUserManager();
         String ownerName = userManager.getByID(rating.getUserId()).getUsername();
-        String ownerGravatarURL = userManager.getByID(rating.getUserId()).getAvatar().get();
+        Optional<String> gravatar = userManager.getByID(rating.getUserId()).getAvatar();
+        String ownerGravatarURL = gravatar.orElse("");
 
         return new RatingPayload()
                 .setOwnerID(rating.getUserId())

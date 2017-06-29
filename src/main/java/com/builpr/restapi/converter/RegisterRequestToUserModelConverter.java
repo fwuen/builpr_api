@@ -4,6 +4,7 @@ import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.restapi.model.Request.RegisterRequest;
 import com.builpr.restapi.security.PasswordConfiguration;
+import com.builpr.restapi.utils.GravatarWrapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.sql.Date;
 
@@ -24,6 +25,7 @@ public class RegisterRequestToUserModelConverter {
                 .setLastname(registerRequest.getLastname())
                 .setShowBirthday(registerRequest.isShowBirthday())
                 .setShowEmail(registerRequest.isShowEmail())
-                .setShowName(registerRequest.isShowName());
+                .setShowName(registerRequest.isShowName())
+                .setAvatar(new GravatarWrapper().getUrl(registerRequest.getEmail()));
     }
 }
