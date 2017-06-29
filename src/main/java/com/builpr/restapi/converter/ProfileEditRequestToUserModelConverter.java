@@ -17,7 +17,7 @@ public class ProfileEditRequestToUserModelConverter {
         }
         // the correctness of the old and the new password is already checked in the controller
         if (request.getPassword() != null) {
-            editUser.setPassword(request.getPassword());
+            editUser.setPassword(new BCryptPasswordEncoder().encode(request.getPassword()));
         }
         if (request.getFirstName() != null) {
             editUser.setFirstname(request.getFirstName());
@@ -32,7 +32,7 @@ public class ProfileEditRequestToUserModelConverter {
             editUser.setShowName(request.getShowName());
         }
         if (request.getShowBirthday() != null) {
-            editUser.setShowName(request.getShowName());
+            editUser.setShowBirthday(request.getShowBirthday());
         }
         if (request.getShowEmail() != null) {
             editUser.setShowEmail(request.getShowEmail());

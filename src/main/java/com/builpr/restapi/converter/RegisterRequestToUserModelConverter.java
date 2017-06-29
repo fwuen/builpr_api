@@ -10,7 +10,7 @@ import java.sql.Date;
 /**
  * maps an account request to a speedment user model
  */
-public class AccountRequestToUserModelConverter {
+public class RegisterRequestToUserModelConverter {
     public static User from(RegisterRequest registerRequest) {
 
         PasswordEncoder passwordEncoder = new PasswordConfiguration().passwordEncoder();

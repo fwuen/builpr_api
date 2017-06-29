@@ -12,9 +12,9 @@ import java.security.Principal;
  */
 public class MessageRequestToMessageModelConverter {
 
-    public static Message from(SendMessageRequest request, Principal principal) {
+    public static Message from(SendMessageRequest request, int userID) {
         return new MessageImpl()
-                .setSenderId(new DatabaseUserManager().getByUsername(principal.getName()).getUserId())
+                .setSenderId(userID)
                 .setReceiverId(request.getReceiverID())
                 .setText(request.getText());
     }

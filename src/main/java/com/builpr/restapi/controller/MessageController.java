@@ -44,7 +44,8 @@ public class MessageController {
             throw new UserNotFoundException("The given user does not exist");
         }
 
-        Message message = MessageRequestToMessageModelConverter.from(request, principal);
+        int userID = userManager.getByUsername(principal.getName()).getUserId();
+        Message message = MessageRequestToMessageModelConverter.from(request, userID);
         messageManager.persist(message);
         Response<MessagePayload> response = new Response<>();
         response.setSuccess(true);
