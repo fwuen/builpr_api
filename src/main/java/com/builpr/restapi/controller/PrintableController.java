@@ -232,7 +232,7 @@ public class PrintableController {
 
         Response<String> response = new Response<>();
 
-        if (databasePrintableManager.isPresent(printableID)) {
+        if (!databasePrintableManager.isPresent(printableID)) {
             response.setSuccess(false);
             response.addError(PrintableDownloadError.PRINTABLE_ID_INVALID);
         }
