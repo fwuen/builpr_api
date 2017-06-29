@@ -11,9 +11,8 @@ import java.util.Map;
 public enum SearchError implements MappableError {
     INVALID_QUERY(1, "Query is invalid"),
     INVALID_RATING_FILTER(2, "Value of ratingfilter invalid"),
-    INVALID_CATEGORY_FILTER(3, "Value of categoryfilter invalid"),
-    INVALID_ORDER(4, "Value of order invalid"),
-    INVALID_SORT(5, "Value of sort invalid");
+    INVALID_ORDER(3, "Value of order invalid"),
+    INVALID_SORT(4, "Value of sort invalid");
 
     private final int code;
     private final String description;

@@ -37,34 +37,28 @@ public class SearchController {
         converter = new PrintableReferenceToPrintableConverter();
     }
 
+    /**
+     * @param query               String
+     * @param minimumRatingFilter String
+     * @param order               String
+     * @param sort                String
+     * @param categoriesAsString  String
+     * @return {Response<SearchResponse>}
+     * @throws SearchManagerException Exception
+     */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_SEARCH, method = RequestMethod.GET)
     @ResponseBody
     public Response<SearchResponse> search(
-            @RequestParam(
-                    value = "query",
-                    required = true
-            ) String query,
-            @RequestParam(
-                    value = "minimumRatingFilter",
-                    defaultValue = "0",
-                    required = false
-            ) int minimumRatingFilter,
-            @RequestParam(
-                    value = "order",
-                    required = false
-            ) String order,
-            @RequestParam(
-                    value = "sort",
-                    required = false
-            ) String sort,
-            @RequestParam(
-                    value = "categories",
-                    required = false
-            ) String categoriesAsString) throws SearchManagerException {
+            @RequestParam(value = "query", required = true) String query,
+            @RequestParam(value = "minimumRatingFilter", defaultValue = "0", required = false) int minimumRatingFilter,
+            @RequestParam(value = "order", required = false) String order,
+            @RequestParam(value = "sort", required = false) String sort,
+            @RequestParam(value = "categories", required = false) String categoriesAsString) throws SearchManagerException {
 
         Response<SearchResponse> response = new Response<>();
         List<String> categoryList = null;
+
         if (categoriesAsString != null) {
             categoryList = new ArrayList<>(Arrays.asList(categoriesAsString.split(",")));
         }
@@ -112,6 +106,7 @@ public class SearchController {
         List<Filter> filter = new ArrayList<>();
         ORDER order_ = null;
         SORT sort_ = null;
+
         if (order != null) {
             order_ = ORDER.valueOf(order.toUpperCase());
         }
@@ -126,6 +121,7 @@ public class SearchController {
             Filter categoryFilter = new CategoryFilter(categoryList);
             filter.add(categoryFilter);
         }
+
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SOLR_BASE_URL);
         List<PrintableReference> foundPrintable;
 
@@ -142,7 +138,6 @@ public class SearchController {
         } else {
             foundPrintable = solrSearchManager.search(query, filter, sort_, order_);
         }
-
 
         if (foundPrintable.isEmpty()) {
             searchResponse.setResults(null);
