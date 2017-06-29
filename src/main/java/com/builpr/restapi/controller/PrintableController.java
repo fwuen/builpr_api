@@ -225,14 +225,14 @@ public class PrintableController {
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_DOWNLOAD, method = RequestMethod.GET)
     @ResponseBody
-    public Response<byte[]> downloadFile(@RequestParam(
+    public Response<String> downloadFile(@RequestParam(
             value = "id",
             defaultValue = "0"
     ) int printableID) throws IOException {
 
-        Response<byte[]> response = new Response<>();
+        Response<String> response = new Response<>();
 
-        if (databasePrintableManager.getPrintableById(printableID) == null) {
+        if (databasePrintableManager.isPresent(printableID)) {
             response.setSuccess(false);
             response.addError(PrintableDownloadError.PRINTABLE_ID_INVALID);
         }
@@ -242,18 +242,8 @@ public class PrintableController {
         }
 
         Printable printable = databasePrintableManager.getPrintableById(printableID);
-        byte[] fileData;
-        try {
-            fileData = printableDownloader.downloadFile(printable.getFilePath());
-        } catch (IOException e) {
-            response.setSuccess(false);
-            response.addError(PrintableDownloadError.DOWNLOAD_FAILED);
-            return response;
-        }
-
         databasePrintableManager.updateDownloads(printableID);
-
-        response.setPayload(fileData);
+        response.setPayload(printable.getFilePath());
 
         return response;
     }
