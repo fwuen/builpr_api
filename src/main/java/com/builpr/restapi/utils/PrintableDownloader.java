@@ -11,6 +11,8 @@ import java.nio.file.Path;
 public class PrintableDownloader {
 
     /**
+     * Download a file from the server
+     *
      * @param path String
      * @return MultipartFile
      * @throws IOException Exception

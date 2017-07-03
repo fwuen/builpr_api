@@ -16,8 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class SearchControllerTest extends ControllerTest {
 
-    private static ObjectMapper mapper = new ObjectMapper();
-
     private static final String VALID_QUERY = "domi";
     private static final String INVALID_QUERY = "";
 

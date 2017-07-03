@@ -10,8 +10,8 @@ import java.util.Map;
  */
 public enum RatingDeleteError implements MappableError {
     RATING_NOT_FOUND(1, "rating cannot be found"),
-    NO_AUTHORIZATION(2, "No authorization"),
-    USER_INVALID(3, "User invalid");
+    NO_AUTHORIZATION(2, "No authorization");
+
     private final int code;
     private final String description;
 

@@ -22,6 +22,8 @@ public class PrintableSolrHelper {
     }
 
     /**
+     * Index every Printable
+     *
      * @return void
      * @throws SearchManagerException exception
      */
@@ -38,22 +40,20 @@ public class PrintableSolrHelper {
         }
     }
 
+    /**
+     * Index a single Printable
+     * @param printable Printabale
+     * @throws SearchManagerException exception
+     */
     public void addPrintableToIndex(Printable printable) throws SearchManagerException {
         com.builpr.search.model.Printable solrPrintable = PrintableToSolrPrintableConverter.getSolrPrintable(printable);
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
         solrSearchManager.addToIndex(solrPrintable);
     }
 
-
     /**
-     * @return void
-     */
-    public void deletePrintableFromIndex() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL("http://192.168.1.50:8983/solr");
-        solrSearchManager.clearIndex();
-    }
-
-    /**
+     * Get the average Rating a Printable has
+     *
      * @param ratings List<Rating>
      * @return double
      */

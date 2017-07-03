@@ -95,7 +95,6 @@ public class PrintableControllerTest extends ControllerTest {
         }
         databaseUserManager.persist(PRINTABLE_TEST_USER);
         // TestFile hochladen
-        // TODO eine datei muss vor dem Test immer abgelegt werden und wieder gelöscht werden
         File file = new File(TEST_PATH + "testFile.stl");
         Path filePath = Paths.get(TEST_PATH + "testFile.stl");
 
@@ -144,9 +143,6 @@ public class PrintableControllerTest extends ControllerTest {
         if (databasePrintableManager.getPrintableById(TEST_PRINTABLE_ID) != null) {
             databasePrintableManager.deletePrintable(TEST_PRINTABLE_ID);
         }
-        // TODO testFile.stl wieder löschen + andere hochgeladenen Datein wieder löschen
-
-        // TODO Category-Tabelle leeren
     }
     //-----------------------------------------------------------------------------------------------------------//
     //        /printable/get                                                                                     //
@@ -409,33 +405,6 @@ public class PrintableControllerTest extends ControllerTest {
         Assert.assertTrue(response.getErrorMap().containsKey(PrintableDownloadError.PRINTABLE_ID_INVALID.getCode()));
         Assert.assertTrue(response.getErrorMap().containsValue(PrintableDownloadError.PRINTABLE_ID_INVALID.getDescription()));
     }
-
-
-    //-----------------------------------------------------------------------------------------------------------//
-    //                      /printable/edit                                                                      //
-    //-----------------------------------------------------------------------------------------------------------//
-//    @Test
-//    @WithMockUser(DB_TEST_USER_NAME)
-//    public void editPrintableWithValidInput() throws Exception {
-//        setValidList();
-//        PrintableEditRequest printableEditRequest = new PrintableEditRequest();
-//        printableEditRequest.setTitle("newnewTitle");
-//        printableEditRequest.setDescription("newDescription");
-//        printableEditRequest.setCategories(VALID_LIST);
-//        printableEditRequest.setPrintableID(1000000001);
-//        MvcResult result = mockMvc.perform(
-//                put(Constants.URL_EDIT_PRINTABLE)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(mapper.writeValueAsString(printableEditRequest)))
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//        Response response = getResponseBodyOf(result, Response.class);
-//
-//        Assert.assertTrue(response.isSuccess());
-//        Assert.assertNotNull(response.getPayload());
-//        Assert.assertTrue(response.getErrorMap().isEmpty());
-//    }
 
     //-----------------------------------------------------------------------------------------------------------//
     //                      /printable/delete                                                                    //

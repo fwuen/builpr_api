@@ -10,27 +10,51 @@ import java.util.List;
  */
 public class PrintablePayload {
 
+    /**
+     * Id of the Printable
+     */
     @Getter
     private int printableID;
 
+    /**
+     * Id of the User
+     */
     @Getter
     private int ownerID;
 
+    /**
+     * Title of the Printable
+     */
     @Getter
     private String title;
 
+    /**
+     * Description of the Printable
+     */
     @Getter
     private String description;
 
+    /**
+     * List of Categories the Printable has
+     */
     @Getter
     private List<String> categories;
 
+    /**
+     * Number of downloads the Printable has
+     */
     @Getter
     private int downloads;
 
+    /**
+     * Ratings referring to the Printable
+     */
     @Getter
     private List<RatingPayload> ratings;
 
+    /**
+     * Time the Printable got uploaded
+     */
     @Getter
     private String uploadTime;
 

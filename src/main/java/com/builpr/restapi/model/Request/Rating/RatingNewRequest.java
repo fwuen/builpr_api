@@ -9,21 +9,21 @@ import lombok.Setter;
 public class RatingNewRequest {
 
     /**
-     * printable-id
+     * Id of the existing Printabl3
      */
     @Getter
     @Setter
     private int printableID;
 
     /**
-     * rating-value
+     * Value of the new Rating
      */
     @Getter
     @Setter
     private int rating;
 
     /**
-     * test
+     * Text of the new Rating
      */
     @Getter
     @Setter

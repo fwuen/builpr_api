@@ -18,6 +18,8 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
     }
 
     /**
+     * Returns a list of objects referring to a printable
+     *
      * @param printableID int
      * @return List<PrintableCategory>
      */
@@ -25,12 +27,18 @@ public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableC
         return getDao().stream().filter(PrintableCategory.PRINTABLE_ID.equal(printableID)).collect(Collectors.toList());
     }
 
-
+    /**
+     * Persistently save a PrintableCategory in the database
+     *
+     * @param printableCategory PrintableCategory
+     */
     public void persist(PrintableCategory printableCategory) {
         getDao().persist(printableCategory);
     }
 
     /**
+     * Delete a PrintableCategory from database
+     *
      * @param printableCategory PrintableCategory
      * @return void
      */

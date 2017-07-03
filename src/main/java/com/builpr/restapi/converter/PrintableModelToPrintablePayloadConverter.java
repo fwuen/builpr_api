@@ -13,10 +13,17 @@ import java.util.List;
 
 
 /**
- * converts a printable speedment model to a printable payload
+ * Converter for PrintableModels to PrintablePayloadModels
  */
 public class PrintableModelToPrintablePayloadConverter {
 
+
+    /**
+     * converts a printable speedment model to a printable payload
+     *
+     * @param printable Printable
+     * @return PrintablePayload
+     */
     public static PrintablePayload from(Printable printable) {
 
         DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();

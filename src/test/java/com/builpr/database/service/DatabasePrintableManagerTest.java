@@ -124,6 +124,7 @@ public class DatabasePrintableManagerTest {
         databasePrintableManager.update(testPrintable);
 
         Assert.assertTrue(!Objects.equals(testPrintable.getTitle(), TEST_TITLE));
+        Assert.assertTrue(testPrintable.getDescription().isPresent());
         Assert.assertTrue(!Objects.equals(testPrintable.getDescription().get(), TEST_DESCRIPTION));
     }
 

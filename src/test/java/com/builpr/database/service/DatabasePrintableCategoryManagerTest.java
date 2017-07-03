@@ -37,14 +37,16 @@ public class DatabasePrintableCategoryManagerTest {
     private static final String TEST_CATEGORY1 = "printcategorytest2";
     private static final String TEST_CATEGORY2 = "printcategorytest3";
     private static final String TEST_CATEGORY3 = "printcategorytest4";
+    private List<PrintableCategory> printableCategories = null;
 
-    private List<PrintableCategory> printableCategories = new ArrayList<>();
 
     public DatabasePrintableCategoryManagerTest() {
         databaseUserManager = new DatabaseUserManager();
         databasePrintableManager = new DatabasePrintableManager();
         databasePrintableCategoryManager = new DatabasePrintableCategoryManager();
         categoryManager = new BuilprApplicationBuilder().withPassword(Constants.DATABASE_PASSWORD).build().getOrThrow(CategoryManager.class);
+        printableCategories = new ArrayList<>();
+
     }
 
     @Before

@@ -18,6 +18,8 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     }
 
     /**
+     * Check if a Rating is already existing in the database
+     *
      * @param ratingID int
      * @return boolean
      */
@@ -26,6 +28,8 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     }
 
     /**
+     * Returning every Rating referring to a Printable
+     *
      * @param printableID int
      * @return List<rating>
      */
@@ -34,6 +38,8 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     }
 
     /**
+     * Persistently saving a Rating in the database
+     *
      * @param rating Rating
      * @return void
      */
@@ -42,6 +48,8 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     }
 
     /**
+     * Return a Rating by the id of the User and the Printable
+     *
      * @param printableID int
      * @param userID      int
      * @return rating
@@ -52,6 +60,8 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     }
 
     /**
+     * Return a Rating by the in the database
+     *
      * @param ratingID int
      * @return rating
      */
@@ -61,6 +71,8 @@ public class DatabaseRatingManager extends DatabaseManager<RatingManager> {
     }
 
     /**
+     * Deleting a Rating from database
+     *
      * @param ratingId int
      * @return void
      */

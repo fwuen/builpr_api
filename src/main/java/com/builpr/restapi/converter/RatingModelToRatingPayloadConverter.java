@@ -14,7 +14,11 @@ import java.util.Optional;
  */
 public class RatingModelToRatingPayloadConverter {
 
-
+    /**
+     * Returns the RatingPayload converted from a Rating
+     * @param rating Rating
+     * @return RatingPayload
+     */
     public static RatingPayload from(Rating rating) {
         DatabaseUserManager userManager = new DatabaseUserManager();
         String ownerName = userManager.getByID(rating.getUserId()).getUsername();
@@ -30,6 +34,12 @@ public class RatingModelToRatingPayloadConverter {
                 .setOwnerGravatarURL(ownerGravatarURL);
     }
 
+    /**
+     * Converts a list of Ratings
+     *
+     * @param ratings List<Rating>
+     * @return List<RatingPayload>
+     */
     public static List<RatingPayload> from(List<Rating> ratings) {
         List<RatingPayload> ratingPayloads = new ArrayList<>();
         for (Rating rating : ratings) {

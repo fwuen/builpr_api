@@ -22,6 +22,8 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
     }
 
     /**
+     * Collects all categories as objects for a Printable
+     *
      * @param printableID id of the printable
      * @return a list with every category the given printable has
      */
@@ -32,6 +34,8 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
     }
 
     /**
+     * Returns a list of category-object
+     *
      * @param printableCategories List<PrintableCategory>
      * @return List<Category>
      */
@@ -45,6 +49,8 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
     }
 
     /**
+     * Returns a list of category-objects
+     *
      * @param list List<String>
      * @return List<Category>
      */
@@ -63,6 +69,8 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
     }
 
     /**
+     * If needed the database will get extended by new categories
+     *
      * @param categories List<String>
      * @return void
      */
@@ -77,6 +85,7 @@ public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {
     }
 
     /**
+     * Saving a new category in the database
      * @param categoryName String
      * @return void
      */

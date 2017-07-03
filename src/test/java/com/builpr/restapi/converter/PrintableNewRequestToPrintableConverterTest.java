@@ -28,6 +28,7 @@ public class PrintableNewRequestToPrintableConverterTest {
         Assert.assertTrue(printable.getUploaderId() == 1);
         Assert.assertTrue(Objects.equals(printable.getFilePath(), "testpath"));
         Assert.assertTrue(Objects.equals(printable.getTitle(), "testTitle"));
+        Assert.assertTrue(printable.getDescription().isPresent());
         Assert.assertTrue(Objects.equals(printable.getDescription().get(), "testDescription"));
     }
 }

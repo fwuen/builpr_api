@@ -1,6 +1,5 @@
 package com.builpr.restapi.controller;
 
-import com.builpr.Constants;
 import com.builpr.database.bridge.rating.Rating;
 import com.builpr.database.bridge.rating.RatingImpl;
 import com.builpr.database.bridge.user.User;
@@ -13,7 +12,6 @@ import com.builpr.restapi.error.rating.RatingNewError;
 import com.builpr.restapi.model.Request.Rating.RatingNewRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
-import com.builpr.restapi.utils.CategoryValidator;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -38,7 +36,13 @@ public class RatingController {
         databaseRatingManager = new DatabaseRatingManager();
     }
 
-
+    /**
+     * Creating a new Rating referring to an existing Printable
+     *
+     * @param principal Principal
+     * @param request RatingNewRequest
+     * @return response
+     */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_NEW_RATING, method = RequestMethod.POST)
     @ResponseBody
@@ -96,6 +100,13 @@ public class RatingController {
         return response;
     }
 
+    /**
+     * Deleting a Rating from a Printable
+     *
+     * @param principal Principal
+     * @param ratingID int
+     * @return response
+     */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_DELETE_RATING, method = RequestMethod.DELETE)
     @ResponseBody

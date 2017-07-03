@@ -10,21 +10,38 @@ import java.util.List;
  */
 public class PrintableNewResponse {
 
+    /**
+     * Id of the Printable
+     */
     @Getter
     private int printableID;
 
+    /**
+     * Id of the User
+     */
     @Getter
     private int ownerID;
 
+    /**
+     * Title of the Printable
+     */
     @Getter
     private String title;
-
+    /**
+     * Description of the Printable
+     */
     @Getter
     private String description;
 
+    /**
+     * List of Categories the Printable has
+     */
     @Getter
     private List<String> categories;
 
+    /**
+     * Time the Printable got uploaded
+     */
     @Getter
     private Timestamp uploadDate;
 
