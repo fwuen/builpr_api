@@ -1,18 +1,11 @@
 package com.builpr.restapi.controller;
 
 import com.builpr.restapi.error.search.SearchError;
-import com.builpr.restapi.model.Request.Search.SearchPayload;
 import com.builpr.restapi.model.Response.Response;
-import com.builpr.restapi.utils.PrintableSolrHelper;
-import com.builpr.search.SearchManagerException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.builpr.Constants.URL_SEARCH;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,12 +21,9 @@ public class SearchControllerTest extends ControllerTest {
     private static final String VALID_QUERY = "domi";
     private static final String INVALID_QUERY = "";
 
-    private static final int VALID_RATING = 5;
-    private static final int TOO_BIG_RATING = 10;
-    private static final int TOO_SHORT_RATING = 0;
-
-    private List<String> VALID_CATEGORY_FILTER = new ArrayList<>();
-    private List<String> INVALID_CATEGORY_FILTER = new ArrayList<>();
+    private static final String VALID_RATING = "0";
+    private static final String TOO_BIG_RATING = "10";
+    private static final String TOO_SHORT_RATING = "-5";
 
     private static final String VALID_ORDER = "desc";
     private static final String INVALID_ORDER = "adesc";
@@ -41,34 +31,17 @@ public class SearchControllerTest extends ControllerTest {
     private static final String VALID_SORT = "relevance";
     private static final String INVALID_SORT = "abcdefg";
 
-    private SearchPayload searchRequest;
-    private PrintableSolrHelper printableSolrHelper;
-
-    public void fillCategoryFilter() {
-        VALID_CATEGORY_FILTER.add("test");
-        INVALID_CATEGORY_FILTER.add("");
-    }
-
-    public SearchControllerTest() throws SearchManagerException {
-        fillCategoryFilter();
-        searchRequest = new SearchPayload();
-        searchRequest.setQuery(VALID_QUERY);
-        searchRequest.setMinimumRatingFilter(VALID_RATING);
-        searchRequest.setCategories(VALID_CATEGORY_FILTER);
-        searchRequest.setOrder(VALID_ORDER);
-        searchRequest.setSort(VALID_SORT);
-
-        printableSolrHelper = new PrintableSolrHelper();
-        printableSolrHelper.indexPrintables();
-    }
 
     @Test
     public void searchWithValidInput() throws Exception {
-
         MvcResult result = mockMvc.perform(
                 get(URL_SEARCH)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(searchRequest)))
+                        .param("query", VALID_QUERY)
+                        .param("minimumRatingFilter", VALID_RATING)
+                        .param("order", VALID_ORDER)
+                        .param("sort", VALID_SORT)
+                        .param("categories", "test,neuertesttag")
+        )
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -81,12 +54,14 @@ public class SearchControllerTest extends ControllerTest {
 
     @Test
     public void searchWithInvalidQuery() throws Exception {
-        searchRequest.setQuery(INVALID_QUERY);
-
         MvcResult result = mockMvc.perform(
                 get(URL_SEARCH)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(searchRequest)))
+                        .param("query", INVALID_QUERY)
+                        .param("minimumRatingFilter", VALID_RATING)
+                        .param("order", VALID_ORDER)
+                        .param("sort", VALID_SORT)
+                        .param("categories", "test,neuertesttag")
+        )
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -101,16 +76,18 @@ public class SearchControllerTest extends ControllerTest {
 
     @Test
     public void searchWithInvalidRating() throws Exception {
-        searchRequest.setMinimumRatingFilter(TOO_BIG_RATING);
-
-        MvcResult resultTooBig = mockMvc.perform(
+        MvcResult result = mockMvc.perform(
                 get(URL_SEARCH)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(searchRequest)))
+                        .param("query", VALID_QUERY)
+                        .param("minimumRatingFilter", TOO_BIG_RATING)
+                        .param("order", VALID_ORDER)
+                        .param("sort", VALID_SORT)
+                        .param("categories", "test,neuertesttag")
+        )
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Response responseTooBig = getResponseBodyOf(resultTooBig, Response.class);
+        Response responseTooBig = getResponseBodyOf(result, Response.class);
 
         Assert.assertTrue(!responseTooBig.isSuccess());
         Assert.assertNotNull(responseTooBig.getPayload());
@@ -118,16 +95,19 @@ public class SearchControllerTest extends ControllerTest {
         Assert.assertTrue(responseTooBig.getErrorMap().containsValue(SearchError.INVALID_RATING_FILTER.getDescription()));
         Assert.assertEquals(1, responseTooBig.getErrorMap().size());
 
-        searchRequest.setMinimumRatingFilter(TOO_SHORT_RATING);
 
-        MvcResult result = mockMvc.perform(
+        MvcResult result2 = mockMvc.perform(
                 get(URL_SEARCH)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(searchRequest)))
+                        .param("query", VALID_QUERY)
+                        .param("minimumRatingFilter", TOO_SHORT_RATING)
+                        .param("order", VALID_ORDER)
+                        .param("sort", VALID_SORT)
+                        .param("categories", "test,neuertesttag")
+        )
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Response responseTooShort = getResponseBodyOf(result, Response.class);
+        Response responseTooShort = getResponseBodyOf(result2, Response.class);
 
         Assert.assertTrue(!responseTooShort.isSuccess());
         Assert.assertNotNull(responseTooShort.getPayload());
@@ -138,15 +118,16 @@ public class SearchControllerTest extends ControllerTest {
 
     @Test
     public void searchWithInvalidCategoryFilter() throws Exception {
-        searchRequest.setCategories(INVALID_CATEGORY_FILTER);
-
         MvcResult result = mockMvc.perform(
                 get(URL_SEARCH)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(searchRequest)))
+                        .param("query", VALID_QUERY)
+                        .param("minimumRatingFilter", VALID_RATING)
+                        .param("order", VALID_ORDER)
+                        .param("sort", VALID_SORT)
+                        .param("categories", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,test")
+        )
                 .andExpect(status().isOk())
                 .andReturn();
-
         Response response = getResponseBodyOf(result, Response.class);
 
         Assert.assertTrue(response.isSuccess());
@@ -156,15 +137,16 @@ public class SearchControllerTest extends ControllerTest {
 
     @Test
     public void searchWithInvalidOrder() throws Exception {
-        searchRequest.setOrder(INVALID_ORDER);
-
         MvcResult result = mockMvc.perform(
                 get(URL_SEARCH)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(searchRequest)))
+                        .param("query", VALID_QUERY)
+                        .param("minimumRatingFilter", VALID_RATING)
+                        .param("order", INVALID_ORDER)
+                        .param("sort", VALID_SORT)
+                        .param("categories", "test,neuertesttag")
+        )
                 .andExpect(status().isOk())
                 .andReturn();
-
         Response response = getResponseBodyOf(result, Response.class);
 
         Assert.assertTrue(!response.isSuccess());
@@ -176,12 +158,14 @@ public class SearchControllerTest extends ControllerTest {
 
     @Test
     public void searchWithInvalidSort() throws Exception {
-        searchRequest.setSort(INVALID_SORT);
-
         MvcResult result = mockMvc.perform(
                 get(URL_SEARCH)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(searchRequest)))
+                        .param("query", VALID_QUERY)
+                        .param("minimumRatingFilter", VALID_RATING)
+                        .param("order", VALID_ORDER)
+                        .param("sort", INVALID_SORT)
+                        .param("categories", "test,neuertesttag")
+        )
                 .andExpect(status().isOk())
                 .andReturn();
 

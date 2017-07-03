@@ -1,5 +1,6 @@
 package com.builpr.restapi.model.Response.rating;
 
+import com.builpr.database.bridge.rating.Rating;
 import lombok.Getter;
 
 /**
@@ -19,6 +20,12 @@ public class RatingPayload {
     @Getter
     private String time;
 
+    @Getter
+    private String ownerUserName;
+
+    @Getter
+    private String ownerGravatarURL;
+
     public RatingPayload setOwnerID(int ownerID) {
         this.ownerID = ownerID;
         return this;
@@ -36,6 +43,16 @@ public class RatingPayload {
 
     public RatingPayload setTime(String time) {
         this.time = time;
+        return this;
+    }
+
+    public RatingPayload setOwnerUserName(String ownerUserName) {
+        this.ownerUserName = ownerUserName;
+        return this;
+    }
+
+    public RatingPayload setOwnerGravatarURL(String ownerGravatarURL) {
+        this.ownerGravatarURL = ownerGravatarURL;
         return this;
     }
 

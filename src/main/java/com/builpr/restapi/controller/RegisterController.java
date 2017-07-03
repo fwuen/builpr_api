@@ -4,7 +4,7 @@ import com.builpr.database.bridge.register_confirmation_token.RegisterConfirmati
 import com.builpr.database.service.DatabaseRegisterConfirmationTokenManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.database.bridge.user.User;
-import com.builpr.restapi.converter.AccountRequestToUserModelConverter;
+import com.builpr.restapi.converter.RegisterRequestToUserModelConverter;
 import com.builpr.restapi.model.Request.RegisterRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.utils.MailHelper;
@@ -97,7 +97,7 @@ public class RegisterController {
 
         if (response.isSuccess()) {
 
-            User registeredUser = databaseUserManager.persist(AccountRequestToUserModelConverter.from(registerRequest));
+            User registeredUser = databaseUserManager.persist(RegisterRequestToUserModelConverter.from(registerRequest));
 
             TokenGenerator tokenGenerator = new TokenGenerator(60, true);
             // send activation mail

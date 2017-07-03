@@ -1,5 +1,6 @@
 package com.builpr.search.solr;
 
+import com.builpr.Constants;
 import com.builpr.search.SearchManagerException;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -14,14 +15,14 @@ public class SolrSearchManagerBasicTest {
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     @Test
     public void createWithBaseUrl() {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         
         Assert.assertNotNull(solrSearchManager);
     }
     
     @Test
     public void createWithMockedSolrClient() {
-        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(SolrTestConstants.REMOTE_BASE_URL_EXTERN).build();
+        SolrClient solrClient = new HttpSolrClient.Builder().withBaseSolrUrl(Constants.SOLR_BASE_URL).build();
         
         SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(solrClient);
         
@@ -42,13 +43,13 @@ public class SolrSearchManagerBasicTest {
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     @Test
     public void reachabilityCheckWithSolrClient() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(SolrTestConstants.REMOTE_BASE_URL_EXTERN).build());
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithSolrClient(new HttpSolrClient.Builder(Constants.SOLR_BASE_URL).build());
         Assert.assertNotNull(solrSearchManager);
     }
     
     @Test
     public void reachabilityCheckWithBaseURL() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Assert.assertNotNull(solrSearchManager);
         
         solrSearchManager.isReachable();
@@ -56,7 +57,7 @@ public class SolrSearchManagerBasicTest {
     
     @Test
     public void solrServerIsReachable() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Assert.assertNotNull(solrSearchManager);
         boolean reachable = solrSearchManager.isReachable();
         Assert.assertTrue(reachable);

@@ -1,5 +1,6 @@
 package com.builpr.search.solr;
 
+import com.builpr.Constants;
 import com.builpr.search.SearchManagerException;
 import com.builpr.search.model.Indexable;
 import com.builpr.search.model.Printable;
@@ -20,7 +21,7 @@ import java.util.List;
 public class SolrIndexUpTest {
     @Test
     public void indexRandomStringsWithCommit() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<String> categories = new ArrayList<String>();
         categories.add("egories");
         categories.add("cat");
@@ -52,7 +53,7 @@ public class SolrIndexUpTest {
     
     @Test
     public void indexWithCommit() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<String> categories = Lists.newArrayList();
         categories.add("3D");
         categories.add("car");
@@ -84,7 +85,7 @@ public class SolrIndexUpTest {
     
     @Test
     public void indexWithMultipleFilesAndCommit() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<String> categories = Lists.newArrayList();
         Date date = new Date(System.currentTimeMillis());
         List<Indexable> indexables = new ArrayList<>();
@@ -156,7 +157,7 @@ public class SolrIndexUpTest {
     
     @Test
     public void indexWithMultipleFilesAndSameCategoriesAndCommit() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<String> categories = Lists.newArrayList();
         Date date = new Date(System.currentTimeMillis());
         List<Indexable> indexables = new ArrayList<>();
@@ -224,21 +225,21 @@ public class SolrIndexUpTest {
     
     @Test(expected = NullPointerException.class)
     public void indexNull() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Indexable idx = null;
         solrSearchManager.addToIndex(idx);
     }
     
     @Test(expected = NullPointerException.class)
     public void indexNullList() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         List<Indexable> indexableList = null;
         solrSearchManager.addToIndex(indexableList);
     }
     
     @AfterClass
     public static void clearIndex() throws SearchManagerException {
-        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(SolrTestConstants.REMOTE_BASE_URL_EXTERN);
+        SolrSearchManager solrSearchManager = SolrSearchManager.createWithBaseURL(Constants.SOLR_BASE_URL);
         Preconditions.checkNotNull(solrSearchManager);
         solrSearchManager.clearIndex();
     }
