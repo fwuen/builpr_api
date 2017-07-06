@@ -6,6 +6,9 @@ import com.builpr.restapi.utils.GravatarWrapper;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author Dominic Fuchs
+ */
 @RestController
 public class GravatarController {
 

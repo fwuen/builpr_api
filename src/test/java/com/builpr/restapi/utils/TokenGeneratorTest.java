@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.util.Set;
 
+/**
+ * @author Dominic Fuchs
+ */
 public class TokenGeneratorTest {
 
     @Test

@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.*;
 
 /**
+ * @author Markus Goller
+ *
  * printableCategory service
  */
 public class DatabaseCategoryManager extends DatabaseManager<CategoryManager> {

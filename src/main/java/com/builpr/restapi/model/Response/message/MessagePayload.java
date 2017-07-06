@@ -3,7 +3,7 @@ package com.builpr.restapi.model.Response.message;
 import lombok.Getter;
 
 /**
- *
+ *@author Marco Geißler
  */
 public class MessagePayload {
 

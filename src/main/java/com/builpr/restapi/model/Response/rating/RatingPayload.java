@@ -4,6 +4,8 @@ import com.builpr.database.bridge.rating.Rating;
 import lombok.Getter;
 
 /**
+ * @author Markus Goller
+ *
  * rating payload
  */
 public class RatingPayload {

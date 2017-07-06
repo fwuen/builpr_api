@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 
 /**
+ *
+ * @author Markus Goller
  * printableCategory manager
  */
 public class DatabasePrintableCategoryManager extends DatabaseManager<PrintableCategoryManager> {

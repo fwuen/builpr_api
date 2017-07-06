@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * @author Markus Goller
+ *
  * RatingDeleteRequest
  */
 public class RatingDeleteRequest {

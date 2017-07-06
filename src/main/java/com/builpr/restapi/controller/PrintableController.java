@@ -24,6 +24,8 @@ import java.util.List;
 import static com.builpr.Constants.*;
 
 /**
+ * @author Markus Goller
+ *
  * PrintableController
  */
 @RestController

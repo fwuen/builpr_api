@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * @author Markus Goller
+ *
  * Validator for categories
  */
 public class CategoryValidator {

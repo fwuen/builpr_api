@@ -6,6 +6,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * Response for the request to create a new printable
  */
 public class PrintableNewResponse {

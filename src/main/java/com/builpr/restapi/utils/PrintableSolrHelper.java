@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * @author Markus Goller
  */
 public class PrintableSolrHelper {
     private DatabasePrintableManager databasePrintableManager;

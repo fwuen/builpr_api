@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * @author Marco Geißler
+ *
  * tests for the DatabaseMessageManager
  */
 public class DatabaseMessageManagerTest {

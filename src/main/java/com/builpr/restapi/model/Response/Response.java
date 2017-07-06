@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @author Marco Geißler, Markus Goller
+ *
  * basic response
  */
 public class Response<payloadType> {

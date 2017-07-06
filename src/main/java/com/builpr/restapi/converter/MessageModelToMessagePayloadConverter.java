@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- *
+ * @author Marco Geißler
  */
 public class MessageModelToMessagePayloadConverter {
 

@@ -3,6 +3,8 @@ package com.builpr.restapi.model.Request;
 import lombok.Getter;
 
 /**
+ * @author Marco Geißler
+ *
  * contains the request made, when editing a user
  */
 public class ProfileEditRequest {

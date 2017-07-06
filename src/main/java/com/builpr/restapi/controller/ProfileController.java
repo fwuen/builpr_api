@@ -18,6 +18,8 @@ import static com.builpr.Constants.*;
 import static com.builpr.restapi.error.response.profile.ProfileEditError.*;
 
 /**
+ * @author Marco Geißler
+ *
  * controller that handles the profile endpoints
  */
 

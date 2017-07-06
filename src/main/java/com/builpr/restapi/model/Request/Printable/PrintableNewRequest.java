@@ -6,6 +6,8 @@ import lombok.Setter;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * Request to create a new printable
  */
 public class PrintableNewRequest {

@@ -6,6 +6,8 @@ import lombok.Getter;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * printable payload
  */
 public class PrintablePayload {

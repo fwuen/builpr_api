@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * Search-payload
  */
 public class SearchPayload {

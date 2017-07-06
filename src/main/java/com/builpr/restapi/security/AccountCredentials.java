@@ -3,6 +3,9 @@ package com.builpr.restapi.security;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author Dominic Fuchs
+ */
 public class AccountCredentials {
 
     @Getter

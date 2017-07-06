@@ -25,6 +25,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * @author Markus Goller@author Markus Goller
+ *
  * Tests for RatingModelToRatingPayloadConverterTest
  */
 public class RatingModelToRatingPayloadConverterTest {

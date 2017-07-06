@@ -5,6 +5,9 @@ import com.builpr.restapi.model.Request.SendMessageRequest;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Marco Geißler
+ */
 public class MessageRequestToMessageModelConverterTest {
 
     private SendMessageRequest request;

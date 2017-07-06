@@ -9,6 +9,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * @author Dominic Fuchs
+ */
 public class GravatarControllerTest extends ControllerTest {
 
     private static final String PARAM_KEY = "email";

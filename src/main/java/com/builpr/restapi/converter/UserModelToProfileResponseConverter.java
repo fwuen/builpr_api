@@ -17,6 +17,8 @@ import java.util.*;
 import static java.lang.Math.round;
 
 /**
+ * @author Marco Geißler
+ *
  * maps a speedment user model to a profile payload model
  */
 public class UserModelToProfileResponseConverter {

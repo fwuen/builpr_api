@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * PrintableReferenceToPrintableConverter
  */
 public class PrintableReferenceToPrintableConverter {

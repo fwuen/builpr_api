@@ -15,6 +15,9 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
 
+/**
+ * @author  Dominic Fuchs
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration

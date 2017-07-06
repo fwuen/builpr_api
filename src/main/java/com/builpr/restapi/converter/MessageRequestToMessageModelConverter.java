@@ -8,7 +8,7 @@ import com.builpr.restapi.model.Request.SendMessageRequest;
 import java.security.Principal;
 
 /**
- *
+ * @author Marco Geißler
  */
 public class MessageRequestToMessageModelConverter {
 

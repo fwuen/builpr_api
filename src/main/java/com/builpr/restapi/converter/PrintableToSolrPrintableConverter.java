@@ -9,6 +9,8 @@ import com.builpr.search.model.Printable;
 import java.util.Date;
 
 /**
+ * @author Markus Goller
+ *
  * PrintableToSolrPrintableConverter
  */
 public class PrintableToSolrPrintableConverter {

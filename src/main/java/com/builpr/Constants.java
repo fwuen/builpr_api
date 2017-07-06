@@ -4,6 +4,9 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
+/**
+ * @author Dominic Fuchs, Marco Geißler, Markus Goller
+ */
 public class Constants {
     public static final String DATE_FORMAT = "yyyy-mm-dd";
     public static final String DATE_PATTERN = "[0-9]{4}-[0-9]{2}-[0-9]{2}";

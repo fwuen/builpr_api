@@ -10,6 +10,8 @@ import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
 import static com.builpr.Constants.URL_REDEEM_CONFIRMATION_TOKEN;
 
 /**
+ * @author Marco Geißler
+ *
  * the controller that handles the account confirmation
  */
 @RestController

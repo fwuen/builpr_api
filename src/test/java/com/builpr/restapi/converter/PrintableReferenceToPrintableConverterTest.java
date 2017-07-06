@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * @author Markus Goller
+ *
  * Tests for the PrintableReferenceToPrintableConverter
  */
 public class PrintableReferenceToPrintableConverterTest {

@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
+/**
+ * @author Dominic Fuchs
+ */
 @RestController
 public class SimplePayloadController {
 

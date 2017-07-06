@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
+ * @author Marco Geißler
+ *
  * errors that can occur when editing a profile
  */
 public enum ProfileEditError implements MappableError {

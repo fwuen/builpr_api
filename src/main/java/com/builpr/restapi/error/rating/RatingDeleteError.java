@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
+ * @author Markus Goller
+ *
  * RatingDeleteError
  */
 public enum RatingDeleteError implements MappableError {

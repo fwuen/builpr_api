@@ -9,6 +9,8 @@ import org.junit.Test;
 import java.util.Objects;
 
 /**
+ * @author Markus Goller
+ *
  * Tests for PrintableNewRequestToPrintableConverter
  */
 public class PrintableNewRequestToPrintableConverterTest {

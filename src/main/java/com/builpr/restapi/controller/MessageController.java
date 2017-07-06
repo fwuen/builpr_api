@@ -22,6 +22,8 @@ import static com.builpr.Constants.SECURITY_CROSS_ORIGIN;
 import static com.builpr.Constants.URL_MESSAGE;
 
 /**
+ * @author Marco Geißler
+ *
  * controller that handles the messaging system
  */
 @RestController

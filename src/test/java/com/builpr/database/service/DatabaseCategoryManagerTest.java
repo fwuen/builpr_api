@@ -24,6 +24,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * @author Markus Goller
+ *
  * Tests for DatabaseCategoryManager
  */
 public class DatabaseCategoryManagerTest {

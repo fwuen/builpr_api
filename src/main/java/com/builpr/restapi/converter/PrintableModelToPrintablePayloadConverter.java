@@ -13,6 +13,8 @@ import java.util.List;
 
 
 /**
+ * @author Markus Goller
+ *
  * Converter for PrintableModels to PrintablePayloadModels
  */
 public class PrintableModelToPrintablePayloadConverter {

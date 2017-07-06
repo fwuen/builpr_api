@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 /**
+ * @author Dominic Fuchs
  * Abstract Database Manager. Every concrete Database Manager class should extend it
  *
  * @param <DaoType> the type of the Speedment manager the class is using

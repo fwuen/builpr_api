@@ -9,6 +9,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
+/**
+ * @author Dominic Fuchs
+ */
 public class GravatarWrapperTest {
 
     private static final String EMAIL = "syntarex@gmail.com";

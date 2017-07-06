@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * @author Markus Goller
+ *
  * DatabasePrintableManagerTest
  */
 public class DatabasePrintableManagerTest {

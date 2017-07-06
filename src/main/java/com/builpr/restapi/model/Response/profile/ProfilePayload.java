@@ -7,6 +7,8 @@ import lombok.Getter;
 import java.util.List;
 
 /**
+ * @author Marco Geißler
+ *
  * payload when displaying a user's profile
  */
 public class ProfilePayload {

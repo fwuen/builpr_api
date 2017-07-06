@@ -6,6 +6,7 @@ import com.builpr.database.bridge.user.UserManager;
 import java.util.Optional;
 
 /**
+ * @author Marco Geißler
  * Database manager that covers the user-table
  */
 public class DatabaseUserManager extends DatabaseManager<UserManager> {

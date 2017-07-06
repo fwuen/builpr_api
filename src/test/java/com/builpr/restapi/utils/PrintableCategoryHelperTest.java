@@ -26,6 +26,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * @author Markus Goller
+ *
  * Tests for the PrintableCategoryHelper
  */
 public class PrintableCategoryHelperTest {

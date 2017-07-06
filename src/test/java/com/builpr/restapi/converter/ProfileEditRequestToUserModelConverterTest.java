@@ -10,6 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Date;
 
+/**
+ * @author Marco Geißler
+ */
 public class ProfileEditRequestToUserModelConverterTest {
 
     private ProfileEditRequest request;

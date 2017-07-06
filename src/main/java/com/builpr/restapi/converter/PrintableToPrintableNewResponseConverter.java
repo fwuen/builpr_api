@@ -7,6 +7,8 @@ import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * PrintableToPrintableNewResponseConverter
  */
 public class PrintableToPrintableNewResponseConverter {

@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import static com.builpr.Constants.TEST_PATH;
 
 /**
+ * @author Markus Goller
+ *
  * PrintableUploader
  */
 public class PrintableUploader {

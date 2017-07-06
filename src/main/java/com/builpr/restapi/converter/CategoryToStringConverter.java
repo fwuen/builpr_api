@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * Converter for Categories
  */
 public class CategoryToStringConverter {

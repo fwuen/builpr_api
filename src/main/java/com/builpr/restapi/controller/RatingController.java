@@ -21,6 +21,8 @@ import static com.builpr.Constants.URL_DELETE_RATING;
 import static com.builpr.Constants.URL_NEW_RATING;
 
 /**
+ * @author Markus Goller
+ *
  * RatingController
  */
 @RestController

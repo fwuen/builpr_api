@@ -12,6 +12,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
+ * @author Markus Goller
+ *
  * SearchControllerTest
  */
 public class SearchControllerTest extends ControllerTest {

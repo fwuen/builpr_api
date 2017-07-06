@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ *  * @author Marco Geißler
+ *
  * Database manager that covers the message-table
  */
 public class DatabaseMessageManager extends DatabaseManager<MessageManager> {

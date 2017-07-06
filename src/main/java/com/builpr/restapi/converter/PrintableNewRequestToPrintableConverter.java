@@ -6,6 +6,8 @@ import com.builpr.restapi.model.Request.Printable.PrintableNewRequest;
 
 
 /**
+ * @author Markus Goller
+ *
  * Converter
  */
 public class PrintableNewRequestToPrintableConverter {

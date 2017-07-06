@@ -17,6 +17,8 @@ import java.sql.Date;
 import java.util.Optional;
 
 /**
+ * @author Marco Geißler
+ *
  * tests for the DatabaseRegisterConfirmationManager
  */
 public class DatabaseRegisterConfirmationTokenManagerTest {

@@ -4,7 +4,9 @@ import com.google.common.base.Preconditions;
 import com.timgroup.jgravatar.Gravatar;
 import lombok.NonNull;
 import org.apache.commons.validator.routines.EmailValidator;
-
+/**
+ * @author Dominic Fuchs
+ */
 public class GravatarWrapper {
 
     private Gravatar gravatarProvider = new Gravatar();

@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * @author Markus Goller
+ *
  * Tests for the DatabasePrintableCategoryManager
  */
 public class DatabasePrintableCategoryManagerTest {

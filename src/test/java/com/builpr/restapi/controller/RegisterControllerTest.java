@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 /**
+ * @author Marco Geißler
  * tests the RegisterController
  */
 public class RegisterControllerTest extends ControllerTest {

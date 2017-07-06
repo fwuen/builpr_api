@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * @author Markus Goller
+ *
  * Test for PrintableToPrintableNewResponseConverter
  */
 public class PrintableToPrintableNewResponseConverterTest {

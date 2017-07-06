@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.sql.Timestamp;
 
+/**
+ * @author Marco Geißler
+ */
 public class MessageModelToMessagePayloadConverterTest {
 
     private Message message;

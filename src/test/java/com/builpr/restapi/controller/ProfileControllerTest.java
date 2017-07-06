@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
+ * @author Marco Geißler
  * tests the profileController
  */
 public class ProfileControllerTest extends ControllerTest {

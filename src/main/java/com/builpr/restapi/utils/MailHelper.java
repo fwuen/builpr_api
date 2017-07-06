@@ -9,6 +9,8 @@ import java.util.Properties;
 import static com.builpr.Constants.*;
 
 /**
+ * @author Marco Geißler
+ *
  * class that provides methods for setting up a mail client
  */
 public class MailHelper {

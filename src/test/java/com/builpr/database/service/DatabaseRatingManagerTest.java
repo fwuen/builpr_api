@@ -21,6 +21,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * @author Markus Goller
+ *
  * Tests for DatabaseRatingManager
  */
 public class DatabaseRatingManagerTest {

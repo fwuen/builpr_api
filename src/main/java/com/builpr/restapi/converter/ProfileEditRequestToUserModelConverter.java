@@ -6,6 +6,8 @@ import com.builpr.restapi.model.Request.ProfileEditRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
+ * @author Marco Geißler
+ *
  * converts an edit-request to a user model with which the user can be updated
  */
 public class ProfileEditRequestToUserModelConverter {

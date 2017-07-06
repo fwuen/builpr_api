@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * @author Markus Goller
  * printable service
  */
 public class DatabasePrintableManager extends DatabaseManager<PrintableManager> {

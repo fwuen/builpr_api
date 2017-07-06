@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
+ * @author Markus Goller
  * Error-enum for search
  */
 public enum SearchError implements MappableError {

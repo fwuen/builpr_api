@@ -22,6 +22,8 @@ import static com.builpr.Constants.*;
 import static com.builpr.restapi.error.response.account.RegisterError.*;
 
 /**
+ * @author Marco Geißler
+ *
  * registration response
  */
 @RestController

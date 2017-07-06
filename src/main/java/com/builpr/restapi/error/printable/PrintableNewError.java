@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
+ * @author Markus Goller
+ *
  * PrintableNewError
  */
 public enum PrintableNewError implements MappableError {

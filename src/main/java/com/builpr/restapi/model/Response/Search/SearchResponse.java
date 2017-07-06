@@ -8,6 +8,8 @@ import lombok.Setter;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * Search Response
  */
 public class SearchResponse extends SearchPayload {

@@ -8,6 +8,8 @@ import com.builpr.database.service.DatabasePrintableCategoryManager;
 import java.util.List;
 
 /**
+ * @author Markus Goller
+ *
  * PrintableCategoryHelper
  */
 public class PrintableCategoryHelper {

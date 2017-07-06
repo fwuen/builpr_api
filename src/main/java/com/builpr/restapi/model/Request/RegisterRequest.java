@@ -3,6 +3,8 @@ package com.builpr.restapi.model.Request;
 import lombok.Getter;
 
 /**
+ * @author Marco Geißler
+ *
  * registration request
  */
 public class RegisterRequest {

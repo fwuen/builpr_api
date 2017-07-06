@@ -25,6 +25,8 @@ import java.util.Objects;
 import static com.builpr.Constants.*;
 
 /**
+ * @author Markus Goller
+ *
  * SearchController
  */
 @RestController

@@ -25,6 +25,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * @author Markus Goller
+ *
  * Tests for PrintableToSolrPrintableConverter
  */
 public class PrintableToSolrPrintableConverterTest {

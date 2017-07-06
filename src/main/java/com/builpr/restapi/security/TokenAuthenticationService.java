@@ -11,7 +11,9 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-
+/**
+ * @author Dominic Fuchs
+ */
 public class TokenAuthenticationService {
 
     private static final long EXPIRATION_TIME = 864_000_000; // 10 Days

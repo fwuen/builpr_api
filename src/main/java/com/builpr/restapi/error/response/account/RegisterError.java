@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
+ * @author Marco Geißler
+ *
  * enum containing all the possible registration errors
  */
 public enum RegisterError implements MappableError {

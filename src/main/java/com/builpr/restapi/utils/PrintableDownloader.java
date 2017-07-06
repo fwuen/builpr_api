@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
+ * @author Markus Goller
+ *
  * Uploads the files to the server
  */
 public class PrintableDownloader {

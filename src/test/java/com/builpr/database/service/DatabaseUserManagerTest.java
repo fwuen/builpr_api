@@ -15,6 +15,8 @@ import java.sql.Date;
 import java.util.Optional;
 
 /**
+ * @author Marco Geißler
+ *
  * tests for the DatabaseUserManager
  */
 public class DatabaseUserManagerTest {

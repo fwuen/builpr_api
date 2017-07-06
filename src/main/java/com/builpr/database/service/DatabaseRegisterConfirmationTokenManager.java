@@ -6,6 +6,8 @@ import com.builpr.database.bridge.register_confirmation_token.RegisterConfirmati
 import java.util.Optional;
 
 /**
+ * @author Marco Geißler
+ *
  * Database manager that covers the register_confirmation_token-table
  */
 public class DatabaseRegisterConfirmationTokenManager extends DatabaseManager<RegisterConfirmationTokenManager> {

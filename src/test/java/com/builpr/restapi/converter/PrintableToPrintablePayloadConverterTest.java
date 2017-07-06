@@ -29,6 +29,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * @author Markus Goller
+ *
  * Tests for PrintableToPrintablePayloadConverter
  */
 public class PrintableToPrintablePayloadConverterTest {

@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.sql.Date;
 
 /**
+ * @author Marco Geißler
+ *
  * maps an account request to a speedment user model
  */
 public class RegisterRequestToUserModelConverter {

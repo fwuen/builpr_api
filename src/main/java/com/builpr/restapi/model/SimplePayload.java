@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
+/**
+ * @author Dominic Fuchs
+ */
 @EqualsAndHashCode
 @ToString
 public class SimplePayload {

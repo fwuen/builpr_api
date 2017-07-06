@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
+ * @author Markus Goller
  * rating service
  */
 public class DatabaseRatingManager extends DatabaseManager<RatingManager> {

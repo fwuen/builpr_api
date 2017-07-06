@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * @author Markus Goller
+ *
  * converts a speedment rating model to a rating payload
  */
 public class RatingModelToRatingPayloadConverter {
