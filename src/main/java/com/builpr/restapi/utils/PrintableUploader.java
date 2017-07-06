@@ -12,11 +12,13 @@ import java.nio.file.Paths;
 import static com.builpr.Constants.TEST_PATH;
 
 /**
- *
+ * PrintableUploader
  */
 public class PrintableUploader {
 
     /**
+     * Upload a file to the server
+     *
      * @param data byte[]
      * @return String
      * @throws IOException Exception

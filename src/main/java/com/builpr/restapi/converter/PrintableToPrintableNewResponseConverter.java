@@ -7,10 +7,17 @@ import com.builpr.restapi.model.Response.printable.PrintableNewResponse;
 import java.util.List;
 
 /**
- * Converting a printable to printablenewresponse
+ * PrintableToPrintableNewResponseConverter
  */
 public class PrintableToPrintableNewResponseConverter {
 
+    /**
+     * Converting a Printable to PrintableNewResponse
+     *
+     * @param printable    Printable
+     * @param categoryList List<Category>
+     * @return PrintableNewResponse
+     */
     public static PrintableNewResponse from(Printable printable, List<Category> categoryList) {
         PrintableNewResponse printableNewResponse = new PrintableNewResponse();
         printableNewResponse.setPrintableID(printable.getPrintableId());

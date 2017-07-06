@@ -10,7 +10,6 @@ import com.builpr.database.bridge.rating.RatingManager;
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.database.service.DatabasePrintableManager;
-import com.builpr.database.service.DatabaseRatingManager;
 import com.builpr.database.service.DatabaseUserManager;
 import com.builpr.restapi.model.Response.rating.RatingPayload;
 import org.junit.After;
@@ -31,7 +30,6 @@ import java.util.Optional;
 public class RatingModelToRatingPayloadConverterTest {
     private DatabaseUserManager databaseUserManager;
     private DatabasePrintableManager databasePrintableManager;
-    private DatabaseRatingManager databaseRatingManager;
     private RatingManager ratingManager;
 
     private static final String TEST_USER = "ratinghelper";
@@ -46,7 +44,6 @@ public class RatingModelToRatingPayloadConverterTest {
     public RatingModelToRatingPayloadConverterTest() {
         databaseUserManager = new DatabaseUserManager();
         databasePrintableManager = new DatabasePrintableManager();
-        databaseRatingManager = new DatabaseRatingManager();
         ratingManager = new BuilprApplicationBuilder().withPassword(Constants.DATABASE_PASSWORD).build().getOrThrow(RatingManager.class);
     }
 
@@ -149,6 +146,7 @@ public class RatingModelToRatingPayloadConverterTest {
     public void testFrom() {
         RatingPayload payload = RatingModelToRatingPayloadConverter.from(testRating);
         Assert.assertNotNull(payload);
+        Assert.assertTrue(testRating.getMsg().isPresent());
         Assert.assertTrue(payload.getOwnerID() == testRating.getUserId());
         Assert.assertTrue(payload.getRating() == testRating.getRating());
         Assert.assertTrue(Objects.equals(payload.getText(), testRating.getMsg().get()));
@@ -163,6 +161,8 @@ public class RatingModelToRatingPayloadConverterTest {
         List<RatingPayload> list = RatingModelToRatingPayloadConverter.from(ratings);
 
         Assert.assertFalse(list.isEmpty());
+        Assert.assertTrue(testRating.getMsg().isPresent());
+
         Assert.assertTrue(list.size() == 1);
         Assert.assertTrue(list.get(0).getOwnerID() == testRating.getUserId());
         Assert.assertTrue(list.get(0).getRating() == testRating.getRating());

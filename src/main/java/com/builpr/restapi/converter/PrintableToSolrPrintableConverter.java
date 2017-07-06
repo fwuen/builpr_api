@@ -9,10 +9,18 @@ import com.builpr.search.model.Printable;
 import java.util.Date;
 
 /**
- *
+ * PrintableToSolrPrintableConverter
  */
 public class PrintableToSolrPrintableConverter {
 
+
+    /**
+     * Converts the model from solr to the database model from speedment
+     *
+     *
+     * @param printable com.builpr.database.bridge.printable.Printable
+     * @return Printable
+     */
     public static Printable getSolrPrintable(com.builpr.database.bridge.printable.Printable printable) {
         DatabaseRatingManager databaseRatingManager = new DatabaseRatingManager();
         DatabaseCategoryManager databaseCategoryManager = new DatabaseCategoryManager();

@@ -8,15 +8,27 @@ import lombok.Getter;
  */
 public class RatingPayload {
 
+    /**
+     * Id of the User
+     */
     @Getter
     private int ownerID;
 
+    /**
+     * Value of the Rating
+     */
     @Getter
     private int rating;
 
+    /**
+     * Text of the Rating
+     */
     @Getter
     private String text;
 
+    /**
+     * Time the Rating got created
+     */
     @Getter
     private String time;
 

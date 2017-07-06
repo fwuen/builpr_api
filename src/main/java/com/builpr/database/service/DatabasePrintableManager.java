@@ -16,6 +16,7 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
+     * Get every Printable referring to an User
      * @param userID int
      * @return List<Printable>
      */
@@ -24,6 +25,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
+     * Get a specific Printable
+     *
      * @param printableID int
      * @return Printable
      */
@@ -33,6 +36,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
+     * Persistently save a Printable in the database
+     *
      * @param printable int
      * @return void
      */
@@ -41,6 +46,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
+     * Update the data from a Printable in the database
+     *
      * @param printable Printable
      * @return void
      */
@@ -49,6 +56,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
+     * Remove a Printable from database
+     *
      * @param printableID int
      * @return void
      */
@@ -57,6 +66,8 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
     }
 
     /**
+     * Increase the number of downloads a Printable has by one
+     *
      * @param printableID Int
      * @return void
      */
@@ -67,11 +78,19 @@ public class DatabasePrintableManager extends DatabaseManager<PrintableManager> 
                 .forEach(this.getDao().updater());
     }
 
+    /**
+     * Check if a Printable is already existing in the database
+     *
+     * @param printableID int
+     * @return boolean
+     */
     public boolean isPresent(int printableID) {
         return getDao().stream().anyMatch(Printable.PRINTABLE_ID.equal(printableID));
     }
 
     /**
+     * Returns a list of every Printable-object saved in the database
+     *
      * @return List<Printable>
      */
     public List<Printable> getAllPrintables() {

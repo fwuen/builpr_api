@@ -10,6 +10,8 @@ import java.util.Set;
  */
 public class CategoryValidator {
     /**
+     * Validates a list of Category-names
+     *
      * @param categories List<String>
      * @return List<String>
      */

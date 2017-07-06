@@ -38,6 +38,10 @@ public class SearchController {
     }
 
     /**
+     * Handle the input from the frontend for the solr search
+     * Check if the input is valid and choose the right method
+     * Handle and return the results given from the solr search
+     *
      * @param query               String
      * @param minimumRatingFilter String
      * @param order               String

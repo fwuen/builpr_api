@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Felix Wünsche, Alexander Zeitler
+ * @author Felix Wünsche
  *         Provides access to Solr search engine
  *         Implements SearchManager-interface
  */

@@ -177,6 +177,8 @@ public class PrintableToPrintablePayloadConverterTest {
         PrintablePayload payload = PrintableModelToPrintablePayloadConverter.from(printable);
 
         Assert.assertTrue(Objects.equals(printable.getTitle(), payload.getTitle()));
+        Assert.assertTrue(printable.getDescription().isPresent());
+        Assert.assertTrue(rating.getMsg().isPresent());
         Assert.assertTrue(Objects.equals(printable.getDescription().get(), payload.getDescription()));
         Assert.assertTrue(printable.getNumDownloads() == payload.getDownloads());
         Assert.assertTrue(printable.getPrintableId() == payload.getPrintableID());

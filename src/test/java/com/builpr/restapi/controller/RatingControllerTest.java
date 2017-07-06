@@ -110,7 +110,6 @@ public class RatingControllerTest extends ControllerTest {
         Assert.assertNotNull(response);
         Assert.assertTrue(response.isSuccess());
         Assert.assertTrue(response.getErrorMap().isEmpty());
-        // TODO Rating wieder löschen
     }
 
     @Test

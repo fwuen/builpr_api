@@ -157,6 +157,7 @@ public class DatabaseRatingManagerTest {
         Assert.assertTrue(list.get(0).getRating() == 5);
         Assert.assertTrue(list.get(0).getPrintableId() == TEST_ID);
         Assert.assertTrue(list.get(0).getUserId() == databaseUserManager.getByUsername(TEST_USER2).getUserId());
+        Assert.assertTrue(list.get(0).getMsg().isPresent());
         Assert.assertTrue(Objects.equals(list.get(0).getMsg().get(), "ratingtestmsg"));
     }
 
@@ -192,6 +193,7 @@ public class DatabaseRatingManagerTest {
                 .filter(Rating.USER_ID.equal(databaseUserManager.getByUsername(TEST_USER2).getUserId())
                         .and(Rating.PRINTABLE_ID.equal(TEST_ID)))
                 .findAny();
+        Assert.assertTrue(list.isPresent());
         Assert.assertNotNull(databaseRatingManager.getRatingByRatingID(list.get().getRatingId()));
 
         Assert.assertNull(databaseRatingManager.getRatingByRatingID(0));

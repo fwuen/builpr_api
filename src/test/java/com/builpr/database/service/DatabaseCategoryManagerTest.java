@@ -38,7 +38,6 @@ public class DatabaseCategoryManagerTest {
     private static final String TEST_CATEGORY1 = "categorytest2";
     private static final String TEST_CATEGORY2 = "categorytest3";
 
-    private Printable testPrintable;
     private List<PrintableCategory> printableCategories = new ArrayList<>();
 
 
@@ -73,7 +72,7 @@ public class DatabaseCategoryManagerTest {
             databasePrintableManager.deletePrintable(TEST_ID);
         }
 
-        testPrintable = new PrintableImpl()
+        Printable testPrintable = new PrintableImpl()
                 .setPrintableId(TEST_ID)
                 .setDescription("category description")
                 .setTitle("category title")

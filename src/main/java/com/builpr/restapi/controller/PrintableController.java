@@ -49,6 +49,8 @@ public class PrintableController {
 
 
     /**
+     * Returning information about a Printable by an valid id
+     *
      * @param printableID int
      * @return response Response<PrintableResponse>
      */
@@ -78,6 +80,9 @@ public class PrintableController {
     }
 
     /**
+     * Creating a new Printable
+     * Saving the file on the server and creating and saving a Printable-object referring to that file
+     *
      * @param principal Principal
      * @param request   PrintableNewRequest
      * @return response Response<PrintableNewResponse>
@@ -150,75 +155,10 @@ public class PrintableController {
         return response;
     }
 
-//    /**
-//     * @param principal Principal
-//     * @param request   PrintableEditRequest
-//     * @return response Response<PrintableEditResponse>
-//     */
-//    @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
-//    @RequestMapping(value = URL_EDIT_PRINTABLE, method = RequestMethod.PUT)
-//    @ResponseBody
-//    public Response<PrintablePayload> editPrintable(Principal principal, @RequestBody PrintableEditRequest request) {
-//        Response<PrintablePayload> response = new Response<>();
-//
-//
-//        if (databasePrintableManager.getPrintableById(request.getPrintableID()) == null) {
-//            response.setSuccess(false);
-//            response.addError(PrintableEditError.PRINTABLE_NOT_EXISTING);
-//        }
-//
-//        List<String> categories = categoryValidator.checkCategories(request.getCategories());
-//        if (categories.size() < 3) {
-//            response.setSuccess(false);
-//            response.addError(PrintableEditError.CATEGORIES_INVALID);
-//        }
-//        if (request.getDescription().length() > 1000) {
-//            response.setSuccess(false);
-//            response.addError(PrintableEditError.DESCRIPTION_INVALID);
-//        }
-//        if (request.getTitle().length() < 5 || request.getTitle().length() > 100) {
-//            response.setSuccess(false);
-//            response.addError(PrintableEditError.TITLE_INVALID);
-//        }
-//
-//        User user = databaseUserManager.getByUsername(principal.getName());
-//        Printable printable = databasePrintableManager.getPrintableById(request.getPrintableID());
-//        if (user != null) {
-//            if (user.getUserId() == 0) {
-//                response.setSuccess(false);
-//                response.addError(PrintableEditError.USER_INVALID);
-//            }
-//            if (user.getUserId() != printable.getUploaderId()) {
-//                response.setSuccess(false);
-//                response.addError(PrintableEditError.NO_AUTHORIZATION);
-//            }
-//        }
-//        if (!response.isSuccess()) {
-//            return response;
-//        }
-//
-//        // UPDATE the printable
-//        printable.setDescription(request.getDescription());
-//        printable.setTitle(request.getTitle());
-//
-//        databasePrintableManager.update(printable);
-//
-//        if (request.getCategories().size() > 0) {
-//            // UPDATE the CATEGORY-table
-//            databaseCategoryManager.update(categories);
-//            // DELETE ALL PRINTABLE_CATEGORIES WITH PRINTABLE_ID
-//            printableCategoryHelper.deleteCategoriesForPrintable(request.getPrintableID());
-//            // GET CATEGORIES FOR PRINTABLE
-//            List<Category> categoryList = databaseCategoryManager.getCategoriesByList(categories);
-//            // CREATE NEW PRINTABLE_CATEGORIES
-//            //  databasePrintableCategoryManager.createCategories(categoryList, request.getPrintableID());
-//        }
-//        PrintablePayload printablePayload = PrintableModelToPrintablePayloadConverter.from(printable);
-//        response.setPayload(printablePayload);
-//        return response;
-//    }
 
     /**
+     * Returning the file the User saved on the server as byte[]
+     *
      * @param printableID int
      * @return response Response<PrintableDownloadResponse>
      */
@@ -259,6 +199,9 @@ public class PrintableController {
     }
 
     /**
+     * Deleting the Printable the User saved on the server
+     * The file that the User uploaded will not be deleted
+     *
      * @param principal Principal
      * @return response Response<PrintableDeleteResponse>
      */

@@ -19,6 +19,8 @@ public class PrintableCategoryHelper {
     }
 
     /**
+     * Create PrintableCategories
+     *
      * @param list        List<Category>
      * @param printableID int
      */
@@ -32,18 +34,4 @@ public class PrintableCategoryHelper {
             }
         }
     }
-
-    /**
-     * @param printableID int
-     * @return void
-     */
-    public void deleteCategoriesForPrintable(int printableID) {
-        List<PrintableCategory> printableCategories = databasePrintableCategoryManager.getListByID(printableID);
-        if (printableCategories != null) {
-            for (PrintableCategory printableCategory : printableCategories) {
-                databasePrintableCategoryManager.delete(printableCategory);
-            }
-        }
-    }
-
 }
