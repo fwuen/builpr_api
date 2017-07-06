@@ -17,7 +17,7 @@ import java.sql.Date;
 import java.util.Optional;
 
 /**
- * tests the DatabaseRegisterConfirmationManager
+ * tests for the DatabaseRegisterConfirmationManager
  */
 public class DatabaseRegisterConfirmationTokenManagerTest {
     private static String TEST_USER_NAME = "regTokenTest";

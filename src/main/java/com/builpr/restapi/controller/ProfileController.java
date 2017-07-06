@@ -9,7 +9,6 @@ import com.builpr.restapi.model.Request.ProfileEditRequest;
 import com.builpr.restapi.model.Response.Response;
 import com.builpr.restapi.model.Response.profile.ProfilePayload;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +18,25 @@ import static com.builpr.Constants.*;
 import static com.builpr.restapi.error.response.profile.ProfileEditError.*;
 
 /**
- * profile controller
+ * controller that handles the profile endpoints
  */
 
 @RestController
 public class ProfileController {
 
-    private DatabaseUserManager userService;
+    private DatabaseUserManager databaseUserManager;
 
     public ProfileController() {
-        userService = new DatabaseUserManager();
+        databaseUserManager = new DatabaseUserManager();
     }
 
+    /**
+     * endpoint that handles the incoming request if a user tries to look at a profile
+     *
+     * @param id the id of the user the profile belongs to
+     * @return the user's profile
+     * @throws UserNotFoundException if a user to the given userID does not exist
+     */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_PROFILE, method = RequestMethod.GET)
     @ResponseBody
@@ -41,7 +47,7 @@ public class ProfileController {
                     required = false
             ) int id
     ) throws UserNotFoundException {
-        User user = userService.getByID(id);
+        User user = databaseUserManager.getByID(id);
         if (user == null) {
             throw new UserNotFoundException("user not found");
         }
@@ -52,17 +58,25 @@ public class ProfileController {
         return response;
     }
 
+    /**
+     * endpoint that handles the incoming request if a user wants to edit his/her profile
+     *
+     * @param request   a request containing the attributes the user wants to change and the values which they should be changed to
+     * @param principal representation of the user that is sending the request
+     * @return a response containing information if the profile was successfully edited or, it that's not the case, a map of errors
+     * that show the user why he couldn't edit his profile successfully
+     */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_PROFILE_EDIT, method = RequestMethod.PUT)
     @ResponseBody
     public Response<String> editProfile(
             @RequestBody(required = false) ProfileEditRequest request,
             Principal principal
-    ) throws UserNotFoundException {
-
+    )
+    {
         String username = principal.getName();
 
-        User user = userService.getByUsername(username);
+        User user = databaseUserManager.getByUsername(username);
 
         Response<String> response = new Response<>();
 
@@ -93,17 +107,22 @@ public class ProfileController {
             response.setSuccess(false);
         }
         if (response.isSuccess()) {
-            User update_data = ProfileEditRequestToUserModelConverter.editUser(user, request);
-            userService.update(update_data);
+            User editedUser = ProfileEditRequestToUserModelConverter.editUser(user, request);
+            databaseUserManager.update(editedUser);
         }
 
         return response;
     }
 
+    /**
+     * endpoint that handles the incoming request if a user wants to delete his/her profile
+     *
+     * @param principal representation of the user that is sending the request and wants to delete his/her profile
+     */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_PROFILE_DELETE, method = RequestMethod.DELETE)
     @ResponseBody
     public void deleteProfile(Principal principal) {
-        userService.deleteByUsername(principal.getName());
+        databaseUserManager.deleteByUsername(principal.getName());
     }
 }

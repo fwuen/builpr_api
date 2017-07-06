@@ -1,5 +1,6 @@
 package com.builpr.restapi.controller;
 import com.builpr.Constants;
+import com.builpr.database.bridge.register_confirmation_token.RegisterConfirmationToken;
 import com.builpr.database.bridge.register_confirmation_token.RegisterConfirmationTokenImpl;
 import com.builpr.database.service.DatabaseRegisterConfirmationTokenManager;
 import com.builpr.database.service.DatabaseUserManager;
@@ -27,22 +28,24 @@ import static com.builpr.restapi.error.response.account.RegisterError.*;
 public class RegisterController {
 
     private DatabaseUserManager databaseUserManager;
+    private DatabaseRegisterConfirmationTokenManager registerConfirmationTokenManager;
 
     public RegisterController() {
         databaseUserManager = new DatabaseUserManager();
+        registerConfirmationTokenManager = new DatabaseRegisterConfirmationTokenManager();
     }
 
     /**
      * registers a user
      *
-     * @param registerRequest data given by the user
-     * @return response that indicates if the registration was successful
-     * @throws Exception
+     * @param registerRequest request that contains all the necessary data for the registration
+     * @return response containing information if the user was successfully created or, if that's not the case, an error map
+     * that shows the user why he/she couldn't create the user
      */
     @CrossOrigin(origins = SECURITY_CROSS_ORIGIN)
     @RequestMapping(value = URL_REGISTER, method = RequestMethod.POST)
     @ResponseBody
-    public Response<String> register(@RequestBody RegisterRequest registerRequest) throws ParseException, MessagingException {
+    public Response<String> register(@RequestBody RegisterRequest registerRequest){
 
         Response<String> response = new Response<>();
 
@@ -62,7 +65,13 @@ public class RegisterController {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATE_FORMAT);
 
-        Date registerDate = simpleDateFormat.parse(registerRequest.getBirthday());
+        Date registerDate = null;
+        try {
+            registerDate = simpleDateFormat.parse(registerRequest.getBirthday());
+        } catch (ParseException e) {
+            response.setSuccess(false);
+            response.addError(INVALID_DATE);
+        }
 
         Date currentDate = new Date(System.currentTimeMillis());
 
@@ -105,9 +114,18 @@ public class RegisterController {
             String subject = "Your confirmation link";
             String mail = BASE_URL + URL_REDEEM_CONFIRMATION_TOKEN + "?key=" + confirmation_token + registeredUser.getUserId();
 
-            new DatabaseRegisterConfirmationTokenManager().persist(new RegisterConfirmationTokenImpl().setUserId(registeredUser.getUserId()).setToken(confirmation_token));
+            RegisterConfirmationToken registerConfirmationToken = new RegisterConfirmationTokenImpl().setUserId(registeredUser.getUserId()).setToken(confirmation_token);
+            registerConfirmationTokenManager.persist(registerConfirmationToken);
 
-            MailHelper.send(registeredUser.getEmail(), subject, mail);
+            // if something doesn't work while trying to send the confirmation mail, delete the user and the token and add an error to the errorMap
+            try {
+                MailHelper.send(registeredUser.getEmail(), subject, mail);
+            } catch (MessagingException e) {
+                response.addError(CONFIRMATION_MAIL_SEND_ERROR);
+                response.setSuccess(false);
+                databaseUserManager.deleteByUsername(registeredUser.getUsername());
+                registerConfirmationTokenManager.delete(registerConfirmationToken);
+            }
 
         }
 

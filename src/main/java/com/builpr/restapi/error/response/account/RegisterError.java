@@ -18,7 +18,8 @@ public enum RegisterError implements MappableError {
     INVALID_DATE(6, "The given date is not valid"),
     INVALID_EMAIL(7, "The given email-address is invalid"),
     EMPTY_FIRSTNAME(8, "The given fist name is empty"),
-    EMPTY_LASTNAME(9, "The given last name is empty");
+    EMPTY_LASTNAME(9, "The given last name is empty"),
+    CONFIRMATION_MAIL_SEND_ERROR(10, "There was an error sending the confirmation-mail");
 
 
     private final int CODE;

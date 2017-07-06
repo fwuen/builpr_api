@@ -5,6 +5,7 @@ import com.builpr.database.bridge.BuilprApplicationBuilder;
 import com.builpr.database.bridge.user.User;
 import com.builpr.database.bridge.user.UserImpl;
 import com.builpr.database.bridge.user.UserManager;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import java.sql.Date;
 import java.util.Optional;
 
 /**
- * tests the DatabaseUserManager
+ * tests for the DatabaseUserManager
  */
 public class DatabaseUserManagerTest {
 
@@ -50,6 +51,11 @@ public class DatabaseUserManagerTest {
                 .setShowEmail(false);
 
         userManager.persist(testUser);
+    }
+
+    @After
+    public void tearDown() {
+        userManager.remove(testUser);
     }
 
     @Test
